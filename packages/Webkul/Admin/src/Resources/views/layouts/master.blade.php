@@ -22,12 +22,39 @@
 
         {!! view_render_event('bagisto.admin.layout.head') !!}
 
+        <link rel="stylesheet" href="{{ asset('vendor/webkul/admin/assets/css/mobile_responsive.css') }}">
+
     </head>
 
     <body @if (core()->getCurrentLocale() && core()->getCurrentLocale()->direction == 'rtl') class="rtl" @endif style="scroll-behavior: smooth;">
         {!! view_render_event('bagisto.admin.layout.body.before') !!}
 
         <div id="app">
+
+            <div class="top_nav_mobile_version">
+                <span class="hambargur">
+                    <img id="menu_open_img" class="dt_cl img_ham"
+                         src="{{ asset('vendor/webkul/admin/assets/css/icons/hambarger.png') }}" alt="">
+                </span>
+
+                <span class="dt2cl click_to_logou_open top_periosd_click top_nav_mobile_logout">
+                    Admin
+                    <i class="dt2cl click_to_logou_open top_periosd_click icon arrow-down-icon active"></i>
+                    <div class="dt2 show_logout_div hide">
+                        <ul class="dt2">
+                             <li class="dt2" >
+                                <a class="dt2"  href="{{ route('shop.home.index') }}" target="_blank">{{ __('admin::app.layouts.visit-shop') }}</a>
+                            </li>
+                            <li class="dt2" >
+                                <a class="dt2"  href="{{ route('admin.account.edit') }}">{{ __('admin::app.layouts.my-account') }}</a>
+                            </li>
+                            <li class="dt2" >
+                                <a class="dt2"  href="{{ route('admin.session.destroy') }}">{{ __('admin::app.layouts.logout') }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </span>
+            </div>
 
             <flash-wrapper ref='flashes'></flash-wrapper>
 
@@ -150,7 +177,7 @@
         @stack('scripts')
 
         {!! view_render_event('bagisto.admin.layout.body.after') !!}
-
+        <script src="{{ asset('vendor/webkul/admin/assets/css/menu.js') }}"></script>
         <div class="modal-overlay"></div>
     </body>
 </html>
