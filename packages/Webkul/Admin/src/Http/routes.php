@@ -331,6 +331,28 @@ Route::group(['middleware' => ['web']], function () {
 
                 Route::post('/categories/delete/{id}', 'Webkul\Category\Http\Controllers\CategoryController@destroy')->name('admin.catalog.categories.delete');
 
+                // Catalog Industry Routes
+                Route::get('/industries', 'Webkul\Industry\Http\Controllers\IndustryController@index')->defaults('_config', [
+                    'view' => 'admin::catalog.industries.index',
+                ])->name('admin.catalog.industries.index');
+                Route::get('/industries/create', 'Webkul\Industry\Http\Controllers\IndustryController@create')->defaults('_config', [
+                    'view' => 'admin::catalog.industries.create',
+                ])->name('admin.catalog.industries.create');
+
+                Route::post('/industries/create', 'Webkul\Industry\Http\Controllers\IndustryController@store')->defaults('_config', [
+                    'redirect' => 'admin.catalog.industries.index',
+                ])->name('admin.catalog.industries.store');
+
+                Route::get('/industries/edit/{id}', 'Webkul\Industry\Http\Controllers\IndustryController@edit')->defaults('_config', [
+                    'view' => 'admin::catalog.industries.edit',
+                ])->name('admin.catalog.industries.edit');
+
+                Route::put('/industries/edit/{id}', 'Webkul\Industry\Http\Controllers\IndustryController@update')->defaults('_config', [
+                    'redirect' => 'admin.catalog.industries.index',
+                ])->name('admin.catalog.industries.update');
+
+                Route::post('/industries/delete/{id}', 'Webkul\Industry\Http\Controllers\IndustryController@destroy')->name('admin.catalog.industries.delete');
+
 
                 // Catalog Attribute Routes
                 Route::get('/attributes', 'Webkul\Attribute\Http\Controllers\AttributeController@index')->defaults('_config', [
