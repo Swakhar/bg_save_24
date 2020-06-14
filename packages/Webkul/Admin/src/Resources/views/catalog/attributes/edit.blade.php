@@ -230,7 +230,7 @@
                                 <input type="hidden" name="value_per_channel" value="{{ $attribute->value_per_channel }}"/>
                             </div>
 
-                            <div class="control-group">
+                            <div class="{{ in_array($attribute->type, ['select', 'multiselect', 'price', 'checkbox', 'text']) ? 'control-group' : 'hide' }}">
                                 <label for="is_filterable">{{ __('admin::app.catalog.attributes.is_filterable') }}</label>
                                 <select class="control" id="is_filterable" name="is_filterable">
                                     <option value="0" {{ $attribute->is_filterable ? '' : 'selected' }}>

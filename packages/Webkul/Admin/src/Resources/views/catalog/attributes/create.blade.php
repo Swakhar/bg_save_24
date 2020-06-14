@@ -344,6 +344,12 @@
                 } else {
                     $('#options').parent().removeClass('hide')
                 }
+
+                if (['select', 'multiselect', 'checkbox', 'price', 'text'].indexOf($(e.target).val()) === -1) {
+                    $('#is_filterable').parent().addClass('hide')
+                } else {
+                    $('#is_filterable').parent().removeClass('hide')
+                }
             })
         });
 

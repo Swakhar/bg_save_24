@@ -564,7 +564,7 @@ return [
             'value_per_locale' => 'Waarde per landinstelling',
             'value_per_channel' => 'Waarde per kanaal',
             'value_per_channel' => 'Waarde per kanaal',
-            'is_filterable' => 'Use in Layered Navigation',
+            'is_filterable' => 'Applicable for Filter',
             'is_configurable' => 'Use To Create Configurable Product',
             'admin_name' => 'Admin Name',
             'is_visible_on_front' => 'Visible on Product View Page on Front-end',
