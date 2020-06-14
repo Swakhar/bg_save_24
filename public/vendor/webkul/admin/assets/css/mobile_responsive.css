@@ -1,0 +1,183 @@
+.top_nav_mobile_version {
+    display: none !important;
+}
+@media screen and (max-width: 500px) {
+    .navbar-top {
+        display: none !important;
+    }
+    .top_nav_mobile_version {
+        display: block !important;
+        height: 60px;
+        /*background: whitesmoke;*/
+    }
+
+    .hambargur {
+        background-image: url(./icons/hambarger.png);
+    }
+
+    img.img_ham {
+        width: 60px;
+        cursor: pointer;
+    }
+    span.top_nav_mobile_logout {
+        display: block;
+        position: absolute;
+        top: 18px;
+        right: 9px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .navbar-left {
+        display: none !important;
+    }
+    .content-container {
+        padding-left: 0;
+    }
+    .content-container .aside-nav {
+        display: none !important;
+    }
+    .content-container .content-wrapper {
+        margin-left: 0;
+    }
+    .content-container .content {
+        margin-top: -25px;
+    }
+    .filter-row-one {
+        margin-bottom: 7px;
+    }
+    #datagrid-filters {
+        /*display: none !important;*/
+    }
+    h1 {
+        font-size: 20px !important;
+    }
+    .angle-left-icon {
+        width: 14px !important;
+        height: 14px !important;
+    }
+    .page-action {
+        margin-top: 0;
+        position: absolute;
+        top: 10px;
+        right: 0;
+    }
+    .btn.btn-lg {
+        padding: 7px 10px;
+    }
+    .search-filter .control {
+        width: 115px;
+    }
+    .table .control-group {
+        min-width: 66px;
+    }
+    .filter-row-one .per-page {
+        right: 136px;
+    }
+    .grid-dropdown-header {
+        width: 106px;
+    }
+    .filter-row-one .per-page .per-page-label {
+        display: none !important;
+    }
+
+    .content-container .content .page-header .control {
+        width: 104px;
+    }
+    .content-container .content .page-header {
+        position: sticky;
+        top: 1px;
+    }
+    .mobile_menu_list {
+        position: fixed;
+        background-color: white;
+        flex-direction: column;
+        height: 100%;
+        box-shadow: 4px 0 10px 0 rgba(0,0,0,.4);
+        will-change: transform;
+        width: 300px;
+        top: 0;
+        z-index: 999999;
+        overflow: scroll;
+    }
+    .mobile_menu_list.translateX {
+        -webkit-animation: linear ease;
+        -webkit-animation-name: run;
+        -webkit-animation-duration: .3s;
+        -moz-animation: linear ease;
+        -moz-animation-name: run;
+        -moz-animation-duration: .3s;
+        -ms-animation: linear ease;
+        -ms-animation-name: run;
+        -ms-animation-duration: .3s;
+        -o-animation: linear ease;
+        -o-animation-name: run;
+        -o-animation-duration: .3s;
+    }
+    .mobile_menu_list ul {
+
+    }
+    .mobile_menu_list ul li.mobile_menu_item {
+        position: relative;
+        /*display: block;*/
+        /*margin-bottom: 3px;*/
+        /*height: 39px;*/
+        /*line-height: 24px;*/
+        /*color: grey;*/
+    }
+    .mobile_menu_list ul li.mobile_menu_item span.icon {
+
+    }
+    .mobile_menu_list div.top_info {
+        display: block;
+        height: 22px;
+    }
+    a.absolute_a_mobile_menu {
+        position: absolute;
+        display: inline-block;
+        top: 13px;
+        left: 56px;
+    }
+    img#menu_close {
+        width: 30px;
+        position: absolute;
+        right: 0;
+        top: 3px;
+        cursor: pointer;
+    }
+    .content-container .content .page-header .control-group {
+        width: 42%;
+        margin-left: 15px;
+    }
+    div.show_logout_div {
+
+    }
+    table {
+
+    }
+    .grid-container {
+        overflow: scroll;
+    }
+    .page-title .control-group {
+        display: none !important;
+    }
+    div.show_logout_div {
+        z-index: 999999999;
+        position: absolute;
+        width: 168px;
+        background: whitesmoke;
+        top: 30px;
+        right: -8px;
+    }
+    div.show_logout_div ul {
+
+    }
+    div.show_logout_div ul li {
+        font-size: 17px;
+        margin: 9px;
+        cursor: pointer;
+    }
+    div.show_logout_div ul li a {
+        text-decoration: none !important;
+    }
+}
