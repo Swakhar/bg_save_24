@@ -3,8 +3,8 @@
 namespace Webkul\Industry\Http\Controllers;
 
 use Illuminate\Support\Facades\Event;
-use Webkul\Industry\Models\Industry;
-use Illuminate\Http\Request;
+use Webkul\Industry\Repositories\IndustryRepository;
+
 
 //use Webkul\Industry\Repositories\IndustryRepository;
 
@@ -18,17 +18,21 @@ class IndustryController extends Controller
     protected $_config;
 
     /**
-     * IndustryRepository object
+     * AttributeRepository object
      *
-     * @var \Webkul\Category\Repositories\IndustryRepository
+     * @var \Webkul\Attribute\Repositories\AttributeRepository
      */
-    //protected $industryRepository;
+    protected $industryRepository;
 
-    public function __construct(
-        //IndustryRepository $industryRepository
-    )
+    /**
+     * Create a new controller instance.
+     *
+     * @param  \Webkul\Attribute\Repositories\AttributeRepository  $attributeRepository
+     * @return void
+     */
+    public function __construct(IndustryRepository $industryRepository)
     {
-       // $this->industryRepository = $industryRepository;
+        $this->industryRepository = $industryRepository;
 
         $this->_config = request('_config');
     }
@@ -50,9 +54,6 @@ class IndustryController extends Controller
      */
     public function create()
     {
-        //$industries = $this->industryRepository->getIndustryTree(null, ['id']);
-
-
         return view($this->_config['view']);
     }
 
@@ -61,18 +62,20 @@ class IndustryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
         $this->validate(request(), [
-            'name'        => ['required', 'unique:related_industries'],
+            'code'       => ['required', 'unique:related_industries'],
         ]);
 
-        //$industries = $this->industryRepository->create(request()->all());
-        $ind_id=strtolower($request->name);
-        $industry =new Industry;
-        $industry->name=$request->name;
-        $industry->ind_id=$ind_id;
-        $industry->save();
+        $data = request()->all();
+        //$code=strtolower($data->name);
+
+        //$data['code'] = $code;
+        //foreach ($data as $key ) {
+           // echo $key;
+        //}
+        $industry = $this->industryRepository->create($data);
 
         session()->flash('success', trans('admin::app.response.create-success', ['name' => 'Industry']));
 
@@ -87,10 +90,8 @@ class IndustryController extends Controller
      */
     public function edit($id)
     {
-        $industry = Industry::findOrFail($id);
-
-        //$industries = $this->industryRepository->getIndustryTreeWithoutDescendant($id);
-
+        $industry = $this->industryRepository->findOrFail($id);
+        
         return view($this->_config['view'], compact('industry'));
     }
 
@@ -100,24 +101,13 @@ class IndustryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        $industry = Industry::findOrFail($id);
-        $name=$industry->name;
-        if($name==$request->name){
-            session()->flash('success', trans('admin::app.response.update-success', ['name' => 'Industry']));
-
-            return redirect()->route($this->_config['redirect']);
-        }
         $this->validate(request(), [
-            'name'        => ['required', 'unique:related_industries'],
+            'admin_name' => 'required',
         ]);
 
-        $ind_id=strtolower($request->name);
-        $industry = Industry::findOrFail($id);
-        $industry->name=$request->name;
-        $industry->ind_id=$ind_id;
-        $industry->save();
+        $industry = $this->industryRepository->update(request()->all(), $id);
 
         session()->flash('success', trans('admin::app.response.update-success', ['name' => 'Industry']));
 
@@ -132,43 +122,57 @@ class IndustryController extends Controller
      */
     public function destroy($id)
     {
-        $industry = Industry::findOrFail($id);
-        $industry ->delete();
+        $industry = $this->industryRepository->findOrFail($id);
 
-        Event::dispatch('catalog.category.delete.after', $id);
+        try {
+            $this->industryRepository->delete($id);
 
-        session()->flash('success', trans('admin::app.response.delete-success', ['name' => 'Industry']));
+            session()->flash('success', trans('admin::app.response.delete-success', ['name' => 'Industry']));
 
-        return response()->json(['message' => true], 200);
-            
+            return response()->json(['message' => true], 200);
+        } catch(\Exception $e) {
+            session()->flash('error', trans('admin::app.response.delete-failed', ['name' => 'Industry']));
+        }
+
+        return response()->json(['message' => false], 400);
     }
 
-    /*
-    public function massDestroy()
+    /**
+     * Remove the specified resources from database
+     *
+     * @return \Illuminate\Http\Response
+     */
+    /*public function massDestroy()
     {
         $suppressFlash = false;
 
-        if (request()->isMethod('delete') || request()->isMethod('post')) {
+        if (request()->isMethod('post')) {
             $indexes = explode(',', request()->input('indexes'));
 
             foreach ($indexes as $key => $value) {
+                $attribute = $this->industryRepository->find($value);
+
                 try {
-                    Event::dispatch('catalog.category.delete.before', $value);
+                    if ($attribute->is_user_defined) {
+                        $suppressFlash = true;
 
-                    $this->industryRepository->delete($value);
+                        $this->industryRepository->delete($value);
+                    } else {
+                        session()->flash('error', trans('admin::app.response.user-define-error', ['name' => 'Attribute']));
+                    }
+                } catch (\Exception $e) {
+                    report($e);
 
-                    Event::dispatch('catalog.category.delete.after', $value);
-                } catch(\Exception $e) {
                     $suppressFlash = true;
 
                     continue;
                 }
             }
 
-            if (! $suppressFlash) {
-                session()->flash('success', trans('admin::app.datagrid.mass-ops.delete-success'));
+            if ($suppressFlash) {
+                session()->flash('success', trans('admin::app.datagrid.mass-ops.delete-success', ['resource' => 'attributes']));
             } else {
-                session()->flash('info', trans('admin::app.datagrid.mass-ops.partial-action', ['resource' => 'Attribute Family']));
+                session()->flash('info', trans('admin::app.datagrid.mass-ops.partial-action', ['resource' => 'attributes']));
             }
 
             return redirect()->back();

@@ -1,5 +1,6 @@
 /docker-compose-collection
 /bin
+/bootstrap/cache/*
 /node_modules
 /public/hot
 /public/storage

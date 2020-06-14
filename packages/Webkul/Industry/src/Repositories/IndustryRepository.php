@@ -2,16 +2,16 @@
 
 namespace Webkul\Industry\Repositories;
 
-use Illuminate\Container\Container as App;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Event;
 use Webkul\Core\Eloquent\Repository;
-use Webkul\Industry\Models\Industry;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Container\Container as App;
+use Illuminate\Support\Str;
+//use Illuminate\Database\Eloquent\ModelNotFoundException;
+//use Illuminate\Support\Facades\DB;
 
 class IndustryRepository extends Repository
 {
+
     /**
      * Specify Model class name
      *
@@ -28,100 +28,33 @@ class IndustryRepository extends Repository
      */
     public function create(array $data)
     {
-        Event::dispatch('catalog.industry.create.before');        
-        //$industry = $this->model->create($data);
-        //$industry = $this->model->create($data);
+        //Event::dispatch('catalog.attribute.create.before');
 
+        $industry = $this->model->create($data);
 
-        Event::dispatch('catalog.industry.create.after', $industry);
+        //Event::dispatch('catalog.attribute.create.after', $industry);
 
         return $industry;
     }
 
     /**
-     * Specify category tree
-     *
-     * @param  int  $id
-     * @return \Webkul\Category\Contracts\Category
-     */
-    public function getIndustryTree($id = null)
-    {
-        return $id
-               ? $this->model::orderBy('name', 'ASC')->where('id', '!=', $id)->get()->toTree()
-               : $this->model::orderBy('name', 'ASC')->get()->toTree();
-    }
-
-    /**
-     * Specify category tree
-     *
-     * @param  int  $id
-     * @return \Illuminate\Support\Collection
-     */
-    public function getIndustryTreeWithoutDescendant($id = null)
-    {
-        return $id
-               ? $this->model::orderBy('name', 'ASC')->where('id', '!=', $id)->whereNotDescendantOf($id)->get()->toTree()
-               : $this->model::orderBy('name', 'ASC')->get()->toTree();
-    }
-
-    
-
-    
-    /**
-     * Checks slug is unique or not based on locale
-     *
-     * @param  int  $id
-     * @param  string  $slug
-     * @return bool
-     */
-    public function isNameUnique($id, $name)
-    {   
-        $exists = Industry::modelClass()::where('id', '<>', $id)
-            ->where('name', $name)
-            ->limit(1)
-            ->select(DB::raw(1))
-            ->exists();
-
-        return $exists ? false : true;
-    }
-
-    /**
-     * Retrive category from slug
-     *
-     * @param string $slug
-     * @return \Webkul\Category\Contracts\Category
-     */
-    public function findByNameOrFail($name)
-    {
-        $industry = $this->model->whereTranslation('name', $name)->first();
-
-        if ($industry) {
-            return $industry;
-        }
-
-        throw (new ModelNotFoundException)->setModel(
-            get_class($this->model), $name
-        );
-    }
-
-
-    /**
      * @param  array  $data
-     * @param  int  $id
+     * @param  int $id
      * @param  string  $attribute
-     * @return \Webkul\Category\Contracts\Category
+     * @return \Webkul\Attribute\Contracts\Attribute
      */
-    public function update(array $data, $id)
+    public function update(array $data, $id, $industry = "id")
     {
-       // $industry = $this->find($id);
 
-        //Event::dispatch('catalog.industry.update.before', $id);
+        $industry = $this->find($id);
 
-        //$industry->update($data);
+        Event::dispatch('catalog.attribute.update.before', $id);
 
-        //Event::dispatch('catalog.industry.update.after', $id);
+        $industry->update($data);
 
-        //return $industry;
+        Event::dispatch('catalog.attribute.update.after', $industry);
+
+        return $industry;
     }
 
     /**
@@ -130,11 +63,29 @@ class IndustryRepository extends Repository
      */
     public function delete($id)
     {
-        Event::dispatch('catalog.industry.delete.before', $id);
+        Event::dispatch('catalog.attribute.delete.before', $id);
 
         parent::delete($id);
 
-        Event::dispatch('catalog.industry.delete.after', $id);
+        Event::dispatch('catalog.attribute.delete.after', $id);
+    }
+
+    
+
+    
+    /**
+     * @param  string  $code
+     * @return \Webkul\Attribute\Contracts\Attribute
+     */
+    public function getAttributeByCode($code)
+    {
+        static $attributes = [];
+
+        if (array_key_exists($code, $attributes)) {
+            return $attributes[$code];
+        }
+
+        return $attributes[$code] = $this->findOneByField('code', $code);
     }
 
 }

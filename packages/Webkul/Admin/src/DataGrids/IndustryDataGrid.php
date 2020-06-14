@@ -15,7 +15,7 @@ class IndustryDataGrid extends DataGrid
     {
         $queryBuilder = DB::table('related_industries')
             ->select('id')
-            ->addSelect('id', 'name', 'ind_id');
+            ->addSelect('id', 'code','admin_name');
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -32,7 +32,7 @@ class IndustryDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'name',
+            'index'      => 'admin_name',
             'label'      => trans('admin::app.name'),
             'type'       => 'string',
             'searchable' => true,
@@ -41,13 +41,15 @@ class IndustryDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'ind_id',
-            'label'      => trans('admin::app.name'),
+            'index'      => 'code',
+            'label'      => trans('admin::app.datagrid.code'),
             'type'       => 'string',
             'searchable' => true,
             'sortable'   => true,
             'filterable' => true,
         ]);
+
+        
 
         
     }
