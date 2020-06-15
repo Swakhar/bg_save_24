@@ -5,7 +5,7 @@
 /public/storage
 /public/css
 /public/js
-
+/bootstrap
 /vendor
 /.idea
 /.vscode
