@@ -112,6 +112,26 @@ return [
         'route' => 'admin.catalog.families.delete',
         'sort'  => 3,
     ], [
+        'key'   => 'catalog.industries',
+        'name'  => 'Related Industries/Institutions',
+        'route' => 'admin.catalog.industries.index',
+        'sort'  => 5,
+    ], [
+        'key'   => 'catalog.industries.create',
+        'name'  => 'Add Industry/Institution',
+        'route' => 'admin.catalog.industries.create',
+        'sort'  => 1,
+    ], [
+        'key'   => 'catalog.industries.edit',
+        'name'  => 'Edit Industry/Institution',
+        'route' => 'admin.catalog.industries.edit',
+        'sort'  => 2,
+    ], [
+        'key'   => 'catalog.industries.delete',
+        'name'  => 'Delete Industry/Institution',
+        'route' => 'admin.catalog.industries.delete',
+        'sort'  => 3,
+    ], [
         'key'   => 'customers',
         'name'  => 'admin::app.acl.customers',
         'route' => 'admin.customer.index',

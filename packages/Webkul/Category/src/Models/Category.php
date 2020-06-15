@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Webkul\Category\Contracts\Category as CategoryContract;
 use Webkul\Attribute\Models\AttributeProxy;
+use Webkul\Industry\Models\IndustryProxy;
 use Webkul\Category\Repositories\CategoryRepository;
 
 /**
@@ -31,7 +32,7 @@ class Category extends TranslatableModel implements CategoryContract
         'meta_keywords',
     ];
 
-    protected $fillable = ['position', 'status', 'display_mode', 'parent_id'];
+    protected $fillable = ['position', 'status','industry_id', 'display_mode', 'parent_id'];
 
     protected $with = ['translations'];
 
@@ -60,6 +61,14 @@ class Category extends TranslatableModel implements CategoryContract
     public function filterableAttributes()
     {
         return $this->belongsToMany(AttributeProxy::modelClass(), 'category_filterable_attributes')->with('options');
+    }
+
+    /**
+     * The filterable attributes that belong to the category.
+     */
+    public function Industries()
+    {
+        return $this->belongsToMany(IndustryProxy::modelClass(),'category_industries');
     }
 
     /**

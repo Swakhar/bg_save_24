@@ -633,6 +633,20 @@ return [
             'image' => 'Image',
             'filterable-attributes' => 'Filterable Attributes',
             'attributes' => 'Attributes',
+            'related-industries' => 'Related Industries/Institutes',
+            'industries' => 'Related Industries/Institutes',
+        ],
+        'industries' => [
+            'title' => 'Related Industries',
+            'add-title' => 'Add Industry/Institute',
+            'edit-title' => 'Edit Industry/Institute',
+            'save-btn-title' => 'Save Industry',
+            'general' => 'General',
+            'name' => 'Name',
+            'code' => 'Code',
+            'label' => 'Label',
+            'admin' => 'Admin',
+            'admin_name' => 'Admin Name',
         ]
     ],
 

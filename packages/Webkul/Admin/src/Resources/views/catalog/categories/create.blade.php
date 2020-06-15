@@ -158,6 +158,29 @@
                             </div>
                         </div>
                     </accordian>
+                    <accordian :title="'{{ __('admin::app.catalog.categories.related-industries') }}'" :active="true">
+                        <div slot="body">
+
+                            <?php $selectedaIndustries = old('industries') ? old('industries') : ['11']  ?>
+
+                            <div class="control-group" :class="[errors.has('industries[]') ? 'has-error' : '']">
+                                <label for="industries">{{ __('admin::app.catalog.categories.industries') }}</label>
+                                <select class="control" name="industries[]"  multiple>
+
+                                    @foreach ($industries as $industry)
+                                        <option value="{{ $industry->id }}" {{ in_array($industry->id, $selectedaIndustries) ? 'selected' : ''}}>
+                                            {{ $industry->name ? $industry->name : $industry->admin_name }}
+                                        </option>
+                                    @endforeach
+
+                                </select>
+                                <span class="control-error" v-if="errors.has('industries[]')">
+                                    @{{ errors.first('industries[]') }}
+                                </span>
+                            </div>
+                        </div>
+                    </accordian>
+
 
                     {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.seo.before') !!}
 
