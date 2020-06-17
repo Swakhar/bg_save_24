@@ -79,14 +79,15 @@
                 <div class="control-group">
                     <select :name="[inputName + '[value_type]']" v-model="customerGroupPrice.value_type" class="control">
                         <option value="fixed">{{ __('admin::app.catalog.products.fixed') }}</option>
-                        <option value="discount">{{ __('admin::app.catalog.products.discount') }}</option>
+                        <option value="discount">{{ __('admin::app.catalog.products.discount') }} %</option>
                     </select>
                 </div>
 
                 <div class="control-group">
                     <div class="control-group" :class="[errors.has(inputName + '[value]') ? 'has-error' : '']">
-                        <input type="number" v-validate="'required|min_value:0'" :name="[inputName + '[value]']" v-model="customerGroupPrice.value" class="control" data-vv-as="&quot;{{ __('admin::app.catalog.products.value') }}&quot;"/>
-                        <span class="control-error" v-if="errors.has(inputName + '[value]')">@{{ errors.first(inputName + '[value]') }}</span>
+                        
+                        <input type="number" v-validate="'required|min_value:0|'" :name="[inputName + '[raw_value]']" v-model="customerGroupPrice.raw_value" class="control" data-vv-as="&quot;{{ __('admin::app.catalog.products.raw_value') }}&quot;"/>
+                        <span class="control-error" v-if="errors.has(inputName + '[raw_value]')">@{{ errors.first(inputName + '[raw_value]') }}</span>
                     </div>
                 </div>
             </td>
