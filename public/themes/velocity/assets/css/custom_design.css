@@ -1,0 +1,85 @@
+/*** login bar **/
+div.modal_pop_up {
+    display: block;
+    height: 240px;
+    width: 400px;
+    background: white;
+    position: absolute;
+    top: 1%;
+    left: 33%;
+    z-index: 99999;
+    box-shadow: 1px 3px 8px 3px grey;
+}
+div.modal_pop_up.hide {
+    display: none !important;
+}
+div.modal_pop_up .header {
+    height: 37px;
+    display: inline-block;
+    position: absolute;
+    background: #4A5678;
+    width: 100%;
+}
+div.modal_pop_up .header span.text {
+    font-size: 20px;
+    color: white;
+    text-align: center;
+    display: block;
+}
+div.modal_pop_up .body select {
+    position: absolute;
+    top: 63px;
+    width: 50%;
+    left: 24%;
+    height: 32px;
+    border: 1px solid #21A179;
+    font-size: 17px;
+}
+div.modal_pop_up .body button {
+    background: #4A5678;
+    padding: 3px;
+    width: 100px;
+    position: absolute;
+    top: 115px;
+    left: 37%;
+    border: none;
+    height: 36px;
+    font-size: 16px;
+    color: white;
+}
+
+div.modal_pop_up.landing_top_to_bottom {
+    animation: start_animation 1s normal forwards ease-in-out
+}
+
+@keyframes start_animation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+span.cross {
+    position: absolute;
+    font-size: 26px;
+    color: white;
+    right: 16px;
+    top: -6px;
+    cursor: pointer;
+}
+
+/*** nav bar style*/
+.main-content-wrapper .content-list ul {
+    background-color: #4A5678;
+}
+header #search-form #header-search-icon {
+    background-color: #4A5678;
+}
+.main-category.fs16.unselectable.fw6.cursor-pointer.left {
+    background: #343C54;
+    color: white;
+}
+#sidebar-level-0 {
+    display: block !important;
+}

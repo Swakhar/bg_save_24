@@ -164,6 +164,11 @@ return [
         'search-text'       => 'Search products here',
         'welcome-message'   => 'Welcome, :customer_name',
         'dropdown-text'     => 'Manage Cart, Orders & Wishlist',
+        'my-account'   => 'My Account',
+        'seller-account'   => 'Seller Account',
+        'shipping-location'   => 'Shipping Location',
+        'shipping-location-modal-header-text'   => 'Please select shipping location',
+
     ],
 
     'menu-navbar'   => [
