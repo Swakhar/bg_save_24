@@ -206,10 +206,14 @@ class ProductController extends Controller
                             $discount=$basePrice*floatval($value['raw_value'])/100;
                             $discount=$basePrice-$discount;
                             $data['customer_group_prices'][$key]['value']=$discount;
+                        }else{
+                            return back()->with('error', trans('Invalid discount entry'));
                         }
                     }else if($value['value_type']=="fixed"){
-                        if($value['raw_value'] !=null || floatval($value['raw_value'])<=$basePrice){
+                        if($value['raw_value'] !=null && floatval($value['raw_value'])>0 && floatval($value['raw_value'])<=$basePrice){
                             $data['customer_group_prices'][$key]['value']=$value['raw_value'];
+                        }else{
+                            return back()->with('error', trans('Invalid fixed entry'));;
                         }
                     }
                 }
