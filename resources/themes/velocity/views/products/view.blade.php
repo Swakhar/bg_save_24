@@ -88,6 +88,19 @@
                             <input type="hidden" name="product_id" value="{{ $product->product_id }}">
 
                             {{-- product-gallery --}}
+                            <div class="store-meta-images col-3">
+                                @if(
+                                    isset($velocityMetaData['product_view_images'])
+                                    && $velocityMetaData['product_view_images']
+                                )
+                                    @foreach (json_decode($velocityMetaData['product_view_images'], true) as $image)
+                                        @if ($image && $image !== '')
+                                            <img src="{{ url()->to('/') }}/storage/{{ $image }}" />
+                                        @endif
+                                    @endforeach
+                                @endif
+                            </div>
+
                             <div class="left col-lg-5">
                                 @include ('shop::products.view.gallery')
                             </div>
@@ -185,18 +198,7 @@
                 @include('shop::products.view.up-sells')
             </div>
 
-            <div class="store-meta-images col-3">
-                @if(
-                    isset($velocityMetaData['product_view_images'])
-                    && $velocityMetaData['product_view_images']
-                )
-                    @foreach (json_decode($velocityMetaData['product_view_images'], true) as $image)
-                        @if ($image && $image !== '')
-                            <img src="{{ url()->to('/') }}/storage/{{ $image }}" />
-                        @endif
-                    @endforeach
-                @endif
-            </div>
+
         </div>
     {!! view_render_event('bagisto.shop.products.view.after', ['product' => $product]) !!}
 @endsection
