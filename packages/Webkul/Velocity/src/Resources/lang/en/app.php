@@ -169,6 +169,7 @@ return [
         'shipping-location'   => 'Shipping Location',
         'shipping-location-modal-header-text'   => 'Please select shipping location',
 
+
     ],
 
     'menu-navbar'   => [
@@ -213,6 +214,7 @@ return [
             'registered-user'       => 'Registered User',
             'your-email-address'    => 'Your email address',
             'form-login-text'       => 'If you have an account, sign in with your email address.',
+            'newsletter-text'   => 'SIGN UP FOR NEWSLETTER',
         ],
         'signup-form'       => [
             'login'             => 'Login',

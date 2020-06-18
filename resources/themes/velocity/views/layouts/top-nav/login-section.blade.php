@@ -26,7 +26,7 @@
         <div id="account">
             <div class="welcome-content pull-right" @click="toggleHref('seller')">
                 <i class="material-icons align-vertical-top">perm_identity</i>
-                <span class="text-center">
+                <span class="text-center" title="{{ __('velocity::app.header.seller-account') }}">
                     @guest('customer')
                     {{ __('velocity::app.header.seller-account') }}
                     @endguest
@@ -43,7 +43,7 @@
         <div id="account">
             <div class="welcome-content pull-right" @click="toggleHref('my-account')">
                 <i class="material-icons align-vertical-top">perm_identity</i>
-                <span class="text-center">
+                <span class="text-center" title="{{ __('velocity::app.header.my-account')  }}">
                     @guest('customer')
                     {{ __('velocity::app.header.my-account')  }}
                     @endguest
@@ -60,7 +60,7 @@
         <div id="account">
             <div class="welcome-content pull-right" @click="shippingLocationModal">
                 <i class="material-icons align-vertical-top">perm_identity</i>
-                <span class="text-center">
+                <span class="text-center" title="{{ __('velocity::app.header.shipping-location') }}">
                     @guest('customer')
                     {{ __('velocity::app.header.shipping-location') }}
                     @endguest
