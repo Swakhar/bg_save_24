@@ -105,7 +105,6 @@
         "Webkul\\Velocity\\": "packages/Webkul/Velocity/src",
         "Webkul\\BookingProduct\\": "packages/Webkul/BookingProduct/src",
         "Webkul\\Industry\\":"packages/Webkul/Industry/src"
- 
       }
     },
 

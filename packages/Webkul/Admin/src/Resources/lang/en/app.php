@@ -635,6 +635,7 @@ return [
             'attributes' => 'Attributes',
             'related-industries' => 'Related Industries/Institutes',
             'industries' => 'Related Industries/Institutes',
+
         ],
         'industries' => [
             'title' => 'Related Industries',

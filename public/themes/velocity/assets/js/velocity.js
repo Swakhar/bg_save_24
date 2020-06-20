@@ -41374,12 +41374,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['id', 'addClass', 'parentSlug', 'mainSidebar', 'categoryCount'],
 
     data: function data() {
         return {
+            more_menu_txt: 'More Categories',
+            more_menu_icon: 'plus',
             slicedCategories: [],
             moreSlicedCategories: [],
             sidebarLevel: Math.floor(Math.random() * 1000)
@@ -41433,9 +41452,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         expand_more_categories: function expand_more_categories(this_class, id) {
             if ($("." + this_class).attr("is_expand") == 0) {
                 $("#" + id).removeClass("hide");
+                this.more_menu_txt = 'Less Categories';
+                this.more_menu_icon = 'minus';
                 $("." + this_class).attr("is_expand", 1);
             } else {
                 $("#" + id).addClass("hide");
+                this.more_menu_txt = 'More Categories';
+                this.more_menu_icon = 'plus';
                 $("." + this_class).attr("is_expand", 0);
             }
         }
@@ -41451,710 +41474,783 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.slicedCategories && _vm.slicedCategories.length > 0
-    ? _c(
-        "nav",
-        {
-          class: "sidebar " + (_vm.addClass ? _vm.addClass : ""),
-          attrs: { id: _vm.id },
-          on: {
-            mouseover: function($event) {
-              return _vm.remainBar(_vm.id)
-            }
-          }
-        },
-        [
-          _c(
-            "ul",
-            { staticClass: "side-nav-ul", attrs: { type: "none" } },
-            _vm._l(_vm.slicedCategories, function(category, categoryIndex) {
-              return _c(
-                "li",
-                {
-                  key: categoryIndex,
-                  staticClass: "category-content cursor-pointer",
-                  attrs: { id: "category-" + category.id },
-                  on: {
-                    mouseout: function($event) {
-                      return _vm.toggleSidebar(_vm.id, $event, "mouseout")
-                    },
-                    mouseover: function($event) {
-                      return _vm.toggleSidebar(_vm.id, $event, "mouseover")
-                    }
-                  }
-                },
-                [
-                  _c(
-                    "a",
-                    {
-                      class:
-                        "category unset " +
-                        (category.children.length > 0 ? "fw6" : ""),
-                      attrs: { href: _vm.$root.baseUrl + "/" + category.slug }
-                    },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "category-icon",
-                          on: {
-                            mouseout: function($event) {
-                              return _vm.toggleSidebar(
-                                _vm.id,
-                                $event,
-                                "mouseout"
-                              )
-                            },
-                            mouseover: function($event) {
-                              return _vm.toggleSidebar(
-                                _vm.id,
-                                $event,
-                                "mouseover"
-                              )
-                            }
-                          }
-                        },
-                        [
-                          category.category_icon_path
-                            ? _c("img", {
-                                attrs: {
-                                  src:
-                                    _vm.$root.baseUrl +
-                                    "/storage/" +
-                                    category.category_icon_path
-                                }
-                              })
-                            : _vm._e()
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "span",
-                        { staticClass: "category-title category-title-level1" },
-                        [_vm._v(_vm._s(category["name"]))]
-                      ),
-                      _vm._v(" "),
-                      category.children.length && category.children.length > 0
-                        ? _c("i", {
-                            staticClass: "rango-arrow-right pr15 pull-right",
-                            on: {
-                              mouseout: function($event) {
-                                return _vm.toggleSidebar(
-                                  _vm.id,
-                                  $event,
-                                  "mouseout"
-                                )
-                              },
-                              mouseover: function($event) {
-                                return _vm.toggleSidebar(
-                                  _vm.id,
-                                  $event,
-                                  "mouseover"
-                                )
-                              }
-                            }
-                          })
-                        : _vm._e()
-                    ]
-                  ),
-                  _vm._v(" "),
-                  category.children.length && category.children.length > 0
-                    ? _c("div", { staticClass: "com sub-category-container" }, [
-                        _c(
-                          "div",
-                          {
-                            class:
-                              "sub-categories sub-category-" +
-                              (_vm.sidebarLevel + categoryIndex) +
-                              " cursor-default",
-                            on: {
-                              mouseout: function($event) {
-                                return _vm.toggleSidebar(
-                                  _vm.id,
-                                  $event,
-                                  "mouseout"
-                                )
-                              },
-                              mouseover: function($event) {
-                                return _vm.remainBar(
-                                  "sidebar-level-" +
-                                    (_vm.sidebarLevel + categoryIndex)
-                                )
-                              }
-                            }
-                          },
-                          [
-                            _c(
-                              "nav",
-                              {
-                                staticClass: "sidebar",
-                                attrs: {
-                                  id:
-                                    "sidebar-level-" +
-                                    (_vm.sidebarLevel + categoryIndex)
-                                },
-                                on: {
-                                  mouseover: function($event) {
-                                    return _vm.remainBar(
-                                      "sidebar-level-" +
-                                        (_vm.sidebarLevel + categoryIndex)
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "ul",
-                                  {
-                                    staticClass: "com",
-                                    attrs: { type: "none" }
-                                  },
-                                  _vm._l(category.children, function(
-                                    subCategory,
-                                    subCategoryIndex
-                                  ) {
-                                    return _c(
-                                      "li",
-                                      {
-                                        key:
-                                          subCategoryIndex +
-                                          "-" +
-                                          categoryIndex,
-                                        staticClass: "com"
-                                      },
-                                      [
-                                        _c(
-                                          "a",
-                                          {
-                                            class:
-                                              "com category sub-category unset " +
-                                              (subCategory.children.length > 0
-                                                ? "fw6"
-                                                : ""),
-                                            attrs: {
-                                              id:
-                                                "sidebar-level-link-2-" +
-                                                subCategoryIndex,
-                                              href:
-                                                _vm.$root.baseUrl +
-                                                "/" +
-                                                category.slug +
-                                                "/" +
-                                                subCategory.slug
-                                            },
-                                            on: {
-                                              mouseout: function($event) {
-                                                return _vm.toggleSidebar(
-                                                  _vm.id,
-                                                  $event,
-                                                  "mouseout"
-                                                )
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "com category-icon",
-                                                on: {
-                                                  mouseout: function($event) {
-                                                    return _vm.toggleSidebar(
-                                                      _vm.id,
-                                                      $event,
-                                                      "mouseout"
-                                                    )
-                                                  },
-                                                  mouseover: function($event) {
-                                                    return _vm.toggleSidebar(
-                                                      _vm.id,
-                                                      $event,
-                                                      "mouseover"
-                                                    )
-                                                  }
-                                                }
-                                              },
-                                              [
-                                                subCategory.category_icon_path
-                                                  ? _c("img", {
-                                                      staticClass: "com",
-                                                      attrs: {
-                                                        src:
-                                                          _vm.$root.baseUrl +
-                                                          "/storage/" +
-                                                          subCategory.category_icon_path
-                                                      }
-                                                    })
-                                                  : _vm._e()
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "span",
-                                              {
-                                                staticClass:
-                                                  "com category-title category-title-level23"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  _vm._s(subCategory["name"])
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "ul",
-                                          {
-                                            staticClass: "nested com",
-                                            attrs: { type: "none" }
-                                          },
-                                          _vm._l(subCategory.children, function(
-                                            childSubCategory,
-                                            childSubCategoryIndex
-                                          ) {
-                                            return _c(
-                                              "li",
-                                              {
-                                                key:
-                                                  childSubCategoryIndex +
-                                                  "-" +
-                                                  subCategoryIndex +
-                                                  "-" +
-                                                  categoryIndex,
-                                                staticClass: "com"
-                                              },
-                                              [
-                                                _c(
-                                                  "a",
-                                                  {
-                                                    class:
-                                                      "com category unset " +
-                                                      (subCategory.children
-                                                        .length > 0
-                                                        ? "fw6"
-                                                        : ""),
-                                                    attrs: {
-                                                      id:
-                                                        "sidebar-level-link-3-" +
-                                                        childSubCategoryIndex,
-                                                      href:
-                                                        _vm.$root.baseUrl +
-                                                        "/" +
-                                                        category.slug +
-                                                        "/" +
-                                                        subCategory.slug +
-                                                        "/" +
-                                                        childSubCategory.slug
-                                                    }
-                                                  },
-                                                  [
-                                                    _c(
-                                                      "span",
-                                                      {
-                                                        staticClass:
-                                                          "com category-title category-title-level2"
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          _vm._s(
-                                                            childSubCategory.name
-                                                          )
-                                                        )
-                                                      ]
-                                                    )
-                                                  ]
-                                                )
-                                              ]
-                                            )
-                                          }),
-                                          0
-                                        )
-                                      ]
-                                    )
-                                  }),
-                                  0
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    : _vm._e()
-                ]
-              )
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _c(
-            "ul",
-            {
-              staticClass: "hide side-nav-ul",
-              attrs: { id: "more_categories", type: "none" }
-            },
-            _vm._l(_vm.moreSlicedCategories, function(category, categoryIndex) {
-              return _c(
-                "li",
-                {
-                  key: categoryIndex,
-                  staticClass: "category-content cursor-pointer",
-                  attrs: { id: "category-" + category.id },
-                  on: {
-                    mouseout: function($event) {
-                      return _vm.toggleSidebar(_vm.id, $event, "mouseout")
-                    },
-                    mouseover: function($event) {
-                      return _vm.toggleSidebar(_vm.id, $event, "mouseover")
-                    }
-                  }
-                },
-                [
-                  _c(
-                    "a",
-                    {
-                      class:
-                        "category unset " +
-                        (category.children.length > 0 ? "fw6" : ""),
-                      attrs: { href: _vm.$root.baseUrl + "/" + category.slug }
-                    },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "category-icon",
-                          on: {
-                            mouseout: function($event) {
-                              return _vm.toggleSidebar(
-                                _vm.id,
-                                $event,
-                                "mouseout"
-                              )
-                            },
-                            mouseover: function($event) {
-                              return _vm.toggleSidebar(
-                                _vm.id,
-                                $event,
-                                "mouseover"
-                              )
-                            }
-                          }
-                        },
-                        [
-                          category.category_icon_path
-                            ? _c("img", {
-                                attrs: {
-                                  src:
-                                    _vm.$root.baseUrl +
-                                    "/storage/" +
-                                    category.category_icon_path
-                                }
-                              })
-                            : _vm._e()
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "span",
-                        {
-                          staticClass: "category-title category-title-level1",
-                          attrs: {
-                            title: category["name"],
-                            dd: category["name"].length
-                          }
-                        },
-                        [
-                          _vm._v(
-                            _vm._s(
-                              category["name"].length > 22
-                                ? category["name"].substring(0, 18) + "........"
-                                : category["name"]
-                            )
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      category.children.length && category.children.length > 0
-                        ? _c("i", {
-                            staticClass: "rango-arrow-right pr15 pull-right",
-                            on: {
-                              mouseout: function($event) {
-                                return _vm.toggleSidebar(
-                                  _vm.id,
-                                  $event,
-                                  "mouseout"
-                                )
-                              },
-                              mouseover: function($event) {
-                                return _vm.toggleSidebar(
-                                  _vm.id,
-                                  $event,
-                                  "mouseover"
-                                )
-                              }
-                            }
-                          })
-                        : _vm._e()
-                    ]
-                  ),
-                  _vm._v(" "),
-                  category.children.length && category.children.length > 0
-                    ? _c("div", { staticClass: "com sub-category-container" }, [
-                        _c(
-                          "div",
-                          {
-                            class:
-                              "sub-categories sub-category-" +
-                              (_vm.sidebarLevel + categoryIndex) +
-                              " cursor-default",
-                            on: {
-                              mouseout: function($event) {
-                                return _vm.toggleSidebar(
-                                  _vm.id,
-                                  $event,
-                                  "mouseout"
-                                )
-                              },
-                              mouseover: function($event) {
-                                return _vm.remainBar(
-                                  "sidebar-level-" +
-                                    (_vm.sidebarLevel + categoryIndex)
-                                )
-                              }
-                            }
-                          },
-                          [
-                            _c(
-                              "nav",
-                              {
-                                staticClass: "sidebar",
-                                attrs: {
-                                  id:
-                                    "sidebar-level-" +
-                                    (_vm.sidebarLevel + categoryIndex)
-                                },
-                                on: {
-                                  mouseover: function($event) {
-                                    return _vm.remainBar(
-                                      "sidebar-level-" +
-                                        (_vm.sidebarLevel + categoryIndex)
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "ul",
-                                  {
-                                    staticClass: "com",
-                                    attrs: { type: "none" }
-                                  },
-                                  _vm._l(category.children, function(
-                                    subCategory,
-                                    subCategoryIndex
-                                  ) {
-                                    return _c(
-                                      "li",
-                                      {
-                                        key:
-                                          subCategoryIndex +
-                                          "-" +
-                                          categoryIndex,
-                                        staticClass: "com"
-                                      },
-                                      [
-                                        _c(
-                                          "a",
-                                          {
-                                            class:
-                                              "com category sub-category unset " +
-                                              (subCategory.children.length > 0
-                                                ? "fw6"
-                                                : ""),
-                                            attrs: {
-                                              id:
-                                                "sidebar-level-link-2-" +
-                                                subCategoryIndex,
-                                              href:
-                                                _vm.$root.baseUrl +
-                                                "/" +
-                                                category.slug +
-                                                "/" +
-                                                subCategory.slug
-                                            },
-                                            on: {
-                                              mouseout: function($event) {
-                                                return _vm.toggleSidebar(
-                                                  _vm.id,
-                                                  $event,
-                                                  "mouseout"
-                                                )
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "com category-icon",
-                                                on: {
-                                                  mouseout: function($event) {
-                                                    return _vm.toggleSidebar(
-                                                      _vm.id,
-                                                      $event,
-                                                      "mouseout"
-                                                    )
-                                                  },
-                                                  mouseover: function($event) {
-                                                    return _vm.toggleSidebar(
-                                                      _vm.id,
-                                                      $event,
-                                                      "mouseover"
-                                                    )
-                                                  }
-                                                }
-                                              },
-                                              [
-                                                subCategory.category_icon_path
-                                                  ? _c("img", {
-                                                      staticClass: "com",
-                                                      attrs: {
-                                                        src:
-                                                          _vm.$root.baseUrl +
-                                                          "/storage/" +
-                                                          subCategory.category_icon_path
-                                                      }
-                                                    })
-                                                  : _vm._e()
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "span",
-                                              {
-                                                staticClass:
-                                                  "com category-title category-title-level23"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  _vm._s(subCategory["name"])
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "ul",
-                                          {
-                                            staticClass: "nested com",
-                                            attrs: { type: "none" }
-                                          },
-                                          _vm._l(subCategory.children, function(
-                                            childSubCategory,
-                                            childSubCategoryIndex
-                                          ) {
-                                            return _c(
-                                              "li",
-                                              {
-                                                key:
-                                                  childSubCategoryIndex +
-                                                  "-" +
-                                                  subCategoryIndex +
-                                                  "-" +
-                                                  categoryIndex,
-                                                staticClass: "com"
-                                              },
-                                              [
-                                                _c(
-                                                  "a",
-                                                  {
-                                                    class:
-                                                      "com category unset " +
-                                                      (subCategory.children
-                                                        .length > 0
-                                                        ? "fw6"
-                                                        : ""),
-                                                    attrs: {
-                                                      id:
-                                                        "sidebar-level-link-3-" +
-                                                        childSubCategoryIndex,
-                                                      href:
-                                                        _vm.$root.baseUrl +
-                                                        "/" +
-                                                        category.slug +
-                                                        "/" +
-                                                        subCategory.slug +
-                                                        "/" +
-                                                        childSubCategory.slug
-                                                    }
-                                                  },
-                                                  [
-                                                    _c(
-                                                      "span",
-                                                      {
-                                                        staticClass:
-                                                          "com category-title category-title-level2"
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          _vm._s(
-                                                            childSubCategory.name
-                                                          )
-                                                        )
-                                                      ]
-                                                    )
-                                                  ]
-                                                )
-                                              ]
-                                            )
-                                          }),
-                                          0
-                                        )
-                                      ]
-                                    )
-                                  }),
-                                  0
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    : _vm._e()
-                ]
-              )
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "more_option_expand",
-              attrs: { is_expand: "0" },
-              on: {
-                click: function($event) {
-                  return _vm.expand_more_categories(
-                    "more_option_expand",
-                    "more_categories"
-                  )
-                }
+  return _c("nav", [
+    _vm.slicedCategories && _vm.slicedCategories.length > 0
+      ? _c(
+          "nav",
+          {
+            class: "sidebar " + (_vm.addClass ? _vm.addClass : ""),
+            attrs: { id: _vm.id },
+            on: {
+              mouseover: function($event) {
+                return _vm.remainBar(_vm.id)
               }
-            },
-            [
-              _c("i", { staticClass: "fa fa-plus" }),
-              _vm._v(" More Categories\n    ")
-            ]
-          )
-        ]
-      )
-    : _vm._e()
+            }
+          },
+          [
+            _c(
+              "ul",
+              { staticClass: "side-nav-ul", attrs: { type: "none" } },
+              _vm._l(_vm.slicedCategories, function(category, categoryIndex) {
+                return _c(
+                  "li",
+                  {
+                    key: categoryIndex,
+                    staticClass: "category-content cursor-pointer",
+                    attrs: { id: "category-" + category.id },
+                    on: {
+                      mouseout: function($event) {
+                        return _vm.toggleSidebar(_vm.id, $event, "mouseout")
+                      },
+                      mouseover: function($event) {
+                        return _vm.toggleSidebar(_vm.id, $event, "mouseover")
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        class:
+                          "category unset " +
+                          (category.children.length > 0 ? "fw6" : ""),
+                        attrs: { href: _vm.$root.baseUrl + "/" + category.slug }
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "category-icon",
+                            on: {
+                              mouseout: function($event) {
+                                return _vm.toggleSidebar(
+                                  _vm.id,
+                                  $event,
+                                  "mouseout"
+                                )
+                              },
+                              mouseover: function($event) {
+                                return _vm.toggleSidebar(
+                                  _vm.id,
+                                  $event,
+                                  "mouseover"
+                                )
+                              }
+                            }
+                          },
+                          [
+                            category.category_icon_path
+                              ? _c("img", {
+                                  attrs: {
+                                    src:
+                                      _vm.$root.baseUrl +
+                                      "/storage/" +
+                                      category.category_icon_path
+                                  }
+                                })
+                              : _vm._e()
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            staticClass: "category-title category-title-level1"
+                          },
+                          [_vm._v(_vm._s(category["name"]))]
+                        ),
+                        _vm._v(" "),
+                        category.children.length && category.children.length > 0
+                          ? _c("i", {
+                              staticClass: "rango-arrow-right pr15 pull-right",
+                              on: {
+                                mouseout: function($event) {
+                                  return _vm.toggleSidebar(
+                                    _vm.id,
+                                    $event,
+                                    "mouseout"
+                                  )
+                                },
+                                mouseover: function($event) {
+                                  return _vm.toggleSidebar(
+                                    _vm.id,
+                                    $event,
+                                    "mouseover"
+                                  )
+                                }
+                              }
+                            })
+                          : _vm._e()
+                      ]
+                    ),
+                    _vm._v(" "),
+                    category.children.length && category.children.length > 0
+                      ? _c(
+                          "div",
+                          { staticClass: "com sub-category-container" },
+                          [
+                            _c(
+                              "div",
+                              {
+                                class:
+                                  "sub-categories sub-category-" +
+                                  (_vm.sidebarLevel + categoryIndex) +
+                                  " cursor-default",
+                                on: {
+                                  mouseout: function($event) {
+                                    return _vm.toggleSidebar(
+                                      _vm.id,
+                                      $event,
+                                      "mouseout"
+                                    )
+                                  },
+                                  mouseover: function($event) {
+                                    return _vm.remainBar(
+                                      "sidebar-level-" +
+                                        (_vm.sidebarLevel + categoryIndex)
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "nav",
+                                  {
+                                    staticClass: "sidebar",
+                                    attrs: {
+                                      id:
+                                        "sidebar-level-" +
+                                        (_vm.sidebarLevel + categoryIndex)
+                                    },
+                                    on: {
+                                      mouseover: function($event) {
+                                        return _vm.remainBar(
+                                          "sidebar-level-" +
+                                            (_vm.sidebarLevel + categoryIndex)
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "ul",
+                                      {
+                                        staticClass: "com",
+                                        attrs: { type: "none" }
+                                      },
+                                      _vm._l(category.children, function(
+                                        subCategory,
+                                        subCategoryIndex
+                                      ) {
+                                        return _c(
+                                          "li",
+                                          {
+                                            key:
+                                              subCategoryIndex +
+                                              "-" +
+                                              categoryIndex,
+                                            staticClass: "com"
+                                          },
+                                          [
+                                            _c(
+                                              "a",
+                                              {
+                                                class:
+                                                  "com category sub-category unset " +
+                                                  (subCategory.children.length >
+                                                  0
+                                                    ? "fw6"
+                                                    : ""),
+                                                attrs: {
+                                                  id:
+                                                    "sidebar-level-link-2-" +
+                                                    subCategoryIndex,
+                                                  href:
+                                                    _vm.$root.baseUrl +
+                                                    "/" +
+                                                    category.slug +
+                                                    "/" +
+                                                    subCategory.slug
+                                                },
+                                                on: {
+                                                  mouseout: function($event) {
+                                                    return _vm.toggleSidebar(
+                                                      _vm.id,
+                                                      $event,
+                                                      "mouseout"
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "com category-icon",
+                                                    on: {
+                                                      mouseout: function(
+                                                        $event
+                                                      ) {
+                                                        return _vm.toggleSidebar(
+                                                          _vm.id,
+                                                          $event,
+                                                          "mouseout"
+                                                        )
+                                                      },
+                                                      mouseover: function(
+                                                        $event
+                                                      ) {
+                                                        return _vm.toggleSidebar(
+                                                          _vm.id,
+                                                          $event,
+                                                          "mouseover"
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  [
+                                                    subCategory.category_icon_path
+                                                      ? _c("img", {
+                                                          staticClass: "com",
+                                                          attrs: {
+                                                            src:
+                                                              _vm.$root
+                                                                .baseUrl +
+                                                              "/storage/" +
+                                                              subCategory.category_icon_path
+                                                          }
+                                                        })
+                                                      : _vm._e()
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass:
+                                                      "com category-title category-title-level23"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        subCategory["name"]
+                                                      )
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "ul",
+                                              {
+                                                staticClass: "nested com",
+                                                attrs: { type: "none" }
+                                              },
+                                              _vm._l(
+                                                subCategory.children,
+                                                function(
+                                                  childSubCategory,
+                                                  childSubCategoryIndex
+                                                ) {
+                                                  return _c(
+                                                    "li",
+                                                    {
+                                                      key:
+                                                        childSubCategoryIndex +
+                                                        "-" +
+                                                        subCategoryIndex +
+                                                        "-" +
+                                                        categoryIndex,
+                                                      staticClass: "com"
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "a",
+                                                        {
+                                                          class:
+                                                            "com category unset " +
+                                                            (subCategory
+                                                              .children.length >
+                                                            0
+                                                              ? "fw6"
+                                                              : ""),
+                                                          attrs: {
+                                                            id:
+                                                              "sidebar-level-link-3-" +
+                                                              childSubCategoryIndex,
+                                                            href:
+                                                              _vm.$root
+                                                                .baseUrl +
+                                                              "/" +
+                                                              category.slug +
+                                                              "/" +
+                                                              subCategory.slug +
+                                                              "/" +
+                                                              childSubCategory.slug
+                                                          }
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              staticClass:
+                                                                "com category-title category-title-level2"
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                _vm._s(
+                                                                  childSubCategory.name
+                                                                )
+                                                              )
+                                                            ]
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]
+                                                  )
+                                                }
+                                              ),
+                                              0
+                                            )
+                                          ]
+                                        )
+                                      }),
+                                      0
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      : _vm._e()
+                  ]
+                )
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c(
+              "ul",
+              {
+                staticClass: "hide side-nav-ul",
+                attrs: { id: "more_categories", type: "none" }
+              },
+              _vm._l(_vm.moreSlicedCategories, function(
+                category,
+                categoryIndex
+              ) {
+                return _c(
+                  "li",
+                  {
+                    key: categoryIndex,
+                    staticClass: "category-content cursor-pointer",
+                    attrs: { id: "category-" + category.id },
+                    on: {
+                      mouseout: function($event) {
+                        return _vm.toggleSidebar(_vm.id, $event, "mouseout")
+                      },
+                      mouseover: function($event) {
+                        return _vm.toggleSidebar(_vm.id, $event, "mouseover")
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        class:
+                          "category unset " +
+                          (category.children.length > 0 ? "fw6" : ""),
+                        attrs: { href: _vm.$root.baseUrl + "/" + category.slug }
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "category-icon",
+                            on: {
+                              mouseout: function($event) {
+                                return _vm.toggleSidebar(
+                                  _vm.id,
+                                  $event,
+                                  "mouseout"
+                                )
+                              },
+                              mouseover: function($event) {
+                                return _vm.toggleSidebar(
+                                  _vm.id,
+                                  $event,
+                                  "mouseover"
+                                )
+                              }
+                            }
+                          },
+                          [
+                            category.category_icon_path
+                              ? _c("img", {
+                                  attrs: {
+                                    src:
+                                      _vm.$root.baseUrl +
+                                      "/storage/" +
+                                      category.category_icon_path
+                                  }
+                                })
+                              : _vm._e()
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            staticClass: "category-title category-title-level1",
+                            attrs: {
+                              title: category["name"],
+                              dd: category["name"].length
+                            }
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(
+                                category["name"].length > 22
+                                  ? category["name"].substring(0, 18) +
+                                      "........"
+                                  : category["name"]
+                              )
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        category.children.length && category.children.length > 0
+                          ? _c("i", {
+                              staticClass: "rango-arrow-right pr15 pull-right",
+                              on: {
+                                mouseout: function($event) {
+                                  return _vm.toggleSidebar(
+                                    _vm.id,
+                                    $event,
+                                    "mouseout"
+                                  )
+                                },
+                                mouseover: function($event) {
+                                  return _vm.toggleSidebar(
+                                    _vm.id,
+                                    $event,
+                                    "mouseover"
+                                  )
+                                }
+                              }
+                            })
+                          : _vm._e()
+                      ]
+                    ),
+                    _vm._v(" "),
+                    category.children.length && category.children.length > 0
+                      ? _c(
+                          "div",
+                          { staticClass: "com sub-category-container" },
+                          [
+                            _c(
+                              "div",
+                              {
+                                class:
+                                  "sub-categories sub-category-" +
+                                  (_vm.sidebarLevel + categoryIndex) +
+                                  " cursor-default",
+                                on: {
+                                  mouseout: function($event) {
+                                    return _vm.toggleSidebar(
+                                      _vm.id,
+                                      $event,
+                                      "mouseout"
+                                    )
+                                  },
+                                  mouseover: function($event) {
+                                    return _vm.remainBar(
+                                      "sidebar-level-" +
+                                        (_vm.sidebarLevel + categoryIndex)
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "nav",
+                                  {
+                                    staticClass: "sidebar",
+                                    attrs: {
+                                      id:
+                                        "sidebar-level-" +
+                                        (_vm.sidebarLevel + categoryIndex)
+                                    },
+                                    on: {
+                                      mouseover: function($event) {
+                                        return _vm.remainBar(
+                                          "sidebar-level-" +
+                                            (_vm.sidebarLevel + categoryIndex)
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "ul",
+                                      {
+                                        staticClass: "com",
+                                        attrs: { type: "none" }
+                                      },
+                                      _vm._l(category.children, function(
+                                        subCategory,
+                                        subCategoryIndex
+                                      ) {
+                                        return _c(
+                                          "li",
+                                          {
+                                            key:
+                                              subCategoryIndex +
+                                              "-" +
+                                              categoryIndex,
+                                            staticClass: "com"
+                                          },
+                                          [
+                                            _c(
+                                              "a",
+                                              {
+                                                class:
+                                                  "com category sub-category unset " +
+                                                  (subCategory.children.length >
+                                                  0
+                                                    ? "fw6"
+                                                    : ""),
+                                                attrs: {
+                                                  id:
+                                                    "sidebar-level-link-2-" +
+                                                    subCategoryIndex,
+                                                  href:
+                                                    _vm.$root.baseUrl +
+                                                    "/" +
+                                                    category.slug +
+                                                    "/" +
+                                                    subCategory.slug
+                                                },
+                                                on: {
+                                                  mouseout: function($event) {
+                                                    return _vm.toggleSidebar(
+                                                      _vm.id,
+                                                      $event,
+                                                      "mouseout"
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "com category-icon",
+                                                    on: {
+                                                      mouseout: function(
+                                                        $event
+                                                      ) {
+                                                        return _vm.toggleSidebar(
+                                                          _vm.id,
+                                                          $event,
+                                                          "mouseout"
+                                                        )
+                                                      },
+                                                      mouseover: function(
+                                                        $event
+                                                      ) {
+                                                        return _vm.toggleSidebar(
+                                                          _vm.id,
+                                                          $event,
+                                                          "mouseover"
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  [
+                                                    subCategory.category_icon_path
+                                                      ? _c("img", {
+                                                          staticClass: "com",
+                                                          attrs: {
+                                                            src:
+                                                              _vm.$root
+                                                                .baseUrl +
+                                                              "/storage/" +
+                                                              subCategory.category_icon_path
+                                                          }
+                                                        })
+                                                      : _vm._e()
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass:
+                                                      "com category-title category-title-level23"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        subCategory["name"]
+                                                      )
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "ul",
+                                              {
+                                                staticClass: "nested com",
+                                                attrs: { type: "none" }
+                                              },
+                                              _vm._l(
+                                                subCategory.children,
+                                                function(
+                                                  childSubCategory,
+                                                  childSubCategoryIndex
+                                                ) {
+                                                  return _c(
+                                                    "li",
+                                                    {
+                                                      key:
+                                                        childSubCategoryIndex +
+                                                        "-" +
+                                                        subCategoryIndex +
+                                                        "-" +
+                                                        categoryIndex,
+                                                      staticClass: "com"
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "a",
+                                                        {
+                                                          class:
+                                                            "com category unset " +
+                                                            (subCategory
+                                                              .children.length >
+                                                            0
+                                                              ? "fw6"
+                                                              : ""),
+                                                          attrs: {
+                                                            id:
+                                                              "sidebar-level-link-3-" +
+                                                              childSubCategoryIndex,
+                                                            href:
+                                                              _vm.$root
+                                                                .baseUrl +
+                                                              "/" +
+                                                              category.slug +
+                                                              "/" +
+                                                              subCategory.slug +
+                                                              "/" +
+                                                              childSubCategory.slug
+                                                          }
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              staticClass:
+                                                                "com category-title category-title-level2"
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                _vm._s(
+                                                                  childSubCategory.name
+                                                                )
+                                                              )
+                                                            ]
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]
+                                                  )
+                                                }
+                                              ),
+                                              0
+                                            )
+                                          ]
+                                        )
+                                      }),
+                                      0
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      : _vm._e()
+                  ]
+                )
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "more_option_expand",
+                attrs: { is_expand: "0" },
+                on: {
+                  click: function($event) {
+                    return _vm.expand_more_categories(
+                      "more_option_expand",
+                      "more_categories"
+                    )
+                  }
+                }
+              },
+              [
+                _c("i", { class: "fa fa-" + _vm.more_menu_icon }),
+                _vm._v(" " + _vm._s(_vm.more_menu_txt) + "\n        ")
+              ]
+            )
+          ]
+        )
+      : _c(
+          "nav",
+          { staticClass: "loading_nav", attrs: { id: "loading_nav" } },
+          [_vm._m(0)]
+        )
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "shimmer-card" }, [
+      _c("div", { staticClass: "shimmer-wrapper" }, [
+        _c("div", { staticClass: "comment animate" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "comment animate" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "comment animate" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "comment animate" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "comment animate" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "comment animate" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "comment animate" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "comment animate" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "comment animate" })
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
