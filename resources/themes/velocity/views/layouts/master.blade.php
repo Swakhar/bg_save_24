@@ -13,7 +13,9 @@
         <link rel="stylesheet" href="{{ asset('themes/velocity/assets/css/velocity.css') }}" />
         <link rel="stylesheet" href="{{ asset('themes/velocity/assets/css/bootstrap.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('themes/velocity/assets/css/google-font.css') }}" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700"/>
         <link rel="stylesheet" href="{{ asset('/themes/velocity/assets/css/custom_design.css') }}" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         @if (core()->getCurrentLocale()->direction == 'rtl')
             <link href="{{ asset('themes/velocity/assets/css/bootstrap-flipped.css') }}" rel="stylesheet">
         @endif
@@ -284,7 +286,52 @@
                         modal.removeClass("landing_top_to_bottom").addClass("hide")
                     }
                 });
+
+                $("#top_ham_bargur").hover(function (e) {
+                    var side_menu = $("#sidebar-level-0");
+                    side_menu.addClass("to_show");
+//                    console.log(e.target)
+                });
+
+                $("body").mouseover(function(e) {
+
+                    if (e.clientX > 230) {
+                        var hasClass = Array.from(e.target.classList).indexOf('com') > -1;
+                        if (!hasClass) {
+                            var side_menu = $("#sidebar-level-0");
+                            side_menu.removeClass("to_show")
+                        }
+
+                    }
+                })
+
+//                $("span.category-title").hover(function (e) {
+//                    var side_menu = $("#sidebar-level-0");
+//                    side_menu.removeClass("to_show");
+//                    console.log(e.target)
+//                });
+
             });
+
+            window.addEventListener('scroll', function(e) {
+                var side_menu = $("#sidebar-level-0");
+                var top_ham_bargur = $("#top_ham_bargur");
+//                console.log(window.scrollY)
+                if (window.scrollY > 430) {
+//                    side_menu.addClass("sidebar_fixed");
+                    top_ham_bargur.removeClass("hide");
+                    side_menu.addClass("hide");
+                } else {
+//                    side_menu.removeClass("sidebar_fixed");
+                    side_menu.removeClass("hide");
+                    side_menu.removeClass("to_show");
+                    top_ham_bargur.addClass("hide");
+                }
+            });
+            // to_show
+
+
+
 
         </script>
     </body>

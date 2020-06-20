@@ -84,11 +84,13 @@ $(document).ready(function () {
             },
 
             toggleSidebar: function (id, {target}, type) {
+
                 if (
                     Array.from(target.classList)[0] == "main-category"
                     || Array.from(target.parentElement.classList)[0] == "main-category"
                 ) {
                     let sidebar = $(`#sidebar-level-${id}`);
+
                     if (sidebar && sidebar.length > 0) {
                         if (type == "mouseover") {
                             this.show(sidebar);
@@ -118,6 +120,7 @@ $(document).ready(function () {
                                 let sidebarChild = subCategories1.find('.sidebar');
                                 this.show(sidebarChild);
                             } else if (type == "mouseout") {
+
                                 this.hide(subCategories1);
                             }
                         } else {

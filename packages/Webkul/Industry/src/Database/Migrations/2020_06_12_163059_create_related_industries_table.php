@@ -16,7 +16,7 @@ class CreateRelatedIndustriesTable extends Migration
         Schema::create('related_industries', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code')->unique();
-            $table->string('admin_name')->unique();
+            $table->string('admin_name');
             $table->timestamps();
         });
     }
