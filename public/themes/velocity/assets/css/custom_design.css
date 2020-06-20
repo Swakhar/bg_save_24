@@ -97,7 +97,7 @@ div.top-banner-image {
     margin-top: 8px;
 }
 .container-right.row.no-margin.col-12.no-padding {
-    height: 251px !important;
+    height: 292px !important;
 }
 img.banner_image {
     background-position: center !important;
@@ -314,13 +314,18 @@ i.within-circle {
     border: 1px solid #ffffffb8;
     color: white;
 }
+header .mini-cart-container ~ .compare-btn .badge-container .badge, header .mini-cart-container ~ .wishlist-btn .badge-container .badge {
 
+    background: #FF5500;
+}
 div.news_letter span.title {
     text-transform: uppercase;
     font-size: 20px;
     color: white;
     display: inline-block;
     float: left;
+    font-weight: 600;
+    margin-right: 15px;
 }
 div.subscribe_email {
     position: relative;
@@ -406,4 +411,31 @@ div.foot_contact_left {
 div.foot_contact_right {
     width: 85%;
     float: left;
+}
+nav#loading_nav {
+    min-height: 358px !important;
+}
+nav.loading_nav {
+    /* border: 1px solid black; */
+    display: block !important;
+    /* float: left; */
+    height: auto !important;
+    width: 230px !important;
+    position: absolute !important;
+    border-top: 2px solid #FF5500;
+    top: -1px;
+    border-right: 1px solid #dcd6d6;
+}
+/*li.category-content {*/
+    /*line-height: 30px;*/
+/*}*/
+/*.sidebar .category-content .category-title {*/
+    /*line-height: 30px;*/
+/*}*/
+
+.category-list-container li a {
+    padding: 4px 0 4px 15px;
+}
+.btn-toolbar > .btn, .quantity .btn-toolbar > button, .quantity .btn-toolbar > input, .btn-toolbar > .btn-group, .btn-toolbar > .quantity, .btn-toolbar > .input-group {
+    margin-left: 17px;
 }
