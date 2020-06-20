@@ -91,18 +91,18 @@ div.top-banner-image {
     margin: 0 auto;
 }
 .container-right > :first-child {
-    width: 85%;
-    margin-left: 18%;
-    height: 280px !important;
-    margin-top: 8px;
+    width: 68%;
+    margin-left: 17%;
+    height: 285px !important;
+    margin-top: 1px;
 }
 .container-right.row.no-margin.col-12.no-padding {
-    height: 292px !important;
+    height: 415px !important;
 }
 img.banner_image {
     background-position: center !important;
     width: 100%;
-    height: 348px;
+    height: 356px;
 }
 #sidebar-level-0 {
     /*z-index: 0 !important;*/
@@ -439,3 +439,82 @@ nav.loading_nav {
 .btn-toolbar > .btn, .quantity .btn-toolbar > button, .quantity .btn-toolbar > input, .btn-toolbar > .btn-group, .btn-toolbar > .quantity, .btn-toolbar > .input-group {
     margin-left: 17px;
 }
+
+.product_add_parent {
+    background: white;
+    border: 1px solid #b9b5b5;
+    margin-top: 1px;
+    /* width: 99%; */
+    float: left;
+    margin-left: 4px;
+    width: 14%;
+    height: 415px;
+}
+.inner_add_div_top {
+    border-bottom: 1px solid #808080d1;
+    height: 138px;
+}
+.inner_add_div_top a {
+    text-decoration: none;
+    color: black;
+}
+.inner_add_div_top:hover {
+    box-shadow: 2px 1px 4px 1px #80808096;
+}
+.inner_add_div_top img {
+    /* width: 60px; */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 91px;
+}
+.inner_add_div_top span.price_placeholder {
+    display: block;
+    text-align: center;
+}
+.inner_add_div_top span.name_placeholder {
+    text-align: center;
+    display: block;
+    font-size: 16px;
+}
+
+.hard_coded_div {
+    display: inline-block;
+    float: left;
+    position: absolute;
+    bottom: -1px;
+    height: 56px;
+    /* background: black; */
+    width: 85%;
+    border: 1px solid #8080807a;
+}
+.hard_coded_inner_div{
+    float: left;
+    width: 20%;
+    border: 1px solid #80808073;
+    height: 56px;
+
+}
+.hard_coded_inner_div:hover {
+    box-shadow: 1px 1px 1px 1px #80808052;
+}
+.hard_coded_inner_div a {
+    text-decoration: none;
+    color: black;
+}
+.hard_coded_inner_div img {
+    width: 35px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.hard_coded_inner_div span.title {
+    text-align: center;
+    display: block;
+    font-size: 16px;
+}
+
+.main-content-wrapper {
+    margin-bottom: 0 !important;
+}
+

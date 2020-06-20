@@ -51,6 +51,8 @@
 
 @section('content-wrapper')
     @include('shop::home.slider')
+    @include('shop::home.product_add')
+    @include('shop::home.hard_coded_div')
 @endsection
 
 @section('full-content-wrapper')
