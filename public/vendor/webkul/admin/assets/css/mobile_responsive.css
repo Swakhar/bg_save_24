@@ -180,4 +180,14 @@
     div.show_logout_div ul li a {
         text-decoration: none !important;
     }
+
+    ul.mobile_menu_sub_menu {
+        margin-left: 34px;
+    }
+    ul.mobile_menu_sub_menu li {
+        height: 22px;
+        line-height: 22px;
+        padding: 0 0 0 5px;
+        margin: 2px 0px;
+    }
 }
