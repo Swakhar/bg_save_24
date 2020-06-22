@@ -46,11 +46,6 @@
                             </div>
                             <div class="right_custom_control">
                                 <div class="multi_select_parent_div">
-                                    <button class="multi_select_btn">BMWLuxury <i class="fa fa-times"></i> </button>
-                                    <button class="multi_select_btn">BMWLuxury <i class="fa fa-times"></i> </button>
-                                    <button class="multi_select_btn">BMWLuxury <i class="fa fa-times"></i> </button>
-                                    <button class="multi_select_btn">BMWLuxury <i class="fa fa-times"></i> </button>
-                                    <button class="multi_select_btn">BMWLuxury <i class="fa fa-times"></i> </button>
                                     <input style="width: 25px; border: none" id="product_search" data-ul="multi_select_ul" type="text"
                                            class="custom_control multi_select" />
                                 </div>
@@ -87,6 +82,7 @@
         width: 100%;
         border: 1px solid #808080cc;
         padding: 0 5px;
+        display: inline-table;
     }
     button.multi_select_btn {
         z-index: 99999;
@@ -97,6 +93,8 @@
         padding: 4px 20px 6px 6px;
         position: relative;
         display: inline-block;
+        margin-right: 3px;
+        margin-bottom: 3px;
     }
     button.multi_select_btn i {
         color: #e22b2b;
@@ -215,30 +213,44 @@
 @push('scripts')
     <script>
         $( document ).ready(function() {
-            $(".multi_select").keyup(function (e) {
-                for (var i = 0; i < $("ul."+$(this).attr("data-ul")).children().length; i++) {
-                    var indx = $("ul."+$(this).attr("data-ul")).children()[i].innerHTML.toLowerCase().indexOf($(this).val().toLowerCase()) > -1;
+            $("body").on("keyup", ".multi_select", function (e) {
+                $(this).css("width", 25+(7*(+$(this).val().length))+"px")
+                var div = $("ul."+$(this).attr("data-ul"));
+                for (var i = 0; i < div.children().length; i++) {
+                    var indx = div.children()[i].innerHTML.toLowerCase().indexOf($(this).val().toLowerCase()) > -1;
                     if (indx) {
-                        $("ul."+$(this).attr("data-ul")).children()[i].classList.remove('hide');
-                        $("ul."+$(this).attr("data-ul")).children()[i].setAttribute("data-id-fill", $(this).attr('id'));
+                        div.children()[i].classList.remove('hide');
+                        div.children()[i].setAttribute("data-id-fill", $(this).attr('id'));
                     } else {
                         $("ul."+$(this).attr("data-ul")).children()[i].classList.add('hide');
                     }
-                    console.log()
+                    console.log($(this).val().toLowerCase())
                 }
 
             });
 
             $("ul.multi_select_ul li").click(function (e) {
-                console.log($(this).html())
-                console.log($(this).attr("data-id-fill"))
                 var btn = document.createElement("button");
                 var icon = document.createElement("i");
                 icon.className = "fa fa-times";
                 btn.className = "multi_select_btn";
+
+                icon.addEventListener("click", function (e) {
+                    console.log(e.target)
+                    e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+                });
+
+                btn.innerHTML = $(this).html();
                 btn.appendChild(icon)
-                btn.innerHTML = $(this).html()
-                $("#"+$(this).attr("data-id-fill")).parent().append(btn)
+
+                var div =  $("#"+$(this).attr("data-id-fill"));
+                var parent = div.parent();
+                parent.append(btn);
+                var it = div.clone();
+                div.remove();
+                parent.append(it);
+                var top = +$(this).parent().parent().css("top").slice(0, -2)+(parent.height()-32)
+                $(this).parent().parent().css("top", top+"px")
             });
 
             $(".multi_select").focus(function (e) {
