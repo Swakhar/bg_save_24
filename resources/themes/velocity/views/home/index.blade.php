@@ -53,7 +53,13 @@
     @include('shop::home.slider')
     @include('shop::home.product_add')
     @include('shop::home.hard_coded_div')
+    @include('shop::home.add_panel')
 @endsection
+
+@section('full-recommended-slider')
+    @include('shop::home.recommended_product')
+@endsection
+
 
 @section('full-content-wrapper')
 

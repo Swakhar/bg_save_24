@@ -23,6 +23,7 @@
         {!! view_render_event('bagisto.admin.layout.head') !!}
 
         <link rel="stylesheet" href="{{ asset('vendor/webkul/admin/assets/css/mobile_responsive.css') }}">
+        <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     </head>
 

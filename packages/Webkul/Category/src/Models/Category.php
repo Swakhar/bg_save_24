@@ -2,6 +2,7 @@
 
 namespace Webkul\Category\Models;
 
+use Illuminate\Support\Facades\DB;
 use Webkul\Core\Eloquent\TranslatableModel;
 use Kalnoy\Nestedset\NodeTrait;
 use Illuminate\Support\Facades\Storage;
@@ -129,5 +130,14 @@ class Category extends TranslatableModel implements CategoryContract
         }
         
         return $this->findInTree($category->children);
+    }
+
+    public static function CategoryRawData()
+    {
+        return DB::select(DB::raw("SELECT category_translations.category_id, category_translations.name category_name
+        FROM categories
+        INNER JOIN category_translations on category_translations.category_id = categories.id
+        GROUP BY category_translations.category_id, category_translations.name
+        ORDER BY category_translations.category_id"));
     }
 }

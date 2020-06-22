@@ -14,8 +14,13 @@
         <link rel="stylesheet" href="{{ asset('themes/velocity/assets/css/bootstrap.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('themes/velocity/assets/css/google-font.css') }}" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700"/>
+
+        {{--<link rel="stylesheet" href="{{ asset('/themes/velocity/assets/css/slick.css') }}" />--}}
+        {{--<link rel="stylesheet" href="{{ asset('/themes/velocity/assets/css/slick-theme.css') }}" />--}}
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" />
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
         <link rel="stylesheet" href="{{ asset('/themes/velocity/assets/css/custom_design.css') }}" />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         @if (core()->getCurrentLocale()->direction == 'rtl')
             <link href="{{ asset('themes/velocity/assets/css/bootstrap-flipped.css') }}" rel="stylesheet">
         @endif
@@ -58,6 +63,7 @@
 
     <body @if (core()->getCurrentLocale()->direction == 'rtl') class="rtl" @endif>
         {!! view_render_event('bagisto.shop.layout.body.before') !!}
+
 
         @include('shop::UI.particals')
 
@@ -193,6 +199,10 @@
                     </div>
                 @show
 
+                <div class="container-fluid cont_recom">
+                    @yield('full-recommended-slider')
+                </div>
+
                 <div class="container">
 
                     {!! view_render_event('bagisto.shop.layout.full-content.before') !!}
@@ -274,6 +284,9 @@
             src="{{ asset('vendor/webkul/ui/assets/js/ui.js') }}">
         </script>
 
+        {{--<script src="{{ asset('/themes/velocity/assets/js/slick.js') }}"></script>--}}
+        <script src="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+
         @stack('scripts')
         <script>
 
@@ -290,7 +303,6 @@
                 $("#top_ham_bargur").hover(function (e) {
                     var side_menu = $("#sidebar-level-0");
                     side_menu.addClass("to_show");
-//                    console.log(e.target)
                 });
 
                 $("body").mouseover(function(e) {
@@ -305,33 +317,20 @@
                     }
                 })
 
-//                $("span.category-title").hover(function (e) {
-//                    var side_menu = $("#sidebar-level-0");
-//                    side_menu.removeClass("to_show");
-//                    console.log(e.target)
-//                });
-
             });
 
             window.addEventListener('scroll', function(e) {
                 var side_menu = $("#sidebar-level-0");
                 var top_ham_bargur = $("#top_ham_bargur");
-//                console.log(window.scrollY)
                 if (window.scrollY > 430) {
-//                    side_menu.addClass("sidebar_fixed");
                     top_ham_bargur.removeClass("hide");
                     side_menu.addClass("hide");
                 } else {
-//                    side_menu.removeClass("sidebar_fixed");
                     side_menu.removeClass("hide");
                     side_menu.removeClass("to_show");
                     top_ham_bargur.addClass("hide");
                 }
             });
-            // to_show
-
-
-
 
         </script>
     </body>
