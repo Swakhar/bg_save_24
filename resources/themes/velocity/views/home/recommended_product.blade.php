@@ -206,6 +206,7 @@
 
         });
 
+
         $(".regular").slick({
             draggable: true,
 //            autoplay: true, /* this is the new line */
@@ -215,6 +216,22 @@
             slidesToScroll: 5,
             touchThreshold: 1000,
         });
+
+        $(".regular.active").slick({
+            draggable: true,
+            autoplay: true, /* this is the new line */
+            autoplaySpeed: 2000,
+            infinite: true,
+            slidesToShow: 5,
+            slidesToScroll: 5,
+            touchThreshold: 1000,
+        });
+
+        const ws = new WebSocket('ws://localhost:8080/chat')
+
+        console.log(ws)
+
+
     })
 
 </script>
