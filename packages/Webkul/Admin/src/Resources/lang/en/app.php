@@ -1191,6 +1191,10 @@ return [
     ],
 
     'cms' => [
+        'recommended_slider' => [
+            'view' => 'Recommended Category Slider',
+            'config' => 'Recommended Category Slider Configuration'
+        ],
         'pages' => [
             'general' => 'General',
             'seo' => 'SEO',

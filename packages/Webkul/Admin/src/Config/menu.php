@@ -217,5 +217,11 @@ return [
         'route'      => 'admin.cms.index',
         'sort'       => 1,
         'icon-class' => '',
+    ], [
+        'key'        => 'cms.recommended_sliders',
+        'name'       => 'admin::app.cms.recommended_slider.view',
+        'route'      => 'admin.recommended_sliders.index',
+        'sort'       => 2,
+        'icon-class' => '',
     ]
 ];

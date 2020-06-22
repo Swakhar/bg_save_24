@@ -2,7 +2,10 @@
 
 namespace Webkul\CMS\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\DB;
+use Webkul\Category\Models\Category;
 use Webkul\CMS\Http\Controllers\Controller;
+use Webkul\CMS\Models\HomeSlider;
 use Webkul\CMS\Repositories\CmsRepository;
 
  class RecommendedSliderController extends Controller
@@ -43,7 +46,11 @@ use Webkul\CMS\Repositories\CmsRepository;
      */
     public function index()
     {
-        return view($this->_config['view']);
+        $categories = Category::CategoryRawData();
+        $home_slider =  HomeSlider::get();
+        return view($this->_config['view'])->with([
+            'categories' => $categories
+        ]);
     }
 
     /**
