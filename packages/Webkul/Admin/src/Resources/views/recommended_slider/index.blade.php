@@ -235,20 +235,27 @@
                 icon.className = "fa fa-times";
                 btn.className = "multi_select_btn";
 
+                var search_div = $(this).parent().parent();
+
+                var div =  $("#"+$(this).attr("data-id-fill"));
+                var parent = div.parent();
+
                 icon.addEventListener("click", function (e) {
-                    console.log(e.target)
+                    var t_top = +search_div.css("top").slice(0, -2)-(parent.height()-32 > 0 ? parent.height()-32 : 0)
+                    console.log(search_div.css("top"), parent.height(), t_top);
+                    search_div.css("top", t_top+"px")
                     e.target.parentNode.parentNode.removeChild(e.target.parentNode);
                 });
 
                 btn.innerHTML = $(this).html();
                 btn.appendChild(icon)
 
-                var div =  $("#"+$(this).attr("data-id-fill"));
-                var parent = div.parent();
                 parent.append(btn);
                 var it = div.clone();
                 div.remove();
                 parent.append(it);
+//                var top = +$(this).parent().parent().css("top").slice(0, -2)+(parent.height()-32)
+                console.log(parent.height(), 32)
                 var top = +$(this).parent().parent().css("top").slice(0, -2)+(parent.height()-32)
                 $(this).parent().parent().css("top", top+"px")
             });
