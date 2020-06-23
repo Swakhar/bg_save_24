@@ -18,6 +18,7 @@ class CreateProductCustomerGroupPricesTable extends Migration
             $table->integer('qty')->default(0);
             $table->string('value_type');
             $table->decimal('value', 12, 4)->default(0);
+            $table->decimal('raw_value', 12, 4)->default(0);
 
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

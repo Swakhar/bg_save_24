@@ -13,6 +13,7 @@ class ProductCustomerGroupPrice extends Model implements ProductCustomerGroupPri
         'qty',
         'value_type',
         'value',
+        'raw_value',
         'product_id',
         'customer_group_id',
     ];
