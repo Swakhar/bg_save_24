@@ -132,12 +132,21 @@ class Category extends TranslatableModel implements CategoryContract
         return $this->findInTree($category->children);
     }
 
-    public static function CategoryRawData()
+    public static function CategoryRawData($local = null)
     {
-        return DB::select(DB::raw("SELECT category_translations.category_id, category_translations.name category_name, category_translations.url_path
+        if ($local) {
+            return DB::select(DB::raw("SELECT category_translations.category_id, category_translations.name category_name, category_translations.url_path
         FROM categories
         INNER JOIN category_translations on category_translations.category_id = categories.id
-        GROUP BY category_translations.category_id, category_translations.name, category_translations.url_path
+        WHERE category_translations.locale = '$local'
         ORDER BY category_translations.category_id"));
+        } else {
+            return DB::select(DB::raw("SELECT category_translations.category_id, category_translations.name category_name, category_translations.url_path
+            FROM categories
+            INNER JOIN category_translations on category_translations.category_id = categories.id
+            GROUP BY category_translations.category_id, category_translations.name, category_translations.url_path
+            ORDER BY category_translations.category_id"));
+        }
+
     }
 }
