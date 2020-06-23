@@ -3,182 +3,38 @@
     <button class="btn_view_all">View All</button>
 </section>
 <section class="recommended_cat_list">
-    <ul>
-        <li data-id="snack" class="click_to_switch_slider active">FAST FOOD & SNACKS BAR</li>
-        <li data-id="grocery" class="click_to_switch_slider">FOOD & GROCERY</li>
-        <li data-id="cake" class="click_to_switch_slider">CAKE & SWEETS</li>
-        <li data-id="handwash" class="click_to_switch_slider">HANDWASH & SANITIZERS</li>
+
+    <?php
+       $recommended_slider = \Webkul\CMS\Models\HomeSlider::GetRecommendedSlider();
+       $slider = [];
+       foreach ($recommended_slider as $key => $value) {
+           $slider[$value->id]['category_name'] = $value->category_name;
+           $slider[$value->id]['products'][] = $value;
+       }
+    ?>
+    <ul >
+        <?php $i = 0; ?>
+        @foreach($slider as $key => $value)
+            <li data-id="cat_recom_{{ $key }}" class="click_to_switch_slider {{ $i == 0 ? 'active' : '' }}">{{ $value['category_name'] }}</li>
+                <?php $i += 1; ?>
+        @endforeach
+
     </ul>
 </section>
-
-<section id="snack" class="active regular slider recommended">
+<?php $i = 0; ?>
+@foreach($slider as $key => $value)
+<section id="cat_recom_{{ $key }}" class="{{ $i == 0 ? 'active' : '' }} regular slider recommended">
+    @foreach($value['products'] as $key => $product)
     <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
+        <a title="{{ $product->product_name }}" class="regular_slider_href" href="/{{ $product->product_name }}">
             <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View12</button>
+            <button class="slider_quick_view_btn" >Quick View</button>
         </a>
     </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View13</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View14</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View15</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View16</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View17</button>
-        </a>
-    </div>
-
+    @endforeach
 </section>
-<section id="grocery" class="regular slider recommended">
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View22</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View23</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View24</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View25</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View26</button>
-        </a>
-    </div>
-
-</section>
-<section id="cake" class="regular slider recommended">
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View31</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View32</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View33</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View34</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View35</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View36</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View37</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View38</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View39</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View391</button>
-        </a>
-    </div>
-
-</section>
-<section id="handwash" class="regular slider recommended">
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View42</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View43</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View44</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View45</button>
-        </a>
-    </div>
-    <div class="regular_slider_inner">
-        <a class="regular_slider_href" href="#">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/3.webp') }}">
-            <button class="slider_quick_view_btn" >Quick View46</button>
-        </a>
-    </div>
-
-</section>
+<?php $i += 1; ?>
+@endforeach
 
 @push('scripts')
 <script>

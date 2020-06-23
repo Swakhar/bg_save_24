@@ -788,6 +788,10 @@ Route::group(['middleware' => ['web']], function () {
                     'view' => 'admin::recommended_slider.index',
                 ])->name('admin.recommended_sliders.index');
 
+                Route::post('/recommended-category-slider-save', 'Webkul\CMS\Http\Controllers\Admin\RecommendedSliderController@store')->defaults('_config', [
+                    'view' => 'admin::recommended_slider.index',
+                ])->name('admin.recommended_sliders.store');
+
 
                 // Route::post('/delete/{id}', 'Webkul\CMS\Http\Controllers\Admin\PageController@delete')->defaults('_config', [
                 //     'redirect' => 'admin.cms.index'
