@@ -15,6 +15,7 @@
 
         <link rel="stylesheet" href="{{ asset('vendor/webkul/ui/assets/css/ui.css') }}">
         <link rel="stylesheet" href="{{ asset('vendor/webkul/admin/assets/css/admin.css') }}">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css">
 
         @yield('head')
 
@@ -104,7 +105,12 @@
 
         <script type="text/javascript" src="{{ asset('vendor/webkul/admin/assets/js/admin.js') }}"></script>
         <script type="text/javascript" src="{{ asset('vendor/webkul/ui/assets/js/ui.js') }}"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.full.min.js"></script>
         <script type="text/javascript">
+            $( document ).ready(function() {
+                $('.select2').select2();
+            });
+
             window.addEventListener('DOMContentLoaded', function() {
                 moveDown = 60;
                 moveUp =  -60;
