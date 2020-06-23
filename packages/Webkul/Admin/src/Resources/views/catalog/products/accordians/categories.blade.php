@@ -8,7 +8,7 @@
         <select class="control" name="categories" id="id" dff="">
             @foreach ($categories as $category)
                 <option value="{{ $category->category_id }}" {{ ($category->category_id) == $product->categories->pluck("id")[0] ? 'selected' : '' }}>
-                    {{ ucwords(str_replace(' '," ",str_replace("/"," > ",$category->url_path))) }}
+                    {{ ucwords(str_replace("-"," ",str_replace("/"," > ",$category->url_path))) }}
                     @endforeach
                 </option>
         </select>
