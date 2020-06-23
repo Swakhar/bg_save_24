@@ -3,6 +3,7 @@
 namespace Webkul\Product\Http\Controllers;
 
 use Illuminate\Support\Facades\Event;
+use Webkul\Category\Models\Category;
 use Webkul\Product\Http\Requests\ProductForm;
 use Webkul\Product\Helpers\ProductType;
 use Webkul\Category\Repositories\CategoryRepository;
@@ -173,7 +174,8 @@ class ProductController extends Controller
     {
         $product = $this->productRepository->with(['variants', 'variants.inventories'])->findOrFail($id);
 
-        $categories = $this->categoryRepository->getCategoryTree();
+        $categories = Category::CategoryRawData();
+        //$this->categoryRepository->getCategoryTree();
 
         $inventorySources = $this->inventorySourceRepository->all();
 
