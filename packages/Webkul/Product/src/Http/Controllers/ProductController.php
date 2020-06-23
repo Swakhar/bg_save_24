@@ -173,8 +173,9 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = $this->productRepository->with(['variants', 'variants.inventories'])->findOrFail($id);
+        $local = request()->get('locale') ?: app()->getLocale();
+        $categories = Category::CategoryRawData($local);
 
-        $categories = Category::CategoryRawData();
         //$this->categoryRepository->getCategoryTree();
 
         $inventorySources = $this->inventorySourceRepository->all();
