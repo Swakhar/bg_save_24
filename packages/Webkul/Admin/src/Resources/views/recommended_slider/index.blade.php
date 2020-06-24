@@ -7,37 +7,111 @@
 @section('content')
 
     <div class="content">
+        <form class="insert" method="post" action="{{ route('admin.recommended_sliders.store') }}"
+              enctype="multipart/form-data">
         <div class="page-header">
             <div class="page-title">
                 <h1>{{ __('admin::app.cms.recommended_slider.config') }}</h1>
             </div>
             <div class="page-action">
-                <button id="add_new_category" class="btn btn-warning"><i class="fa fa-plus"></i></button>
+                <button type="submit" class="btn btn-success">Save</button>
+                <button type="button" id="add_new_category" class="btn btn-warning"><i class="fa fa-plus"></i></button>
             </div>
         </div>
 
         <div class="page-content">
             <div class="control-group">
 
-                <form class="insert" method="post" action="{{ route('admin.recommended_sliders.store') }}"
-                      enctype="multipart/form-data">
+
                     {{ csrf_field() }}
-                    <div class="custom_control_group">
-                        <div class="left_custom_control">
-                            <label for="">Slider Name</label>
+                    @if($RecommendedSliderIsConfigured)
+                        <div class="custom_control_group">
+                            <div class="left_custom_control">
+                                <label for="">Slider Name</label>
+                            </div>
+                            <div class="right_custom_control">
+                                <input id="slider_name" value="{{ $slider_name }}" name="slider_name" type="text"
+                                       class="custom_control"
+                                       placeholder="Slider Name" />
+                            </div>
                         </div>
-                        <div class="right_custom_control">
-                            <input id="slider_name" name="slider_name" type="text" class="custom_control"
-                                   placeholder="Slider Name" />
+
+                        <div id="newly_added_div">
+                            <?php $i = 0; ?>
+                        @foreach($slider_data as $key => $value)
+                            @if ($i == 0)
+                                <input type="hidden" name="slider_id" value="{{ $value['slider_id'] }}" />
+                            @endif
+                                <div class="category_select_group">
+                                    <div class="category_select_header">
+                                        <span class="panel_head_name panel_title_{{ $i }}">{{ $value['category_name'] }}</span>
+                                        <i class="expand_div fa fa-plus"></i>
+                                        <i class="trash fa fa-trash text-danger"></i>
+                                    </div>
+                                    <div class="category_select_body hide">
+                                        <div class="custom_control_group">
+                                            <div class="left_custom_control">
+                                                <label for="">Category</label>
+                                            </div>
+                                            <div class="right_custom_control">
+                                                <input readonly value="{{ $value['category_name'] }}" id="category_{{ $i }}" data-product-key="product_search_{{ $i }}"
+                                                       data-panel-title="panel_title_{{ $i }}" type="text"
+                                                       class="dt2 custom_control custom_select2_input" placeholder="Category">
+                                                <input id="category_id_{{ $i }}" name="category_id_{{ $i }}" class="value_fill" value="{{ $value['category_id'] }}" type="hidden">
+                                            </div>
+                                        </div>
+                                        <div class="custom_control_group">
+                                            <div class="left_custom_control">
+                                                <label for="">Position</label>
+                                            </div>
+                                            <div class="right_custom_control">
+                                                <input value="{{ $value['position'] }}" type="number" id="position_{{ $i }}"
+                                                       name="position_{{ $i }}" class="custom_control" placeholder="Position">
+                                            </div>
+                                        </div>
+                                        <div class="custom_control_group">
+                                            <div class="left_custom_control">
+                                                <label for="">Products</label>
+                                            </div>
+                                            <div class="dt2 right_custom_control">
+                                                <div class="dt2 multi_select_parent_div">
+                                                    @foreach($value['products'] as $product_key => $product_value)
+                                                        <button class="multi_select_btn">{{ $product_value->product_name }}
+                                                            <i class="fa fa-times close_product"></i>
+                                                            <input type="hidden" name="product_id_{{ $i }}[]" value="{{ $product_value->product_id }}">
+                                                        </button>
+                                                    @endforeach
+                                                    <input style="width: 25px; border: none" id="product_search_{{ $i }}" data-ul="multi_select_ul"
+                                                            data-cat-name="category_id_{{ $i }}"
+                                                           type="text" data-name="product_id_{{ $i }}" class="dt2 custom_control multi_select" data-limit="8">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <?php $i += 1; ?>
+                        @endforeach
                         </div>
-                    </div>
 
-                    <div id="newly_added_div">
+                        <button type="submit" class="btn btn-success">Save</button>
+                    @else
+                        <div class="custom_control_group">
+                            <div class="left_custom_control">
+                                <label for="">Slider Name</label>
+                            </div>
+                            <div class="right_custom_control">
+                                <input id="slider_name" name="slider_name" type="text" class="custom_control"
+                                       placeholder="Slider Name" />
+                            </div>
+                        </div>
 
-                    </div>
+                        <div id="newly_added_div">
 
-                    <button type="submit" class="btn btn-success">Save</button>
-                </form>
+                        </div>
+
+                        <button type="submit" class="btn btn-success">Save</button>
+                    @endif
+
 
                 <div class="dt2 multi_select_div hide" data-top="">
                     <input type="hidden"  class="hidden_multi_select_top_position" />
@@ -49,12 +123,12 @@
                     </ul>
                 </div>
 
-                <div class="dt2 custom_select2 hide">
+                <div class=" custom_select2 hide">
                     <input type="hidden"  class="hidden_custom_select_top_position" />
-                    <ul class="dt2 custom_select2_ul">
+                    <ul class=" custom_select2_ul">
                         @foreach($catalog_object['categories'] as $key => $value)
                             <li data-id="{{ $key }}"
-                                class="dt2 custom_select2_li">{{ $value }}</li>
+                                class=" custom_select2_li">{{ $value }}</li>
                         @endforeach
                     </ul>
                 </div>
@@ -62,6 +136,7 @@
             </div>
 
         </div>
+        </form>
     </div>
 
 @stop
@@ -187,18 +262,26 @@
         border-radius: 5px;
     }
     div.category_select_body {
-        display: block;
-        height: 200px;
+        display: flow-root;
+        height: auto;
         border: 1px solid #8080806e;
         padding: 10px 15px;
         border-top: none;
     }
-    div.category_select_header i {
+     div.category_select_header i.expand_div {
         position: absolute;
         right: 12px;
         top: 9px;
         cursor: pointer;
         font-size: 20px;
+    }
+     div.category_select_header i.trash {
+         position: absolute;
+         right: 54px;
+         top: 6px;
+         cursor: pointer;
+         font-size: 20px;
+         color: #e60404;
     }
     button.btn-warning {
         color: white;
@@ -238,10 +321,20 @@
 @push('scripts')
     <script>
         $( document ).ready(function() {
+            $("body").on("blur", ".custom_select2_input", function (e) {
+                if ($(this) == "") {
+                    $(this).parent().children().find(".value_fill").val("");
+                    $("#"+$(this).attr("data-product-key")).prop("disabled", true)
+                } else {
+                    $("#"+$(this).attr("data-product-key")).prop("disabled", false)
+                }
+                console.log()
+            });
+
             $('form.insert').submit(function(event) {
                 event.preventDefault();
                 var formData = new FormData($(this)[0]);
-
+                var custom_message = $("#custom_message");
                 console.log(formData)
 
                 $.ajax({
@@ -252,12 +345,22 @@
                     contentType: false,
                     success: function(result)
                     {
-                        console.log(result)
+                        custom_message.removeClass("hide");
+                        custom_message.children()[0].classList.remove("alert-danger");
+                        custom_message.children()[0].classList.add("alert-success");
+                        custom_message.children().children()[1].innerHTML = result.message;
+                        setTimeout(function(){
+                            custom_message.addClass("hide");
+                        }, 3000);
 //                        location.reload();
                     },
                     error: function(data)
                     {
-
+                        console.log(data.responseJSON.errors)
+                        custom_message.removeClass("hide");
+                        custom_message.children()[0].classList.remove("alert-success");
+                        custom_message.children()[0].classList.add("alert-danger");
+                        custom_message.children().children()[1].innerHTML = data
                     }
                 });
 
@@ -298,11 +401,13 @@
             });
 
             $("body").on("keyup", ".multi_select", function (e) {
+
                 $(this).css("width", 25+(7*(+$(this).val().length))+"px");
                 var div = $("ul."+$(this).attr("data-ul"));
                 for (var i = 0; i < div.children().length; i++) {
                     var indx = div.children()[i].innerHTML.toLowerCase().indexOf($(this).val().toLowerCase()) > -1;
-                    if (indx) {
+                    var li_cat = div.children()[i].getAttribute("data-cat-id");
+                    if (indx && (li_cat == $("#"+($(this).attr("data-cat-name"))).val())) {
                         div.children()[i].classList.remove('hide');
                     } else {
                         $("ul."+$(this).attr("data-ul")).children()[i].classList.add('hide');
@@ -364,6 +469,13 @@
 
             });
 
+            $(".close_product").on("click", function (e) {
+                var hidden_multi_select_top_position = $(".hidden_multi_select_top_position");
+                e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+                var t_top = +hidden_multi_select_top_position.val() + (parent.height()-32);
+
+            });
+
             $("ul.custom_select2_ul li").click(function (e) {
                 var hidden_custom_select_top_position = $(".hidden_custom_select_top_position");
                 $("#"+hidden_custom_select_top_position.attr("data-id-fill")).val($(this).html());
@@ -390,19 +502,30 @@
                 var hidden_multi_select_top_position = $(".hidden_multi_select_top_position");
                 var multi_select_div = $(".multi_select_div");
                 multi_select_div.removeClass("hide");
-                console.log('->', hidden_multi_select_top_position.attr("data-id-fill"), $(this).attr('id'));
+
+                var div = $("ul."+$(this).attr("data-ul"));
+                for (var i = 0; i < div.children().length; i++) {
+                    var li_cat = div.children()[i].getAttribute("data-cat-id");
+                    if ((li_cat == $("#"+($(this).attr("data-cat-name"))).val())) {
+                        div.children()[i].classList.remove('hide');
+                    } else {
+                        $("ul."+$(this).attr("data-ul")).children()[i].classList.add('hide');
+                    }
+                }
+
                 if (hidden_multi_select_top_position.val() === "") {
                     hidden_multi_select_top_position.attr("data-id-fill", $(this).attr('id'));
                     multi_select_div.removeClass("hide");
                     var top = $(this).parent().position().top;
                     var left = $(this).parent().position().left;
                     var width = $(this).parent().width();
-
-                    multi_select_div.css("top", (top+30) + "px");
+                    top = top + $(this).parent().height();
+//                    multi_select_div.css("top", (top+30) + "px");
+                    multi_select_div.css("top", top + "px");
                     multi_select_div.css("left", left + "px");
                     multi_select_div.css("width", width + "px");
                     multi_select_div.css("position", "absolute");
-                    hidden_multi_select_top_position.val((top+30));
+                    hidden_multi_select_top_position.val((top));
                     hidden_multi_select_top_position.attr("data-id-fill", $(this).attr('id'));
                     hidden_multi_select_top_position.attr("data-limit", $(this).attr('data-limit'));
                     hidden_multi_select_top_position.attr("data-name", $(this).attr('data-name'));
@@ -414,16 +537,17 @@
                     var left = $(this).parent().position().left;
                     var width = $(this).parent().width();
 
-                    multi_select_div.css("top", (top+30) + "px");
+                    top = top + $(this).parent().height();
+//                    multi_select_div.css("top", (top+30) + "px");
+                    multi_select_div.css("top", top + "px");
                     multi_select_div.css("left", left + "px");
                     multi_select_div.css("width", width + "px");
                     multi_select_div.css("position", "absolute");
-                    hidden_multi_select_top_position.val((top+30));
+                    hidden_multi_select_top_position.val((top));
                     hidden_multi_select_top_position.attr("data-id-fill", $(this).attr('id'));
                     hidden_multi_select_top_position.attr("data-limit", $(this).attr('data-limit'));
                     hidden_multi_select_top_position.attr("data-name", $(this).attr('data-name'));
                 }
-
 
             });
 
@@ -433,6 +557,7 @@
                             '<div class="category_select_header">'+
                                 '<span class="panel_head_name panel_title_'+count+'"></span>'+
                                 '<i class="expand_div fa fa-plus"></i>'+
+                                '<i class="trash fa fa-trash"></i>'+
                             '</div>'+
                             '<div class="category_select_body hide">'+
                             '<div class="custom_control_group">'+
@@ -440,7 +565,7 @@
                                     '<label for="">Category</label>'+
                                 '</div>'+
                                 '<div class="right_custom_control">'+
-                                    '<input id="category_'+count+'" data-panel-title="panel_title_'+count+'" type="text" class="dt2 custom_control custom_select2_input"'+
+                                    '<input readonly id="category_'+count+'" data-product-key="product_search_'+count+'" data-panel-title="panel_title_'+count+'" type="text" class="dt2 custom_control custom_select2_input"'+
                                     'placeholder="Category" />'+
                                     '<input id="category_id_'+count+'"  name="category_id_'+count+'" class="value_fill" type="hidden"  />'+
                                 '</div>'+
@@ -460,8 +585,9 @@
                                 '<div class="dt2 right_custom_control">'+
                                     '<div class="dt2 multi_select_parent_div">'+
                                     '<input style="width: 25px; border: none" id="product_search_'+count+'"'+
-                                    'data-ul="multi_select_ul" type="text"'+
+                                    'data-ul="multi_select_ul" disabled type="text"'+
                                     'data-name="product_id_'+count+'"'+
+                                    'data-cat-name="category_id_'+count+'"'+
                                     'class="dt2 custom_control multi_select" data-limit="8" />'+
                                     '</div>'+
                                 ' </div>'+
@@ -469,6 +595,10 @@
                         '</div>'+
                    ' </div>';
                 $("#newly_added_div").append(div)
+            });
+
+            $("body").on("click", "i.trash", function (e) {
+                console.log($(this).parent().parent().remove())
             });
 
 

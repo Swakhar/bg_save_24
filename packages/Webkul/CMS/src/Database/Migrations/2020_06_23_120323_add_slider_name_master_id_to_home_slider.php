@@ -15,7 +15,8 @@ class AddSliderNameMasterIdToHomeSlider extends Migration
     {
         Schema::table('home_sliders', function (Blueprint $table) {
             $table->integer('slider_name_master_id')->unsigned();
-            $table->foreign('slider_name_master_id')->references('id')->on('slider_name_master')->onDelete('cascade');
+            $table->foreign('slider_name_master_id')->references('id')
+                ->on('slider_name_master')->onDelete('cascade');
 
         });
     }

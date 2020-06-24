@@ -14,9 +14,9 @@ class CreateSliderNameMasterTable extends Migration
     public function up()
     {
         Schema::create('slider_name_master', function (Blueprint $table) {
-            $table->integer('id')->unsigned();
+            $table->increments('id')->unsigned();
             $table->string('name');
-            $table->char('slider_type');
+            $table->char('slider_type', 1)->default('1');
             $table->timestamps();
         });
     }

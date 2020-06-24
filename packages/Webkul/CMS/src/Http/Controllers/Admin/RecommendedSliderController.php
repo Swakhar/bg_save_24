@@ -5,6 +5,7 @@ namespace Webkul\CMS\Http\Controllers\Admin;
 use Codeception\PHPUnit\ResultPrinter\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Webkul\Category\Models\Category;
 use Webkul\CMS\Http\Controllers\Controller;
 use Webkul\CMS\Models\HomeSlider;
@@ -45,15 +46,36 @@ class RecommendedSliderController extends Controller
     /**
      * Loads the index page showing the static pages resources
      * 
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View|\Webkul\Velocity\Repositories\Product\ProductRepository
      */
     public function index()
     {
         $home_slider =  HomeSlider::get();
         $catalog_object = Product::GetProductsWithCategory();
 
+        $RecommendedSliderIsConfigured = HomeSlider::FindIsRecommendedSliderIsConfigured() > 0;
+        $home_slider_data = [];
+        $slider_data = [];
+        $slider_name = "";
+        if ($RecommendedSliderIsConfigured) {
+            $home_slider_data = HomeSlider::GetRecommendedSliderWithImage();
+        }
+
+        foreach ($home_slider_data as $key => $value) {
+            $slider_data[$value->id]['slider_name'] = $value->slider_name;
+            $slider_data[$value->id]['slider_id'] = $value->slider_id;
+            $slider_data[$value->id]['category_name'] = $value->category_name;
+            $slider_data[$value->id]['category_id'] = $value->category_id;
+            $slider_data[$value->id]['position'] = $value->position;
+            $slider_data[$value->id]['products'][] = $value;
+            $slider_name = $value->slider_name;
+        }
+
         return view($this->_config['view'])->with([
-            'catalog_object' => $catalog_object
+            'catalog_object' => $catalog_object,
+            'RecommendedSliderIsConfigured' => $RecommendedSliderIsConfigured,
+            'slider_data' => $slider_data,
+            'slider_name' => $slider_name
         ]);
     }
 
@@ -75,7 +97,6 @@ class RecommendedSliderController extends Controller
     public function store()
     {
 
-        $data = request()->all();
         $key_ref = [];
         for ($i = 0; $i < 15; $i++) {
             if (request()->input('category_id_' . $i)) {
@@ -86,14 +107,37 @@ class RecommendedSliderController extends Controller
         $slider_product = [];
         $slider_config = [];
 
-        $id = DB::table('slider_name_master')->insertGetId([
-            'name' => request()->input('slider_name')
+        $data = request()->all();
+
+        $this->validate(request(), [
+            'slider_name'   => 'required',
         ]);
+        foreach ($key_ref as $key => $value) {
+            $this->validate(request(), [
+                'category_id_' . $value   => 'required',
+                'position_' . $value  => 'required',
+            ]);
+        }
+
+        if (request()->input('slider_id') != null) {
+            DB::table('slider_name_master')
+                ->where('id', request()->input('slider_id'))
+                ->update([
+                    'name' => request()->input('slider_name')
+                ]);
+            DB::table('home_sliders')->where('slider_name_master_id', request()->input('slider_id'))->delete();
+            $id = request()->input('slider_id');
+        } else {
+            $id = DB::table('slider_name_master')->insertGetId([
+                'name' => request()->input('slider_name')
+            ]);
+        }
 
         foreach ($key_ref as $key => $value) {
             $dtl_id = DB::table('home_sliders')->insertGetId([
                 'category_id' => request()->input('category_id_' . $value),
                 'slider_type' => 1,
+                'position' => request()->input('position_' . $value),
                 'slider_name_master_id' => $id
             ]);
             foreach (request()->input('product_id_' . $value) as $product_key => $product_value) {
@@ -104,26 +148,9 @@ class RecommendedSliderController extends Controller
             }
 
         }
-
-        //category_id_0: "6"
-        //position_0: "1"
-        //product_id_0: ["9", "10", "11"]
-        //0: "9"
-        //1: "10"
-        //2: "11"
-        //slider_name: "slide"
-
-//        $this->validate(request(), [
-//            'slider_name'   => 'required',
-//            'channels'     => 'required',
-//            'html_content' => 'required',
-//        ]);
-        
-//        $page = $this->cmsRepository->create(request()->all());
-//
-//        session()->flash('success', trans('admin::app.response.create-success', ['name' => 'page']));
-//
-//        return redirect()->route($this->_config['redirect']);
+       return Response::json(
+           ['message' => request()->input('slider_id') != null ? 'Updated Successfully' : 'Saved Successfully']
+       );
     }
 
     /**

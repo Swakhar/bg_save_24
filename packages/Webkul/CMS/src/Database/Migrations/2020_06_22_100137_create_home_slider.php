@@ -16,7 +16,7 @@ class CreateHomeSlider extends Migration
         Schema::create('home_sliders', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('category_id')->unsigned();
-            $table->char('slider_type', 1);
+            $table->char('slider_type', 1)->default('1');
             $table->timestamps();
         });
     }

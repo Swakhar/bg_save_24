@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRelatedIndustriesTable extends Migration
+class AddColumnPositionToHomeSlider extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateRelatedIndustriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('related_industries', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('code')->unique();
-            $table->string('admin_name')->unique();
-            $table->timestamps();
+        Schema::table('home_sliders', function (Blueprint $table) {
+            $table->integer('position')->unsigned();
         });
     }
 
@@ -28,6 +25,8 @@ class CreateRelatedIndustriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('related_industries');
+        Schema::table('home_sliders', function (Blueprint $table) {
+            $table->dropForeign(['position']);
+        });
     }
 }
