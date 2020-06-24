@@ -2,13 +2,16 @@
 
 namespace Webkul\CMS\Http\Controllers\Admin;
 
+use Codeception\PHPUnit\ResultPrinter\Report;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Webkul\Category\Models\Category;
 use Webkul\CMS\Http\Controllers\Controller;
 use Webkul\CMS\Models\HomeSlider;
 use Webkul\CMS\Repositories\CmsRepository;
+use Webkul\Product\Models\Product;
 
- class RecommendedSliderController extends Controller
+class RecommendedSliderController extends Controller
 {
     /**
      * To hold the request variables from route file
@@ -46,10 +49,11 @@ use Webkul\CMS\Repositories\CmsRepository;
      */
     public function index()
     {
-        $categories = Category::CategoryRawData();
         $home_slider =  HomeSlider::get();
+        $catalog_object = Product::GetProductsWithCategory();
+
         return view($this->_config['view'])->with([
-            'categories' => $categories
+            'catalog_object' => $catalog_object
         ]);
     }
 
@@ -70,20 +74,56 @@ use Webkul\CMS\Repositories\CmsRepository;
      */
     public function store()
     {
+
         $data = request()->all();
+        $key_ref = [];
+        for ($i = 0; $i < 15; $i++) {
+            if (request()->input('category_id_' . $i)) {
+                $key_ref[] = $i;
+            }
+        }
+        $home_slider_array = [];
+        $slider_product = [];
+        $slider_config = [];
 
-        $this->validate(request(), [
-            'url_key'      => ['required', 'unique:cms_page_translations,url_key', new \Webkul\Core\Contracts\Validations\Slug],
-            'page_title'   => 'required',
-            'channels'     => 'required',
-            'html_content' => 'required',
+        $id = DB::table('slider_name_master')->insertGetId([
+            'name' => request()->input('slider_name')
         ]);
+
+        foreach ($key_ref as $key => $value) {
+            $dtl_id = DB::table('home_sliders')->insertGetId([
+                'category_id' => request()->input('category_id_' . $value),
+                'slider_type' => 1,
+                'slider_name_master_id' => $id
+            ]);
+            foreach (request()->input('product_id_' . $value) as $product_key => $product_value) {
+                DB::table('home_slider_products')->insertGetId([
+                    'product_id' => $product_value,
+                    'home_slider_id' => $dtl_id
+                ]);
+            }
+
+        }
+
+        //category_id_0: "6"
+        //position_0: "1"
+        //product_id_0: ["9", "10", "11"]
+        //0: "9"
+        //1: "10"
+        //2: "11"
+        //slider_name: "slide"
+
+//        $this->validate(request(), [
+//            'slider_name'   => 'required',
+//            'channels'     => 'required',
+//            'html_content' => 'required',
+//        ]);
         
-        $page = $this->cmsRepository->create(request()->all());
-
-        session()->flash('success', trans('admin::app.response.create-success', ['name' => 'page']));
-
-        return redirect()->route($this->_config['redirect']);
+//        $page = $this->cmsRepository->create(request()->all());
+//
+//        session()->flash('success', trans('admin::app.response.create-success', ['name' => 'page']));
+//
+//        return redirect()->route($this->_config['redirect']);
     }
 
     /**
