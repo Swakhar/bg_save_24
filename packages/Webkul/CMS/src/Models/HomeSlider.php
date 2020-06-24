@@ -26,7 +26,7 @@ class HomeSlider extends Model
         INNER JOIN product_flat on product_flat.product_id = home_slider_products.product_id
         WHERE slider_name_master.slider_type = 1
         and category_translations.locale = '$local'
-        ORDER BY home_sliders.id, category_translations.name"));
+        ORDER BY home_sliders.position, category_translations.name"));
     }
 
     public static function GetRecommendedSliderWithImage() {
