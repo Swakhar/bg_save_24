@@ -18,7 +18,7 @@ class HomeSlider extends Model
         $local = request()->get('locale') ?: app()->getLocale();
        return DB::select(DB::raw("SELECT slider_name_master.name slider_name, category_translations.name category_name,
         product_flat.name product_name, product_flat.product_id, category_translations.category_id,
-        home_sliders.id, home_sliders.position, slider_name_master.id slider_id
+        home_sliders.id, home_sliders.position, slider_name_master.id slider_id, product_flat.url_key
         FROM slider_name_master 
         INNER JOIN home_sliders on home_sliders.slider_name_master_id = slider_name_master.id
         INNER JOIN home_slider_products on home_slider_products.home_slider_id = home_sliders.id
@@ -34,7 +34,7 @@ class HomeSlider extends Model
         return $data = DB::select(DB::raw("SELECT slider_name_master.name slider_name, category_translations.name category_name,
         product_flat.name product_name, product_flat.product_id, category_translations.category_id,
         home_sliders.id, home_sliders.position, slider_name_master.id slider_id,
-        product_images.path image_path
+        product_images.path image_path, product_flat.url_key
         FROM slider_name_master 
         INNER JOIN home_sliders on home_sliders.slider_name_master_id = slider_name_master.id
         INNER JOIN home_slider_products on home_slider_products.home_slider_id = home_sliders.id

@@ -11,11 +11,9 @@ foreach ($recommended_slider as $key => $value) {
 @if (count($slider) > 0)
     <section class="recommended_title_top">
         <span class="title">{{ $slider_name }}</span>
-        <button class="btn_view_all">View All</button>
+        <a href="#" class="btn-home btn_view_all">{{ __('velocity::app.home.view-all') }}</a>
     </section>
     <section class="recommended_cat_list">
-
-
         <ul >
             <?php $i = 0; ?>
             @foreach($slider as $key => $value)
@@ -23,7 +21,6 @@ foreach ($recommended_slider as $key => $value) {
                     {{ $value['category_name'] }}</li>
                 <?php $i += 1; ?>
             @endforeach
-
         </ul>
     </section>
     <?php $i = 0; ?>
@@ -31,9 +28,9 @@ foreach ($recommended_slider as $key => $value) {
         <section id="cat_recom_{{ $key }}" class="{{ $i == 0 ? 'active' : '' }} regular slider recommended">
             @foreach($value['products'] as $key => $product)
                 <div class="regular_slider_inner">
-                    <a title="{{ $product->product_name }}" class="regular_slider_href" href="/{{ $product->product_name }}">
+                    <a title="{{ $product->product_name }}" class="regular_slider_href" href="/{{ $product->url_key }}">
                         <img src="{{ \Webkul\CMS\Models\HomeSlider::GetProductImage($product->product_id) }}">
-                        <button class="slider_quick_view_btn" >Quick View</button>
+                        <button class="slider_quick_view_btn" >{{ __('velocity::app.products.quick-view') }}</button>
                     </a>
                 </div>
             @endforeach
@@ -75,17 +72,17 @@ foreach ($recommended_slider as $key => $value) {
             autoplaySpeed: 2000,
             infinite: true,
             slidesToShow: 5,
-            slidesToScroll: 5,
+            slidesToScroll: 1,
             touchThreshold: 1000,
         });
 
         $(".regular.active").slick({
             draggable: true,
-            autoplay: true, /* this is the new line */
+//            autoplay: true, /* this is the new line */
             autoplaySpeed: 2000,
             infinite: true,
             slidesToShow: 5,
-            slidesToScroll: 5,
+            slidesToScroll: 1,
             touchThreshold: 1000,
         });
 

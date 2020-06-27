@@ -149,6 +149,7 @@ return [
         'customer-reviews'   => 'Customer Reviews',
         'shipping-methods'   => 'Shipping Methods',
         'popular-categories' => 'Popular Categories',
+        'shop-now'           => 'Shop Now'
     ],
 
     'header'        => [

@@ -175,7 +175,6 @@ class ProductController extends Controller
         $product = $this->productRepository->with(['variants', 'variants.inventories'])->findOrFail($id);
         $local = request()->get('locale') ?: app()->getLocale();
         $categories = Category::CategoryRawData($local);
-
         //$this->categoryRepository->getCategoryTree();
 
         $inventorySources = $this->inventorySourceRepository->all();

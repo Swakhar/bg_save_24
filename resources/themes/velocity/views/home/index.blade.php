@@ -53,11 +53,34 @@
     @include('shop::home.slider')
     @include('shop::home.product_add')
     @include('shop::home.hard_coded_div')
+@endsection
+
+@section('full-add-first')
     @include('shop::home.add_panel')
 @endsection
 
 @section('full-recommended-slider')
     @include('shop::home.recommended_product')
+@endsection
+
+@section('full-on-sale-now')
+    @include('shop::home.on_sale_now')
+@endsection
+
+@section('full-add-second')
+    {{--@include('shop::home.add_panel_second')--}}
+@endsection
+
+@section('full-add-third')
+    @include('shop::home.add_panel_third')
+@endsection
+
+@section('full-add-third')
+{{--    @include('shop::home.add_panel_third')--}}
+@endsection
+
+@section('full-needed-slider')
+    @include('shop::home.customize_store_section')
 @endsection
 
 

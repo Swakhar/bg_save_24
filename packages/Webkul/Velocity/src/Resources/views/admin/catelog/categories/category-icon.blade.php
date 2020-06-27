@@ -5,7 +5,7 @@
         <image-wrapper
             :multiple="false"
             input-name="category_icon_path"
-            :images='"{{ url()->to('/') . '/storage/' . $category->category_icon_path }}"'
+            :images='"{{ url()->to('/') . '/public/uploads/' . $category->category_icon_path }}"'
             :button-label="'{{ __('admin::app.catalog.products.add-image-btn-title') }}'">
         </image-wrapper>
     @else

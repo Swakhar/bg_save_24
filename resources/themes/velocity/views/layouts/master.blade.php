@@ -199,11 +199,30 @@
                     </div>
                 @show
 
+                <div class="container-fluid">
+                    @yield('full-add-first')
+                </div>
                 <div class="container-fluid cont_recom">
                     @yield('full-recommended-slider')
                 </div>
 
-                <div class="container">
+                <div class="container-fluid">
+                    @yield('full-on-sale-now')
+                </div>
+
+                <div class="container-fluid">
+                    @yield('full-add-second')
+                </div>
+
+                    <div class="container-fluid">
+                        @yield('full-add-third')
+                    </div>
+
+                    <div class="container-fluid">
+                        @yield('full-needed-slider')
+                    </div>
+
+                <div class="container-fluid">
 
                     {!! view_render_event('bagisto.shop.layout.full-content.before') !!}
 
