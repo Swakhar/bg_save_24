@@ -104,7 +104,9 @@
         "Webkul\\CMS\\": "packages/Webkul/CMS/src",
         "Webkul\\Velocity\\": "packages/Webkul/Velocity/src",
         "Webkul\\BookingProduct\\": "packages/Webkul/BookingProduct/src",
-        "Webkul\\Industry\\":"packages/Webkul/Industry/src"
+        "Webkul\\Industry\\":"packages/Webkul/Industry/src",
+        "Webkul\\Manufacturer\\":"packages/Webkul/Manufacturer/src",
+        "Webkul\\Tag\\":"packages/Webkul/Tag/src"
  
       }
     },

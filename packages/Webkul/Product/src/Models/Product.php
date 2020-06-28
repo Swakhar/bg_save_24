@@ -72,6 +72,14 @@ class Product extends Model implements ProductContract
         return $this->belongsToMany(CategoryProxy::modelClass(), 'product_categories');
     }
 
+    public function Tags()
+    {
+        return $this->belongsToMany(TagProxy::modelClass(),'product_tags');
+    }
+    public function Manufacturers()
+    {
+        return $this->belongsToMany(ManufacturerProxy::modelClass(),'product_manufacturers');
+    }
     /**
      * The inventories that belong to the product.
      */

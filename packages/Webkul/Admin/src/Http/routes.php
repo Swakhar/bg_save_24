@@ -352,7 +352,49 @@ Route::group(['middleware' => ['web']], function () {
                 ])->name('admin.catalog.industries.update');
 
                 Route::post('/industries/delete/{id}', 'Webkul\Industry\Http\Controllers\IndustryController@destroy')->name('admin.catalog.industries.delete');
+                // Catalog Manufacturer Routes
+                Route::get('/manufacturers', 'Webkul\Manufacturer\Http\Controllers\ManufacturerController@index')->defaults('_config', [
+                    'view' => 'admin::catalog.manufacturers.index',
+                ])->name('admin.catalog.manufacturers.index');
+                Route::get('/manufacturers/create', 'Webkul\Manufacturer\Http\Controllers\ManufacturerController@create')->defaults('_config', [
+                    'view' => 'admin::catalog.manufacturers.create',
+                ])->name('admin.catalog.manufacturers.create');
 
+                Route::post('/manufacturers/create', 'Webkul\Manufacturer\Http\Controllers\ManufacturerController@store')->defaults('_config', [
+                    'redirect' => 'admin.catalog.manufacturers.index',
+                ])->name('admin.catalog.manufacturers.store');
+
+                Route::get('/manufacturers/edit/{id}', 'Webkul\Manufacturer\Http\Controllers\ManufacturerController@edit')->defaults('_config', [
+                    'view' => 'admin::catalog.manufacturers.edit',
+                ])->name('admin.catalog.manufacturers.edit');
+
+                Route::put('/manufacturers/edit/{id}', 'Webkul\Manufacturer\Http\Controllers\ManufacturerController@update')->defaults('_config', [
+                    'redirect' => 'admin.catalog.manufacturers.index',
+                ])->name('admin.catalog.manufacturers.update');
+
+                Route::post('/manufacturers/delete/{id}', 'Webkul\Manufacturer\Http\Controllers\ManufacturerController@destroy')->name('admin.catalog.manufacturers.delete');
+
+                // Catalog Tag Routes
+                Route::get('/tags', 'Webkul\Tag\Http\Controllers\TagController@index')->defaults('_config', [
+                    'view' => 'admin::catalog.tags.index',
+                ])->name('admin.catalog.tags.index');
+                Route::get('/tags/create', 'Webkul\Tag\Http\Controllers\TagController@create')->defaults('_config', [
+                    'view' => 'admin::catalog.tags.create',
+                ])->name('admin.catalog.tags.create');
+
+                Route::post('/tags/create', 'Webkul\Tag\Http\Controllers\TagController@store')->defaults('_config', [
+                    'redirect' => 'admin.catalog.tags.index',
+                ])->name('admin.catalog.tags.store');
+
+                Route::get('/tags/edit/{id}', 'Webkul\Tag\Http\Controllers\TagController@edit')->defaults('_config', [
+                    'view' => 'admin::catalog.tags.edit',
+                ])->name('admin.catalog.tags.edit');
+
+                Route::put('/tags/edit/{id}', 'Webkul\Tag\Http\Controllers\TagController@update')->defaults('_config', [
+                    'redirect' => 'admin.catalog.tags.index',
+                ])->name('admin.catalog.tags.update');
+
+                Route::post('/tags/delete/{id}', 'Webkul\Tag\Http\Controllers\TagController@destroy')->name('admin.catalog.tags.delete');
 
                 // Catalog Attribute Routes
                 Route::get('/attributes', 'Webkul\Attribute\Http\Controllers\AttributeController@index')->defaults('_config', [

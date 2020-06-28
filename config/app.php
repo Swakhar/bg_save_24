@@ -268,6 +268,8 @@ return [
         Webkul\CMS\Providers\CMSServiceProvider::class,
         Webkul\Velocity\Providers\VelocityServiceProvider::class,
         Webkul\BookingProduct\Providers\BookingProductServiceProvider::class,
+        Webkul\Manufacturer\Providers\ManufacturerServiceProvider::class,
+        Webkul\Tag\Providers\TagServiceProvider::class,
     ],
 
     /*
