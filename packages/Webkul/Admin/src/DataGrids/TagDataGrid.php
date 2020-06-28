@@ -7,16 +7,20 @@ use Webkul\Ui\DataGrid\DataGrid;
 
 class TagDataGrid extends DataGrid
 {
-    protected $index = 'id';
+    protected $index = 'tag_id';
 
     protected $sortOrder = 'desc';
 
     public function prepareQueryBuilder()
     {
-        $queryBuilder = DB::table('tags')
-            ->select('id')
-            ->addSelect('id','admin_name')
-            ;
+        $queryBuilder = DB::table('tags as tag')
+            ->select('tag.id as tag_id', 'tag.admin_name', 'tag.status', 
+            DB::raw('COUNT(DISTINCT ' . DB::getTablePrefix() . 'pt.product_id) as count'))
+            ->leftJoin('product_tags as pt', 'tag.id', '=', 'pt.tag_id')
+            ->groupBy('tag.id');
+
+
+        $this->addFilter('tag_id', 'tag.id');
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -24,7 +28,7 @@ class TagDataGrid extends DataGrid
     public function addColumns()
     {
         $this->addColumn([
-            'index'      => 'id',
+            'index'      => 'tag_id',
             'label'      => trans('admin::app.datagrid.id'),
             'type'       => 'number',
             'searchable' => false,
@@ -39,6 +43,31 @@ class TagDataGrid extends DataGrid
             'searchable' => true,
             'sortable'   => true,
             'filterable' => true,
+        ]);
+
+        $this->addColumn([
+            'index'      => 'status',
+            'label'      => trans('admin::app.datagrid.status'),
+            'type'       => 'boolean',
+            'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
+            'wrapper'    => function($value) {
+                if ($value->status == 1) {
+                    return trans('admin::app.datagrid.active');
+                } else {
+                    return trans('admin::app.datagrid.inactive');
+                }
+            },
+        ]);
+
+        $this->addColumn([
+            'index'      => 'count',
+            'label'      => trans('admin::app.datagrid.no-of-products'),
+            'type'       => 'number',
+            'sortable'   => true,
+            'searchable' => false,
+            'filterable' => false,
         ]);
         
     }

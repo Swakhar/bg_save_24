@@ -1,7 +1,7 @@
 <?php
 
 namespace Webkul\Manufacturer\Repositories;
-
+use Illuminate\Support\Facades\Storage;
 use Webkul\Core\Eloquent\Repository;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Container\Container as App;

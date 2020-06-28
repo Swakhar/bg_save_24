@@ -4,6 +4,8 @@ namespace Webkul\Product\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Attribute\Models\AttributeFamilyProxy;
+use Webkul\Tag\Models\TagProxy;
+use Webkul\Manufacturer\Models\ManufacturerProxy;
 use Webkul\Category\Models\CategoryProxy;
 use Webkul\Attribute\Models\AttributeProxy;
 use Webkul\Inventory\Models\InventorySourceProxy;

@@ -460,6 +460,7 @@ return [
     'catalog' => [
         'products' => [
             'title' => 'Products',
+            'tag_man' => 'Tags and Manufacturers',
             'add-product-btn-title' => 'Add Product',
             'add-title' => 'Add Product',
             'edit-title' => 'Edit Product',

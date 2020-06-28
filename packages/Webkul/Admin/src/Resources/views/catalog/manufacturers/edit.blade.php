@@ -80,16 +80,13 @@
 
                     <accordian :title="'{{ __('admin::app.catalog.manufacturers.description-and-images') }}'" :active="true">
                         <div slot="body">
-
-                            {!! view_render_event('bagisto.admin.catalog.category.edit_form_accordian.description_images.controls.before', ['manufacturer' => $manufacturer]) !!}
-
                             
                             <description></description>
 
                             <div class="control-group {!! $errors->has('image.*') ? 'has-error' : '' !!}">
                                 <label>{{ __('admin::app.catalog.manufacturers.image') }}</label>
 
-                                <image-wrapper :button-label="'{{ __('admin::app.catalog.products.add-image-btn-title') }}'" input-name="image" :multiple="false"  :images='"{{ $manufacturer->image_url }}"'></image-wrapper>
+                                <image-wrapper :button-label="'{{ __('admin::app.catalog.products.add-image-btn-title') }}'" input-name="image" :multiple="false"  :images='"{{ $manufacturer->image_url }}"' :required="true"></image-wrapper>
 
                                 <span class="control-error" v-if="{!! $errors->has('image.*') !!}">
                                     @foreach ($errors->get('image.*') as $key => $message)
@@ -98,9 +95,6 @@
                                 </span>
 
                             </div>
-
-                            {!! view_render_event('bagisto.admin.catalog.category.edit_form_accordian.description_images.controls.after', ['manufacturer' => $manufacturer]) !!}
-
                         </div>
                     </accordian>
 

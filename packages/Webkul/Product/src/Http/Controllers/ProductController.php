@@ -5,6 +5,8 @@ namespace Webkul\Product\Http\Controllers;
 use Illuminate\Support\Facades\Event;
 use Webkul\Product\Http\Requests\ProductForm;
 use Webkul\Product\Helpers\ProductType;
+use Webkul\Tag\Repositories\TagRepository;
+use Webkul\Manufacturer\Repositories\ManufacturerRepository;
 use Webkul\Category\Repositories\CategoryRepository;
 use Webkul\Product\Repositories\ProductRepository;
 use Webkul\Product\Repositories\ProductDownloadableLinkRepository;
@@ -63,6 +65,9 @@ class ProductController extends Controller
      * @var \Webkul\Inventory\Repositories\InventorySourceRepository
      */
     protected $inventorySourceRepository;
+    protected $tagRepository;
+    protected $manufacturerRepository;
+
 
     /**
      * Create a new controller instance.
@@ -77,6 +82,8 @@ class ProductController extends Controller
      */
     public function __construct(
         CategoryRepository $categoryRepository,
+        TagRepository $tagRepository,
+        ManufacturerRepository $manufacturerRepository,
         ProductRepository $productRepository,
         ProductDownloadableLinkRepository $productDownloadableLinkRepository,
         ProductDownloadableSampleRepository $productDownloadableSampleRepository,
@@ -87,6 +94,8 @@ class ProductController extends Controller
         $this->_config = request('_config');
 
         $this->categoryRepository = $categoryRepository;
+        $this->tagRepository = $tagRepository;
+        $this->manufacturerRepository = $manufacturerRepository;
 
         $this->productRepository = $productRepository;
 
@@ -134,7 +143,8 @@ class ProductController extends Controller
      */
     public function store()
     {
-        if (! request()->get('family')
+        return request()->all();
+        /*if (! request()->get('family')
             && ProductType::hasVariants(request()->input('type'))
             && request()->input('sku') != ''
         ) {
@@ -160,7 +170,7 @@ class ProductController extends Controller
 
         session()->flash('success', trans('admin::app.response.create-success', ['name' => 'Product']));
 
-        return redirect()->route($this->_config['redirect'], ['id' => $product->id]);
+        return redirect()->route($this->_config['redirect'], ['id' => $product->id]);*/
     }
 
     /**
@@ -176,8 +186,10 @@ class ProductController extends Controller
         $categories = $this->categoryRepository->getCategoryTree();
 
         $inventorySources = $this->inventorySourceRepository->all();
+        $tags = $this->tagRepository->orderBy('id','desc')->get();
+        $manufacturers = $this->manufacturerRepository->orderBy('id','desc')->get();
 
-        return view($this->_config['view'], compact('product', 'categories', 'inventorySources'));
+        return view($this->_config['view'], compact('product', 'categories', 'inventorySources','tags','manufacturers'));
     }
 
     /**

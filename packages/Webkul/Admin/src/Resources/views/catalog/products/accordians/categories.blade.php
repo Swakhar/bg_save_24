@@ -11,6 +11,7 @@
 
         {!! view_render_event('bagisto.admin.catalog.product.edit_form_accordian.categories.controls.after', ['product' => $product]) !!}
 
+
     </div>
 </accordian>
 

@@ -79,9 +79,9 @@
                             <description></description>
 
                             <div class="control-group {!! $errors->has('image.*') ? 'has-error' : '' !!}">
-                                <label>{{ __('admin::app.catalog.manufacturers.image') }}</label>
+                                <label class="required">{{ __('admin::app.catalog.manufacturers.image') }} </label>
 
-                                <image-wrapper :button-label="'{{ __('admin::app.catalog.products.add-image-btn-title') }}'" input-name="image" :multiple="false"></image-wrapper>
+                                <image-wrapper :button-label="'{{ __('admin::app.catalog.products.add-image-btn-title') }}'" input-name="image" :multiple="false" :required="true"></image-wrapper>
 
                                 <span class="control-error" v-if="{!! $errors->has('image.*') !!}">
                                     @foreach ($errors->get('image.*') as $key => $message)
@@ -113,7 +113,7 @@
                             </div>
                             <div class="control-group" :class="[errors.has('dis_order') ? 'has-error' : '']">
                                 <label for="dis_order" class="required">{{ __('admin::app.catalog.manufacturers.display-order') }}</label>
-                                <input type="text" v-validate="'required|numeric'" class="control" id="dis_order" name="dis_order" value="{{ old('dis_order') }}" data-vv-as="&quot;{{ __('admin::app.catalog.manufacturers.display-order') }}&quot;"/>
+                                <input type="number" v-validate="'required|numeric'" class="control" id="dis_order" name="dis_order" value="{{ old('dis_order') }}" data-vv-as="&quot;{{ __('admin::app.catalog.manufacturers.display-order') }}&quot;"/>
                                 <span class="control-error" v-if="errors.has('dis_order')">@{{ errors.first('dis_order') }}</span>
                             </div>
                         </div>
@@ -129,7 +129,7 @@
 
                             <div class="control-group" :class="[errors.has('discounts') ? 'has-error' : '']">
                                 <label for="discounts">{{ __('admin::app.catalog.manufacturers.discounts') }}</label>
-                                <input type="text" v-validate="'required|numeric'" class="control" id="discounts" name="discounts" value="{{ old('discounts') }}" data-vv-as="&quot;{{ __('admin::app.catalog.manufacturers.discounts') }}&quot;" v-slugify-target="'slug'"/>
+                                <input type="number" min="0" max="100" step="0.01" v-validate="'decimal'" class="control" id="discounts" name="discounts" value="{{ old('discounts') }}" data-vv-as="&quot;{{ __('admin::app.catalog.manufacturers.discounts') }}&quot;"/>
                                 <span class="control-error" v-if="errors.has('discounts')">@{{ errors.first('discounts') }}</span>
                             </div>
 
