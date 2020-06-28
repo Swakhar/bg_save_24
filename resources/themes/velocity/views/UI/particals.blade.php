@@ -48,8 +48,8 @@
         :class="`left ${addClass}`"
         href="{{ route('shop.home.index') }}">
 
-        @if ($logo = core()->getCurrentChannel()->logo_url)
-            <img class="logo"  src="{{ $logo }}" />
+        @if ($logo = core()->getCurrentChannel()->logo)
+            <img class="logo"  src="{{ $relative_path . '/uploads/' . $logo }}" />
         @else
             <img class="logo" src="{{ asset('themes/velocity/assets/images/logo-text.png') }}" />
         @endif
