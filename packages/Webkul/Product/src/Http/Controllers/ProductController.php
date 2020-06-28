@@ -199,32 +199,34 @@ class ProductController extends Controller
             /// price save in variant table
             ///
         } else {
+
             if ($data['special_price'] != null) {
                 $basePrice = $data['special_price'];
             } elseif ($data['price'] != null) {
                 $basePrice = $data['price'];
             }
+//            return $basePrice;
             if ($basePrice != null) {
-                foreach ($data['customer_group_prices'] as $key => $value) {
-
-                    if ($value['value_type'] != null) {
-                        if ($value['value_type'] == "discount") {
-                            if ($value['raw_value'] != null && floatval($value['raw_value']) > 0 && floatval($value['raw_value']) <= 100) {
-                                $discount = $basePrice * floatval($value['raw_value']) / 100;
-                                $discount = $basePrice - $discount;
-                                $data['customer_group_prices'][$key]['value'] = $discount;
-                            } else {
-                                return back()->with('error', trans('Invalid discount entry'));
-                            }
-                        } else if ($value['value_type'] == "fixed") {
-                            if ($value['raw_value'] != null && floatval($value['raw_value']) > 0 && floatval($value['raw_value']) <= $basePrice) {
-                                $data['customer_group_prices'][$key]['value'] = $value['raw_value'];
-                            } else {
-                                return back()->with('error', trans('Invalid fixed entry'));;
-                            }
-                        }
-                    }
-                }
+//                foreach ($data['customer_group_prices'] as $key => $value) {
+//
+//                    if ($value['value_type'] != null) {
+//                        if ($value['value_type'] == "discount") {
+//                            if ($value['raw_value'] != null && floatval($value['raw_value']) > 0 && floatval($value['raw_value']) <= 100) {
+//                                $discount = $basePrice * floatval($value['raw_value']) / 100;
+//                                $discount = $basePrice - $discount;
+//                                $data['customer_group_prices'][$key]['value'] = $discount;
+//                            } else {
+//                                return back()->with('error', trans('Invalid discount entry'));
+//                            }
+//                        } else if ($value['value_type'] == "fixed") {
+//                            if ($value['raw_value'] != null && floatval($value['raw_value']) > 0 && floatval($value['raw_value']) <= $basePrice) {
+//                                $data['customer_group_prices'][$key]['value'] = $value['raw_value'];
+//                            } else {
+//                                return back()->with('error', trans('Invalid fixed entry'));;
+//                            }
+//                        }
+//                    }
+//                }
             }
         }
         

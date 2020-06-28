@@ -68,7 +68,8 @@ $(document).ready(function () {
                 'sharedRootCategories': [],
                 'responsiveSidebarTemplate': '',
                 'responsiveSidebarKey': Math.random(),
-                'baseUrl': document.querySelector("script[src$='velocity.js']").getAttribute('baseUrl'),
+                // 'baseUrl': document.querySelector("script[src$='velocity.js']").getAttribute('baseUrl'),
+                'baseUrl': document.getElementById("base_url_span").getAttribute('baseUrl'),
             }
         },
 
@@ -284,7 +285,7 @@ $(document).ready(function () {
                         } else {
                             inputNames.push(chunk)
                         }
-                    })
+                    });
 
                     var inputName = inputNames.join('');
 

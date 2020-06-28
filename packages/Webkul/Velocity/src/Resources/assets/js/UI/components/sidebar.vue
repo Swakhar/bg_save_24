@@ -28,10 +28,12 @@
 
                             <img
                                     v-if="category.category_icon_path"
-                                    :src="`${$root.baseUrl}/storage/${category.category_icon_path}`" />
+                                    :src="`${$root.baseUrl}/public/uploads/${category.category_icon_path}`" />
                         </div>
 
-                        <span class="category-title category-title-level1">{{ category['name'] }}</span>
+                        <span class="category-title category-title-level1">
+                            {{ category['name'].length > 25 ? category['name'].substring(0, 25) + '..' : category['name'] }}
+                        </span>
 
                         <i
                                 class="rango-arrow-right pr15 pull-right"
@@ -73,7 +75,7 @@
 
                                                 <img class="com"
                                                      v-if="subCategory.category_icon_path"
-                                                     :src="`${$root.baseUrl}/storage/${subCategory.category_icon_path}`" />
+                                                     :src="`${$root.baseUrl}/public/uploads/${subCategory.category_icon_path}`" />
                                             </div>
                                             <span class="com category-title category-title-level23">{{ subCategory['name'] }}</span>
                                         </a>
@@ -119,12 +121,12 @@
 
                             <img
                                     v-if="category.category_icon_path"
-                                    :src="`${$root.baseUrl}/storage/${category.category_icon_path}`" />
+                                    :src="`${$root.baseUrl}/public/uploads/${category.category_icon_path}`" />
                         </div>
 
                         <span class="category-title category-title-level1"
                               v-bind:title="category['name']"
-                              v-bind:dd="category['name'].length">{{ category['name'].length > 22 ? category['name'].substring(0, 18) + '........' : category['name'] }}</span>
+                              v-bind:dd="category['name'].length">{{ category['name'].length > 25 ? category['name'].substring(0, 25) + '..' : category['name'] }}</span>
 
                         <i
                                 class="rango-arrow-right pr15 pull-right"
@@ -166,7 +168,7 @@
 
                                                 <img class="com"
                                                      v-if="subCategory.category_icon_path"
-                                                     :src="`${$root.baseUrl}/storage/${subCategory.category_icon_path}`" />
+                                                     :src="`${$root.baseUrl}/public/uploads/${subCategory.category_icon_path}`" />
                                             </div>
                                             <span class="com category-title category-title-level23">{{ subCategory['name'] }}</span>
                                         </a>
@@ -199,6 +201,8 @@
         <nav id="loading_nav" class="loading_nav" v-else >
             <div class="shimmer-card">
                 <div class="shimmer-wrapper">
+                    <div class="comment animate"></div>
+                    <div class="comment animate"></div>
                     <div class="comment animate"></div>
                     <div class="comment animate"></div>
                     <div class="comment animate"></div>
@@ -258,9 +262,11 @@
 
             formatCategories: function (categories) {
                 let slicedCategories = categories;
-                let categoryCount = this.categoryCount ? this.categoryCount : 9;
+                //let categoryCount = this.categoryCount ? this.categoryCount : 13;
+                let categoryCount = 10;
                 let moreSlicedCategories;
 
+                console.log('categoryCount', categoryCount)
 
                 if (
                     slicedCategories
@@ -269,10 +275,10 @@
                     slicedCategories = categories.slice(0, categoryCount);
                 }
 
-                if (categories.length > 9) {
+                if (categories.length > 10) {
 
                     console.log((10, categories.length))
-                    moreSlicedCategories = categories.slice(9, categories.length);
+                    moreSlicedCategories = categories.slice(10, categories.length);
                 }
 
                 this.moreSlicedCategories = moreSlicedCategories;
@@ -287,7 +293,7 @@
             expand_more_categories: function (this_class, id) {
                 if ($("."+this_class).attr("is_expand") == 0) {
                     $("#"+id).removeClass("hide");
-                    this.more_menu_txt = 'Less Categories';
+                    this.more_menu_txt = 'Close Menu';
                     this.more_menu_icon = 'minus';
                     $("."+this_class).attr("is_expand", 1)
                 } else {

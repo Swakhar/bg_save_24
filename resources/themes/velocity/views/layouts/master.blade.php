@@ -10,43 +10,43 @@
         <meta http-equiv="content-language" content="{{ app()->getLocale() }}">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <link rel="stylesheet" href="{{ asset('themes/velocity/assets/css/velocity.css') }}" />
-        <link rel="stylesheet" href="{{ asset('themes/velocity/assets/css/bootstrap.min.css') }}" />
-        <link rel="stylesheet" href="{{ asset('themes/velocity/assets/css/google-font.css') }}" />
+        <link rel="stylesheet" href="{{ asset($relative_path . 'themes/velocity/assets/css/velocity.css') }}" />
+        <link rel="stylesheet" href="{{ asset($relative_path . 'themes/velocity/assets/css/bootstrap.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset($relative_path . 'themes/velocity/assets/css/google-font.css') }}" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700"/>
 
         {{--<link rel="stylesheet" href="{{ asset('/themes/velocity/assets/css/slick.css') }}" />--}}
         {{--<link rel="stylesheet" href="{{ asset('/themes/velocity/assets/css/slick-theme.css') }}" />--}}
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" />
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
-        <link rel="stylesheet" href="{{ asset('/themes/velocity/assets/css/custom_design.css') }}" />
+        <link rel="stylesheet" href="{{ asset($relative_path . '/themes/velocity/assets/css/custom_design.css?version='.$version) }}" />
         <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         @if (core()->getCurrentLocale()->direction == 'rtl')
-            <link href="{{ asset('themes/velocity/assets/css/bootstrap-flipped.css') }}" rel="stylesheet">
+            <link href="{{ asset($relative_path . 'themes/velocity/assets/css/bootstrap-flipped.css') }}" rel="stylesheet">
         @endif
 
         @if ($favicon = core()->getCurrentChannel()->favicon_url)
             <link rel="icon" sizes="16x16" href="{{ $favicon }}" />
         @else
-            <link rel="icon" sizes="16x16" href="{{ asset('/themes/velocity/assets/images/static/v-icon.png') }}" />
+            <link rel="icon" sizes="16x16" href="{{ asset($relative_path . '/themes/velocity/assets/images/static/v-icon.png') }}" />
         @endif
 
-
+        <span baseUrl="{{ url()->to('/') }}" id="base_url_span"></span>
 
         <script
             type="text/javascript"
-            src="{{ asset('themes/velocity/assets/js/jquery.min.js') }}">
+            src="{{ asset($relative_path . 'themes/velocity/assets/js/jquery.min.js') }}">
         </script>
 
         <script
             type="text/javascript"
             baseUrl="{{ url()->to('/') }}"
-            src="{{ asset('themes/velocity/assets/js/velocity.js') }}">
+            src="{{ asset($relative_path . 'themes/velocity/assets/js/velocity.js?version='.$version) }}">
         </script>
 
         <script
             type="text/javascript"
-            src="{{ asset('themes/velocity/assets/js/jquery.ez-plus.js') }}">
+            src="{{ asset($relative_path . 'themes/velocity/assets/js/jquery.ez-plus.js') }}">
         </script>
 
         @yield('head')
@@ -300,7 +300,7 @@
 
         <script
             type="text/javascript"
-            src="{{ asset('vendor/webkul/ui/assets/js/ui.js') }}">
+            src="{{ asset($relative_path . 'vendor/webkul/ui/assets/js/ui.js?version='.$version) }}">
         </script>
 
         {{--<script src="{{ asset('/themes/velocity/assets/js/slick.js') }}"></script>--}}

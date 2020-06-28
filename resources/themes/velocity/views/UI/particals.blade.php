@@ -59,61 +59,25 @@
 
 <script type="text/x-template" id="searchbar-template">
     <div class="row no-margin right searchbar">
-        <div class="col-lg-6 col-md-12 no-padding input-group">
+        <div class="col-md-6">
             <form
-                method="GET"
-                role="search"
-                id="search-form"
-                action="{{ route('velocity.search.index') }}">
+                    method="GET"
+                    role="search"
+                    id="search-form"
+                    action="{{ route('velocity.search.index') }}">
+               <div class="search-bar">
+                   <input
+                           required
+                           name="term"
+                           type="search"
+                           class="form-control"
+                           :value="searchedQuery.term ? searchedQuery.term.split('+').join(' ') : ''"
+                           placeholder="{{ __('velocity::app.header.search-text') }}" />
 
-                <div
-                    class="btn-toolbar full-width"
-                    role="toolbar">
-
-                    <div class="btn-group full-width">
-                        <div class="selectdiv">
-                            <select class="form-control fs13 styled-select" name="category" @change="focusInput($event)">
-                                <option value="">
-                                    {{ __('velocity::app.header.all-categories') }}
-                                </option>
-
-                                <template v-for="(category, index) in $root.sharedRootCategories">
-                                    <option
-                                        :key="index"
-                                        selected="selected"
-                                        :value="category.id"
-                                        v-if="(category.id == searchedQuery.category)">
-                                        @{{ category.name }}
-                                    </option>
-
-                                    <option :key="index" :value="category.id" v-else>
-                                        @{{ category.name }}
-                                    </option>
-                                </template>
-                            </select>
-
-                            <div class="select-icon-container">
-                                <span class="select-icon rango-arrow-down"></span>
-                            </div>
-                        </div>
-
-                        <div class="full-width">
-
-                            <input
-                                required
-                                name="term"
-                                type="search"
-                                class="form-control"
-                                :value="searchedQuery.term ? searchedQuery.term.split('+').join(' ') : ''"
-                                placeholder="{{ __('velocity::app.header.search-text') }}" />
-
-                            <button class="btn" type="submit" id="header-search-icon">
-                                <i class="fs16 fw6 rango-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
+                   <button class="btn" type="submit" id="header-search-icon">
+                       <i class="fs16 fw6 rango-search"></i>
+                   </button>
+               </div>
             </form>
         </div>
 
