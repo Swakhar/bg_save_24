@@ -143,8 +143,7 @@ class ProductController extends Controller
      */
     public function store()
     {
-        return request()->all();
-        /*if (! request()->get('family')
+        if (! request()->get('family')
             && ProductType::hasVariants(request()->input('type'))
             && request()->input('sku') != ''
         ) {
@@ -170,7 +169,7 @@ class ProductController extends Controller
 
         session()->flash('success', trans('admin::app.response.create-success', ['name' => 'Product']));
 
-        return redirect()->route($this->_config['redirect'], ['id' => $product->id]);*/
+        return redirect()->route($this->_config['redirect'], ['id' => $product->id]);
     }
 
     /**
