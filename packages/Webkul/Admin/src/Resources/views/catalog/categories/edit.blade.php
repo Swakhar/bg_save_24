@@ -8,12 +8,6 @@
     <div class="content">
         <?php $locale = request()->get('locale') ?: app()->getLocale(); ?>
 
-        <?php
-        echo  "<pre>";
-        print_r($category->image_url);
-        echo  "</pre>";
-        ?>
-
         <form method="POST" action="" @submit.prevent="onSubmit" enctype="multipart/form-data">
 
             <div class="page-header">

@@ -1,7 +1,7 @@
 <div id="menu_List" class="dt mobile_menu_list hide">
     <div class="top_info">
         <img id="menu_close" class="dt_cl img_close"
-             src="{{ asset('vendor/webkul/admin/assets/css/icons/close.png') }}" alt="">
+             src="{{ asset($relative_path . 'vendor/webkul/admin/assets/css/icons/close.png') }}" alt="">
     </div>
     <ul class="dt">
         {{--{!! json_encode($menu->items, true) !!}--}}

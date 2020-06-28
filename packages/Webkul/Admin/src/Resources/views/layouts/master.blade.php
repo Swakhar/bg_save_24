@@ -48,7 +48,7 @@
             <div class="top_nav_mobile_version">
                 <span class="hambargur">
                     <img id="menu_open_img" class="dt_cl img_ham"
-                         src="{{ asset('vendor/webkul/admin/assets/css/icons/hambarger.png') }}" alt="">
+                         src="{{ asset($relative_path . 'vendor/webkul/admin/assets/css/icons/hambarger.png') }}" alt="">
                 </span>
 
                 <span class="dt2cl click_to_logou_open top_periosd_click top_nav_mobile_logout">
