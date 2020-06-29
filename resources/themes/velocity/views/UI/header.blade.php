@@ -317,7 +317,7 @@
                         <div class="badge-container" v-if="compareCount > 0">
                             <span class="badge" v-text="compareCount"></span>
                         </div>
-                        <i class="material-icons">compare_arrows</i>
+                        <i class="material-icons"></i>
                     </a>
 
                     <a class="wishlist-btn unset" :href="`${isCustomer ? '{{ route('customer.wishlist.index') }}' : '{{ route('velocity.product.guest-wishlist') }}'}`">
@@ -335,7 +335,7 @@
                         <div class="badge-wrapper">
                             <span class="badge">@{{ cartItemsCount }}</span>
                         </div>
-                        <i class="material-icons text-down-3">shopping_cart</i>
+                        <i class="material-icons text-down-3"></i>
                     </a>
                 </div>
 

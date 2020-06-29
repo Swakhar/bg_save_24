@@ -6,7 +6,7 @@
         :class="`btn btn-link disable-box-shadow ${itemCount == 0 ? 'cursor-not-allowed' : ''}`">
 
         <div class="mini-cart-content">
-            <i class="material-icons-outlined text-down-3">shopping_cart</i>
+            <i class="material-icons-outlined text-down-3"></i>
             <span class="badge" v-text="itemCount" v-if="itemCount != 0"></span>
             <span class="fs18 fw6 cart-text">{{ __('velocity::app.minicart.cart') }}</span>
         </div>
