@@ -9,6 +9,7 @@ use Webkul\Checkout\Repositories\CartItemRepository;
 use Webkul\Checkout\Repositories\CartAddressRepository;
 use Webkul\Customer\Models\CustomerAddress;
 use Webkul\Product\Repositories\ProductRepository;
+use Webkul\Product\Repositories\ProductFlatRepository;
 use Webkul\Tax\Helpers\Tax;
 use Webkul\Tax\Repositories\TaxCategoryRepository;
 use Webkul\Checkout\Models\CartItem;
@@ -48,6 +49,8 @@ class Cart
      * @var \Webkul\Checkout\Repositories\ProductRepository
      */
     protected $productRepository;
+    protected $productFlatRepository;
+
 
     /**
      * TaxCategoryRepository instance
@@ -87,6 +90,7 @@ class Cart
         CartItemRepository $cartItemRepository,
         CartAddressRepository $cartAddressRepository,
         ProductRepository $productRepository,
+        ProductFlatRepository $productFlatRepository,
         TaxCategoryRepository $taxCategoryRepository,
         WishlistRepository $wishlistRepository,
         CustomerAddressRepository $customerAddressRepository
@@ -99,6 +103,7 @@ class Cart
         $this->cartAddressRepository = $cartAddressRepository;
 
         $this->productRepository = $productRepository;
+        $this->productFlatRepository = $productFlatRepository;
 
         $this->taxCategoryRepository = $taxCategoryRepository;
 
@@ -170,7 +175,8 @@ class Cart
                         //     return ['warning' => __('shop::app.checkout.cart.integrity.qty_impossible')];
                         // }
 
-                        $cartItem = $this->cartItemRepository->update($cartProduct, $cartItem->id);
+                        //$cartItem = $this->cartItemRepository->update($cartProduct, $cartItem->id);
+                        return ['warning' => 'Item already exists!'];
                     }
                 }
 
@@ -236,41 +242,49 @@ class Cart
      */
     public function updateItems($data)
     {
-        foreach ($data['qty'] as $itemId => $quantity) {
-            $item = $this->cartItemRepository->findOneByField('id', $itemId);
+        $item = $this->cartItemRepository->findOneByField('id', $data['product_id']);
 
-            if (! $item) {
-                continue;
+        $quantity=$data['quantity'];
+        if ($quantity <= 0) {
+            $this->removeItem($itemId);
+
+            throw new \Exception(trans('shop::app.checkout.cart.quantity.illegal'));
+        }
+
+        $item->quantity = $quantity;
+
+        if (! $this->isItemHaveQuantity($item)) {
+            throw new \Exception(trans('shop::app.checkout.cart.quantity.inventory_warning'));
+        }
+        $pro = $this->productFlatRepository->findOneByField('id', $item->product_id);
+
+        if($pro->min_qty ){
+            $min=$pro->min_qty;
+            if ($min>$quantity) {
+                throw new \Exception(trans('Minimum quantity must be '.$min));
             }
-
-            if ($quantity <= 0) {
-                $this->removeItem($itemId);
-
-                throw new \Exception(trans('shop::app.checkout.cart.quantity.illegal'));
+        }
+        if($pro->min_qty){
+            $max=$pro->max_qty;
+            if ($max<$quantity) {
+                throw new \Exception(trans('Maximum quantity must be under'.$max));
             }
+        }
+        Event::dispatch('checkout.cart.update.before', $item);
 
-            $item->quantity = $quantity;
-
-            if (! $this->isItemHaveQuantity($item)) {
-                throw new \Exception(trans('shop::app.checkout.cart.quantity.inventory_warning'));
-            }
-
-            Event::dispatch('checkout.cart.update.before', $item);
-
-            $this->cartItemRepository->update([
+        $this->cartItemRepository->update([
                 'quantity'          => $quantity,
                 'total'             => core()->convertPrice($item->price * $quantity),
                 'base_total'        => $item->price * $quantity,
                 'total_weight'      => $item->weight * $quantity,
                 'base_total_weight' => $item->weight * $quantity,
-            ], $itemId);
+            ], $item->id);
 
-            Event::dispatch('checkout.cart.update.after', $item);
-        }
+            //Event::dispatch('checkout.cart.update.after', $item);        
 
         $this->collectTotals();
 
-        return true;
+        return $this->getCart();
     }
 
     /**

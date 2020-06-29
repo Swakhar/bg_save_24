@@ -16,6 +16,7 @@ class ProductAttributeValue extends Model implements ProductAttributeValueContra
      */
     public static $attributeTypeFields = [
         'text'        => 'text_value',
+        'number'        => 'number_value',
         'textarea'    => 'text_value',
         'price'       => 'float_value',
         'boolean'     => 'boolean_value',
@@ -35,6 +36,7 @@ class ProductAttributeValue extends Model implements ProductAttributeValueContra
         'locale',
         'channel',
         'text_value',
+        'number_value',
         'boolean_value',
         'integer_value',
         'float_value',
