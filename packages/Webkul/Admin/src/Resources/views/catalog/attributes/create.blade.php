@@ -45,6 +45,7 @@
                                 <label for="type" class="required">{{ __('admin::app.catalog.attributes.type') }}</label>
                                 <select class="control" id="type" name="type">
                                     <option value="text">{{ __('admin::app.catalog.attributes.text') }}</option>
+                                    <option value="number">{{ __('admin::app.catalog.attributes.number') }}</option>
                                     <option value="textarea">{{ __('admin::app.catalog.attributes.textarea') }}</option>
                                     <option value="price">{{ __('admin::app.catalog.attributes.price') }}</option>
                                     <option value="boolean">{{ __('admin::app.catalog.attributes.boolean') }}</option>

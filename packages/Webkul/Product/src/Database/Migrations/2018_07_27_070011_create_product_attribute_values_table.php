@@ -20,6 +20,7 @@ class CreateProductAttributeValuesTable extends Migration
             $table->text('text_value')->nullable();
             $table->boolean('boolean_value')->nullable();
             $table->integer('integer_value')->nullable();
+            $table->integer('number_value')->nullable();
             $table->double('float_value')->nullable();
             $table->dateTime('datetime_value')->nullable();
             $table->date('date_value')->nullable();
