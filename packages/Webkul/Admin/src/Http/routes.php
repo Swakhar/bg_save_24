@@ -825,6 +825,16 @@ Route::group(['middleware' => ['web']], function () {
                     'redirect' => 'admin.cms.index',
                 ])->name('admin.cms.mass-delete');
 
+                /*** recommended category slider ***/
+                Route::get('/recommended-category-slider', 'Webkul\CMS\Http\Controllers\Admin\RecommendedSliderController@index')->defaults('_config', [
+                    'view' => 'admin::recommended_slider.index',
+                ])->name('admin.recommended_sliders.index');
+
+                Route::post('/recommended-category-slider-save', 'Webkul\CMS\Http\Controllers\Admin\RecommendedSliderController@store')->defaults('_config', [
+                    'view' => 'admin::recommended_slider.index',
+                ])->name('admin.recommended_sliders.store');
+
+
                 // Route::post('/delete/{id}', 'Webkul\CMS\Http\Controllers\Admin\PageController@delete')->defaults('_config', [
                 //     'redirect' => 'admin.cms.index'
                 // ])->name('admin.cms.delete');

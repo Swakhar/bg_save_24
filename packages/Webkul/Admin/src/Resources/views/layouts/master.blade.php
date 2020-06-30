@@ -23,6 +23,12 @@
         {!! view_render_event('bagisto.admin.layout.head') !!}
 
         <link rel="stylesheet" href="{{ asset('vendor/webkul/admin/assets/css/mobile_responsive.css') }}">
+        <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            .alert.alert-danger {
+                background: #c10707f7;
+            }
+        </style>
 
     </head>
 
@@ -30,6 +36,13 @@
         {!! view_render_event('bagisto.admin.layout.body.before') !!}
 
         <div id="app">
+
+            <div class="alert-wrapper hide" id="custom_message">
+                <div class="alert alert-success">
+                    <span class="icon white-cross-sm-icon"></span>
+                    <p></p>
+                </div>
+            </div>
 
             <div class="top_nav_mobile_version">
                 <span class="hambargur">
@@ -108,6 +121,10 @@
             $( document ).ready(function() {
                 $('.select2').select2();
             });
+<<<<<<< HEAD
+=======
+
+>>>>>>> home-page-design
             window.addEventListener('DOMContentLoaded', function() {
                 moveDown = 60;
                 moveUp =  -60;

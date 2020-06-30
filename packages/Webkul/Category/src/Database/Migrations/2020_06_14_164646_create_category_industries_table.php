@@ -16,8 +16,8 @@ class CreateCategoryIndustriesTable extends Migration
         Schema::create('category_industries', function (Blueprint $table) {
             $table->integer('category_id')->unsigned();
             $table->bigInteger('industry_id')->unsigned();
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->foreign('industry_id')->references('id')->on('related_industries')->onDelete('cascade');
+//            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+//            $table->foreign('industry_id')->references('id')->on('related_industries')->onDelete('cascade');
         });
     }
 

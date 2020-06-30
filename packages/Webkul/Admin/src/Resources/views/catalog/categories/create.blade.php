@@ -116,7 +116,7 @@
                     {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.description_images.after') !!}
 
 
-                    @if ($categories->count())
+                    @if (count($categories))
 
                         {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.parent_category.before') !!}
 
@@ -125,7 +125,15 @@
 
                                 {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.parent_category.controls.before') !!}
 
-                                <tree-view value-field="id" name-field="parent_id" input-type="radio" items='@json($categories)'></tree-view>
+                                <div class="control-group select">
+                                    <select class="control select2" style="width: 100%" name="parent_id" id="id" dff="">
+                                        @foreach ($categories as $catego)
+                                            <option value="{{ $catego->category_id }}">
+                                                {{ ucwords(str_replace("-"," ",str_replace("/"," > ",$catego->url_path))) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
                                 {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.parent_category.controls.after') !!}
 

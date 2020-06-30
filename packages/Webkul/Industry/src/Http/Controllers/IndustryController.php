@@ -64,11 +64,10 @@ class IndustryController extends Controller
      */
     public function store()
     {
-        
         $this->validate(request(), [
-            'admin_name'       => ['required', 'unique:related_industries'],
+            'code'       => ['required', 'unique:related_industries'],
         ]);
-        
+
         $data = request()->all();
         //$code=strtolower($data->name);
 
@@ -107,23 +106,11 @@ class IndustryController extends Controller
         $this->validate(request(), [
             'admin_name' => 'required',
         ]);
-        $data=request()->all();
-        $industry = $this->industryRepository->findOrFail($id);
-        $name=strtolower($data['admin_name']);
-        if($name==$industry->admin_name){
-            $industry = $this->industryRepository->update(request()->all(), $id);
 
-            session()->flash('success', trans('admin::app.response.update-success', ['name' => 'Industry']));
-        }else{
-            $this->validate(request(), [
-            'admin_name'       => ['required', 'unique:related_industries'],
-            ]);
-            $industry = $this->industryRepository->update(request()->all(), $id);
+        $industry = $this->industryRepository->update(request()->all(), $id);
 
-            session()->flash('success', trans('admin::app.response.update-success', ['name' => 'Industry']));
+        session()->flash('success', trans('admin::app.response.update-success', ['name' => 'Industry']));
 
-        }
-           
         return redirect()->route($this->_config['redirect']);
     }
 

@@ -3,6 +3,8 @@
 namespace Webkul\Product\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use stdClass;
 use Webkul\Attribute\Models\AttributeFamilyProxy;
 use Webkul\Tag\Models\TagProxy;
 use Webkul\Manufacturer\Models\ManufacturerProxy;
@@ -384,4 +386,34 @@ class Product extends Model implements ProductContract
     {
         return $this;
     }
+
+    /***
+     * return product_name, category_name, product_id, category_id as collection of array
+     */
+
+    public static function GetProductsWithCategory()
+    {
+        $local = request()->get('locale') ?: app()->getLocale();
+
+        $data = DB::select(DB::raw("SELECT product_flat.name product_name, category_translations.name category_name,
+        product_categories.product_id, product_categories.category_id
+        FROM product_categories
+        INNER JOIN product_flat on product_flat.product_id = product_categories.product_id
+        INNER JOIN category_translations on category_translations.category_id = product_categories.category_id
+        WHERE category_translations.locale = '$local' and product_flat.locale = '$local'
+        ORDER BY product_flat.name"));
+
+        $products = [];
+        $categories = [];
+
+        foreach ($data as $key => $value) {
+            $products[$value->product_id] = $value;
+            $categories[$value->category_id] = $value->category_name;
+        }
+        return [
+            'products' => $products,
+            'categories' => $categories
+        ];
+    }
+
 }

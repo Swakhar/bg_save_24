@@ -270,6 +270,7 @@ return [
         Webkul\BookingProduct\Providers\BookingProductServiceProvider::class,
         Webkul\Manufacturer\Providers\ManufacturerServiceProvider::class,
         Webkul\Tag\Providers\TagServiceProvider::class,
+        Webkul\Industry\Providers\IndustryServiceProvider::class
     ],
 
     /*

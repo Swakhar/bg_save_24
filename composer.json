@@ -107,7 +107,6 @@
         "Webkul\\Industry\\":"packages/Webkul/Industry/src",
         "Webkul\\Manufacturer\\":"packages/Webkul/Manufacturer/src",
         "Webkul\\Tag\\":"packages/Webkul/Tag/src"
- 
       }
     },
 

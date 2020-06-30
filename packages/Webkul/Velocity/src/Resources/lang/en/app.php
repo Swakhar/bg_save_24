@@ -149,6 +149,7 @@ return [
         'customer-reviews'   => 'Customer Reviews',
         'shipping-methods'   => 'Shipping Methods',
         'popular-categories' => 'Popular Categories',
+        'shop-now'           => 'Shop Now'
     ],
 
     'header'        => [
@@ -164,6 +165,12 @@ return [
         'search-text'       => 'Search products here',
         'welcome-message'   => 'Welcome, :customer_name',
         'dropdown-text'     => 'Manage Cart, Orders & Wishlist',
+        'my-account'   => 'My Account',
+        'seller-account'   => 'Seller Account',
+        'shipping-location'   => 'Shipping Location',
+        'shipping-location-modal-header-text'   => 'Please select shipping location',
+
+
     ],
 
     'menu-navbar'   => [
@@ -208,6 +215,7 @@ return [
             'registered-user'       => 'Registered User',
             'your-email-address'    => 'Your email address',
             'form-login-text'       => 'If you have an account, sign in with your email address.',
+            'newsletter-text'   => 'SIGN UP FOR NEWSLETTER',
         ],
         'signup-form'       => [
             'login'             => 'Login',
