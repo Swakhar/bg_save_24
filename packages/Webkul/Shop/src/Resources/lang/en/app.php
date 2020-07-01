@@ -12,7 +12,13 @@ return [
         'reviews' => 'Reviews',
         'wishlist' => 'Wishlist',
         'orders' => 'Orders',
-        'downloadable-products' => 'Downloadable Products'
+        'downloadable-products' => 'Downloadable Products',
+        'my-store' => 'My Store',
+        'become-seller' => 'Become a Seller',
+        'store-profile' => 'Profile',
+        'store-products' => 'Products',
+        'store-orders' => 'Orders',
+        'store-reviews' => 'Reviews',
     ],
 
     'common' => [
@@ -102,10 +108,13 @@ return [
             'firstname' => 'First Name',
             'lastname' => 'Last Name',
             'email' => 'Email',
+            'phone' => 'Phone',
             'password' => 'Password',
             'confirm_pass' => 'Confirm Password',
             'button_title' => 'Register',
             'agree' => 'Agree',
+            'seller_message' => 'I want to be a seller',
+            'store_url' => 'Enter the store url',
             'terms' => 'Terms',
             'conditions' => 'Conditions',
             'using' => 'by using this website',
