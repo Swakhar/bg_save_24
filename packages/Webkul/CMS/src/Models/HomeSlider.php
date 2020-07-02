@@ -5,10 +5,10 @@ namespace Webkul\CMS\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Webkul\Core\Eloquent\TranslatableModel;
-use Webkul\CMS\Contracts\CmsPage as CmsPageContract;
+use Webkul\CMS\Contracts\HomeSlider as HomeSliderContract;
 use Webkul\Core\Models\ChannelProxy;
 
-class HomeSlider extends Model
+class HomeSlider extends Model implements HomeSliderContract
 {
     protected $fillable = ['layout'];
 
@@ -16,7 +16,7 @@ class HomeSlider extends Model
 
     public static function GetRecommendedSlider() {
         $local = request()->get('locale') ?: app()->getLocale();
-       return DB::select(DB::raw("SELECT slider_name_master.name slider_name, category_translations.name category_name,
+        $data = DB::select(DB::raw("SELECT slider_name_master.name slider_name, category_translations.name category_name,
         product_flat.name product_name, product_flat.product_id, category_translations.category_id,
         home_sliders.id, home_sliders.position, slider_name_master.id slider_id, product_flat.url_key
         FROM slider_name_master 
@@ -27,6 +27,10 @@ class HomeSlider extends Model
         WHERE slider_name_master.slider_type = 1
         and category_translations.locale = '$local'
         ORDER BY home_sliders.position, category_translations.name"));
+        foreach ($data as $value) {
+            $value->image_url = self::GetProductImage($value->product_id);
+        }
+        return $data;
     }
 
     public static function GetRecommendedSliderWithImage() {

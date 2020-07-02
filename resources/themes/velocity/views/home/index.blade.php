@@ -50,9 +50,22 @@
 @endpush
 
 @section('content-wrapper')
-    @include('shop::home.slider')
-    @include('shop::home.product_add')
-    @include('shop::home.hard_coded_div')
+    <div class="col-md-7" style="flex: 0 0 63.3333%;
+    max-width: 67.3333%;
+
+    overflow: hidden;">
+        <div style="height: 370px;">
+            @include('shop::home.slider')
+        </div>
+        @include('shop::home.hard_coded_div')
+    </div>
+    <div class="col-md-2" style="    margin-left: -15px !important;flex: 0 0 16.666667%;
+    max-width: 16.666667%;">
+        @include('shop::home.product_add')
+    </div>
+
+
+
 @endsection
 
 @section('full-add-first')

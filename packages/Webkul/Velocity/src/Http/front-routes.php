@@ -2,6 +2,43 @@
 
 Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function () {
     Route::namespace('Webkul\Velocity\Http\Controllers\Shop')->group(function () {
+
+        Route::get('/recommended-slider', function () {
+            $formattedProducts = [];
+            $products = \Webkul\Product\Models\ProductFlat::select(DB::raw('product_flat.*, t1.name slider_name, 
+            category_translations.name category_name, t1.id slider_id, home_sliders.id home_slider_id'))
+                ->join('slider_name_master as t1', function($join) {
+                    $join->where('t1.slider_type', '=', 1);
+                })
+                ->join('home_sliders', 'home_sliders.slider_name_master_id', '=', 't1.id')
+                ->join('category_translations', 'category_translations.category_id', '=', 'home_sliders.category_id')
+                ->join('home_slider_products', function($join) {
+                    $join->on('home_slider_products.home_slider_id', '=', 'home_sliders.id');
+                    $join->on('home_slider_products.product_id', '=', 'product_flat.product_id');
+                })
+                ->get();
+
+            foreach ($products as $product) {
+                $velocityHelper = app('Webkul\Velocity\Helpers\Helper');
+                $array = $velocityHelper->formatProduct($product);
+                $array['slider_name'] = $product->slider_name;
+                $array['category_name'] = $product->category_name;
+                $array['slider_id'] = $product->slider_id;
+                $array['home_slider_id'] = $product->home_slider_id;
+                array_push($formattedProducts, $array);
+            }
+            $slider = [];
+            $slider_name = "";
+            foreach ($formattedProducts as $key => $value) {
+                $slider_name = $value['slider_name'];
+                $slider[$value['home_slider_id']]['category_name'] = $value['category_name'];
+                $slider[$value['home_slider_id']]['slider_name'] = $value['slider_name'];
+                $slider[$value['home_slider_id']]['slider_id'] = $value['slider_id'];
+                $slider[$value['home_slider_id']]['products'][] = $value;
+            }
+            return $slider;
+        })->name('velocity.shop.product');
+
         Route::get('/product-details/{slug}', 'ShopController@fetchProductDetails')
             ->name('velocity.shop.product');
 

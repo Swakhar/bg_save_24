@@ -1,7 +1,11 @@
 <header class="sticky-header" v-if="!isMobile()">
-    <div class="row col-12 remove-padding-margin velocity-divide-page">
-        <logo-component></logo-component>
-        <searchbar-component></searchbar-component>
+    <div class="col-md-12">
+        <div class="col-md-3" style="    max-width: 21%;">
+            <logo-component></logo-component>
+        </div>
+        <div class="col-md-9" style="    max-width: 79%;">
+            <searchbar-component></searchbar-component>
+        </div>
     </div>
 </header>
 
