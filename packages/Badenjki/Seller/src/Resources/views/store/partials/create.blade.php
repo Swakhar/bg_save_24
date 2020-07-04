@@ -13,7 +13,7 @@
 
 <div class="control-group" :class="[errors.has('category') ? 'has-error' : '']">
     <label for="category_id" class="required">
-        {{ __('shop::app.customer.account.store.create.store-category') }}
+        {{ __('shop::app.customer.account.store.create.select-category') }}
     </label>
     <select class="control" id="category_id" name="category_id">
         <option value="">{{ __('shop::app.customer.account.store.create.select-category') }}</option>
