@@ -1,0 +1,184 @@
+@charset "utf-8";
+
+html{
+	font-size: 100%;
+}
+body{
+	font-size: 16px;
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	line-height: 26px;
+	color: #777;
+	-webkit-font-smoothing: antialiased;
+	font-weight: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {	
+	padding: 5px 0 15px 0;	
+	margin: 0;	
+	color: #333;
+	font-weight: normal;
+	-webkit-font-smoothing: antialiased;
+}
+h1,
+.h1 {
+  font-size: 2.225rem;
+  line-height: 2.8rem;
+}
+h2,
+.h2 {
+  font-size: 1.875rem;
+  line-height: 2.5rem;
+}
+h3,
+.h3 {
+  font-size: 1.5rem;
+  line-height: 2.125rem;
+}
+h4,
+.h4 {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+h5,
+.h5 {
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+}
+h6,
+.h6 {
+  font-size: 0.75rem;
+  line-height: 1.375rem;
+}
+p{
+	margin: 0 0 20px 0;
+	font-size: 1.5rem;
+	line-height: 1.5rem;
+}
+p:last-child {
+  margin-bottom: 0px;
+}
+ul{
+	margin: 0;
+	padding: 0;
+	list-style: disc;
+}
+li{
+	font-size: 1.5rem;
+	line-height: 1.5rem;
+	text-align: left;
+}
+div.fontawesome-icon-list [class*="col-md-"] {
+	margin-bottom: 10px;
+}
+div.fontawesome-icon-list i {
+	margin-right: 10px;
+}
+div.fontawesome-icon-list a{
+	color: #777;
+	font-size: 14px;
+}
+
+.ol{
+	margin-left: 50px;
+}
+.content_info{
+	position: relative;
+	width: 100%;
+}
+.paddings{
+	padding: 70px 0 !important;
+}
+.clients{
+	text-align: center;
+}
+/* Boxes Info ----------------------------------------------*/
+.boxes-info-mod{
+	background-color: #fff;
+	text-align: left;
+	padding: 20px;
+	border: solid 1px #dedede;
+}
+.boxes-info{
+	background-color: #fff;
+	text-align: left;
+	padding: 20px;
+}
+.boxes-info h3{
+	font-weight: 800;
+	color: #333 !important;
+}
+.boxes-info h3 i{
+	float: right;
+	color: #666;
+	font-size: 40px;
+	margin-top: -5px;
+}
+.boxes-info h5{
+	padding: 10px 0;
+	margin-bottom: 20px;
+	font-weight: 800;	
+}
+.boxes-info p{
+	color: #777 !important;
+}
+.crumbs a{
+	color: #999;
+	font-size: 20px;
+	padding: 6px;
+	background-color: blue;
+}
+
+.track {
+  /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+  /* Set a specific height */
+  /* Position and center the image to scale nicely on all screens */
+  background:url('/themes/velocity/assets/images/static/courier.png');
+  height: 400px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+.about {
+  padding: 20px 9px 0 22px;
+  border-bottom: 5px solid #de5151;
+  background:url('/themes/velocity/assets/images/static/b5.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.about h2{
+    padding-bottom: 15px;
+    color: #5f5f5f;
+}
+
+.just{
+	text-align: justify;
+}
+/* Place text in the middle of the image */
+.track_input {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+.tr_in{
+	height: 38px;padding: 6px 8px;font-size: 20px;width: 270px;
+}
+.tr_btn{
+	background: #FF5500 !important;font-size: 18px;height: 37px;line-height: 16px;padding: 10px;
+}
+.apply-fade-hover a
+{transition:color .3s ease-out}
+
+.apply-fade-hover.is-faded{color:red}
+
+
+.apply-fade-hover img
+{filter:grayscale(100%);transition:all .3s ease-out;opacity:.5}
+
+.apply-fade-hover:hover img{filter:inherit;opacity:1}
