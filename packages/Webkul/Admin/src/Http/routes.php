@@ -792,6 +792,15 @@ Route::group(['middleware' => ['web']], function () {
                     'view' => 'admin::recommended_slider.index',
                 ])->name('admin.recommended_sliders.store');
 
+                /*** customize section configuration ***/
+                Route::get('/customize-section', 'Webkul\CMS\Http\Controllers\Admin\CustomizeSectionController@index')->defaults('_config', [
+                    'view' => 'admin::customize_home_section.index',
+                ])->name('admin.customize_home_section.index');
+
+                Route::post('/customize-section-save', 'Webkul\CMS\Http\Controllers\Admin\CustomizeSectionController@store')->defaults('_config', [
+                    'view' => 'admin::recommended_slider.index',
+                ])->name('admin.customize_home_section.store');
+
 
                 // Route::post('/delete/{id}', 'Webkul\CMS\Http\Controllers\Admin\PageController@delete')->defaults('_config', [
                 //     'redirect' => 'admin.cms.index'

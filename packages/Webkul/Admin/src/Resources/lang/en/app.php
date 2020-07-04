@@ -1195,6 +1195,10 @@ return [
             'view' => 'Recommended Category Slider',
             'config' => 'Recommended Category Slider Configuration'
         ],
+        'customize_home_section' => [
+            'view' => 'Customize Home Section',
+            'config' => 'Customize Home Section Configuration'
+        ],
         'pages' => [
             'general' => 'General',
             'seo' => 'SEO',

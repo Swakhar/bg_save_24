@@ -16,6 +16,8 @@ class CreateHomeCustomizeSectionMasterTable extends Migration
         Schema::create('home_customize_section_masters', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->char('is_visible', 1)->comment('1 = visible, 0 = invisible');
+            $table->integer('position');
             $table->timestamps();
         });
     }

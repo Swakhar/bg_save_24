@@ -386,23 +386,81 @@ class Product extends Model implements ProductContract
         $local = request()->get('locale') ?: app()->getLocale();
 
         $data = DB::select(DB::raw("SELECT product_flat.name product_name, category_translations.name category_name,
-        product_categories.product_id, product_categories.category_id
+        product_categories.product_id, product_categories.category_id, categories.parent_id,
+        p_cat.name p_category_name
         FROM product_categories
         INNER JOIN product_flat on product_flat.product_id = product_categories.product_id
         INNER JOIN category_translations on category_translations.category_id = product_categories.category_id
+        INNER JOIN categories on categories.id = product_categories.category_id
+        INNER JOIN category_translations p_cat on p_cat.category_id = categories.parent_id
         WHERE category_translations.locale = '$local' and product_flat.locale = '$local'
         ORDER BY product_flat.name"));
 
         $products = [];
         $categories = [];
+        $categories_parent = [];
 
         foreach ($data as $key => $value) {
             $products[$value->product_id] = $value;
             $categories[$value->category_id] = $value->category_name;
+
+            if (array_key_exists($value->parent_id, $categories_parent)) {
+                if (!in_array($value->category_id, $categories_parent[$value->parent_id]['category'])) {
+                    $categories_parent[$value->parent_id]['category'][] = $value->category_id;
+                }
+            } else {
+                $categories_parent[$value->parent_id]['parent'] = $value->parent_id;
+                $categories_parent[$value->parent_id]['parent_name'] = $value->p_category_name;
+                $categories_parent[$value->parent_id]['category'][] = $value->category_id;
+            }
+
         }
         return [
             'products' => $products,
-            'categories' => $categories
+            'categories' => $categories,
+            'categories_parent' => $categories_parent
+        ];
+    }
+
+    public static function GetProductsWithCategoryParentRelation()
+    {
+        $local = request()->get('locale') ?: app()->getLocale();
+
+        $data = DB::select(DB::raw("SELECT product_flat.name product_name, category_translations.name category_name,
+        product_categories.product_id, product_categories.category_id, categories.parent_id,
+        p_cat.name p_category_name
+        FROM product_categories
+        INNER JOIN product_flat on product_flat.product_id = product_categories.product_id
+        INNER JOIN category_translations on category_translations.category_id = product_categories.category_id
+        INNER JOIN categories on categories.id = product_categories.category_id
+        INNER JOIN category_translations p_cat on p_cat.category_id = categories.parent_id
+        WHERE category_translations.locale = '$local' and product_flat.locale = '$local'
+        ORDER BY product_flat.name"));
+
+        $products = [];
+        $categories = [];
+        $categories_parent = [];
+
+        foreach ($data as $key => $value) {
+            $products[$value->product_id] = $value;
+            $categories[$value->category_id]['cat_name'] = $value->category_name;
+            $categories[$value->category_id]['parent_cat_id'] = $value->parent_id;
+
+            if (array_key_exists($value->parent_id, $categories_parent)) {
+                if (!in_array($value->category_id, $categories_parent[$value->parent_id]['category'])) {
+                    $categories_parent[$value->parent_id]['category'][] = $value->category_id;
+                }
+            } else {
+                $categories_parent[$value->parent_id]['parent'] = $value->parent_id;
+                $categories_parent[$value->parent_id]['parent_name'] = $value->p_category_name;
+                $categories_parent[$value->parent_id]['category'][] = $value->category_id;
+            }
+
+        }
+        return [
+            'products' => $products,
+            'categories' => $categories,
+            'categories_parent' => $categories_parent
         ];
     }
 

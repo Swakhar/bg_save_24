@@ -223,5 +223,11 @@ return [
         'route'      => 'admin.recommended_sliders.index',
         'sort'       => 2,
         'icon-class' => '',
+    ], [
+        'key'        => 'cms.customize_home_section',
+        'name'       => 'admin::app.cms.customize_home_section.view',
+        'route'      => 'admin.customize_home_section.index',
+        'sort'       => 3,
+        'icon-class' => '',
     ]
 ];
