@@ -3,6 +3,16 @@
 Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function () {
     Route::namespace('Webkul\Velocity\Http\Controllers\Shop')->group(function () {
 
+        Route::get('/category-list', function () {
+           $data = \Illuminate\Support\Facades\DB::table('category_translations')
+               ->select(\Illuminate\Support\Facades\DB::raw('name, category_id id'))
+               ->orderBy('name')
+                ->get();
+           return [
+               'categories' => $data
+           ];
+        })->name('category-list');
+
         Route::get('/recommended-slider', function () {
             $formattedProducts = [];
             $products = \Webkul\Product\Models\ProductFlat::select(DB::raw('product_flat.*, t1.name slider_name, 

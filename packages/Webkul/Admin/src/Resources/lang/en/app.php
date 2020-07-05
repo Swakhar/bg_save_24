@@ -1199,6 +1199,10 @@ return [
             'view' => 'Customize Home Section',
             'config' => 'Customize Home Section Configuration'
         ],
+        'mix_customize_section' => [
+            'view' => 'Mix Customize Section',
+            'config' => 'Mix Customize Section Configuration'
+        ],
         'pages' => [
             'general' => 'General',
             'seo' => 'SEO',

@@ -801,6 +801,15 @@ Route::group(['middleware' => ['web']], function () {
                     'view' => 'admin::recommended_slider.index',
                 ])->name('admin.customize_home_section.store');
 
+                /*** mix customize section configuration ***/
+                Route::get('/mix-customize-section', 'Webkul\CMS\Http\Controllers\Admin\MixSectionController@index')->defaults('_config', [
+                    'view' => 'admin::mix_customize_section.index',
+                ])->name('admin.mix_customize_section.index');
+
+                Route::post('/mix-customize-section-save', 'Webkul\CMS\Http\Controllers\Admin\MixSectionController@store')->defaults('_config', [
+                    'view' => 'admin::mix_customize_section.index',
+                ])->name('admin.mix_customize_section.store');
+
 
                 // Route::post('/delete/{id}', 'Webkul\CMS\Http\Controllers\Admin\PageController@delete')->defaults('_config', [
                 //     'redirect' => 'admin.cms.index'

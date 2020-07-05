@@ -15,6 +15,7 @@ $(document).ready(function () {
             && !dt_cl.is(e.target)
             && dt_cl.has(e.target).length === 0) {
             $("#menu_List").removeClass("translateX").addClass("hide")
+            $(".parent_multi_select ul").addClass("hide")
         }
     });
 

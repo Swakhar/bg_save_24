@@ -98,6 +98,8 @@
 
         </div>
 
+        <span id="base_url" url="{{ url()->to('/') }}"></span>
+
         <script type="text/javascript">
             window.flashMessages = [];
 
