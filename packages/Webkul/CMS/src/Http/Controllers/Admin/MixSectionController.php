@@ -94,45 +94,46 @@ class MixSectionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
-//        return \request();
-        $key_ref = [];
-        for ($i = 0; $i < 15; $i++) {
-            if (request()->has('category_id_' . $i)) {
-                $key_ref[] = $i;
+        $data = $request->input('data');
+        $master_section = [];
+        $details_section = [];
+        $details_child_section = [];
+        foreach ($data as $key => $value) {
+            $master_section[$key]['slug'] = $value['slug'];
+            $master_section[$key]['subtitle'] = $value['subtitle'];
+            $master_section[$key]['title'] = $value['title'];
+
+            foreach ($value['rows_iterate'] as $key2 => $value2) {
+                $details_section[$value['slug']][$key2]['slug'] = $value2['slug'];
+                $details_section[$value['slug']][$key2]['parent_slug'] = $value['slug'];
+                foreach ($value2['conditions'] as $key3 => $value3) {
+                    $details_child_section[$value2['slug']][$key3]['rule_operator'] = $value3['rule_operator'];
+                    $details_child_section[$value2['slug']][$key3]['parent_slug'] = $value2['slug'];
+                    $details_child_section[$value2['slug']][$key3]['show_multi_select'] = $value3['showMultiSelect'] == true ? 1 : 0;
+                    $details_child_section[$value2['slug']][$key3]['rule_value'] = $value3['showMultiSelect'] == true ? \GuzzleHttp\json_encode($value3['rule_value_multi']) : $value3['rule_value'];
+                }
+            }
+        }
+//return $details_section;
+        $f = [];
+        foreach ($master_section as $key => $value) {
+            DB::table('mix_customize_section_master')->insert($master_section[$key]);
+            DB::table('mix_customize_section_details')->insert($details_section[$master_section[$key]['slug']]);
+            foreach ($details_section[$master_section[$key]['slug']] as $key2 => $value2) {
+                DB::table('mix_customize_section_details_child')->insert($details_child_section[$value2['slug']]);
             }
         }
 
-        $home_slider_array = [];
-        $slider_product = [];
-        $slider_config = [];
+        // DB::table('mix_customize_section_details')->insert($master_section[$key]);
 
-        $data = request()->all();
-
-        foreach ($key_ref as $key => $value) {
-            $this->validate(request(), [
-//                'category_id_' . $value   => 'required',
-                'position_' . $value  => 'required',
-                'is_visible_' . $value  => 'required',
-                'display_name_' . $value  => 'required',
-            ]);
-        }
-        /*
-        if (request()->input('slider_id') != null) {
-            DB::table('slider_name_master')
-                ->where('id', request()->input('slider_id'))
-                ->update([
-                    'name' => request()->input('slider_name')
-                ]);
-            DB::table('home_sliders')->where('slider_name_master_id', request()->input('slider_id'))->delete();
-            $id = request()->input('slider_id');
-        } else {
-            $id = DB::table('slider_name_master')->insertGetId([
-                'name' => request()->input('slider_name')
-            ]);
-        }
-        */
+        // mix_customize_section_master
+        // mix_customize_section_details
+        // mix_customize_section_details_child
+return $f;
+        return $details_section['best-of-electronics'];
+        return \request();
         DB::table('home_customize_section_masters')->delete();
 //        DB::table('home_customize_section_details')->where('slider_name_master_id', request()->input('slider_id'))->delete();
         foreach ($key_ref as $key => $value) {
