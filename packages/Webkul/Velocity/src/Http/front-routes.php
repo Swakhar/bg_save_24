@@ -13,6 +13,7 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
            ];
         })->name('category-list');
 
+
         Route::get('/recommended-slider', function () {
             $formattedProducts = [];
             $products = \Webkul\Product\Models\ProductFlat::select(DB::raw('product_flat.*, t1.name slider_name, 

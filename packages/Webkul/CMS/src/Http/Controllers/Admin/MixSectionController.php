@@ -96,6 +96,8 @@ class MixSectionController extends Controller
      */
     public function store(Request $request)
     {
+        DB::table('mix_customize_section_master')->delete();
+
         $data = $request->input('data');
         $master_section = [];
         $details_section = [];
@@ -107,53 +109,79 @@ class MixSectionController extends Controller
 
             foreach ($value['rows_iterate'] as $key2 => $value2) {
                 $details_section[$value['slug']][$key2]['slug'] = $value2['slug'];
+                $details_section[$value['slug']][$key2]['title'] = $value2['title'];
                 $details_section[$value['slug']][$key2]['parent_slug'] = $value['slug'];
+
                 foreach ($value2['conditions'] as $key3 => $value3) {
+                    $details_child_section[$value2['slug']][$key3]['label'] = $value3['rule_type'];
                     $details_child_section[$value2['slug']][$key3]['rule_operator'] = $value3['rule_operator'];
                     $details_child_section[$value2['slug']][$key3]['parent_slug'] = $value2['slug'];
-                    $details_child_section[$value2['slug']][$key3]['show_multi_select'] = $value3['showMultiSelect'] == true ? 1 : 0;
-                    $details_child_section[$value2['slug']][$key3]['rule_value'] = $value3['showMultiSelect'] == true ? \GuzzleHttp\json_encode($value3['rule_value_multi']) : $value3['rule_value'];
+                    $details_child_section[$value2['slug']][$key3]['show_multi_select'] = $value3['show_multi_select'] == true ? 1 : 0;
+                    $details_child_section[$value2['slug']][$key3]['rule_value'] = $value3['show_multi_select'] == true ? \GuzzleHttp\json_encode($value3['rule_value_multi']) : $value3['rule_value'];
                 }
             }
         }
-//return $details_section;
-        $f = [];
+
         foreach ($master_section as $key => $value) {
             DB::table('mix_customize_section_master')->insert($master_section[$key]);
-            DB::table('mix_customize_section_details')->insert($details_section[$master_section[$key]['slug']]);
-            foreach ($details_section[$master_section[$key]['slug']] as $key2 => $value2) {
-                DB::table('mix_customize_section_details_child')->insert($details_child_section[$value2['slug']]);
+            if (array_key_exists($master_section[$key]['slug'], $details_section)) {
+                DB::table('mix_customize_section_details')->insert($details_section[$master_section[$key]['slug']]);
+                foreach ($details_section[$master_section[$key]['slug']] as $key2 => $value2) {
+                    if (array_key_exists($value2['slug'], $details_child_section)) {
+                        DB::table('mix_customize_section_details_child')->insert($details_child_section[$value2['slug']]);
+                    }
+                }
             }
         }
 
-        // DB::table('mix_customize_section_details')->insert($master_section[$key]);
-
-        // mix_customize_section_master
-        // mix_customize_section_details
-        // mix_customize_section_details_child
-return $f;
-        return $details_section['best-of-electronics'];
+        //return $details_section['best-of-electronics'];
         return \request();
-        DB::table('home_customize_section_masters')->delete();
-//        DB::table('home_customize_section_details')->where('slider_name_master_id', request()->input('slider_id'))->delete();
-        foreach ($key_ref as $key => $value) {
-            $id = DB::table('home_customize_section_masters')->insertGetId([
-                'name' => request()->input('display_name_' . $value),
-                'is_visible' => request()->has('is_visible_' . $value) ? 1 : 0,
-                'position' => request()->input('position_' . $value)
-            ]);
-            foreach (request()->input('product_id_' . $value) as $product_key => $product_value) {
-                $block_type = request()->has('is_subcategory_' . $value) ? 1 : 2;
-                DB::table('home_customize_section_details')->insertGetId([
-                    'display_category_id' => $product_value,
-                    'master_id' => $id,
-                    'display_block_type' => $block_type
-                ]);
-            }
-        }
+
        return Response::json(
            ['message' => 'Saved Successfully']
        );
+    }
+
+    public function getMixSection()
+    {
+        $sql = "SELECT mix_customize_section_master.id, mix_customize_section_master.title,
+        mix_customize_section_master.subtitle, mix_customize_section_master.slug,
+        mix_customize_section_master.is_visible,
+        mix_customize_section_master.admin_url,
+        mix_customize_section_details.master_section_id, 
+        mix_customize_section_details.slug details_slug,
+        mix_customize_section_details.title details_title,
+        mix_customize_section_details_child.details_row_id,
+        mix_customize_section_details_child.rule_operator,
+        mix_customize_section_details_child.rule_value,
+        mix_customize_section_details_child.show_multi_select,
+        mix_customize_section_details_child.label rule_type,
+        CASE 
+            WHEN mix_customize_section_details_child.show_multi_select = 1 THEN
+                rule_value
+            ELSE
+                ''
+        END rule_value_multi
+        FROM mix_customize_section_master
+        LEFT JOIN mix_customize_section_details on 
+        mix_customize_section_details.master_section_id = mix_customize_section_master.id
+        LEFT JOIN mix_customize_section_details_child on 
+        mix_customize_section_details_child.details_row_id = mix_customize_section_details.id";
+        $data = DB::select($sql);
+        $master_detail = [];
+
+        foreach ($data as $key => $value) {
+            $master_detail[$value->slug]['is_visible'] = $value->is_visible;
+            $master_detail[$value->slug]['admin_url'] = $value->admin_url;
+            $master_detail[$value->slug]['slug'] = $value->slug;
+            $master_detail[$value->slug]['title'] = $value->title;
+            $master_detail[$value->slug]['subtitle'] = $value->subtitle;
+            $master_detail[$value->slug]['rows_iterate'][$value->details_slug]['slug'] = $value->details_slug;
+            $master_detail[$value->slug]['rows_iterate'][$value->details_slug]['title'] = $value->details_title;
+            $master_detail[$value->slug]['rows_iterate'][$value->details_slug]['conditions'][] = $value;
+        }
+
+        return $master_detail;
     }
 
     /**

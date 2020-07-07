@@ -16,7 +16,7 @@
 
     export default {
         name: "multi-select",
-        props: ['items', 'index1', 'index2', 'index3'],
+        props: ['items', 'index1', 'index2', 'index3', 'rule_value_multi'],
         components: {
 
         },
@@ -28,14 +28,54 @@
         mounted() {
 
         },
+        updated() {
+            this.editPortionMultiSelect()
+        },
         created() {
-//            console.log('items', this.items)
+//            this.editPortionMultiSelect()
         },
         methods: {
+            editPortionMultiSelect: function () {
+                if (this.typing_input === "") {
+                    let multi_value = JSON.parse(this.rule_value_multi);
+
+                    for (let itm in multi_value) {
+                        for (let main_arry in this.items) {
+                            if ((+multi_value[itm]) == this.items[main_arry].id) {
+                                var btn = document.createElement("button");
+                                var icon = document.createElement("i");
+                                var input_hidden = document.createElement("input");
+                                input_hidden.type= "hidden";
+
+                                icon.className = "fa fa-times";
+                                btn.className = "multi_select_btn";
+
+                                icon.addEventListener("click", function (ee) {
+                                    ee.target.parentNode.parentNode.removeChild(ee.target.parentNode);
+                                });
+
+                                btn.innerHTML = this.items[main_arry].name;
+                                btn.appendChild(icon);
+                                btn.appendChild(input_hidden);
+                                console.log(btn);
+                                $(".div_to_add_button").append(btn);
+                                this.$emit('passDataChildToParent', {
+                                    index1: this.index1,
+                                    index2: this.index2,
+                                    index3: this.index3,
+                                    value: this.items[main_arry].id
+                                })
+                            }
+                        }
+
+                    }
+                }
+
+            },
+
             focus_parent: function (e) {
                 let tag = $(e.target).prop("tagName");
                 if (tag === "INPUT") {
-//                    console.log($(e.target).parent().height(), $(e.target).parent())
                     $(e.target).parent().parent().find("ul").removeClass("hide")
                 } else if (tag === "DIV") {
                     $(e.target).find("input.custom_control").focus();
@@ -53,6 +93,7 @@
                 }
                 $(e.target).css('width', (this.typing_input.length*9)+20+"px")
             },
+
             li_click: function (e) {
                 var btn = document.createElement("button");
                 var icon = document.createElement("i");
@@ -76,7 +117,6 @@
                     index3: this.index3,
                     value: $(e.target).attr("data-value")
                 })
-                // data-value
             }
         },
         filters: {

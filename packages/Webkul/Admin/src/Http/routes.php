@@ -806,9 +806,18 @@ Route::group(['middleware' => ['web']], function () {
                     'view' => 'admin::mix_customize_section.index',
                 ])->name('admin.mix_customize_section.index');
 
+                Route::get('/get-mix-section', 'Webkul\CMS\Http\Controllers\Admin\MixSectionController@getMixSection')->name('get-mix-section');
+
                 Route::post('/mix-customize-section-save', 'Webkul\CMS\Http\Controllers\Admin\MixSectionController@store')->defaults('_config', [
                     'view' => 'admin::mix_customize_section.index',
                 ])->name('admin.mix_customize_section.store');
+
+                Route::get('/product-image-url', function () {
+                    $data = \Illuminate\Support\Facades\DB::table('product_images')
+                        ->select(\Illuminate\Support\Facades\DB::raw('path'))
+                        ->get();
+                    return $data;
+                })->name('product-image-url');
 
 
                 // Route::post('/delete/{id}', 'Webkul\CMS\Http\Controllers\Admin\PageController@delete')->defaults('_config', [

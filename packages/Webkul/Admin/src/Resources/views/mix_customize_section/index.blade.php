@@ -26,11 +26,11 @@
                 'label'=>  __('admin::app.promotions.catalog-rules.equals-or-less-than')
              ],
              [
-                'operator'=> '<=',
+                'operator'=> '>',
                 'label'=>  __('admin::app.promotions.catalog-rules.greater-than')
              ],
              [
-                'operator'=> '<=',
+                'operator'=> '<',
                 'label'=>  __('admin::app.promotions.catalog-rules.less-than')
              ]
             ];
