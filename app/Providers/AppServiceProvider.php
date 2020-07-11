@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -15,6 +16,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+        view()->composer('*', function ($view)
+        {
+            View::share('relative_path', '');
+            View::share('version', '1.0.1');
+            View::share('server_path_from', '');
+        });
     }
 
     /**

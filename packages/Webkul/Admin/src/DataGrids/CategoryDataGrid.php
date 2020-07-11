@@ -14,7 +14,8 @@ class CategoryDataGrid extends DataGrid
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('categories as cat')
-            ->select('cat.id as category_id', 'ct.name', 'cat.position', 'cat.status', 'ct.locale',
+            ->select('cat.id as category_id', 'cat.position', 'cat.status', 'ct.locale',
+            DB::raw('PROPER(REPLACE(REPLACE(ct.url_path,\'/\',\' > \'),\'-\',\' \')) as name'),
             DB::raw('COUNT(DISTINCT ' . DB::getTablePrefix() . 'pc.product_id) as count'))
             ->leftJoin('category_translations as ct', function($leftJoin) {
                 $leftJoin->on('cat.id', '=', 'ct.category_id')

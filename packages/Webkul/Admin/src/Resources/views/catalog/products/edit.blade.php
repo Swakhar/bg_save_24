@@ -164,6 +164,7 @@
                   'bagisto.admin.catalog.product.edit_form_accordian.additional_views.before',
                    ['product' => $product])
                 !!}
+
                 @foreach ($product->getTypeInstance()->getAdditionalViews() as $view)
 
                     @include ($view)
@@ -195,7 +196,7 @@
             })
 
             tinymce.init({
-                selector: 'textarea#description, textarea#short_description',
+                selector: 'textarea',
                 height: 200,
                 width: "100%",
                 plugins: 'image imagetools media wordcount save fullscreen code',

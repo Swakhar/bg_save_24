@@ -7,6 +7,8 @@ import './bootstrap';
 
 window.Vue = Vue;
 window.VeeValidate = VeeValidate;
+window.toastr = require('toastr/toastr');
+require('toastr/toastr.scss');
 
 Vue.use(VeeValidate, {
     dictionary: {
@@ -19,6 +21,11 @@ Vue.prototype.$http = axios
 
 window.eventBus = new Vue();
 
+Vue.component('mix-customize-section', require('./components/mix_section').default);
+Vue.component('multi-select', require('./components/shared/multi_select').default);
+Vue.component('single-select', require('./components/shared/single_select').default);
+Vue.component('image-picker', require('./components/shared/image_pickup').default);
+
 $(document).ready(function () {
     Vue.config.ignoredElements = [
         'option-wrapper',
@@ -30,7 +37,8 @@ $(document).ready(function () {
         el: "#app",
 
         data: {
-            modalIds: {}
+            modalIds: {},
+
         },
 
         mounted() {
@@ -38,9 +46,11 @@ $(document).ready(function () {
             this.addFlashMessages();
 
             this.$validator.localize(document.documentElement.lang);
+
         },
 
         methods: {
+
             onSubmit: function (e) {
                 this.toggleButtonDisable(true);
 

@@ -31,7 +31,7 @@ return array(
     */
 
     'paths' => array(
-        storage_path('app/public'),
+        public_path('uploads'),
         public_path('storage')
     ),
 

@@ -635,6 +635,7 @@ return [
             'attributes' => 'Attributes',
             'related-industries' => 'Related Industries/Institutes',
             'industries' => 'Related Industries/Institutes',
+
         ],
         'industries' => [
             'title' => 'Related Industries',
@@ -1190,6 +1191,18 @@ return [
     ],
 
     'cms' => [
+        'recommended_slider' => [
+            'view' => 'Recommended Category Slider',
+            'config' => 'Recommended Category Slider Configuration'
+        ],
+        'customize_home_section' => [
+            'view' => 'Customize Home Section',
+            'config' => 'Customize Home Section Configuration'
+        ],
+        'mix_customize_section' => [
+            'view' => 'Mix Customize Section',
+            'config' => 'Mix Customize Section Configuration'
+        ],
         'pages' => [
             'general' => 'General',
             'seo' => 'SEO',
