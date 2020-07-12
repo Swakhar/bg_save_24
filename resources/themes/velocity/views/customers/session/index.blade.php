@@ -94,8 +94,15 @@
                             {!! view_render_event('bagisto.shop.customers.login_form_controls.after') !!}
 
                             <input class="theme-btn" type="submit" value="{{ __('shop::app.customer.login-form.button_title') }}">
-
+                            <br>
+                            <hr>
+                            <p>Alternative Login</p>
+                            <div class="theme-btn"><a href="{{ route('redirectFacebook') }}">Facebbok</a></div>
+                            <br>
+                            <hr>
+                            <div class="theme-btn"><a href="{{ route('redirectGoogle') }}">Google</a></div>
                         </form>
+                        
                     </div>
                 </div>
             </div>

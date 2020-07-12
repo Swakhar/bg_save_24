@@ -21,13 +21,15 @@ class CreateCustomersTable extends Migration
             $table->string('last_name');
             $table->enum('gender', ['Male', 'Female']);
             $table->date('date_of_birth')->nullable();
-            $table->string('email')->unique();
+            $table->string('email');
             $table->tinyInteger('status')->default(1);
             $table->string('password');
             $table->integer('customer_group_id')->unsigned()->nullable();
             $table->foreign('customer_group_id')->references('id')->on('customer_groups')->onDelete('set null');
             $table->boolean('subscribed_to_news_letter')->default(0);
             $table->rememberToken();
+            $table->string('fb_id')->default(null);
+            $table->string('g_id')->default(null);
             $table->timestamps();
         });
     }

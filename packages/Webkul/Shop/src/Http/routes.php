@@ -137,6 +137,7 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
         Route::post('login', 'Webkul\Customer\Http\Controllers\SessionController@create')->defaults('_config', [
             'redirect' => 'customer.profile.index'
         ])->name('customer.session.create');
+        
 
         // Registration Routes
         //registration form show
@@ -305,4 +306,10 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
             'category_view' => 'shop::products.index'
         ])
         ->name('shop.productOrCategory.index');
+    //Login using facebook
+        Route::get('login/facebook', 'Webkul\Customer\Http\Controllers\SessionController@redirectToFacebookProvider')->name('redirectFacebook');
+        Route::get('login/facebook/callback', 'Webkul\Customer\Http\Controllers\SessionController@handleFacebookProviderCallback');
+        //Login using google
+        Route::get('login/google', 'Webkul\Customer\Http\Controllers\SessionController@redirectToGoogleProvider')->name('redirectGoogle');
+        Route::get('login/google/callback', 'Webkul\Customer\Http\Controllers\SessionController@handleGoogleProviderCallback');
 });

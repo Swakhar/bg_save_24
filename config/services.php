@@ -46,5 +46,16 @@ return [
         'model' => App\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
+    ],
+    'facebook' => [
+        'client_id' => '607988420103433',
+        'client_secret' => '352b7f6bf6707cdc4a212937a7675718',
+        'redirect' => 'http://localhost:8000/login/facebook/callback',
+    ],
+    'google' => [
+        'client_id' => '556897270707-aj5buafcdjimd1t0itnpf4l9j8rsni1m.apps.googleusercontent.com',
+        'client_secret' => 'E1V3SBfeUPb47KSmHU6GklF3',
+        'redirect' => 'http://localhost:8000/login/google/callback',
     ]
+    
 ];
