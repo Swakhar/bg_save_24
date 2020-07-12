@@ -96,6 +96,10 @@
     @include('shop::home.customize_store_section')
 @endsection
 
+@section('full-mix-customize-section')
+    @include('shop::home.mix_customize_section_home')
+@endsection
+
 
 @section('full-content-wrapper')
 

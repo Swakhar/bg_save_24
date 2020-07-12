@@ -1,6 +1,6 @@
 <template>
     <div class="dt parent_multi_select">
-        <div class="dt div_to_add_button" @click="focus_parent">
+        <div class="dt div_to_add_button" @click="focus_parent"  :ref="`${ index1 + '_' + index2 + '_' + index3 }`">
             <input v-model="typing_input" @keyup="typing_input_keyup"
                    @focus="focus_parent"
                    class="dt custom_control" style="width: 20px;border: none;" type="text" placeholder="">
@@ -38,6 +38,7 @@
             editPortionMultiSelect: function () {
                 if (this.typing_input === "") {
                     let multi_value = JSON.parse(this.rule_value_multi);
+                    console.log()
 
                     for (let itm in multi_value) {
                         for (let main_arry in this.items) {
@@ -57,8 +58,9 @@
                                 btn.innerHTML = this.items[main_arry].name;
                                 btn.appendChild(icon);
                                 btn.appendChild(input_hidden);
-                                console.log(btn);
-                                $(".div_to_add_button").append(btn);
+//                                console.log(btn);
+                                this.$refs[this.index1 + '_' + this.index2 + '_' + this.index3].append(btn);
+//                                $(".div_to_add_button").append(btn);
                                 this.$emit('passDataChildToParent', {
                                     index1: this.index1,
                                     index2: this.index2,
@@ -102,8 +104,11 @@
 
                 icon.className = "fa fa-times";
                 btn.className = "multi_select_btn";
+                btn.type = "button"
 
                 icon.addEventListener("click", function (ee) {
+                    ee.stopPropagation()
+                    ee.preventDefault()
                     ee.target.parentNode.parentNode.removeChild(ee.target.parentNode);
                 });
 

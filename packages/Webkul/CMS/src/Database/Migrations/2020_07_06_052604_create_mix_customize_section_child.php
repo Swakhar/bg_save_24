@@ -19,6 +19,7 @@ class CreateMixCustomizeSectionChild extends Migration
             $table->integer('details_row_id')->unsigned();
             $table->foreign('details_row_id')->references('id')
                 ->on('mix_customize_section_details')->onDelete('cascade');
+            $table->string('label');
             $table->string('rule_operator');
             $table->string('rule_value');
             $table->char('show_multi_select')->comment("1 = true, 0 = false");

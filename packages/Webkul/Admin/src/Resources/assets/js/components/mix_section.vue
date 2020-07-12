@@ -131,29 +131,46 @@
                                                     @change="attribute_select_change($event, parent_item_index, index, nested_index)"
                                                     name="" id="">
                                                 <option :data-type="attr_item.label"
-                                                :data-value="JSON.stringify({
-                                                key: attr_item.key,
-                                                type: attr_item.type,
-                                                label: attr_item.label
-                                                })"
-                                                        :value="attr_item.label"
-                                                        v-for="attr_item in condition_attributes2[0].children">{{ attr_item.label }}</option>
+                                                :data-value="child_cat_index"
+                                                :value="attr_item.label"
+                                                v-for="(attr_item, child_cat_index) in condition_attributes2[0].children">{{ attr_item.label }}</option>
                                             </select>
                                         </div>
+
                                         <div class="inline_form_3_col">
                                             <select v-model="item_cond.rule_operator" name="" class="control">
                                                 <option v-for="cond in item_cond.conditions_operator"
                                                         :value="cond.operator">{{ cond.label }}</option>
                                             </select>
                                         </div>
+
                                         <div class="inline_form_3_col">
-                                            <multi-select v-if="item_cond.show_multi_select == 1"
-                                                          v-on:passDataChildToParent="categories_selected"
-                                                          :index1="parent_item_index"
-                                                          :index2="index"
-                                                          :index3="nested_index"
-                                                          :rule_value_multi="item_cond.rule_value_multi"
-                                                          :items="categories"></multi-select>
+                                            <!--<multi-select :key="`${parent_item_index + '_' + index + '_' + nested_index}`"-->
+                                                          <!--v-if="item_cond.show_multi_select == 1"-->
+                                                          <!--v-on:passDataChildToParent="categories_selected"-->
+                                                          <!--:index1="parent_item_index"-->
+                                                          <!--:index2="index"-->
+                                                          <!--:index3="nested_index"-->
+                                                          <!--:rule_value_multi="item_cond.rule_value_multi"-->
+                                                          <!--:items="categories"></multi-select>-->
+                                            <select2
+                                                    :index1="parent_item_index"
+                                                    :index2="index"
+                                                    :index3="nested_index"
+                                                    :included_data="item_cond.multi"
+                                                    v-if="item_cond.show_multi_select == 1"
+                                                    :items="item_cond.data_List"
+                                                    :key_value="`id`"
+                                                    :field_value="`admin_name`"
+                                                    :aspect_key_value="`id`"
+                                                    :aspect_field_value="`admin_name`"
+                                                    :type="`multi`"
+                                                    :reference="`${item_cond.multi}`"
+                                                    :v_model="`item_cond.rule_value_multi`"
+                                                    v-on:passDataToParent="select2"
+                                                    v-on:passDataToParentDeleteItem="select2Delete"
+                                            ></select2>
+
                                             <input  v-model="item_cond.rule_value" v-else  type="text" class="control">
 
                                             <i @click="click_to_delete_condition_row(parent_item_index, index, nested_index)"
@@ -162,13 +179,15 @@
                                     </div>
 
                                     <button type="button" @click="item.conditions.push({
-                            rule_type: '',
-                            rule_operator: '',
-                            rule_value: '',
-                            rule_value_multi: [],
-                            conditions_operator: [],
-                            show_multi_select: 1
-                            })" class="btn btn-btn-success change_cond">Add Condition</button>
+                                    rule_type: '',
+                                    rule_operator: '',
+                                    rule_value: '',
+                                    rule_value_multi: [],
+                                    conditions_operator: [],
+                                    data_List: [],
+                                    multi: [],
+                                    show_multi_select: 1
+                                    })" class="btn btn-btn-success change_cond">Add Condition</button>
                                 </div>
                             </div>
                         </div>
@@ -185,11 +204,12 @@
 
 <script>
 
+    import Select2 from './shared/Select2.vue';
     export default {
         name: "mix-customize-section",
         props: ['translation_array', 'condition_attributes', 'page_title', 'route'],
         components: {
-
+            select2: Select2
         },
         data() {
             return {
@@ -207,6 +227,9 @@
                 under_parent_index: 0,
             }
         },
+        updated() {
+//          console.log(this.condition_attributes)
+        },
         mounted() {
 
         },
@@ -215,6 +238,56 @@
             this.getCategories();
         },
         methods: {
+            select2: function (val) {
+                this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
+                    .conditions[val.index3]['multi'].push(+val.val[val.key_value]);
+
+            },
+
+            select2Delete: function (val) {
+                console.log(val)
+                for (let child in this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
+                   .conditions[val.index3]['multi']) {
+                    console.log(this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
+                        .conditions[val.index3]['multi'][child], val.val)
+                    if (this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
+                            .conditions[val.index3]['multi'][child] == val.val) {
+                        this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
+                            .conditions[val.index3]['multi'].splice(child, 1)
+                    }
+                }
+//                this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
+//                    .conditions[val.index3]['multi'].push(+val.val[val.key_value]);
+
+            },
+
+            attribute_select_change: function (event, parent_item_index, index, nested_index) {
+                let cur_obj = JSON.parse($(event.target.options[event.target.options.selectedIndex]).attr('data-value'));
+
+                if (this.condition_attributes2[0].children[cur_obj].type === "multiselect" &&
+                    this.condition_attributes2[0].children[cur_obj].label === "Categories" ) {
+                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
+                        .conditions[nested_index].show_multi_select = 1;
+                    console.log(this.condition_attributes2[0].children[cur_obj].options[0].children)
+                } else if (this.condition_attributes2[0].children[cur_obj].type === "multiselect") {
+                    console.log(this.condition_attributes2[0].children[cur_obj].options)
+                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
+                        .conditions[nested_index].show_multi_select = 1;
+                } else if (this.condition_attributes2[0].children[cur_obj].type === "select") {
+                    console.log(this.condition_attributes2[0].children[cur_obj].options)
+                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
+                        .conditions[nested_index].show_multi_select = 0;
+                } else {
+                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
+                        .conditions[nested_index].show_multi_select = 0;
+                }
+//                console.log('cur_obj', this.condition_attributes2[0].children[cur_obj]['options'])
+                this.parent_rows_iterate[parent_item_index].rows_iterate[index]
+                    .conditions[nested_index].data_List = this.condition_attributes2[0].children[cur_obj]['options'];
+                this.parent_rows_iterate[parent_item_index].rows_iterate[index]
+                    .conditions[nested_index].conditions_operator = this.translation_array[this.condition_attributes2[0].children[cur_obj].type];
+
+            },
             visibility_image_Panel: function (val) {
                 this.is_show_image_panel = val;
             },
@@ -228,13 +301,16 @@
                 this.parent_rows_iterate[parent_item_index].rows_iterate[index].conditions.splice(nested_index, 1);
             },
             categories_selected: function (val) {
+
                 let parse_arr = JSON.parse(this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
                     .conditions[val.index3].rule_value_multi);
+                console.log('parse_arr', parse_arr)
                 let parse_arr2 = JSON.parse(parse_arr)
-                console.log(parse_arr2.indexOf(val.value.toString()))
-                if (parse_arr2.indexOf(val.value.toString()) === -1) {
-                    parse_arr2.push(val.value.toString())
+                console.log(parse_arr2.indexOf(+val.value.toString()))
+                if (parse_arr2.indexOf(+val.value.toString()) === -1) {
+                    parse_arr2.push(+val.value.toString())
                 }
+                console.log('parse_arr2', parse_arr2)
                 this.parent_rows_iterate[val.index1].rows_iterate[val.index2].conditions[val.index3]
                     .rule_value_multi = JSON.stringify(JSON.stringify(parse_arr2))
             },
@@ -266,19 +342,7 @@
                     rows_iterate: []
                 });
             },
-            attribute_select_change: function (event, parent_item_index, index, nested_index) {
-                let cur_obj = JSON.parse($(event.target.options[event.target.options.selectedIndex]).attr('data-value'));
-                this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                    .conditions[nested_index].conditions_operator = this.translation_array[cur_obj.type];
 
-                if (cur_obj.label ===  "Categories") {
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].show_multi_select = 1;
-                } else {
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].show_multi_select = 0;
-                }
-            },
             loaded: function () {
                 this.baseUrl = $("#base_url").attr("url");
                 this.condition_attributes2 = this.condition_attributes

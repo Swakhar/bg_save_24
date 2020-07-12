@@ -23,6 +23,7 @@ window.eventBus = new Vue();
 
 Vue.component('mix-customize-section', require('./components/mix_section').default);
 Vue.component('multi-select', require('./components/shared/multi_select').default);
+Vue.component('select2', require('./components/shared/Select2').default);
 Vue.component('single-select', require('./components/shared/single_select').default);
 Vue.component('image-picker', require('./components/shared/image_pickup').default);
 

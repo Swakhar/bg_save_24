@@ -16,6 +16,8 @@ $(document).ready(function () {
             && dt_cl.has(e.target).length === 0) {
             $("#menu_List").removeClass("translateX").addClass("hide")
             $(".parent_multi_select ul").addClass("hide")
+            $(".select2 ul").addClass("hide")
+
         }
     });
 

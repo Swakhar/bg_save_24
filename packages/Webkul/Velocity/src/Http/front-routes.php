@@ -13,6 +13,56 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
            ];
         })->name('category-list');
 
+        Route::get('/mix-category-item-front', 'ShopController@HomePageGetMixCategory')->name('mix-category-home-page');
+
+        Route::get('/mix-category-item/{slug}', function ($slug) {
+//            return $slug;
+            $data = \Illuminate\Support\Facades\DB::select("SELECT mix_customize_section_details.slug, 
+            mix_customize_section_details.title,
+            mix_customize_section_details_child.label, mix_customize_section_details_child.rule_operator,
+            mix_customize_section_details_child.rule_value, mix_customize_section_details_child.show_multi_select
+            FROM mix_customize_section_details
+            INNER JOIN mix_customize_section_details_child ON mix_customize_section_details_child.details_row_id = 
+            mix_customize_section_details.ID
+            WHERE slug = '$slug'");
+
+            $label_to_column_map = [
+                'Price' => 'product_flat.price',
+            ];
+
+            $prod = [];
+
+            foreach ($data as $key => $value) {
+                $prod['rule'][$value->label] = $value->rule_operator;
+                $prod['label'][$value->label] = $value->label;
+//              return  $filtered = strtolower(preg_replace('/[\W\s\/]+/', '-', $value->rule_value));
+                $prod['value'][$value->label] = $value->show_multi_select == 1 ? implode(',', json_decode($value->rule_value)) : $value->rule_value;
+            }
+            $sql = "";
+            if (count($prod) > 0) {
+                if (array_key_exists('Categories', $prod['value'])) {
+                    $sql = "SELECT product_flat.id, product_flat.sku, product_flat.name, product_flat.url_key, 
+                    product_flat.new, product_flat.featured, product_flat.status, product_flat.thumbnail,
+                    price, product_flat.cost, product_flat.special_price,
+                    special_price_from, product_flat.special_price_to, product_flat.weight FROM product_categories
+                    INNER JOIN product_flat on product_flat.id = product_categories.product_id
+                    WHERE category_id in (" . $prod['value']['Categories'] .")";
+                } else {
+                    $sql = "SELECT product_flat.id, product_flat.sku, product_flat.name, product_flat.url_key, 
+                    product_flat.new, product_flat.featured, product_flat.status, product_flat.thumbnail,
+                    price, product_flat.cost, product_flat.special_price,
+                    special_price_from, product_flat.special_price_to, product_flat.weight FROM product_flat where product_flat.id > 0 ";
+                }
+                foreach ($prod['value'] as $key => $value) {
+                    if ($key != "Categories") {
+                        $sql .= " AND $label_to_column_map[$key] " . $prod['rule'][$key] . " $value";
+                    }
+                }
+            }
+            return $product = \Illuminate\Support\Facades\DB::select($sql);
+
+        })->name('mix-category-item');
+
 
         Route::get('/recommended-slider', function () {
             $formattedProducts = [];

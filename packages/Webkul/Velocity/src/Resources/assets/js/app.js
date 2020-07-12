@@ -53,6 +53,7 @@ Vue.component('responsive-sidebar', require('./UI/components/responsive-sidebar'
 Vue.component('product-quick-view', require('./UI/components/product-quick-view'));
 Vue.component('product-quick-view-btn', require('./UI/components/product-quick-view-btn'));
 Vue.component('recommended-cat-list', require('./UI/components/recommended-cat-list'));
+Vue.component('mix-customize-section-home', require('./UI/components/mix-customize-section'));
 
 window.eventBus = new Vue();
 

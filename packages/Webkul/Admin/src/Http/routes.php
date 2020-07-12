@@ -806,7 +806,8 @@ Route::group(['middleware' => ['web']], function () {
                     'view' => 'admin::mix_customize_section.index',
                 ])->name('admin.mix_customize_section.index');
 
-                Route::get('/get-mix-section', 'Webkul\CMS\Http\Controllers\Admin\MixSectionController@getMixSection')->name('get-mix-section');
+                Route::get('/get-mix-section', 'Webkul\CMS\Http\Controllers\Admin\MixSectionController@getMixSection')
+                    ->name('get-mix-section');
 
                 Route::post('/mix-customize-section-save', 'Webkul\CMS\Http\Controllers\Admin\MixSectionController@store')->defaults('_config', [
                     'view' => 'admin::mix_customize_section.index',
