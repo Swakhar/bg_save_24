@@ -21,7 +21,7 @@ class CreateCustomersTable extends Migration
             $table->string('last_name');
             $table->enum('gender', ['Male', 'Female']);
             $table->date('date_of_birth')->nullable();
-            $table->string('email');
+            $table->string('email')->unique();
             $table->tinyInteger('status')->default(1);
             $table->string('password');
             $table->integer('customer_group_id')->unsigned()->nullable();

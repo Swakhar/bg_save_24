@@ -118,6 +118,11 @@ class SessionController extends Controller
     public function handleFacebookProviderCallback()
     {
         $user = Socialite::driver('facebook')->stateless()->user();
+        $emailexist=$this->customerRepository->where('email',$user->getEmail())->get();
+        if(count($emailexist)){
+            session()->flash('error', trans('The email related to this account has exist by other login methods! Please sign in wth that account!'));
+            return redirect()->back();
+        }
         $customer=$this->customerRepository->where('fb_id',$user->getId())->get();
         $log['email']=$user->getEmail();
         $log['password']=$user->getId();
@@ -161,7 +166,11 @@ class SessionController extends Controller
     public function handleGoogleProviderCallback()
     {
         $user = Socialite::driver('google')->stateless()->user();
-
+        $emailexist=$this->customerRepository->where('email',$user->getEmail())->get();
+        if(count($emailexist)){
+            session()->flash('error', trans('The email related to this account has exist by other login methods! Please sign in wth that account!'));
+            return redirect()->back();
+        }
         $customer=$this->customerRepository->where('g_id',$user->getId())->get();
         $log['email']=$user->getEmail();
         $log['password']=$user->getId();
