@@ -73,4 +73,14 @@ class ProductImage extends AbstractProduct
 
         return $image;
     }
+
+    public function getProductImageRaw($product)
+    {
+        if (! Storage::has($product->image_url)) {
+            return asset('vendor/webkul/ui/assets/images/product/meduim-product-placeholder.png');
+        } else {
+            return url('cache/medium/' . $product->image_url);
+        }
+
+    }
 }

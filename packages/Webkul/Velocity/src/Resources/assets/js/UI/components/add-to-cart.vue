@@ -5,7 +5,7 @@
             :disabled="isButtonEnable == 'false' || isButtonEnable == false"
             :class="`btn btn-add-to-cart ${addClassToBtn}`">
 
-            <i class="material-icons text-down-3" v-if="showCartIcon">shopping_cart</i>
+            <i class="material-icons text-down-3" v-if="showCartIcon"></i>
 
             <span class="fs14 fw6 text-uppercase text-up-4" v-text="btnText"></span>
         </button>

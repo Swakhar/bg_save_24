@@ -21,6 +21,7 @@
     "vue-template-compiler": "^2.6.11"
   },
   "dependencies": {
+    "toastr": "^2.1.4",
     "vee-validate": "^2.2.15"
   }
 }

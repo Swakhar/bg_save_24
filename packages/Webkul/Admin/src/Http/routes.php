@@ -783,6 +783,44 @@ Route::group(['middleware' => ['web']], function () {
                     'redirect' => 'admin.cms.index',
                 ])->name('admin.cms.mass-delete');
 
+                /*** recommended category slider ***/
+                Route::get('/recommended-category-slider', 'Webkul\CMS\Http\Controllers\Admin\RecommendedSliderController@index')->defaults('_config', [
+                    'view' => 'admin::recommended_slider.index',
+                ])->name('admin.recommended_sliders.index');
+
+                Route::post('/recommended-category-slider-save', 'Webkul\CMS\Http\Controllers\Admin\RecommendedSliderController@store')->defaults('_config', [
+                    'view' => 'admin::recommended_slider.index',
+                ])->name('admin.recommended_sliders.store');
+
+                /*** customize section configuration ***/
+                Route::get('/customize-section', 'Webkul\CMS\Http\Controllers\Admin\CustomizeSectionController@index')->defaults('_config', [
+                    'view' => 'admin::customize_home_section.index',
+                ])->name('admin.customize_home_section.index');
+
+                Route::post('/customize-section-save', 'Webkul\CMS\Http\Controllers\Admin\CustomizeSectionController@store')->defaults('_config', [
+                    'view' => 'admin::recommended_slider.index',
+                ])->name('admin.customize_home_section.store');
+
+                /*** mix customize section configuration ***/
+                Route::get('/mix-customize-section', 'Webkul\CMS\Http\Controllers\Admin\MixSectionController@index')->defaults('_config', [
+                    'view' => 'admin::mix_customize_section.index',
+                ])->name('admin.mix_customize_section.index');
+
+                Route::get('/get-mix-section', 'Webkul\CMS\Http\Controllers\Admin\MixSectionController@getMixSection')
+                    ->name('get-mix-section');
+
+                Route::post('/mix-customize-section-save', 'Webkul\CMS\Http\Controllers\Admin\MixSectionController@store')->defaults('_config', [
+                    'view' => 'admin::mix_customize_section.index',
+                ])->name('admin.mix_customize_section.store');
+
+                Route::get('/product-image-url', function () {
+                    $data = \Illuminate\Support\Facades\DB::table('product_images')
+                        ->select(\Illuminate\Support\Facades\DB::raw('path'))
+                        ->get();
+                    return $data;
+                })->name('product-image-url');
+
+
                 // Route::post('/delete/{id}', 'Webkul\CMS\Http\Controllers\Admin\PageController@delete')->defaults('_config', [
                 //     'redirect' => 'admin.cms.index'
                 // ])->name('admin.cms.delete');

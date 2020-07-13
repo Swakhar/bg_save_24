@@ -52,6 +52,8 @@ Vue.component("shimmer-component", require("./UI/components/shimmer-component"))
 Vue.component('responsive-sidebar', require('./UI/components/responsive-sidebar'));
 Vue.component('product-quick-view', require('./UI/components/product-quick-view'));
 Vue.component('product-quick-view-btn', require('./UI/components/product-quick-view-btn'));
+Vue.component('recommended-cat-list', require('./UI/components/recommended-cat-list'));
+Vue.component('mix-customize-section-home', require('./UI/components/mix-customize-section'));
 
 window.eventBus = new Vue();
 
@@ -68,7 +70,8 @@ $(document).ready(function () {
                 'sharedRootCategories': [],
                 'responsiveSidebarTemplate': '',
                 'responsiveSidebarKey': Math.random(),
-                'baseUrl': document.querySelector("script[src$='velocity.js']").getAttribute('baseUrl'),
+                // 'baseUrl': document.querySelector("script[src$='velocity.js']").getAttribute('baseUrl'),
+                'baseUrl': document.getElementById("base_url_span").getAttribute('baseUrl'),
             }
         },
 
@@ -84,11 +87,13 @@ $(document).ready(function () {
             },
 
             toggleSidebar: function (id, {target}, type) {
+
                 if (
                     Array.from(target.classList)[0] == "main-category"
                     || Array.from(target.parentElement.classList)[0] == "main-category"
                 ) {
                     let sidebar = $(`#sidebar-level-${id}`);
+
                     if (sidebar && sidebar.length > 0) {
                         if (type == "mouseover") {
                             this.show(sidebar);
@@ -113,13 +118,17 @@ $(document).ready(function () {
                             subCategories1 = $(subCategories1);
 
                             if (type == "mouseover") {
+                                console.log(subCategories1)
                                 this.show(subCategories1);
-
                                 let sidebarChild = subCategories1.find('.sidebar');
                                 this.show(sidebarChild);
                             } else if (type == "mouseout") {
+
                                 this.hide(subCategories1);
+                            } else {
+                                console.log('not found')
                             }
+
                         } else {
                             if (type == "mouseout") {
                                 let sidebar = $(`#${id}`);
@@ -281,7 +290,7 @@ $(document).ready(function () {
                         } else {
                             inputNames.push(chunk)
                         }
-                    })
+                    });
 
                     var inputName = inputNames.join('');
 

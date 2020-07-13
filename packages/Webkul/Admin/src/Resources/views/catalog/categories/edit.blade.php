@@ -128,17 +128,23 @@
 
                     {!! view_render_event('bagisto.admin.catalog.category.edit_form_accordian.description_images.after', ['category' => $category]) !!}
 
-                    @if ($categories->count())
+                    @if (count($categories))
 
                         {!! view_render_event('bagisto.admin.catalog.category.edit_form_accordian.parent_category.before', ['category' => $category]) !!}
 
                         <accordian :title="'{{ __('admin::app.catalog.categories.parent-category') }}'" :active="true">
                             <div slot="body">
-
                                 {!! view_render_event('bagisto.admin.catalog.category.edit_form_accordian.parent_category.controls.before', ['category' => $category]) !!}
+                                    <div class="control-group select">
+                                        <select class="control select2" style="width: 100%" name="parent_id" id="id" dff="">
+                                            @foreach ($categories as $catego)
+                                                <option value="{{ $catego->category_id }}" {{ ($catego->category_id) == $category->parent_id ? 'selected' : '' }}>
+                                                    {{ ucwords(str_replace("-"," ",str_replace("/"," > ",$catego->url_path))) }}
 
-                                <tree-view value-field="id" name-field="parent_id" input-type="radio" items='@json($categories)' value='@json($category->parent_id)'></tree-view>
-
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 {!! view_render_event('bagisto.admin.catalog.category.edit_form_accordian.parent_category.controls.before', ['category' => $category]) !!}
 
                             </div>

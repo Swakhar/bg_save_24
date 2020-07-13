@@ -28,9 +28,11 @@ class IndustryRepository extends Repository
      */
     public function create(array $data)
     {
-        $code=strtolower($data['admin_name']);
-        $data['code']=$code;
+        //Event::dispatch('catalog.attribute.create.before');
+
         $industry = $this->model->create($data);
+
+        //Event::dispatch('catalog.attribute.create.after', $industry);
 
         return $industry;
     }
@@ -43,11 +45,8 @@ class IndustryRepository extends Repository
      */
     public function update(array $data, $id, $industry = "id")
     {
-        $code=strtolower($data['admin_name']);
-        
-        $industry = $this->find($id);
 
-        $data['code']=$code;
+        $industry = $this->find($id);
 
         Event::dispatch('catalog.attribute.update.before', $id);
 
