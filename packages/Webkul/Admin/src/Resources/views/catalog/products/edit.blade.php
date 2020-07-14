@@ -86,6 +86,9 @@
                                         if ($attribute->is_required) {
                                             array_push($validations, 'required');
                                         }
+                                        if ($attribute->type == 'number') {
+                                            array_push($validations, 'numeric|min:0');
+                                        }
 
                                         if ($attribute->type == 'price') {
                                             array_push($validations, 'decimal');

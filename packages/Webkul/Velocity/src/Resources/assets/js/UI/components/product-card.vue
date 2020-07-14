@@ -28,7 +28,9 @@
                 <div class="product-rating" v-else>
                     <span class="fs14" v-text="product.firstReviewText"></span>
                 </div>
-
+                <div  class="product-name col-12 no-padding">
+                    <span class="fs16">Min Order {{product.min_qty}}</span>
+                </div>
                 <vnode-injector :nodes="getDynamicHTML(product.addToCartHtml)"></vnode-injector>
             </div>
         </div>
@@ -74,7 +76,9 @@
             <div class="product-rating col-12 no-padding" v-else>
                 <span class="fs14" v-text="product.firstReviewText"></span>
             </div>
-
+            <div v-if="product.min_qty > 1" class="product-name col-12 no-padding">
+                <span class="fs16">Min Order {{product.min_qty}}</span>
+            </div>
             <vnode-injector :nodes="getDynamicHTML(product.addToCartHtml)"></vnode-injector>
         </div>
     </div>

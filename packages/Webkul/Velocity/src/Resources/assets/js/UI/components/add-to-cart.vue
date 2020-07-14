@@ -20,6 +20,7 @@
             'isEnable',
             'csrfToken',
             'productId',
+            'productMinQty',
             'reloadPage',
             'moveToCart',
             'showCartIcon',
@@ -40,7 +41,7 @@
                 let url = `${this.$root.baseUrl}/cart/add`;
 
                 this.$http.post(url, {
-                    'quantity': 1,
+                    'quantity': this.productMinQty,
                     '_token': this.csrfToken,
                     'product_id': this.productId,
                 })
