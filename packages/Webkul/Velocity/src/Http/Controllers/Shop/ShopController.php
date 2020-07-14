@@ -27,6 +27,7 @@ class ShopController extends Controller
             mix_customize_section_master.title,
             mix_customize_section_master.slug, 
             mix_customize_section_details.title detail_title,
+            mix_customize_section_details.image_url,
             mix_customize_section_details.slug details_slug,
             mix_customize_section_details_child.label, 
             mix_customize_section_details_child.rule_operator,
@@ -54,6 +55,7 @@ class ShopController extends Controller
 
             $main_array[$value->id]['details'][$value->details_id]['details_title'] = $value->detail_title;
             $main_array[$value->id]['details'][$value->details_id]['details_slug'] = $value->details_slug;
+            $main_array[$value->id]['details'][$value->details_id]['image_url'] = $value->image_url;
             $main_array[$value->id]['details'][$value->details_id]['price_range_span'] = "";
             $main_array[$value->id]['details'][$value->details_id]['category_brand_span'] = [];
 
@@ -70,11 +72,11 @@ class ShopController extends Controller
                         foreach ($value2['child'] as $key3 => $value3) {
                             foreach ($value3 as $key4 => $value4) {
                                 if ($key4 == "Categories") {
-                                    $main_array[$key]['details'][$key2]['category_brand_span'][] = $this->homePageCustomizeHelper->GetCategoryString($value3);
+                                    $main_array[$key]['details'][$key2]['category_brand_span'][] = $this->homePageCustomizeHelper->GetCategoryString($value3, $key2);
                                 } else if ($key4 == "Attribute Family") {
 
                                 } else {
-                                    $main_array[$key]['details'][$key2]['category_brand_span'][] = $this->homePageCustomizeHelper->GetAttributeString($value3);
+                                    $main_array[$key]['details'][$key2]['category_brand_span'][] = $this->homePageCustomizeHelper->GetAttributeString($value3, $key2);
                                 }
                             }
 

@@ -23,6 +23,7 @@ class CreateMixCustomizeSectionChild extends Migration
             $table->string('rule_operator');
             $table->string('rule_value');
             $table->char('show_multi_select')->comment("1 = true, 0 = false");
+            $table->integer('sort_no');
             $table->timestamps();
         });
     }

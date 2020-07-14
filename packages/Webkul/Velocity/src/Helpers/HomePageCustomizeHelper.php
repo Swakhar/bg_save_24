@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\DB;
 
 class HomePageCustomizeHelper
 {
-    function GetCategoryString($arr)
+    protected $exist_val = [];
+    protected $exist_index = "";
+    function GetCategoryString($arr, $index)
     {
         $rule = "";
         $rule_value = [];
@@ -30,11 +32,16 @@ class HomePageCustomizeHelper
                 $options .= ", " . $value->name;
 
         }
-
+        if ($this->exist_index != $index) {
+            $this->exist_index = $index;
+            unset($this->exist_val);
+            $this->exist_val = array();
+        }
+        $this->exist_val[] = $val;
         return $attr . ':' . $options;
     }
 
-    function GetAttributeString($arr)
+    function GetAttributeString($arr, $index)
     {
         $list = ['boolean', 'checkbox', 'date', 'datetime', 'file', 'image', 'multiselect', 'price', 'select', 'text', 'textarea'];
         $rule = "";
@@ -47,6 +54,18 @@ class HomePageCustomizeHelper
             }
             $attr = $key;
         }
+
+        $rule_map = [
+            '==' => '=',
+            '!=' => '!=',
+            '>=' => '>=',
+            '<=' => '<=',
+            '>' => '>',
+            '<' => '<',
+            '{}' => 'in',
+            '!{}' => 'not in',
+        ];
+
         $val = implode(',', $rule_value);
 
         $sql_get_type = "SELECT attributes.type FROM attribute_translations
@@ -69,9 +88,28 @@ class HomePageCustomizeHelper
                     $options .= ", " . $value->admin_name;
 
             }
+            if ($this->exist_index != $index) {
+                $this->exist_index = $index;
+                unset($this->exist_val);
+                $this->exist_val = array();
+            }
+            $this->exist_val[] = $val;
             return $attr . ':' . $options;
         } else if ($sql_get_type_data == "price") {
-
+            $sql_price_product = "SELECT price FROM product_flat
+            WHERE product_id in (SELECT product_id FROM product_attribute_values
+            WHERE attribute_id in (".implode(',', $this->exist_val)."))
+            and price $rule_map[$rule] $val AND status = 1
+            ORDER BY price ";
+            $data = DB::select($sql_price_product);
+            $low_price = count($data) > 0 ? $data[0]->price : 0;
+            $high_price = count($data) > 0 ? $data[count($data)-1]->price : 0;
+            if ($this->exist_index != $index) {
+                $this->exist_index = $index;
+                unset($this->exist_val);
+                $this->exist_val = array();
+            }
+            return $attr . ': ' . round($low_price) . ' to ' . round($high_price);
         }
 
 
