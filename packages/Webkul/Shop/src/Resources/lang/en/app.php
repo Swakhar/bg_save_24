@@ -12,7 +12,13 @@ return [
         'reviews' => 'Reviews',
         'wishlist' => 'Wishlist',
         'orders' => 'Orders',
-        'downloadable-products' => 'Downloadable Products'
+        'downloadable-products' => 'Downloadable Products',
+        'my-store' => 'My Store',
+        'become-seller' => 'Become a Seller',
+        'store-profile' => 'Profile',
+        'store-products' => 'Products',
+        'store-orders' => 'Orders',
+        'store-reviews' => 'Reviews',
     ],
 
     'common' => [
@@ -103,10 +109,13 @@ return [
             'firstname' => 'First Name',
             'lastname' => 'Last Name',
             'email' => 'Email',
+            'phone' => 'Phone',
             'password' => 'Password',
             'confirm_pass' => 'Confirm Password',
             'button_title' => 'Register',
             'agree' => 'Agree',
+            'seller_message' => 'I want to be a seller',
+            'store_url' => 'Enter the store url',
             'terms' => 'Terms',
             'conditions' => 'Conditions',
             'using' => 'by using this website',
@@ -317,6 +326,35 @@ return [
                     'cancel-btn-title' => 'Cancel',
                     'tracking-number' => 'Tracking Number',
                     'cancel-confirm-msg' => 'Are you sure you want to cancel this order ?'
+                ]
+            ],
+
+            'store' => [
+                'become-seller' => [
+                    'title' => 'Become a Seller',
+                    'page-title' => 'Customer - Become a Seller',
+                ],
+                'my-store' => [
+                    'title' => 'My Store',
+                    'page-title' => 'Seller - My Store'
+                ],
+                'index' => [
+                    'title' => 'My store',
+                    'page-title' => 'My Store',
+                    'edit' => 'Edit',
+                    'pending' => 'Your store is under review. We will notify you once accepted',
+                    'empty' => 'Your online store is few steps away! start selling products and making money today',
+                    'add' => 'Become a seller',
+                ],
+                'create' => [
+                    'title' => 'Create a store',
+                    'page-title' => 'Create a store',
+                    'store-title' => 'Store Name',
+                    'url' => 'Store url',
+                    'phone' => 'Business Phone',
+                    'submit' => 'Save Store',
+                    'select-category' => 'Choose a category',
+                    'title-placeholder' => 'Example: Al-Fares store'
                 ]
             ],
 

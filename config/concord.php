@@ -24,7 +24,6 @@ return [
         \Webkul\CartRule\Providers\ModuleServiceProvider::class,
         \Webkul\CMS\Providers\ModuleServiceProvider::class,
         \Webkul\Velocity\Providers\ModuleServiceProvider::class,
-        \Webkul\Industry\Providers\ModuleServiceProvider::class,
-
+        \Badenjki\Seller\Providers\ModuleServiceProvider::class,
     ]
 ];
