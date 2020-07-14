@@ -5,7 +5,28 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
     Route::get('/', 'Webkul\Shop\Http\Controllers\HomeController@index')->defaults('_config', [
         'view' => 'shop::home.index'
     ])->name('shop.home.index');
-
+    //Store front about
+    Route::get('/about', 'Webkul\Shop\Http\Controllers\StaticPageController@aboutus')->defaults('_config', [
+        'view' => 'shop::about.about_us'
+    ])->name('shop.about.about_us');
+    Route::get('/privacy', 'Webkul\Shop\Http\Controllers\StaticPageController@privacy')->defaults('_config', [
+        'view' => 'shop::privacy.privacy'
+    ])->name('shop.privacy.privacy');
+    Route::get('/policy', 'Webkul\Shop\Http\Controllers\StaticPageController@policy')->defaults('_config', [
+        'view' => 'shop::policy.policy'
+    ])->name('shop.policy.policy');
+    Route::get('/payment', 'Webkul\Shop\Http\Controllers\StaticPageController@payment')->defaults('_config', [
+        'view' => 'shop::methods.payment'
+    ])->name('shop.methods.payment');
+    Route::get('/shipping', 'Webkul\Shop\Http\Controllers\StaticPageController@shipping')->defaults('_config', [
+        'view' => 'shop::methods.shipping'
+    ])->name('shop.methods.shipping');
+    Route::get('/tracking', 'Webkul\Shop\Http\Controllers\StaticPageController@tracking')->defaults('_config', [
+        'view' => 'shop::methods.tracking'
+    ])->name('shop.methods.tracking');
+    Route::get('/faqs', 'Webkul\Shop\Http\Controllers\StaticPageController@faqs')->defaults('_config', [
+        'view' => 'shop::faqs.faqs'
+    ])->name('shop.faqs.faqs');
     //subscription
     //subscribe
     Route::get('/subscribe', 'Webkul\Shop\Http\Controllers\SubscriptionController@subscribe')->name('shop.subscribe');

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use stdClass;
 use Webkul\Attribute\Models\AttributeFamilyProxy;
+use Webkul\Tag\Models\TagProxy;
+use Webkul\Manufacturer\Models\ManufacturerProxy;
 use Webkul\Category\Models\CategoryProxy;
 use Webkul\Attribute\Models\AttributeProxy;
 use Webkul\Inventory\Models\InventorySourceProxy;
@@ -74,6 +76,14 @@ class Product extends Model implements ProductContract
         return $this->belongsToMany(CategoryProxy::modelClass(), 'product_categories');
     }
 
+    public function Tags()
+    {
+        return $this->belongsToMany(TagProxy::modelClass(),'product_tags');
+    }
+    public function Manufacturers()
+    {
+        return $this->belongsToMany(ManufacturerProxy::modelClass(),'product_manufacturers');
+    }
     /**
      * The inventories that belong to the product.
      */

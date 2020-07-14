@@ -1,10 +1,8 @@
 <div class="col-lg-2 col-md-12 col-sm-12 footer-ct-content">
-    <span class="contact_main">ABOUT MARKET</span>
+    <span class="contact_main">SAFESHOP METHODS</span>
     <ul class="footer_middle_content">
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Customer Service</a></li>
-        <li><a href="#">What&rsquo;s New</a></li>
-        <li><a href="#">Contact Us</a></li>
+        <li><a href="{{ route('shop.methods.payment') }}">Payment Method</a></li>
+        <li><a href="{{ route('shop.methods.shipping') }}">Shippng Method</a></li>
     </ul>
 	{{--<div class="row">--}}
 

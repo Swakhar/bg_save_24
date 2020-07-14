@@ -16,7 +16,6 @@
         <link rel="stylesheet" href="{{ asset($relative_path . 'vendor/webkul/ui/assets/css/ui.css?version='.$version) }}">
         <link rel="stylesheet" href="{{ asset($relative_path . 'vendor/webkul/admin/assets/css/admin.css?version='.$version) }}">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css">
-
         @yield('head')
 
         @yield('css')
@@ -124,7 +123,10 @@
             $( document ).ready(function() {
                 $('.select2').select2();
             });
+<<<<<<< HEAD
+=======
 
+>>>>>>> home-page-design
             window.addEventListener('DOMContentLoaded', function() {
                 moveDown = 60;
                 moveUp =  -60;

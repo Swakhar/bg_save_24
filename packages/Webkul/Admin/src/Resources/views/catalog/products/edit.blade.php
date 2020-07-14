@@ -162,7 +162,45 @@
                     @endif
 
                 @endforeach
+                                        <accordian :title="'{{ __('admin::app.catalog.products.tag_man') }}'" :active="false">
+                        <div slot="body">
 
+                            {!! view_render_event('bagisto.admin.catalog.product.edit_form_accordian.general.controls.before', ['product' => $product]) !!}
+
+                            <?php $selectedTags = old('tags') ?? $product->Tags->pluck('id')->toArray() ?>
+
+                            <div class="control-group select" :class="[errors.has('tags[]') ? 'has-error' : '']">
+                                <label for="tags" class="required">{{ __('admin::app.catalog.tags.tags') }}</label>
+                                <select class="control select2" style="width: 100%" name="tags[]"  multiple>
+                                    @foreach ($tags as $tag)
+                                        <option value="{{ $tag->id }}" {{ in_array($tag->id, $selectedTags) ? 'selected' : ''}}>
+                                            {{ $tag->admin_name }}
+                                        </option>
+                                    @endforeach
+
+                                </select>
+                                <span class="control-error" v-if="errors.has('tags[]')">
+                                    @{{ errors.first('tags[]') }}
+                                </span>
+                            </div>
+                             <?php $selectedManufacturers = old('manufacturers') ?? $product->Manufacturers->pluck('id')->toArray() ?>
+
+                            <div class="control-group select" :class="[errors.has('manufacturers[]') ? 'has-error' : '']">
+                                <label for="manufacturers" class="required">{{ __('admin::app.catalog.manufacturers.manufacturers') }}</label>
+                                <select class="control select2" style="width: 100%" name="manufacturers[]"  multiple>
+                                    @foreach ($manufacturers as $manufacturer)
+                                        <option value="{{ $manufacturer->id }}" {{ in_array($manufacturer->id, $selectedManufacturers) ? 'selected' : ''}}>
+                                            {{ $manufacturer->admin_name }}
+                                        </option>
+                                    @endforeach
+
+                                </select>
+                                <span class="control-error" v-if="errors.has('manufacturers[]')">
+                                    @{{ errors.first('manufacturers[]') }}
+                                </span>
+                            </div>
+                        </div>
+                    </accordian>
                 {!! view_render_event(
                   'bagisto.admin.catalog.product.edit_form_accordian.additional_views.before',
                    ['product' => $product])

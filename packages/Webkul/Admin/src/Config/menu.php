@@ -74,6 +74,18 @@ return [
         'sort'       => 5,
         'icon-class' => '',
     ], [
+        'key'        => 'catalog.manufacturers',
+        'name'       => 'Manufacturers',
+        'route'      => 'admin.catalog.manufacturers.index',
+        'sort'       => 6,
+        'icon-class' => '',
+    ], [
+        'key'        => 'catalog.tags',
+        'name'       => 'Product tags',
+        'route'      => 'admin.catalog.tags.index',
+        'sort'       => 7,
+        'icon-class' => '',
+    ], [
         'key'        => 'customers',
         'name'       => 'admin::app.layouts.customers',
         'route'      => 'admin.customer.index',

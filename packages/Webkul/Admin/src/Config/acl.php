@@ -132,6 +132,46 @@ return [
         'route' => 'admin.catalog.industries.delete',
         'sort'  => 3,
     ], [
+        'key'   => 'catalog.manufacturers',
+        'name'  => 'Manufacturers',
+        'route' => 'admin.catalog.manufacturers.index',
+        'sort'  => 5,
+    ], [
+        'key'   => 'catalog.manufacturers.create',
+        'name'  => 'Add Manufacturers',
+        'route' => 'admin.catalog.manufacturers.create',
+        'sort'  => 1,
+    ], [
+        'key'   => 'catalog.manufacturers.edit',
+        'name'  => 'Edit Manufacturers',
+        'route' => 'admin.catalog.manufacturers.edit',
+        'sort'  => 2,
+    ], [
+        'key'   => 'catalog.manufacturers.delete',
+        'name'  => 'Delete Manufacturers',
+        'route' => 'admin.catalog.manufacturers.delete',
+        'sort'  => 3,
+    ], [
+        'key'   => 'catalog.tags',
+        'name'  => 'Product Tags',
+        'route' => 'admin.catalog.tags.index',
+        'sort'  => 5,
+    ], [
+        'key'   => 'catalog.tags.create',
+        'name'  => 'Add Tag',
+        'route' => 'admin.catalog.tags.create',
+        'sort'  => 1,
+    ], [
+        'key'   => 'catalog.tags.edit',
+        'name'  => 'Edit Tag',
+        'route' => 'admin.catalog.tags.edit',
+        'sort'  => 2,
+    ], [
+        'key'   => 'catalog.tags.delete',
+        'name'  => 'Delete Tag',
+        'route' => 'admin.catalog.tags.delete',
+        'sort'  => 3,
+    ], [
         'key'   => 'customers',
         'name'  => 'admin::app.acl.customers',
         'route' => 'admin.customer.index',
