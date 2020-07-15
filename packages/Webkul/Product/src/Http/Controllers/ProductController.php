@@ -6,8 +6,6 @@ use Illuminate\Support\Facades\Event;
 use Webkul\Category\Models\Category;
 use Webkul\Product\Http\Requests\ProductForm;
 use Webkul\Product\Helpers\ProductType;
-use Webkul\Tag\Repositories\TagRepository;
-use Webkul\Manufacturer\Repositories\ManufacturerRepository;
 use Webkul\Category\Repositories\CategoryRepository;
 use Webkul\Product\Repositories\ProductRepository;
 use Webkul\Product\Repositories\ProductDownloadableLinkRepository;
@@ -66,9 +64,6 @@ class ProductController extends Controller
      * @var \Webkul\Inventory\Repositories\InventorySourceRepository
      */
     protected $inventorySourceRepository;
-    protected $tagRepository;
-    protected $manufacturerRepository;
-
 
     /**
      * Create a new controller instance.
@@ -83,8 +78,6 @@ class ProductController extends Controller
      */
     public function __construct(
         CategoryRepository $categoryRepository,
-        TagRepository $tagRepository,
-        ManufacturerRepository $manufacturerRepository,
         ProductRepository $productRepository,
         ProductDownloadableLinkRepository $productDownloadableLinkRepository,
         ProductDownloadableSampleRepository $productDownloadableSampleRepository,
@@ -95,8 +88,6 @@ class ProductController extends Controller
         $this->_config = request('_config');
 
         $this->categoryRepository = $categoryRepository;
-        $this->tagRepository = $tagRepository;
-        $this->manufacturerRepository = $manufacturerRepository;
 
         $this->productRepository = $productRepository;
 
@@ -187,10 +178,8 @@ class ProductController extends Controller
         //$this->categoryRepository->getCategoryTree();
 
         $inventorySources = $this->inventorySourceRepository->all();
-        $tags = $this->tagRepository->orderBy('id','desc')->get();
-        $manufacturers = $this->manufacturerRepository->orderBy('id','desc')->get();
 
-        return view($this->_config['view'], compact('product', 'categories', 'inventorySources','tags','manufacturers'));
+        return view($this->_config['view'], compact('product', 'categories', 'inventorySources'));
     }
 
     /**
@@ -203,6 +192,35 @@ class ProductController extends Controller
     public function update(ProductForm $request, $id)
     {
         $data=request()->all();
+<<<<<<<<< Temporary merge branch 1
+        //return json_encode($data);
+        
+        if($data['special_price'] !=null){
+            $basePrice=$data['special_price'];
+        }elseif($data['price'] !=null){
+            $basePrice=$data['price'];
+        }
+        if($basePrice !=null){
+            foreach ($data['customer_group_prices'] as $key => $value) {
+                
+                if($value['value_type'] !=null){
+                    if($value['value_type']=="discount"){
+                        if($value['raw_value'] !=null && floatval($value['raw_value'])>0 && floatval($value['raw_value'])<=100){
+                            $discount=$basePrice*floatval($value['raw_value'])/100;
+                            $discount=$basePrice-$discount;
+                            $data['customer_group_prices'][$key]['value']=$discount;
+                        }else{
+                            return back()->with('error', trans('Invalid discount entry'));
+                        }
+                    }else if($value['value_type']=="fixed"){
+                        if($value['raw_value'] !=null && floatval($value['raw_value'])>0 && floatval($value['raw_value'])<=$basePrice){
+                            $data['customer_group_prices'][$key]['value']=$value['raw_value'];
+                        }else{
+                            return back()->with('error', trans('Invalid fixed entry'));;
+                        }
+                    }
+                }
+=========
 //        return json_encode($data);
 
         if (array_key_exists('variants', $data)) {
@@ -210,32 +228,35 @@ class ProductController extends Controller
             /// price save in variant table
             ///
         } else {
+
             if ($data['special_price'] != null) {
                 $basePrice = $data['special_price'];
             } elseif ($data['price'] != null) {
                 $basePrice = $data['price'];
             }
+//            return $basePrice;
             if ($basePrice != null) {
-                foreach ($data['customer_group_prices'] as $key => $value) {
-
-                    if ($value['value_type'] != null) {
-                        if ($value['value_type'] == "discount") {
-                            if ($value['raw_value'] != null && floatval($value['raw_value']) > 0 && floatval($value['raw_value']) <= 100) {
-                                $discount = $basePrice * floatval($value['raw_value']) / 100;
-                                $discount = $basePrice - $discount;
-                                $data['customer_group_prices'][$key]['value'] = $discount;
-                            } else {
-                                return back()->with('error', trans('Invalid discount entry'));
-                            }
-                        } else if ($value['value_type'] == "fixed") {
-                            if ($value['raw_value'] != null && floatval($value['raw_value']) > 0 && floatval($value['raw_value']) <= $basePrice) {
-                                $data['customer_group_prices'][$key]['value'] = $value['raw_value'];
-                            } else {
-                                return back()->with('error', trans('Invalid fixed entry'));;
-                            }
-                        }
-                    }
-                }
+//                foreach ($data['customer_group_prices'] as $key => $value) {
+//
+//                    if ($value['value_type'] != null) {
+//                        if ($value['value_type'] == "discount") {
+//                            if ($value['raw_value'] != null && floatval($value['raw_value']) > 0 && floatval($value['raw_value']) <= 100) {
+//                                $discount = $basePrice * floatval($value['raw_value']) / 100;
+//                                $discount = $basePrice - $discount;
+//                                $data['customer_group_prices'][$key]['value'] = $discount;
+//                            } else {
+//                                return back()->with('error', trans('Invalid discount entry'));
+//                            }
+//                        } else if ($value['value_type'] == "fixed") {
+//                            if ($value['raw_value'] != null && floatval($value['raw_value']) > 0 && floatval($value['raw_value']) <= $basePrice) {
+//                                $data['customer_group_prices'][$key]['value'] = $value['raw_value'];
+//                            } else {
+//                                return back()->with('error', trans('Invalid fixed entry'));;
+//                            }
+//                        }
+//                    }
+//                }
+>>>>>>>>> Temporary merge branch 2
             }
         }
         

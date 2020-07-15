@@ -74,9 +74,7 @@
     70 => 'Webkul\\CMS\\Providers\\CMSServiceProvider',
     71 => 'Webkul\\Velocity\\Providers\\VelocityServiceProvider',
     72 => 'Webkul\\BookingProduct\\Providers\\BookingProductServiceProvider',
-    73 => 'Webkul\\Manufacturer\\Providers\\ManufacturerServiceProvider',
-    74 => 'Webkul\\Tag\\Providers\\TagServiceProvider',
-    75 => 'Webkul\\Industry\\Providers\\IndustryServiceProvider',
+    73 => 'Webkul\\Industry\\Providers\\IndustryServiceProvider',
   ),
   'eager' => 
   array (
@@ -141,9 +139,7 @@
     58 => 'Webkul\\CMS\\Providers\\CMSServiceProvider',
     59 => 'Webkul\\Velocity\\Providers\\VelocityServiceProvider',
     60 => 'Webkul\\BookingProduct\\Providers\\BookingProductServiceProvider',
-    61 => 'Webkul\\Manufacturer\\Providers\\ManufacturerServiceProvider',
-    62 => 'Webkul\\Tag\\Providers\\TagServiceProvider',
-    63 => 'Webkul\\Industry\\Providers\\IndustryServiceProvider',
+    61 => 'Webkul\\Industry\\Providers\\IndustryServiceProvider',
   ),
   'deferred' => 
   array (

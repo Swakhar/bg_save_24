@@ -6,7 +6,7 @@ packages/Webkul/Shop/src/Resources/views/checkout/cart_dam/
 /public/storage
 /public/css
 /public/js
-/bootstrap
+/bootstrap/*
 /vendor
 /.idea
 /.vscode
