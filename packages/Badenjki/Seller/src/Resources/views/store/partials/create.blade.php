@@ -9,7 +9,7 @@
     <span class="control-error" v-if="errors.has('name')">@{{ errors.first('name') }}</span>
 </div>
 
-@include ('admin::marketplace.stores.country-state', ['countryCode' => 'SY'])
+@include ('admin::marketplace.stores.country-state', ['countryCode' => 'IN'])
 
 <div class="control-group" :class="[errors.has('category') ? 'has-error' : '']">
     <label for="category_id" class="required">

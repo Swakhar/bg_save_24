@@ -522,6 +522,7 @@ return [
         'stores' => [
             'title' => 'Stores',
             'edit-title' => 'Edit Store',
+            'add-title' => 'Add Store',
             'save-btn-title' => 'Save Store',
             'general' => 'General',
             'name' => 'Store Name',
@@ -553,7 +554,19 @@ return [
         'categories' => [
             'title' => 'Categories',
             'add-category-btn-title' => 'Create Category',
-            'general' => 'General'
+            'general' => 'General',
+            'add-title' => 'Add Categories',
+            'save-btn-title' => 'Save Category',
+            'name' => 'Name',
+            'description-and-images' => 'Description and Images',
+            'description' => 'Description',
+            'image' => 'Image',
+            'add-image-btn-title' => 'Add Image',
+            'seo' => 'SEO',
+            'meta_title' => 'Meta Title',
+            'slug' => 'Slug',
+            'meta_description' => 'Meta Description',
+            'meta_keywords' => 'Meta Keywords'
         ],
 
         'invoices' => [

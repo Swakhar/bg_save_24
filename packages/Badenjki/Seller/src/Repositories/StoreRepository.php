@@ -30,7 +30,7 @@ class StoreRepository extends Repository{
 
     public function create(array $data){
 
-        Event::fire('marketplace.store.create.before');
+        // Event::fire('marketplace.store.create.before');
 
         if(isset($data['locale']) && $data['locale'] == 'all'){
 
@@ -54,7 +54,7 @@ class StoreRepository extends Repository{
 
         $store = $this->model->create($data);
 
-      Event::fire('marketplace.store.create.after');
+        // Event::fire('marketplace.store.create.after');
 
         return $store;
 

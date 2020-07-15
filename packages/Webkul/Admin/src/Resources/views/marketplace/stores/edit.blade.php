@@ -47,7 +47,7 @@
 
                         <div class="control-group" :class="[errors.has('{{$locale}}[name]') ? 'has-error' : '']">
                             <label for="name" class="required">{{ __('admin::app.marketplace.stores.name') }}</label>
-                            <input type="text" v-validate="'required'" class="control" id="name" name="{{$locale}}[name]" value="{{ old($locale)['name'] ?: $store->translate($locale)['name'] }}" data-vv-as="&quot;{{ __('admin::app.marketplace.stores.name') }}&quot;"/>
+                            <input type="text" v-validate="'required'" class="control" id="name" name="{{$locale}}[name]" value="{{ old($locale) && old($locale)['name'] ?: $store->translate($locale)['name'] }}" data-vv-as="&quot;{{ __('admin::app.marketplace.stores.name') }}&quot;"/>
                             <span class="control-error" v-if="errors.has('{{$locale}}[name]')">@{{ errors.first('{!!$locale!!}[name]') }}</span>
                         </div>
 
@@ -73,7 +73,7 @@
 
                         <div class="control-group" :class="[errors.has('{{$locale}}[address]') ? 'has-error' : '']">
                             <label for="address">{{ __('admin::app.marketplace.stores.address') }}</label>
-                            <input type="text" class="control" id="address" name="{{$locale}}[address]" value="{{ old($locale)['address'] ?: $store->translate($locale)['address'] }}" data-vv-as="&quot;{{ __('admin::app.marketplace.stores.address') }}&quot;"/>
+                            <input type="text" class="control" id="address" name="{{$locale}}[address]" value="{{ old($locale) && old($locale)['address'] ?: $store->translate($locale)['address'] }}" data-vv-as="&quot;{{ __('admin::app.marketplace.stores.address') }}&quot;"/>
                             <span class="control-error" v-if="errors.has('{{$locale}}[address]')">@{{ errors.first('{!!$locale!!}[address]') }}</span>
                         </div>
 
@@ -97,7 +97,7 @@
                 <accordian :title="'{{ __('admin::app.marketplace.stores.social-links') }}'" :active="true">
                     <div slot="body">
                         @foreach($socialmedia = ['facebook', 'twitter', 'instagram', 'telegram'] as $item)
-                            <div class="control-group" :class="[errors.has({{$item}}) ? 'has-error' : '']">
+                            <div class="control-group" :class="[errors.has('{{$item}}') ? 'has-error' : '']">
                                 <label for="{{$item}}">{{ __('admin::app.marketplace.stores.'.$item) }}</label>
                                 <input type="text" class="control" id="{{$item}}" name="{{$item}}" value="{{$store->$item}}"/>
                             </div>
@@ -139,17 +139,17 @@
 
                         <div class="control-group">
                             <label for="meta_title">{{ __('admin::app.marketplace.stores.meta_title') }}</label>
-                            <input type="text" class="control" id="meta_title" name="{{$locale}}[meta_title]" value="{{ old($locale)['meta_title'] ?: $store->translate($locale)['meta_title'] }}"/>
+                            <input type="text" class="control" id="meta_title" name="{{$locale}}[meta_title]" value="{{ old($locale) && old($locale)['meta_title'] ?: $store->translate($locale)['meta_title'] }}"/>
                         </div>
 
                         <div class="control-group">
                             <label for="meta_description">{{ __('admin::app.marketplace.stores.meta_description') }}</label>
-                            <textarea class="control" id="meta_description" name="{{$locale}}[meta_description]">{{ old($locale)['meta_description'] ?: $store->translate($locale)['meta_description'] }}</textarea>
+                            <textarea class="control" id="meta_description" name="{{$locale}}[meta_description]">{{ old($locale) && old($locale)['meta_description'] ?: $store->translate($locale)['meta_description'] }}</textarea>
                         </div>
 
                         <div class="control-group">
                             <label for="meta_keywords">{{ __('admin::app.marketplace.stores.meta_keywords') }}</label>
-                            <textarea class="control" id="meta_keywords" name="{{$locale}}[meta_keywords]">{{ old($locale)['meta_keywords'] ?: $store->translate($locale)['meta_keywords'] }}</textarea>
+                            <textarea class="control" id="meta_keywords" name="{{$locale}}[meta_keywords]">{{ old($locale) && old($locale)['meta_keywords'] ?: $store->translate($locale)['meta_keywords'] }}</textarea>
                         </div>
 
 {{--                        {!! view_render_event('bagisto.admin.catalog.category.edit_form_accordian.seo.controls.after', ['category' => $category]) !!}--}}
@@ -175,7 +175,7 @@
 
         <div class="control-group" :class="[errors.has('{{$locale}}[description]') ? 'has-error' : '']">
             <label for="description" :class="isRequired ? 'required' : ''">{{ __('admin::app.marketplace.stores.description') }}</label>
-            <textarea v-validate="isRequired ? 'required' : ''" class="control" id="description" name="{{$locale}}[description]" data-vv-as="&quot;{{ __('admin::app.marketplace.stores.description') }}&quot;">{{ old($locale)['description'] ?: $store->translate($locale)['description'] }}</textarea>
+            <textarea v-validate="isRequired ? 'required' : ''" class="control" id="description" name="{{$locale}}[description]" data-vv-as="&quot;{{ __('admin::app.marketplace.stores.description') }}&quot;">{{ old($locale) && old($locale)['description'] ?: $store->translate($locale)['description'] }}</textarea>
             <span class="control-error" v-if="errors.has('{{$locale}}[description]')">@{{ errors.first('{!!$locale!!}[description]') }}</span>
         </div>
 
