@@ -180,7 +180,7 @@
 
                     <div class="container-fluid ">
                         <div class="row top_banner_three_section">
-                            <div class="col-md-3" style="    max-width: 21%;">
+                            <div class="col-md-3" style="max-width: 21%;margin-left: 0 !important;margin-right: -6px !important;">
                                 <sidebar-component
                                         main-sidebar=true
                                         id="sidebar-level-0"
