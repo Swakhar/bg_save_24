@@ -98,7 +98,7 @@
                             <div class="control-group {!! $errors->has('image.*') ? 'has-error' : '' !!}">
                                 <label>{{ __('admin::app.marketplace.categories.image') }}
 
-                                    <image-wrapper :button-label="'{{ __('admin::app.marketplace.products.add-image-btn-title') }}'" input-name="image" :multiple="false"></image-wrapper>
+                                    <image-wrapper :button-label="'{{ __('admin::app.marketplace.categories.add-image-btn-title') }}'" input-name="image" :multiple="false"></image-wrapper>
 
                                     <span class="control-error" v-if="{!! $errors->has('image.*') !!}">
                                     @foreach ($errors->get('image.*') as $key => $message)
