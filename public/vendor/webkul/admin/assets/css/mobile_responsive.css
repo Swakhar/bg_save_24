@@ -1,6 +1,10 @@
 .top_nav_mobile_version {
     display: none !important;
 }
+.navbar-left {
+    position: inherit !important;
+    padding-top: 55px !important;
+}
 @media screen and (max-width: 500px) {
     .navbar-top {
         display: none !important;
