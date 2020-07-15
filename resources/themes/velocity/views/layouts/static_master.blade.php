@@ -56,6 +56,16 @@
             <meta name="description" content="{{ core()->getCurrentChannel()->description }}"/>
         @show
 
+        <style>
+
+            .track {
+                background: url('{{ $relative_path }}/themes/velocity/assets/images/static/courier.png') !important;
+            }
+            .about {
+                background: url('{{ $relative_path }}/themes/velocity/assets/images/static/b5.jpg') !important;;
+            }
+        </style>
+
         @stack('css')
 
         {!! view_render_event('bagisto.shop.layout.head') !!}
