@@ -3,7 +3,7 @@
 }
 .navbar-left {
     position: inherit !important;
-    padding-top: 55px !important;
+    /*padding-top: 55px !important;*/
 }
 @media screen and (max-width: 500px) {
     .navbar-top {
