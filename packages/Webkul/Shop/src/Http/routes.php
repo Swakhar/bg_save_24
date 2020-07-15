@@ -319,10 +319,10 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
     });
     //customer routes end here
 
-//    Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function () {
-//
-//        Route::group(['middleware' => ['customer']], function () {
-//
+    Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function () {
+
+        Route::group(['middleware' => ['customer']], function () {
+
 //            Route::get('stores', 'Badenjki\Seller\Http\Controllers\StoreController@index')->defaults('_config', [
 //                'view' => 'shop::customers.account.store.index'
 //            ])->name('customer.store.index');
@@ -334,18 +334,18 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
 //            Route::post('stores/create', 'Badenjki\Seller\Http\Controllers\StoreController@store')->defaults('_config',[
 //                'redirect' => 'customer.store.index'
 //            ])->name('customer.store.create');
-//
-//            Route::get('stores/edit/{id}', 'Webkul\Customer\Http\Controllers\AddressController@edit')->defaults('_config', [
-//                'view' => 'shop::customers.account.store.edit'
-//            ])->name('customer.store.edit');
-//
-//            Route::patch('stores/edit/{store}', 'Badenjki\Seller\Http\Controllers\StoreController@update')->defaults('_config',[
-//                'redirect' => 'customer.store.index'
-//            ])->name('customer.store.edit');
-//
-//        });
+
+            Route::get('stores/edit/{id}', 'Webkul\Customer\Http\Controllers\AddressController@edit')->defaults('_config', [
+                'view' => 'shop::customers.account.store.edit'
+            ])->name('customer.store.edit');
+
+            Route::patch('stores/edit/{store}', 'Badenjki\Seller\Http\Controllers\StoreController@update')->defaults('_config',[
+                'redirect' => 'customer.store.index'
+            ])->name('customer.store.edit');
+
+        });
 //        Route::get('/{store}', 'Badenjki\Seller\Http\Controllers\StoreController@show');
-//    });
+    });
 
     Route::get('page/{slug}', 'Webkul\CMS\Http\Controllers\Shop\PagePresenterController@presenter')->name('shop.cms.page');
 

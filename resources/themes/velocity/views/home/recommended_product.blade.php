@@ -26,6 +26,7 @@
 </script>
 @endpush
 
+
 @push('scripts')
 <script type="text/x-template" id="recommended-category-list">
     <div class="col-md-12" >

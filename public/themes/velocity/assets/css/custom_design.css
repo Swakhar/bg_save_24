@@ -1124,3 +1124,29 @@ a.unset.compare-icon.text-right {
 .VueCarousel-navigation-next {
     right: 25px !important;
 }
+
+.recomend-slide-cat-div {
+    max-width: 14.4667% !important;
+}
+
+
+
+@media only screen and (min-width: 320px)  {  }
+@media only screen and (min-width: 768px)  {  }
+@media only screen and (min-width: 1024px) { }
+@media only screen and (min-width: 1900px) {
+
+
+    .sidebar {
+        width: 300px !important;
+    }
+    .velocity-divide-page .left {
+        z-index: 1;
+        width: 300px;
+        position: absolute;
+        left: 20px;
+        height: 42px;
+        line-height: 42px;
+        padding: 0 10px;
+    }
+}

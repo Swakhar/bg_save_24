@@ -4,7 +4,7 @@
             <span class="title">{{ slider_name }}</span>
             <a href="#" class="btn-home btn_view_all">{{ btn_txt }}</a>
         </section>
-        <div class="col-md-2" style="    max-width: 14.6667%;
+        <div class="col-md-2 recomend-slide-cat-div" style="    max-width: 14.4667%;;
     padding-right: 3px;
     margin-right: -13px;">
             <section class="recommended_cat_list">
