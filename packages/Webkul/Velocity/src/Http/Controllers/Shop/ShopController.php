@@ -3,6 +3,7 @@
 namespace Webkul\Velocity\Http\Controllers\Shop;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Webkul\Velocity\Http\Shop\Controllers;
 use Webkul\Checkout\Contracts\Cart as CartModel;
 use Cart;
@@ -45,7 +46,7 @@ class ShopController extends Controller
             mix_customize_section_details_child.details_row_id = mix_customize_section_details.id
             left join mix_customize_child_multi_value on 
             mix_customize_child_multi_value.child_id = mix_customize_section_details_child.id
-            ORDER BY mix_customize_section_master.id, mix_customize_section_details.id, mix_customize_section_details_child.id");
+            ORDER BY mix_customize_section_master.id, mix_customize_section_details.id, mix_customize_section_details_child.sort_no");
 
         $main_array = [];
         $i = 0;
@@ -65,6 +66,7 @@ class ShopController extends Controller
             $i += 1;
         }
         $list = ['Categories', 'Attribute Family'];
+//        return $main_array;
         foreach ($main_array as $key => $value) {
             if (count($value['details']) > 0) {
                 foreach ($value['details'] as $key2 => $value2) {
@@ -86,6 +88,25 @@ class ShopController extends Controller
             }
         }
         return $main_array;
+    }
+
+    public function CustomizeSectionHomePage()
+    {
+        $data = DB::select("SELECT home_customize_section_masters.id, home_customize_section_masters.name,
+        home_customize_section_details.display_category_id, home_customize_section_details.display_block_type
+        FROM home_customize_section_masters
+        inner join home_customize_section_details on 
+        home_customize_section_details.master_id = home_customize_section_masters.id
+        ORDER BY home_customize_section_masters.position");
+
+        $main_data = [];
+        foreach ($data as $key => $value) {
+            $main_data[$value->id]['title'] = $value->name;
+            $main_data[$value->id]['child'][] = $this->homePageCustomizeHelper
+                ->GetParseCustomizeSectionLogic($value->display_category_id, $value->display_block_type);
+        }
+
+        return $main_data;
     }
 
     public function fetchProductDetails($slug)

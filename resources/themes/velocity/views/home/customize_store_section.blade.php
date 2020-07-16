@@ -1,80 +1,65 @@
-<div class="flash_sales">
-    {{--<span class="section_title">Flash Sale</span>--}}
-    <div class="flash_sales_head">
-        <div class="display_text_flash_sales">
-            <span  class="inline_span">Customize name</span>
+<customize-category-section2></customize-category-section2>
+@push('scripts')
+<script>
+    $(document).ready(function () {
 
-            <a href="#" class="btn-home btn_view_all">{{ __('velocity::app.home.view-all') }}</a>
-        </div>
+    })
+</script>
+@endpush
 
+@push('scripts')
+<script type="text/x-template" id="customize-category-section">
+    <div>
+        <customize-category-section :data_list="data_list"></customize-category-section>
     </div>
-    <?php $is_sub_cat = true; ?>
-    @if (!$is_sub_cat)
-    <div class="customize_product_body">
-        <a href="#" class="flash_div_href">
-            <img class="flash_product" src="{{ asset('vendor/webkul/admin/assets/images/01.jpg') }}" alt="">
-            <span class="fs-card-title">【Local Ready Stock】</span>
-            <span class="price">৳44.99</span>
-        </a>
-        <a href="#" class="flash_div_href">
-            <img class="flash_product" src="{{ asset('vendor/webkul/admin/assets/images/01.jpg') }}" alt="">
-            <span class="fs-card-title">【Local Ready Stock】</span>
-            <span class="price">৳44.99</span>
-        </a>
-        <a href="#" class="flash_div_href">
-            <img class="flash_product" src="{{ asset('vendor/webkul/admin/assets/images/01.jpg') }}" alt="">
-            <span class="fs-card-title">【Local Ready Stock】</span>
-            <span class="price">৳44.99</span>
-        </a>
-        <a href="#" class="flash_div_href">
-            <img class="flash_product" src="{{ asset('vendor/webkul/admin/assets/images/01.jpg') }}" alt="">
-            <span class="fs-card-title">【Local Ready Stock】</span>
-            <span class="price">৳44.99</span>
-        </a>
-        <a href="#" class="flash_div_href">
-            <img class="flash_product" src="{{ asset('vendor/webkul/admin/assets/images/01.jpg') }}" alt="">
-            <span class="fs-card-title">【Local Ready Stock】</span>
-            <span class="price">৳44.99</span>
-        </a>
-        <a href="#" class="flash_div_href">
-            <img class="flash_product" src="{{ asset('vendor/webkul/admin/assets/images/01.jpg') }}" alt="">
-            <span class="fs-card-title">【Local Ready Stock】</span>
-            <span class="price">৳44.99</span>
-        </a>
-    </div>
-    @else
-    <div class="customize_category_body">
-        <a href="#" class="flash_div_href">
-            <img class="flash_product" src="{{ asset('vendor/webkul/admin/assets/images/01.jpg') }}" alt="">
-            <span class="fs-card-title">【Local Ready Stock】50 Pcs</span>
-            <span class="price">From ৳44.99</span>
-        </a>
-        <a href="#" class="flash_div_href">
-            <img class="flash_product" src="{{ asset('vendor/webkul/admin/assets/images/01.jpg') }}" alt="">
-            <span class="fs-card-title">【Local Ready Stock】50 Pcs</span>
-            <span class="price">From ৳44.99</span>
-        </a>
-        <a href="#" class="flash_div_href">
-            <img class="flash_product" src="{{ asset('vendor/webkul/admin/assets/images/01.jpg') }}" alt="">
-            <span class="fs-card-title">【Local Ready Stock】50 Pcs</span>
-            <span class="price">From ৳44.99</span>
-        </a>
-        <a href="#" class="flash_div_href">
-            <img class="flash_product" src="{{ asset('vendor/webkul/admin/assets/images/01.jpg') }}" alt="">
-            <span class="fs-card-title">【Local Ready Stock】50 Pcs</span>
-            <span class="price">From ৳44.99</span>
-        </a>
-        <a href="#" class="flash_div_href">
-            <img class="flash_product" src="{{ asset('vendor/webkul/admin/assets/images/01.jpg') }}" alt="">
-            <span class="fs-card-title">【Local Ready Stock】50 Pcs</span>
-            <span class="price">From ৳44.99</span>
-        </a>
-        <a href="#" class="flash_div_href">
-            <img class="flash_product" src="{{ asset('vendor/webkul/admin/assets/images/01.jpg') }}" alt="">
-            <span class="fs-card-title">【Local Ready Stock】50 Pcs</span>
-            <span class="price">From ৳44.99</span>
-        </a>
+</script>
 
-    </div>
-    @endif
-</div>
+<script type="text/javascript">
+    (() => {
+        Vue.component('customize-category-section2', {
+            'template': '#customize-category-section',
+            data: function () {
+                return {
+                    'list': false,
+                    'isLoading': true,
+                    'data_list': [],
+                    'isMobileView': this.$root.isMobile(),
+                }
+            },
+
+            mounted: function () {
+                this.customize_section_data_front();
+            },
+
+            methods: {
+
+
+                'getSizeOfObject': function (obj) {
+                    var size = 0, key;
+                    for (key in obj) {
+                        if (obj.hasOwnProperty(key)) size++;
+                    }
+                    return size;
+                },
+
+                'passIndexSliderToParent': function (index) {
+                    this.active_slider = this.slider_product_list[index];
+                    this.active_index = index;
+                },
+
+                'customize_section_data_front': function () {
+                    this.$http.get(`${this.baseUrl}/customize-section-home-page`)
+                        .then(response => {
+                            this.data_list = response.data;
+                            this.isLoading = false;
+                        })
+                        .catch(error => {
+                            this.isLoading = false;
+                            console.log(this.__('error.something_went_wrong'));
+                        })
+                }
+            }
+        })
+    })()
+</script>
+@endpush

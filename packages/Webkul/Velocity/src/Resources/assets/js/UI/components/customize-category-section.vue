@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="container-fluid" v-for="item in data_list">
-            <div class="col-md-123" >
-                <span class="mix-section-title">{{ item.title }}</span>
+            <div class="col-md-123s" >
+                <span class="mix-section-title">{{ item.title  }}</span>
                 <carousel
                         :class="'pagination-hide'"
                         :navigationEnabled="true"
@@ -12,23 +12,23 @@
                         :autoplay="false"
                         :autoplayDirection="'forward'"
                          :mouse-drag="false">
-                    <slide :key="`mix-sell-${index}`" v-for="(child, index) in item.details">
+                    <slide :key="`l-sell-${index}`" v-for="(child, index) in item.child">
                         <div  :class="`inline-card card grid-card product-card-new card-${index} mix-category-section`" >
-                            <a :href="`http://localhost:8000/mix-category-item/${child.details_slug}`"
-                               :title="`${child.details_title}`" >
-                                <img loading="lazy" :alt="`${child.details_title}`"
-                                     :src="`/uploads/${child.image_url}`"
+                            <a
+                               :title="`${child.name}`" >
+                                <img loading="lazy" :alt="`${child.name}`"
+                                     :src="`/uploads/${child.image_path}`"
                                      data-src="http://localhost:8000/cache/medium/product/31/crbATFGOysK0c8SY6A0xGFlwCs6iBBXNlPe4lyJY.jpeg"
                                      onerror="this.src='http://localhost:8000/vendor/webkul/ui/assets/images/product/large-product-placeholder.png'"
                                      class="card-img-top lzy_img">
 
                             </a>
                             <div class="mix-category-section-footer">
-                                <a title="Men's Bag" :href="`http://localhost:8000/mix-category-item/${child.details_slug}` " class="">
-                                    <span class="title-span">{{ child.details_title }}</span>
-                                    <span v-for="category_brand_span in child.category_brand_span" class="type-span">
-                                        {{ category_brand_span }}
-                                    </span>
+                                <a title="Men's Bag" :href="`http://localhost:8000/${child.slug}` " class="">
+                                    <span class="title-span">{{ child.name }}</span>
+                                    <!--<span v-for="category_brand_span in child.category_brand_span" class="type-span">-->
+                                        <!--{{ category_brand_span }}-->
+                                    <!--</span>-->
 
                                 </a>
                             </div>
@@ -44,7 +44,7 @@
 <script type="text/javascript">
     import { Carousel, Slide } from 'vue-carousel';
     export default {
-        name: "mix-customize-section-home",
+        name: "customize-category-section",
         mixins: ['myMixin'],
         props: ['data_list'],
         components: {

@@ -1,12 +1,6 @@
 <template>
     <div class="content">
 
-        <image-picker v-if="is_show_image_panel"
-                v-on:apply_to_choose="apply_to_choose"
-                      :inside_row_data="this.parent_rows_iterate[parent_index].rows_iterate[under_parent_index]"
-                      :under_parent_index="under_parent_index"
-                      :parent_index="parent_index"
-                v-on:visibility_image_Panel="visibility_image_Panel"></image-picker>
         <form class="insert" method="post" action=""
               enctype="multipart/form-data">
             <div class="page-header">
@@ -46,152 +40,6 @@
                                 </div>
                             </div>
 
-                            <div class="custom_control_group">
-                                <div class="left_custom_control">
-                                    <label for="">Sub-Title</label>
-                                </div>
-                                <div class="right_custom_control">
-                                    <input v-model="parent_item_row.subtitle" class="dt2 custom_control" />
-                                </div>
-                            </div>
-
-                            <div class="custom_control_group">
-                                <div class="left_custom_control">
-                                    <label for="">Slug</label>
-                                </div>
-                                <div class="right_custom_control">
-                                    <input v-model="parent_item_row.slug" class="dt2 custom_control" />
-                                </div>
-                            </div>
-
-                            <div class="custom_control_group">
-                                <div class="left_custom_control">
-                                    <label for="">Admin Url</label>
-                                </div>
-                                <div class="right_custom_control">
-                                    <input v-model="parent_item_row.admin_url" class="dt2 custom_control" />
-                                </div>
-                            </div>
-
-                            <div class="custom_control_group">
-                                <div class="left_custom_control">
-                                    <label for="">Is Visible ?</label>
-                                </div>
-                                <div class="right_custom_control">
-                                    <input type="checkbox" :checked="parent_item_row.is_visible==1"
-                                           @click="visibility_change($event, parent_item_index)"
-                                           v-model="parent_item_row.is_visible">
-                                </div>
-                            </div>
-
-
-                            <div class="category_select_group" v-for="(item, index) in parent_item_row.rows_iterate">
-                                <div class="category_select_header">
-                                    <span class="panel_head_name panel_title_0"></span>
-                                    <i class="expand_div fa fa-plus"></i>
-                                    <i @click="click_to_delete_row(parent_item_index, index)" class="trash fa fa-trash text-danger"></i>
-                                </div>
-
-                                <div class="category_select_body hide">
-                                    <div class="custom_control_group">
-                                        <div class="left_custom_control">
-                                            <label for="">Title</label>
-                                        </div>
-                                        <div class="right_custom_control">
-                                            <input @keyup="under_parent_slug_generate($event, parent_item_index, index)"
-                                                   v-model="item.title" class="dt2 custom_control" />
-                                        </div>
-                                    </div>
-
-                                    <div class="custom_control_group">
-                                        <div class="left_custom_control">
-                                            <label for="">Slug</label>
-                                        </div>
-                                        <div class="right_custom_control">
-                                            <input v-model="item.slug"
-                                                   class="dt2 custom_control" />
-                                        </div>
-                                    </div>
-
-                                    <div class="custom_control_group">
-                                        <div class="left_custom_control">
-                                            <label for="">image</label>
-                                        </div>
-                                        <div class="right_custom_control">
-                                            <input style="width: 88%;" v-model="item.image_url" class="dt2 custom_control" />
-                                            <i @click="parent_index = parent_item_index;
-                                            under_parent_index = index; is_show_image_panel = true"
-                                               class="take-picture fa fa-picture-o"></i>
-                                        </div>
-                                    </div>
-
-                                    <div class="custom_control_group" v-for="(item_cond, nested_index) in item.conditions">
-                                        <div class="inline_form_3_col">
-                                            <select v-model="item_cond.rule_type" class="control"
-                                                    @change="attribute_select_change($event, parent_item_index, index, nested_index)"
-                                                    name="" id="">
-                                                <option :data-type="attr_item.label"
-                                                :data-value="child_cat_index"
-                                                :value="attr_item.label"
-                                                v-for="(attr_item, child_cat_index) in condition_attributes2[0].children">{{ attr_item.label }}</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="inline_form_3_col">
-                                            <select v-model="item_cond.rule_operator" name="" class="control">
-                                                <option v-for="cond in item_cond.conditions_operator"
-                                                        :value="cond.operator">{{ cond.label }}</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="inline_form_3_col">
-                                            <!--<multi-select :key="`${parent_item_index + '_' + index + '_' + nested_index}`"-->
-                                                          <!--v-if="item_cond.show_multi_select == 1"-->
-                                                          <!--v-on:passDataChildToParent="categories_selected"-->
-                                                          <!--:index1="parent_item_index"-->
-                                                          <!--:index2="index"-->
-                                                          <!--:index3="nested_index"-->
-                                                          <!--:rule_value_multi="item_cond.rule_value_multi"-->
-                                                          <!--:items="categories"></multi-select>-->
-                                            <select2
-                                                    :index1="parent_item_index"
-                                                    :index2="index"
-                                                    :index3="nested_index"
-                                                    :included_data="item_cond.multi"
-                                                    v-if="item_cond.show_multi_select == 1"
-                                                    :items="item_cond.data_List"
-                                                    :key_value="`${item_cond.key_value}`"
-                                                    :field_value="`${item_cond.field_value}`"
-                                                    :aspect_key_value="`id`"
-                                                    :aspect_field_value="`admin_name`"
-                                                    :type="`multi`"
-                                                    :reference="`${parent_item_index + '_' + index + '_' + nested_index}`"
-                                                    :v_model="`item_cond.rule_value_multi`"
-                                                    v-on:passDataToParent="select2"
-                                                    v-on:passDataToParentDeleteItem="select2Delete"
-                                            ></select2>
-
-                                            <input  v-model="item_cond.rule_value" v-else  type="text" class="control">
-
-                                            <i @click="click_to_delete_condition_row(parent_item_index, index, nested_index)"
-                                               class="trash-condition fa fa-trash text-danger"></i>
-                                        </div>
-                                    </div>
-
-                                    <button type="button" @click="item.conditions.push({
-                                    rule_type: '',
-                                    rule_operator: '',
-                                    rule_value: '',
-                                    rule_value_multi: [],
-                                    conditions_operator: [],
-                                    data_List: [],
-                                    key_value: '',
-                                    field_value: '',
-                                    multi: [],
-                                    show_multi_select: 1
-                                    })" class="btn btn-btn-success change_cond">Add Condition</button>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -208,8 +56,8 @@
 
     import Select2 from './shared/Select2.vue';
     export default {
-        name: "mix-customize-section",
-        props: ['translation_array', 'condition_attributes', 'page_title', 'route'],
+        name: "advertisement-section-two",
+        props: ['page_title'],
         components: {
             select2: Select2
         },
@@ -269,40 +117,23 @@
                 if (this.condition_attributes2[0].children[cur_obj].type === "multiselect" &&
                     this.condition_attributes2[0].children[cur_obj].label === "Categories" ) {
                     this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].data_List = this.categories;
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].key_value = 'id';
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].field_value = 'name';
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
                         .conditions[nested_index].show_multi_select = 1;
                     console.log(this.condition_attributes2[0].children[cur_obj].options[0].children)
                 } else if (this.condition_attributes2[0].children[cur_obj].type === "multiselect") {
-                    console.log(this.condition_attributes2[0].children[cur_obj].options);
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].data_List = this.condition_attributes2[0].children[cur_obj]['options'];
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].key_value = 'id';
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].field_value = 'admin_name';
+                    console.log(this.condition_attributes2[0].children[cur_obj].options)
                     this.parent_rows_iterate[parent_item_index].rows_iterate[index]
                         .conditions[nested_index].show_multi_select = 1;
                 } else if (this.condition_attributes2[0].children[cur_obj].type === "select") {
-                    console.log(this.condition_attributes2[0].children[cur_obj].options);
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].data_List = this.condition_attributes2[0].children[cur_obj]['options'];
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].key_value = 'id';
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].field_value = 'admin_name';
+                    console.log(this.condition_attributes2[0].children[cur_obj].options)
                     this.parent_rows_iterate[parent_item_index].rows_iterate[index]
                         .conditions[nested_index].show_multi_select = 0;
                 } else {
                     this.parent_rows_iterate[parent_item_index].rows_iterate[index]
                         .conditions[nested_index].show_multi_select = 0;
                 }
-
-
+//                console.log('cur_obj', this.condition_attributes2[0].children[cur_obj]['options'])
+                this.parent_rows_iterate[parent_item_index].rows_iterate[index]
+                    .conditions[nested_index].data_List = this.condition_attributes2[0].children[cur_obj]['options'];
                 this.parent_rows_iterate[parent_item_index].rows_iterate[index]
                     .conditions[nested_index].conditions_operator = this.translation_array[this.condition_attributes2[0].children[cur_obj].type];
 

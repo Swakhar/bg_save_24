@@ -96,11 +96,17 @@ class HomePageCustomizeHelper
             $this->exist_val[] = $val;
             return $attr . ':' . $options;
         } else if ($sql_get_type_data == "price") {
+            $fb = "";
+            if (implode(',', $this->exist_val) != "") {
+                $fb = " and product_id in (SELECT product_id FROM product_attribute_values
+                WHERE attribute_id in (".implode(',', $this->exist_val)."))";
+            }
+
             $sql_price_product = "SELECT price FROM product_flat
-            WHERE product_id in (SELECT product_id FROM product_attribute_values
-            WHERE attribute_id in (".implode(',', $this->exist_val)."))
+            WHERE 1=1 $fb
             and price $rule_map[$rule] $val AND status = 1
             ORDER BY price ";
+//            return $sql_price_product;
             $data = DB::select($sql_price_product);
             $low_price = count($data) > 0 ? $data[0]->price : 0;
             $high_price = count($data) > 0 ? $data[count($data)-1]->price : 0;
@@ -109,9 +115,42 @@ class HomePageCustomizeHelper
                 unset($this->exist_val);
                 $this->exist_val = array();
             }
-            return $attr . ': ' . round($low_price) . ' to ' . round($high_price);
+            if ($low_price == 0 && $high_price == 0)
+                return $attr . ': No Product Found';
+            else
+                return $attr . ': ' . round($low_price) . ' to ' . round($high_price);
+
         }
 
+    }
 
+    public function GetParseCustomizeSectionLogic($id, $type_id)
+    {
+        $obj = [];
+        $data = [];
+        if ($type_id == 1) {
+            $data = DB::select("SELECT name, slug, image image_path FROM category_translations
+            INNER JOIN categories on categories.id = category_translations.category_id
+            WHERE category_id = $id");
+        } else if ($type_id == 2) {
+            $data = DB::select("SELECT tbl.* FROM 
+            (
+                SELECT (@row_number:=@row_number + 1) AS num,
+                name, url_key slug, product_images.path image_path FROM product_flat,
+                        (SELECT @row_number:=0) AS t,
+                        product_images
+                WHERE product_flat.product_id = $id
+                and product_images.product_id = product_flat.product_id
+            ) tbl
+            WHERE tbl.num = 1");
+        }
+
+        if (count($data) > 0) {
+            $obj['name'] = $data[0]->name;
+            $obj['slug'] = $data[0]->slug;
+            $obj['image_path'] = $data[0]->image_path;
+        }
+
+        return $obj;
     }
 }

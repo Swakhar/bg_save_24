@@ -1408,6 +1408,14 @@ return [
             'view' => 'Mix Customize Section',
             'config' => 'Mix Customize Section Configuration'
         ],
+        'advertisement_section_one' => [
+            'view' => 'Advertisement Section One',
+            'config' => 'Advertisement Section One Configuration'
+        ],
+        'advertisement_section_two' => [
+            'view' => 'Advertisement Section Two',
+            'config' => 'Advertisement Section Two Configuration'
+        ],
         'pages' => [
             'general' => 'General',
             'seo' => 'SEO',

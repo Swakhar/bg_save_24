@@ -15,6 +15,8 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
 
         Route::get('/mix-category-item-front', 'ShopController@HomePageGetMixCategory')->name('mix-category-home-page');
 
+        Route::get('/customize-section-home-page', 'ShopController@CustomizeSectionHomePage')->name('customize-section-home-page');
+
         Route::get('/mix-category-item/{slug}', function ($slug) {
 //            return $slug;
             $data = \Illuminate\Support\Facades\DB::select("SELECT mix_customize_section_details.slug, 
@@ -62,7 +64,6 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
             return $product = \Illuminate\Support\Facades\DB::select($sql);
 
         })->name('mix-category-item');
-
 
         Route::get('/recommended-slider', function () {
             $formattedProducts = [];

@@ -22,6 +22,8 @@ Vue.prototype.$http = axios
 window.eventBus = new Vue();
 
 Vue.component('mix-customize-section', require('./components/mix_section').default);
+Vue.component('advertisement-section-one', require('./components/mix_section').default);
+Vue.component('advertisement-section-two', require('./components/mix_section').default);
 Vue.component('multi-select', require('./components/shared/multi_select').default);
 Vue.component('select2', require('./components/shared/Select2').default);
 Vue.component('single-select', require('./components/shared/single_select').default);

@@ -265,5 +265,17 @@ return [
         'route'      => 'admin.mix_customize_section.index',
         'sort'       => 3,
         'icon-class' => '',
+    ], [
+        'key'        => 'cms.advertisement_section_one',
+        'name'       => 'admin::app.cms.advertisement_section_one.view',
+        'route'      => 'admin.advertisement_section_one.index',
+        'sort'       => 3,
+        'icon-class' => '',
+    ], [
+        'key'        => 'cms.advertisement_section_two',
+        'name'       => 'admin::app.cms.advertisement_section_two.view',
+        'route'      => 'admin.advertisement_section_two.index',
+        'sort'       => 3,
+        'icon-class' => '',
     ]
 ];

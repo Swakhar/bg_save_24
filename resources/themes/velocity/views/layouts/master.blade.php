@@ -217,7 +217,7 @@
                         @yield('full-add-third')
                     </div>
 
-                    <div class="container-fluid">
+                    <div >
                         @yield('full-needed-slider')
                     </div>
 

@@ -911,6 +911,16 @@ Route::group(['middleware' => ['web']], function () {
                     return $data;
                 })->name('product-image-url');
 
+                /*** advertisement section one ***/
+                Route::get('/advertisement-section-one', 'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@index')->defaults('_config', [
+                    'view' => 'admin::advertisement_section_one.index',
+                ])->name('admin.advertisement_section_one.index');
+
+                /*** advertisement section two ***/
+                Route::get('/advertisement-section-two', 'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@index')->defaults('_config', [
+                    'view' => 'admin::advertisement_section_two.index',
+                ])->name('admin.advertisement_section_two.index');
+
 
                 // Route::post('/delete/{id}', 'Webkul\CMS\Http\Controllers\Admin\PageController@delete')->defaults('_config', [
                 //     'redirect' => 'admin.cms.index'
