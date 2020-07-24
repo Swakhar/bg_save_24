@@ -17,6 +17,11 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
 
         Route::get('/customize-section-home-page', 'ShopController@CustomizeSectionHomePage')->name('customize-section-home-page');
 
+        Route::get('/get-slider-data-home-page', 'ShopController@GetSliderDataHome')->name('get-slider-data-home-page');
+        Route::get('/get-data-add-panel-second', 'ShopController@GetAddPanelSecond')->name('get-data-add-panel-second');
+        Route::get('/get-data-add-panel-first', 'ShopController@GetAddPanelFirst')->name('get-slider-data-home-first');
+        Route::get('/get-slider-add-section', 'ShopController@GetSliderAddSection')->name('get-slider-add-section');
+
         Route::get('/mix-category-item/{slug}', function ($slug) {
 //            return $slug;
             $data = \Illuminate\Support\Facades\DB::select("SELECT mix_customize_section_details.slug, 

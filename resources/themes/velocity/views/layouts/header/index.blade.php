@@ -1,5 +1,5 @@
 <header class="sticky-header" v-if="!isMobile()">
-    <div class="col-md-12">
+    <div class="col-md-12" style="margin-top: 3px;">
         <div class="col-md-3" style="    max-width: 21%;">
             <logo-component></logo-component>
         </div>

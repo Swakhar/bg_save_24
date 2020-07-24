@@ -128,27 +128,35 @@ class HomePageCustomizeHelper
     {
         $obj = [];
         $data = [];
+        $product = "";
+        $name = "";
+        $slug = "";
+        $image_path = "";
         if ($type_id == 1) {
-            $data = DB::select("SELECT name, slug, image image_path FROM category_translations
+            $data = DB::select("SELECT name, slug, image image_path, 0 price, 0 special_price FROM category_translations
             INNER JOIN categories on categories.id = category_translations.category_id
             WHERE category_id = $id");
+            $name = $data[0]->name;
+            $slug = $data[0]->slug;
+            $image_path = $data[0]->image_path;
         } else if ($type_id == 2) {
-            $data = DB::select("SELECT tbl.* FROM 
-            (
-                SELECT (@row_number:=@row_number + 1) AS num,
-                name, url_key slug, product_images.path image_path FROM product_flat,
-                        (SELECT @row_number:=0) AS t,
-                        product_images
-                WHERE product_flat.product_id = $id
-                and product_images.product_id = product_flat.product_id
-            ) tbl
-            WHERE tbl.num = 1");
-        }
 
+            $product = \Webkul\Product\Models\ProductFlat::select(DB::raw('product_flat.*'))
+                ->where('product_id', $id)
+                ->first();
+
+            $velocityHelper = app('Webkul\Velocity\Helpers\Helper');
+           return $product = $velocityHelper->formatProduct($product);
+
+        }
+        $is_product = ($type_id == 2);
+// Be the first to write a review
         if (count($data) > 0) {
-            $obj['name'] = $data[0]->name;
-            $obj['slug'] = $data[0]->slug;
-            $obj['image_path'] = $data[0]->image_path;
+            $obj['name'] = $name;
+            $obj['slug'] = $slug;
+            $obj['image_path'] = $image_path;
+            $obj['is_product'] = $is_product;
+            $obj['product'] = $product;
         }
 
         return $obj;

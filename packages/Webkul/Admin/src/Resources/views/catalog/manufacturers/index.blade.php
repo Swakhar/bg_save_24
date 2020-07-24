@@ -1,19 +1,19 @@
 @extends('admin::layouts.content')
 
 @section('page_title')
-     {{ __('admin::app.catalog.manufacturers.title') }}
+     {{ __('admin::app.catalog.attribute_options.title') }}
 @stop
 
 @section('content')
     <div class="content">
         <div class="page-header">
             <div class="page-title">
-                <h1>{{ __('admin::app.catalog.manufacturers.title') }}</h1>
+                <h1>{{ __('admin::app.catalog.attribute_options.title') }}</h1>
             </div>
 
             <div class="page-action">
                 <a href="{{ route('admin.catalog.manufacturers.create') }}" class="btn btn-lg btn-primary">
-                     {{ __('admin::app.catalog.manufacturers.add-title') }}
+                     {{ __('admin::app.catalog.attribute_options.add-title') }}
                 </a>
             </div>
         </div>

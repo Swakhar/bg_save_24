@@ -755,6 +755,16 @@ return [
             'is_comparable' => "Attribute is comparable",
             'default_null_option' => 'Create default empty option',
         ],
+        'attribute_options' => [
+            'title' => 'Configurable Option Value',
+            'add-title' => 'Add Configurable Option',
+            'edit-title' => 'Edit Configurable Option',
+            'save-btn-title' => 'Save Configurable Option',
+            'admin_name' => 'Admin Name',
+            'is_configurable' => 'Is Configurable ?',
+            'image_name' => 'Image',
+            'attribute_name' => 'Attribute Name',
+        ],
         'families' => [
             'title' => 'Families',
             'add-family-btn-title' => 'Add Family',
@@ -1415,6 +1425,14 @@ return [
         'advertisement_section_two' => [
             'view' => 'Advertisement Section Two',
             'config' => 'Advertisement Section Two Configuration'
+        ],
+        'slider_section' => [
+            'view' => 'Slider Section',
+            'config' => 'Slider Section Configuration'
+        ],
+        'slider_add_section' => [
+            'view' => 'Slider Add Section',
+            'config' => 'Slider Add Section Configuration'
         ],
         'pages' => [
             'general' => 'General',

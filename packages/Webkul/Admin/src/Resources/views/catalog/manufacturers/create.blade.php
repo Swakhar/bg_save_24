@@ -1,7 +1,7 @@
 @extends('admin::layouts.content')
 
 @section('page_title')
-    {{ __('admin::app.catalog.manufacturers.add-title') }}
+    {{ __('admin::app.catalog.attribute_options.add-title') }}
 @stop
 
 @section('content')
@@ -14,7 +14,7 @@
                     <h1>
                         <i class="icon angle-left-icon back-link" onclick="history.length > 1 ? history.go(-1) : window.location = '{{ url('/admin/dashboard') }}';"></i>
 
-                        {{ __('admin::app.catalog.manufacturers.add-title') }}
+                        {{ __('admin::app.catalog.attribute_options.add-title') }}
                     </h1>
                 </div>
 

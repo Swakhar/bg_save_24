@@ -1,8 +1,9 @@
 <template>
     <div>
         <div class="container-fluid" v-for="item in data_list">
-            <div class="col-md-123" >
+            <div class="col-md-123 default_section" >
                 <span class="mix-section-title">{{ item.title }}</span>
+                <a :href="`/${item.slug}`" class="default_section_btn btn_view_all">View All</a>
                 <carousel
                         :class="'pagination-hide'"
                         :navigationEnabled="true"
@@ -12,24 +13,28 @@
                         :autoplay="false"
                         :autoplayDirection="'forward'"
                          :mouse-drag="false">
-                    <slide :key="`mix-sell-${index}`" v-for="(child, index) in item.details">
+                    <slide :key="`mix-sell-${index}`" v-for="(child, index) in item.child">
                         <div  :class="`inline-card card grid-card product-card-new card-${index} mix-category-section`" >
-                            <a :href="`http://localhost:8000/mix-category-item/${child.details_slug}`"
+                            <a :href="`/mix-category-item/${child.details_slug}`"
                                :title="`${child.details_title}`" >
                                 <img loading="lazy" :alt="`${child.details_title}`"
-                                     :src="`/uploads/${child.image_url}`"
-                                     data-src="http://localhost:8000/cache/medium/product/31/crbATFGOysK0c8SY6A0xGFlwCs6iBBXNlPe4lyJY.jpeg"
-                                     onerror="this.src='http://localhost:8000/vendor/webkul/ui/assets/images/product/large-product-placeholder.png'"
+                                     :src="`/cache/medium/${child.image_url}`"
+                                     :data-src="`/cache/medium/${child.image_url}`"
+                                     onerror="this.src='/vendor/webkul/ui/assets/images/product/large-product-placeholder.png'"
                                      class="card-img-top lzy_img">
 
                             </a>
                             <div class="mix-category-section-footer">
-                                <a title="Men's Bag" :href="`http://localhost:8000/mix-category-item/${child.details_slug}` " class="">
-                                    <span class="title-span">{{ child.details_title }}</span>
-                                    <span v-for="category_brand_span in child.category_brand_span" class="type-span">
+                                <span class="hide" :set="c=''"></span>
+                                <span :set="c += category_brand_span + '\n' "
+                                      v-for="(category_brand_span, inde) in child.attr" class="hide">
                                         {{ category_brand_span }}
+                                </span>
+                                <a :title="c" :href="`/mix-category-item/${child.details_slug}` " class="">
+                                    <span class="title-span">{{ child.details_title }}</span>
+                                    <span v-for="category_brand_span in child.attr" class="type-span">
+                                        {{ category_brand_span.length > 17 ? category_brand_span.substr(0, 15) + '...' : category_brand_span }}
                                     </span>
-
                                 </a>
                             </div>
                         </div>
@@ -80,9 +85,6 @@
     .card-0 {
         margin-left: 0;
     }
-    .mix-category-section {
-        height: 100%;
-    }
 
     .mix-category-section a {
         text-decoration: none;
@@ -100,6 +102,7 @@
         display: block;
         font-size: 16px;
         text-align: center;
+        font-weight: 600;
     }
 
 </style>

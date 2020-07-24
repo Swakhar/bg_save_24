@@ -20,9 +20,9 @@ class CreateMixCustomizeSectionChild extends Migration
             $table->foreign('details_row_id')->references('id')
                 ->on('mix_customize_section_details')->onDelete('cascade');
             $table->string('label');
-            $table->string('rule_operator');
+            $table->string('operation');
             $table->string('rule_value');
-            $table->char('show_multi_select')->comment("1 = true, 0 = false");
+            $table->char('is_multi')->comment("1 = true, 0 = false");
             $table->integer('sort_no');
             $table->timestamps();
         });

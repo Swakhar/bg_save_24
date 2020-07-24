@@ -2,7 +2,11 @@
 
 namespace Webkul\Manufacturer\Http\Controllers;
 
+use App\Helper\ImageManipulation;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
+use Webkul\Core\Repositories\LocaleRepository;
+use Webkul\Manufacturer\Models\ConfigurableOption;
 use Webkul\Manufacturer\Repositories\ManufacturerRepository;
 
 class ManufacturerController extends Controller
@@ -61,14 +65,41 @@ class ManufacturerController extends Controller
      */
     public function store()
     {
-        
+        $local = app('Webkul\Core\Repositories\LocaleRepository')->all();
         $this->validate(request(), [
             'admin_name'       => ['required', 'unique:manufacturers'],
             'image.*'     => 'mimes:jpeg,jpg,bmp,png',
         ]);
-        
-        $data = request()->all();
-        $manufacturer = $this->manufacturerRepository->create($data);
+        $master_data = [];
+        $value_translation = [];
+        $path = '/uploads/option_image/';
+        $path2 = '/option_image/';
+        $image = "";
+        $imageManipulation = new ImageManipulation();
+         foreach (request()->input('image') as $key => $value) {
+             if(request()->hasFile('image.'.$key)) {
+                 $file = request()->file('image')[$key];
+                 $image = $path2 . $imageManipulation->UploadImage($file, $path);
+             } else {
+                 $image = "";
+             }
+         }
+        $master_data['admin_name'] = request()->input('admin_name');
+        $master_data['description'] = request()->input('description');
+        $master_data['published'] = request()->input('published');
+        $master_data['dis_order'] = request()->input('dis_order');
+        $master_data['discounts'] = request()->input('discounts');
+        $master_data['image'] = $image;
+
+        $id = DB::table('configurable_option_value')->insertGetId($master_data);
+
+        foreach ($local as $key => $value) {
+            $value_translation[$key]['locale'] = $value->code;
+            $value_translation[$key]['configurable_option_id'] = $id;
+            $value_translation[$key]['name'] = request()->input($value->code)['name'];
+        }
+
+        DB::table('configurable_option_value_translation')->insert($value_translation);
 
         session()->flash('success', trans('admin::app.response.create-success', ['name' => 'Manufacturer']));
 
@@ -83,9 +114,9 @@ class ManufacturerController extends Controller
      */
     public function edit($id)
     {
-        $manufacturer = $this->manufacturerRepository->findOrFail($id);
+        $configurableoption = ConfigurableOption::where('id', $id)->first();
         
-        return view($this->_config['view'], compact('manufacturer'));
+        return view($this->_config['view'], compact('configurableoption'));
     }
 
     /**
@@ -96,28 +127,44 @@ class ManufacturerController extends Controller
      */
     public function update($id)
     {
+        //return request()->all();
+        $local = app('Webkul\Core\Repositories\LocaleRepository')->all();
         $this->validate(request(), [
-            'admin_name' => 'required',
-            'image.*'         => 'mimes:jpeg,jpg,bmp,png',
-        ]);
-        $data=request()->all();
-        $manufacturer = $this->manufacturerRepository->findOrFail($id);
-        $name=$data['admin_name'];
-        if($name==$manufacturer->admin_name){
-            $manufacturer = $this->manufacturerRepository->update(request()->all(), $id);
-
-            session()->flash('success', trans('admin::app.response.update-success', ['name' => 'Manufacturer']));
-        }else{
-            $this->validate(request(), [
             'admin_name'       => ['required', 'unique:manufacturers'],
-            'image.*'         => 'mimes:jpeg,jpg,bmp,png',
-            ]);
-            $manufacturer = $this->manufacturerRepository->update(request()->all(), $id);
-
-            session()->flash('success', trans('admin::app.response.update-success', ['name' => 'Manufacturer']));
-
+            'image.*'     => 'mimes:jpeg,jpg,bmp,png',
+        ]);
+        $master_data = [];
+        $value_translation = [];
+        $path = '/uploads/option_image/';
+        $path2 = '/option_image/';
+        $image = "";
+        $imageManipulation = new ImageManipulation();
+        foreach (request()->input('image') as $key => $value) {
+            if(request()->hasFile('image.'.$key)) {
+                $file = request()->file('image')[$key];
+                $image = $path2 . $imageManipulation->UploadImage($file, $path);
+            } else {
+                $image = "";
+            }
         }
-           
+        $master_data['admin_name'] = request()->input('admin_name');
+        $master_data['description'] = request()->input('description');
+        $master_data['published'] = request()->input('published');
+        $master_data['dis_order'] = request()->input('dis_order');
+        $master_data['discounts'] = request()->input('discounts');
+        $master_data['image'] = $image;
+
+        DB::table('configurable_option_value')->where('id', $id)->update($master_data);
+        DB::table('configurable_option_value_translation')->where('configurable_option_id', $id)->delete();
+        foreach ($local as $key => $value) {
+            $value_translation[$key]['locale'] = $value->code;
+            $value_translation[$key]['configurable_option_id'] = $id;
+            $value_translation[$key]['name'] = request()->input($value->code)['name'];
+        }
+
+        DB::table('configurable_option_value_translation')->insert($value_translation);
+
+        session()->flash('success', trans('admin::app.response.update-success', ['name' => 'Manufacturer']));
         return redirect()->route($this->_config['redirect']);
     }
 

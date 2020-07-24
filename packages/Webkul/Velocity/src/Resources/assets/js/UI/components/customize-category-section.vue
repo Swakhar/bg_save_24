@@ -13,26 +13,32 @@
                         :autoplayDirection="'forward'"
                          :mouse-drag="false">
                     <slide :key="`l-sell-${index}`" v-for="(child, index) in item.child">
-                        <div  :class="`inline-card card grid-card product-card-new card-${index} mix-category-section`" >
+
+                        <div v-if="child.is_product == false"
+                             :class="`inline-card card grid-card product-card-new card-${index} mix-category-section`" >
                             <a
                                :title="`${child.name}`" >
                                 <img loading="lazy" :alt="`${child.name}`"
-                                     :src="`/uploads/${child.image_path}`"
-                                     data-src="http://localhost:8000/cache/medium/product/31/crbATFGOysK0c8SY6A0xGFlwCs6iBBXNlPe4lyJY.jpeg"
-                                     onerror="this.src='http://localhost:8000/vendor/webkul/ui/assets/images/product/large-product-placeholder.png'"
+                                     :src="`/cache/medium/${child.image_path}`"
+                                     data-src="/cache/medium/product/31/crbATFGOysK0c8SY6A0xGFlwCs6iBBXNlPe4lyJY.jpeg"
+                                     onerror="this.src='/vendor/webkul/ui/assets/images/product/large-product-placeholder.png'"
                                      class="card-img-top lzy_img">
 
                             </a>
                             <div class="mix-category-section-footer">
-                                <a title="Men's Bag" :href="`http://localhost:8000/${child.slug}` " class="">
+                                <a :title="child.name" :href="`/${child.slug}` " class="">
                                     <span class="title-span">{{ child.name }}</span>
-                                    <!--<span v-for="category_brand_span in child.category_brand_span" class="type-span">-->
-                                        <!--{{ category_brand_span }}-->
-                                    <!--</span>-->
-
                                 </a>
                             </div>
                         </div>
+
+                        <div v-else>
+                            <product-card
+                                    :list="false"
+                                    :product="child">
+                            </product-card>
+                        </div>
+
                     </slide>
 
                 </carousel>
@@ -64,6 +70,15 @@
             clickLi: function (index) {
                 this.$emit('passIndexSliderToParent', index)
             },
+            quickView: function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                this.$root.quickView = true;
+                this.$root.productDetails = this.quickViewDetails;
+
+                $('body').toggleClass('overflow-hidden');
+            }
         }
     }
 </script>
@@ -80,9 +95,7 @@
     .card-0 {
         margin-left: 0;
     }
-    .mix-category-section {
-        height: 100%;
-    }
+
 
     .mix-category-section a {
         text-decoration: none;

@@ -9,7 +9,7 @@
                 </div>
                 <div class="page-action">
                     <button type="button" @click="submit" class="btn btn-success">Save</button>
-                    <button type="button" @click="click_to_add_parent_row"
+                    <button type="button" @click="addSlider"
                             class="btn btn-warning add_new_category"><i class="fa fa-plus"></i></button>
                 </div>
             </div>
@@ -17,28 +17,84 @@
             <div class="page-content">
                 <div class="control-group">
 
-                    <div class="parent_div_of_custom_category"
-                         v-for="(parent_item_row, parent_item_index) in parent_rows_iterate">
-                        <div class="parent_div_of_custom_category_header">
-                            <span class="panel_head_name panel_title_0"></span>
-                            <i @click="click_to_expand_parent_div" class="expand_div fa fa-plus"></i>
-                            <i @click="click_to_delete_parent_row(parent_item_index)" class="trash fa fa-trash text-danger"></i>
-                        </div>
-                        <div class="hide parent_div_of_custom_category_body">
-                            <div class="button_section">
-                                <button type="button" @click="click_to_add_row(parent_item_index)" id="add_new_category"
-                                        class="btn btn-warning add_new_category"><i class="fa fa-plus"></i></button>
+                    <div v-for="(slider, index) in sliders" class="parent_div_of_custom_category">
+                        <div class="accordion_header">Slider
+                            <i @click="removeSlider(index)" class="section_delete fa fa-trash text-danger"></i>
+                            <i @click="click_to_expand"
+                               class="expand_div fa fa-angle-right"></i></div>
+                        <div v-bind:class="div_hide ? 'accordion_body hide' : 'accordion_body'" >
+
+                            <div class="form-group">
+                                <label for="slider_title">Slider Title</label>
+                                <input  type="text" class="dt2 control" v-model="slider.title"
+                                        id="slider_title" placeholder="Slider Title">
+                            </div>
+                            <div class="form-group">
+                                <label for="slider_slug">Slider Slug</label>
+                                <input  type="text" class="dt2 control" v-model="slider.slug"
+                                        id="slider_slug" placeholder="Slider Slug">
+                            </div>
+                            <div class="form-group">
+                                <label for="slider_image">Slider Image</label>
+                                <div class="image-wrapper">
+                                    <label class="image-item has-image">
+                                        <input type="hidden" name="images[image_1]">
+                                        <input type="file" @change="on_change_Image($event, slider.idd+'_image')"
+                                               accept="image/*" name="images[]" :id="`${slider.idd}`"
+                                               multiple="multiple" aria-required="false" aria-invalid="false">
+                                        <img :src="`/uploads/${slider.image}`" class="preview" alt="" :id="`${slider.idd}_image`" />
+                                        <label @click="removeImageDiv(index)" class="remove-image">Remove Image</label>
+                                    </label>
+                                </div>
                             </div>
 
-                            <div class="custom_control_group">
-                                <div class="left_custom_control">
-                                    <label for="">Title</label>
-                                </div>
-                                <div class="right_custom_control">
-                                    <input @keyup="parent_slug_generate($event, parent_item_index)"
-                                           v-model="parent_item_row.title" class="dt2 custom_control" />
-                                </div>
-                            </div>
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th colspan="4">
+                                        <button @click="addCondition(index)" type="button"
+                                                class="btn btn-success text-left">Add new condition</button>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(condition, index2) in slider.conditions">
+                                    <th width="20%">
+                                        <select v-model="condition.label" name=""
+                                                @change="changeCondition($event, index, index2)"
+                                                class="dt2 control" id="">
+                                            <option  value="">Select Option</option>
+                                            <option :data-value="item.type"
+                                                    :index="index3"
+                                                    v-for="(item, index3) in attributes"
+                                                    :value="`${item.name}`">{{ item.name }}</option>
+                                        </select>
+                                    </th>
+                                    <th width="20%">
+                                        <select v-model="condition.rule" name="" class="dt2 control" id="">
+                                            <option value="">Select Option</option>
+                                            <option v-for="rule in condition.rule_array"
+                                                    :value="`${rule.operator}`">{{ rule.label }}</option>
+                                        </select>
+                                    </th>
+                                    <th width="55%">
+                                        <multiselect v-if="condition.is_multi"
+                                                     v-model="condition.rule_value_multi"
+                                                     :options="condition.options"
+                                                     placeholder="Select Options"
+                                                     label="admin_name"
+                                                     :select-label="''"
+                                                     :multiple="true" :searchable="true"
+                                                     track-by="admin_name"></multiselect>
+                                        <input v-model="condition.rule_value" v-else
+                                               type="text" class="dt2 control" />
+                                    </th>
+                                    <th width="5%">
+                                        <i @click="removeCondition(index, index2)" class="table_row_delete fa fa-trash"></i>
+                                    </th>
+                                </tr>
+                                </tbody>
+                            </table>
 
                         </div>
                     </div>
@@ -54,185 +110,73 @@
 
 <script>
 
-    import Select2 from './shared/Select2.vue';
     export default {
         name: "advertisement-section-one",
-        props: ['page_title'],
+        props: ['condition_rule', 'page_title'],
         components: {
-            select2: Select2
+
         },
         data() {
             return {
-                attribute_select: "",
-                condition_attributes2: {},
-                parent_rows_iterate: [],
-                rows_iterate: [{slug: "", categories: [], conditions: [], conditions_operator: []}],
-                baseUrl: "",
-                show_multi_select: false,
-                categories: [],
-                conditions: [],
-                is_edit_mode: false,
-                is_show_image_panel: false,
-                parent_index: 0,
-                under_parent_index: 0,
+//                page_title: "Slider Settings",
+                div_hide: false,
+                attributes: [],
+                sliders: [],
             }
-        },
-        updated() {
-//          console.log(this.condition_attributes)
         },
         mounted() {
 
         },
         created() {
-            this.loaded();
-            this.getCategories();
+            this.getListAttribute()
+            this.getAdvertisementData()
+//            console.log(this.baseUrl)
         },
         methods: {
-            select2: function (val) {
-                this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
-                    .conditions[val.index3]['multi'].push(+val.val[val.key_value]);
-
+            removeCondition: function(index, index2) {
+                this.sliders[index].conditions.splice(index2, 1)
             },
-
-            select2Delete: function (val) {
-                console.log(val)
-                for (let child in this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
-                   .conditions[val.index3]['multi']) {
-                    console.log(this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
-                        .conditions[val.index3]['multi'][child], val.val)
-                    if (this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
-                            .conditions[val.index3]['multi'][child] == val.val) {
-                        this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
-                            .conditions[val.index3]['multi'].splice(child, 1)
-                    }
+            changeCondition: function(event, index, index2) {
+                let cur_obj = $(event.target.options[event.target.options.selectedIndex]).attr('data-value');
+                let index3 = $(event.target.options[event.target.options.selectedIndex]).attr('index');
+                this.sliders[index].conditions[index2].rule_array = this.condition_rule[cur_obj];
+                if (cur_obj === 'multiselect' || cur_obj === 'select') {
+                    console.log(this.attributes[index3])
+                    this.sliders[index].conditions[index2].options = this.attributes[index3].options
                 }
-//                this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
-//                    .conditions[val.index3]['multi'].push(+val.val[val.key_value]);
-
+                this.sliders[index].conditions[index2].is_multi = (cur_obj === 'multiselect' || cur_obj === 'select')
+                console.log(this.condition_rule[cur_obj], cur_obj)
             },
-
-            attribute_select_change: function (event, parent_item_index, index, nested_index) {
-                let cur_obj = JSON.parse($(event.target.options[event.target.options.selectedIndex]).attr('data-value'));
-
-                if (this.condition_attributes2[0].children[cur_obj].type === "multiselect" &&
-                    this.condition_attributes2[0].children[cur_obj].label === "Categories" ) {
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].show_multi_select = 1;
-                    console.log(this.condition_attributes2[0].children[cur_obj].options[0].children)
-                } else if (this.condition_attributes2[0].children[cur_obj].type === "multiselect") {
-                    console.log(this.condition_attributes2[0].children[cur_obj].options)
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].show_multi_select = 1;
-                } else if (this.condition_attributes2[0].children[cur_obj].type === "select") {
-                    console.log(this.condition_attributes2[0].children[cur_obj].options)
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].show_multi_select = 0;
-                } else {
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].show_multi_select = 0;
-                }
-//                console.log('cur_obj', this.condition_attributes2[0].children[cur_obj]['options'])
-                this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                    .conditions[nested_index].data_List = this.condition_attributes2[0].children[cur_obj]['options'];
-                this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                    .conditions[nested_index].conditions_operator = this.translation_array[this.condition_attributes2[0].children[cur_obj].type];
-
-            },
-            visibility_image_Panel: function (val) {
-                this.is_show_image_panel = val;
-            },
-            apply_to_choose: function (val) {
-                console.log(val)
-                this.parent_rows_iterate[val.parent_index].rows_iterate[val.under_parent_index]
-                    .image_url = val.image_path;
-                this.is_show_image_panel = false;
-            },
-            click_to_delete_condition_row: function (parent_item_index, index, nested_index) {
-                this.parent_rows_iterate[parent_item_index].rows_iterate[index].conditions.splice(nested_index, 1);
-            },
-            categories_selected: function (val) {
-
-                let parse_arr = JSON.parse(this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
-                    .conditions[val.index3].rule_value_multi);
-                console.log('parse_arr', parse_arr)
-                let parse_arr2 = JSON.parse(parse_arr)
-                console.log(parse_arr2.indexOf(+val.value.toString()))
-                if (parse_arr2.indexOf(+val.value.toString()) === -1) {
-                    parse_arr2.push(+val.value.toString())
-                }
-                console.log('parse_arr2', parse_arr2)
-                this.parent_rows_iterate[val.index1].rows_iterate[val.index2].conditions[val.index3]
-                    .rule_value_multi = JSON.stringify(JSON.stringify(parse_arr2))
-            },
-            click_to_delete_row: function (parent_item_index, index) {
-                this.parent_rows_iterate[parent_item_index].rows_iterate.splice(parent_item_index, 1);
-            },
-            click_to_delete_parent_row: function (parent_item_index) {
-                this.parent_rows_iterate.splice(parent_item_index, 1);
-            },
-            click_to_expand_parent_div: function (e) {
-
-            },
-            visibility_change: function (event, parent_item_index) {
-//                console.log($(event))
-                this.parent_rows_iterate[parent_item_index].is_visible =
-                    (this.parent_rows_iterate[parent_item_index].is_visible == 1 ? 0 : 1);
-                console.log(this.parent_rows_iterate[parent_item_index].is_visible)
-            },
-            click_to_add_row: function (parent_item_index) {
-                //
-                this.parent_rows_iterate[parent_item_index].rows_iterate.push({title: "", slug: "",
-                    is_visible: 0, admin_url: "", categories: [], conditions: []});
-            },
-            click_to_add_parent_row: function (e) {
-                this.parent_rows_iterate.push({
-                    slug: "",
-                    title: "",
-                    subtitle: "",
-                    rows_iterate: []
-                });
-            },
-
-            loaded: function () {
-                this.baseUrl = $("#base_url").attr("url");
-                this.condition_attributes2 = this.condition_attributes
-                this.getMixSections();
-            },
-
-            getCategories : function() {
-                let that = this;
-                axios.get(this.baseUrl + '/category-list')
-                .then(function (response) {
-                    that.categories = response.data.categories
+            addCondition: function (index) {
+                this.sliders[index].conditions.push({
+                    label: "",
+                    rule_array: [],
+                    rule: "",
+                    rule_value: "",
+                    rule_value_multi: [],
+                    is_select: false,
+                    options: [],
+                    is_multi: false
                 })
-                .catch(function (error) {
-                    // handle error
-                    console.log(error);
+            },
+            addSlider: function () {
+                console.log('aaa')
+                this.sliders.push({
+                    slug: '',
+                    image: '',
+                    image_name: '',
+                    visibility: true,
+                    title: '',
+                    idd: 'id_' + this.sliders.length,
+                    conditions: []
                 })
             },
 
-            getMixSections : function() {
+            getListAttribute: function (e) {
                 let that = this;
-                axios.get(this.baseUrl + '/admin/cms/get-mix-section')
+                axios.get('/admin/catalog/attribute-options')
                     .then(function (response) {
-                        let i = 0;
-                        for (let parent in response.data) {
-                            that.parent_rows_iterate.push({
-                                slug: response.data[parent].slug,
-                                admin_url: response.data[parent].admin_url,
-                                subtitle: response.data[parent].subtitle,
-                                is_visible: response.data[parent].is_visible,
-                                title: response.data[parent].title,
-                                rows_iterate: []
-                            });
-                            for (let row_iterate in response.data[parent]['rows_iterate']) {
-                                if (row_iterate !== "") {
-                                    that.parent_rows_iterate[i].rows_iterate
-                                        .push(response.data[parent]['rows_iterate'][row_iterate])
-                                }
-                            }
-                            i += 1;
-                        }
+                        that.attributes = response.data
                     })
                     .catch(function (error) {
                         // handle error
@@ -240,25 +184,89 @@
                     })
             },
 
-            parent_slug_generate : function(event, parent_item_index) {
-                this.parent_rows_iterate[parent_item_index].slug = $(event.target).val().toLowerCase().split(' ').join('-')
-                    .split(/[.,\/ -&]/).join('').split('--').join('-')
-            },
-            under_parent_slug_generate : function(event, parent_item_index, index) {
-                this.parent_rows_iterate[parent_item_index].rows_iterate[index].slug = $(event.target).val().toLowerCase().split(' ').join('-')
-                    .split(/[.,\/ -&]/).join('')
-                    .split('--').join('-')
+            getAdvertisementData: function (e) {
+                let that = this;
+                axios.get('/admin/cms/get-advertisement-section-one')
+                    .then(function (response) {
+                        that.sliders = response.data
+                    })
+                    .catch(function (error) {
+                        // handle error
+                        console.log(error);
+                    })
             },
 
-            submit : function() {
+            readURL: function(input, id) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#'+id).attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            },
+            on_change_Image: function(e, id) {
+                this.readURL($(e.target)[0], id)
+            },
+
+
+            removeSlider: function(index) {
+                this.sliders.splice(index, 1)
+            },
+
+            submit : function(){
+
                 let that = this;
-                axios.post(this.baseUrl + '/admin/cms/mix-customize-section-save',
-                    {data: this.parent_rows_iterate})
+                let data = new FormData();
+                for (let i = 0; i < this.sliders.length; i++) {
+                    data.append(this.sliders[i].idd, document.getElementById(this.sliders[i].idd).files[0]);
+                }
+                data.append('data', JSON.stringify(this.sliders));
+
+                axios.post('/admin/cms/update-advertisement-section-one', data)
                     .then(data =>{
                         toastr.success(data.data);
                     })
-                    .catch(error => {
-                    });
+                    .catch(error => {});
+
+            },
+
+            click_to_expand: function (e) {
+                let target = $(e.target);
+                if (target.hasClass('fa-angle-down')) {
+                    target.removeClass('fa-angle-down').addClass('fa-angle-right');
+                    target.parent().parent().find('.accordion_body').addClass('hide')
+                } else {
+                    target.removeClass('fa-angle-right').addClass('fa-angle-down');
+                    target.parent().parent().find('.accordion_body').removeClass('hide')
+                }
+
+            },
+
+            change_attribute_type: function (e) {
+                let types = ['select','multiselect', 'checkbox'];
+                if (types.indexOf($(e.target).val()) > -1) {
+                    this.is_extra_option_value = true
+                } else {
+                    this.is_extra_option_value = false
+                }
+
+            },
+            add_option: function (e) {
+
+                this.total_options.push({
+                    option_name: "",
+                    sort_order: ""
+                })
+            },
+            minus_option: function (e) {
+                this.total_options.length = 0
+                $(e.target).parent().parent().remove()
+            },
+
+            removeImageDiv: function (index) {
+                this.images.splice(index, 1);
             },
 
         },
@@ -321,5 +329,8 @@
     i.take-picture {
         font-size: 21px;
         cursor: pointer;
+    }
+    .control-group {
+        width: 100%;
     }
 </style>

@@ -21,7 +21,11 @@
     "vue-template-compiler": "^2.6.11"
   },
   "dependencies": {
+    "array-tools": "^2.0.9",
     "toastr": "^2.1.4",
-    "vee-validate": "^2.2.15"
+    "v-calendar": "^1.0.8",
+    "vee-validate": "^2.2.15",
+    "vue-multiselect": "^2.1.6",
+    "vue2-timepicker": "^1.1.3"
   }
 }

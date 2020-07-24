@@ -423,6 +423,7 @@ Route::group(['middleware' => ['web']], function () {
 
                 Route::post('/manufacturers/delete/{id}', 'Webkul\Manufacturer\Http\Controllers\ManufacturerController@destroy')->name('admin.catalog.manufacturers.delete');
 
+
                 // Catalog Tag Routes
                 Route::get('/tags', 'Webkul\Tag\Http\Controllers\TagController@index')->defaults('_config', [
                     'view' => 'admin::catalog.tags.index',
@@ -469,6 +470,9 @@ Route::group(['middleware' => ['web']], function () {
                 Route::post('/attributes/delete/{id}', 'Webkul\Attribute\Http\Controllers\AttributeController@destroy')->name('admin.catalog.attributes.delete');
 
                 Route::post('/attributes/massdelete', 'Webkul\Attribute\Http\Controllers\AttributeController@massDestroy')->name('admin.catalog.attributes.massdelete');
+
+                Route::get('/attribute-options', 'Webkul\Attribute\Http\Controllers\AttributeController@GetAttributeProperty')
+                    ->name('attribute_options');
 
                 // Catalog Family Routes
                 Route::get('/families', 'Webkul\Attribute\Http\Controllers\AttributeFamilyController@index')->defaults('_config', [
@@ -904,22 +908,64 @@ Route::group(['middleware' => ['web']], function () {
                     'view' => 'admin::mix_customize_section.index',
                 ])->name('admin.mix_customize_section.store');
 
-                Route::get('/product-image-url', function () {
-                    $data = \Illuminate\Support\Facades\DB::table('product_images')
-                        ->select(\Illuminate\Support\Facades\DB::raw('path'))
-                        ->get();
-                    return $data;
-                })->name('product-image-url');
+                Route::post('/product-image-url', 'Webkul\CMS\Http\Controllers\Admin\MixSectionController@GetProductImageByCondition')
+                    ->name('product-image-url');
 
                 /*** advertisement section one ***/
                 Route::get('/advertisement-section-one', 'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@index')->defaults('_config', [
                     'view' => 'admin::advertisement_section_one.index',
                 ])->name('admin.advertisement_section_one.index');
 
+                Route::post('/update-advertisement-section-one',
+                    'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@UpdateAdvertisementOne')
+                ->name('update-advertisement-section-one');
+
+                Route::get('/get-advertisement-section-one',
+                    'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@GetAdvertisementOne')
+                ->name('get-advertisement-section-one');
+
                 /*** advertisement section two ***/
-                Route::get('/advertisement-section-two', 'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@index')->defaults('_config', [
+                Route::get('/advertisement-section-two', 'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@index')
+                    ->defaults('_config', [
                     'view' => 'admin::advertisement_section_two.index',
                 ])->name('admin.advertisement_section_two.index');
+
+                Route::post('/update-advertisement-section-two',
+                    'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@UpdateAdvertisementTwo')
+                    ->name('update-advertisement-section-two');
+
+                Route::get('/get-advertisement-section-two',
+                    'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@GetAdvertisementTwo')
+                    ->name('get-advertisement-section-two');
+
+                /****  slider section  ****/
+                Route::get('/slider-section', 'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@index')
+                    ->defaults('_config', [
+                    'view' => 'admin::slider_section.index',
+                ])->name('admin.slider_section.index');
+
+                Route::post('/update-section-slider',
+                    'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@UpdateSliderSection')
+                    ->name('update-advertisement-section-slider');
+
+                Route::get('/get-section-slider',
+                    'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@GetSliderSection')
+                    ->name('get-advertisement-section-slider');
+
+                /****  slider add section  ****/
+                Route::get('/slider-add-section', 'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@index')
+                    ->defaults('_config', [
+                    'view' => 'admin::slider_add_section.index',
+                ])->name('admin.slider_add_section.index');
+
+                Route::post('/update-slider-add-section',
+                    'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@UpdateSliderAddSection')
+                    ->name('update-slider-add-section-slider');
+
+                Route::get('/get-slider-add-section',
+                    'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@GetSliderAddSection')
+                    ->name('get-slider-add-section-slider');
+
 
 
                 // Route::post('/delete/{id}', 'Webkul\CMS\Http\Controllers\Admin\PageController@delete')->defaults('_config', [

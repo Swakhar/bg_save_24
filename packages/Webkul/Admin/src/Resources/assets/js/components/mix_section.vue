@@ -1,12 +1,12 @@
 <template>
     <div class="content">
-
         <image-picker v-if="is_show_image_panel"
-                v-on:apply_to_choose="apply_to_choose"
-                      :inside_row_data="this.parent_rows_iterate[parent_index].rows_iterate[under_parent_index]"
-                      :under_parent_index="under_parent_index"
+                      v-on:apply_to_choose="apply_to_choose"
+                      :selected_conditions="selected_conditions"
                       :parent_index="parent_index"
-                v-on:visibility_image_Panel="visibility_image_Panel"></image-picker>
+                      :parent_index_details="parent_index_details"
+                      v-on:visibility_image_Panel="visibility_image_Panel"></image-picker>
+
         <form class="insert" method="post" action=""
               enctype="multipart/form-data">
             <div class="page-header">
@@ -15,7 +15,7 @@
                 </div>
                 <div class="page-action">
                     <button type="button" @click="submit" class="btn btn-success">Save</button>
-                    <button type="button" @click="click_to_add_parent_row"
+                    <button type="button" @click="addSections"
                             class="btn btn-warning add_new_category"><i class="fa fa-plus"></i></button>
                 </div>
             </div>
@@ -23,177 +23,133 @@
             <div class="page-content">
                 <div class="control-group">
 
-                    <div class="parent_div_of_custom_category"
-                         v-for="(parent_item_row, parent_item_index) in parent_rows_iterate">
-                        <div class="parent_div_of_custom_category_header">
-                            <span class="panel_head_name panel_title_0"></span>
-                            <i @click="click_to_expand_parent_div" class="expand_div fa fa-plus"></i>
-                            <i @click="click_to_delete_parent_row(parent_item_index)" class="trash fa fa-trash text-danger"></i>
+                    <div v-for="(section, index) in sections" class="main_section_mix">
+                        <div class="main_section_mix_header">
+                            <span></span>
+                            <i @click="removeSlider(index)" class="section_delete fa fa-trash text-danger"></i>
+                            <i @click="collapse($event, index)"  :class="`section_expand fa fa-${section.icon} text-danger`"></i>
                         </div>
-                        <div class="hide parent_div_of_custom_category_body">
-                            <div class="button_section">
-                                <button type="button" @click="click_to_add_row(parent_item_index)" id="add_new_category"
-                                        class="btn btn-warning add_new_category"><i class="fa fa-plus"></i></button>
+                        <div :class="`main_section_mix_body ${section.is_hide ? 'hide' : ''}`">
+                            <div class="form-group">
+                                <label for="sections_title">Title</label>
+                                <input  type="text" class="dt2 control" v-model="section.title"
+                                        id="sections_title" placeholder="Title">
+                            </div>
+                            <div class="form-group">
+                                <label for="sections_subtitle">Sub-Title</label>
+                                <input  type="text" class="dt2 control" v-model="section.subtitle"
+                                        id="sections_subtitle" placeholder="Sub-Title">
+                            </div>
+                            <div class="form-group">
+                                <label for="sections_slug">Sections Slug</label>
+                                <input  type="text" class="dt2 control" v-model="section.slug"
+                                        id="sections_slug" placeholder="Sections Slug">
+                            </div>
+                            <div class="form-group">
+                                <label for="sections_admin_url">Sections Admin Url</label>
+                                <input  type="text" class="dt2 control" v-model="section.admin_url"
+                                        id="sections_admin_url" placeholder="Sections Admin Url">
                             </div>
 
-                            <div class="custom_control_group">
-                                <div class="left_custom_control">
-                                    <label for="">Title</label>
-                                </div>
-                                <div class="right_custom_control">
-                                    <input @keyup="parent_slug_generate($event, parent_item_index)"
-                                           v-model="parent_item_row.title" class="dt2 custom_control" />
-                                </div>
-                            </div>
+                            <button type="button" @click="addDetails(index)"
+                                    class="btn btn-warning add_new_category"><i class="fa fa-plus"></i></button>
 
-                            <div class="custom_control_group">
-                                <div class="left_custom_control">
-                                    <label for="">Sub-Title</label>
+                            <div class="details_section_of_mix" v-for="(details, index2) in section.details">
+                                <div class="mix_details_header">
+                                    <i @click="removeSlider2(index, index2)" class="section_delete fa fa-trash text-danger"></i>
+                                    <i @click="collapse2($event, index, index2)"  :class="`section_expand fa fa-${details.icon} text-danger`"></i>
                                 </div>
-                                <div class="right_custom_control">
-                                    <input v-model="parent_item_row.subtitle" class="dt2 custom_control" />
-                                </div>
-                            </div>
-
-                            <div class="custom_control_group">
-                                <div class="left_custom_control">
-                                    <label for="">Slug</label>
-                                </div>
-                                <div class="right_custom_control">
-                                    <input v-model="parent_item_row.slug" class="dt2 custom_control" />
-                                </div>
-                            </div>
-
-                            <div class="custom_control_group">
-                                <div class="left_custom_control">
-                                    <label for="">Admin Url</label>
-                                </div>
-                                <div class="right_custom_control">
-                                    <input v-model="parent_item_row.admin_url" class="dt2 custom_control" />
-                                </div>
-                            </div>
-
-                            <div class="custom_control_group">
-                                <div class="left_custom_control">
-                                    <label for="">Is Visible ?</label>
-                                </div>
-                                <div class="right_custom_control">
-                                    <input type="checkbox" :checked="parent_item_row.is_visible==1"
-                                           @click="visibility_change($event, parent_item_index)"
-                                           v-model="parent_item_row.is_visible">
-                                </div>
-                            </div>
-
-
-                            <div class="category_select_group" v-for="(item, index) in parent_item_row.rows_iterate">
-                                <div class="category_select_header">
-                                    <span class="panel_head_name panel_title_0"></span>
-                                    <i class="expand_div fa fa-plus"></i>
-                                    <i @click="click_to_delete_row(parent_item_index, index)" class="trash fa fa-trash text-danger"></i>
-                                </div>
-
-                                <div class="category_select_body hide">
-                                    <div class="custom_control_group">
-                                        <div class="left_custom_control">
-                                            <label for="">Title</label>
-                                        </div>
-                                        <div class="right_custom_control">
-                                            <input @keyup="under_parent_slug_generate($event, parent_item_index, index)"
-                                                   v-model="item.title" class="dt2 custom_control" />
-                                        </div>
+                                <div :class="`mix_details_body ${details.is_hide ? 'hide' : ''}`">
+                                    <div class="form-group">
+                                        <label for="details_title">Title</label>
+                                        <input  type="text" class="dt2 control" v-model="details.title"
+                                                id="details_title" placeholder="Title">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="details_slug">Slug</label>
+                                        <input  type="text" class="dt2 control" v-model="details.slug"
+                                                id="details_slug" placeholder="Slug">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="details_image_url">Image</label>
+                                        <input style="width: 88%;" type="text" class="dt2 control" v-model="details.image_url"
+                                                id="details_image_url" placeholder="Image Url">
+                                        <i @click="show_image_panel(index, index2)"
+                                           class="take-picture fa fa-picture-o"></i>
                                     </div>
 
-                                    <div class="custom_control_group">
-                                        <div class="left_custom_control">
-                                            <label for="">Slug</label>
-                                        </div>
-                                        <div class="right_custom_control">
-                                            <input v-model="item.slug"
-                                                   class="dt2 custom_control" />
-                                        </div>
-                                    </div>
-
-                                    <div class="custom_control_group">
-                                        <div class="left_custom_control">
-                                            <label for="">image</label>
-                                        </div>
-                                        <div class="right_custom_control">
-                                            <input style="width: 88%;" v-model="item.image_url" class="dt2 custom_control" />
-                                            <i @click="parent_index = parent_item_index;
-                                            under_parent_index = index; is_show_image_panel = true"
-                                               class="take-picture fa fa-picture-o"></i>
-                                        </div>
-                                    </div>
-
-                                    <div class="custom_control_group" v-for="(item_cond, nested_index) in item.conditions">
-                                        <div class="inline_form_3_col">
-                                            <select v-model="item_cond.rule_type" class="control"
-                                                    @change="attribute_select_change($event, parent_item_index, index, nested_index)"
-                                                    name="" id="">
-                                                <option :data-type="attr_item.label"
-                                                :data-value="child_cat_index"
-                                                :value="attr_item.label"
-                                                v-for="(attr_item, child_cat_index) in condition_attributes2[0].children">{{ attr_item.label }}</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="inline_form_3_col">
-                                            <select v-model="item_cond.rule_operator" name="" class="control">
-                                                <option v-for="cond in item_cond.conditions_operator"
-                                                        :value="cond.operator">{{ cond.label }}</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="inline_form_3_col">
-                                            <!--<multi-select :key="`${parent_item_index + '_' + index + '_' + nested_index}`"-->
-                                                          <!--v-if="item_cond.show_multi_select == 1"-->
-                                                          <!--v-on:passDataChildToParent="categories_selected"-->
-                                                          <!--:index1="parent_item_index"-->
-                                                          <!--:index2="index"-->
-                                                          <!--:index3="nested_index"-->
-                                                          <!--:rule_value_multi="item_cond.rule_value_multi"-->
-                                                          <!--:items="categories"></multi-select>-->
-                                            <select2
-                                                    :index1="parent_item_index"
-                                                    :index2="index"
-                                                    :index3="nested_index"
-                                                    :included_data="item_cond.multi"
-                                                    v-if="item_cond.show_multi_select == 1"
-                                                    :items="item_cond.data_List"
-                                                    :key_value="`${item_cond.key_value}`"
-                                                    :field_value="`${item_cond.field_value}`"
-                                                    :aspect_key_value="`id`"
-                                                    :aspect_field_value="`admin_name`"
-                                                    :type="`multi`"
-                                                    :reference="`${parent_item_index + '_' + index + '_' + nested_index}`"
-                                                    :v_model="`item_cond.rule_value_multi`"
-                                                    v-on:passDataToParent="select2"
-                                                    v-on:passDataToParentDeleteItem="select2Delete"
-                                            ></select2>
-
-                                            <input  v-model="item_cond.rule_value" v-else  type="text" class="control">
-
-                                            <i @click="click_to_delete_condition_row(parent_item_index, index, nested_index)"
-                                               class="trash-condition fa fa-trash text-danger"></i>
-                                        </div>
-                                    </div>
-
-                                    <button type="button" @click="item.conditions.push({
-                                    rule_type: '',
-                                    rule_operator: '',
-                                    rule_value: '',
-                                    rule_value_multi: [],
-                                    conditions_operator: [],
-                                    data_List: [],
-                                    key_value: '',
-                                    field_value: '',
-                                    multi: [],
-                                    show_multi_select: 1
-                                    })" class="btn btn-btn-success change_cond">Add Condition</button>
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th colspan="4">
+                                                <button @click="addCondition(index, index2)" type="button"
+                                                        class="btn btn-success text-left">Add new condition</button>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="(condition, index3) in details.conditions">
+                                            <th width="20%">
+                                                <select v-model="condition.label" name=""
+                                                        @change="changeCondition($event, index, index2, index3)"
+                                                        class="dt2 control" id="">
+                                                    <option  value="">Select Option</option>
+                                                    <option :data-value="item.type"
+                                                            :index="index3"
+                                                            v-for="(item, index3) in attributes"
+                                                            :value="`${item.name}`">{{ item.name }}</option>
+                                                </select>
+                                            </th>
+                                            <th width="20%">
+                                                <select v-model="condition.rule" name="" class="dt2 control" id="">
+                                                    <option value="">Select Option</option>
+                                                    <option v-for="rule in condition.rule_array"
+                                                            :value="`${rule.operator}`">{{ rule.label }}</option>
+                                                </select>
+                                            </th>
+                                            <th width="55%">
+                                                <multiselect v-if="condition.is_multi"
+                                                             v-model="condition.rule_value_multi"
+                                                             :options="condition.options"
+                                                             placeholder="Select Options"
+                                                             label="admin_name"
+                                                             :select-label="''"
+                                                             :multiple="true" :searchable="true"
+                                                             @input="onChange(index)"
+                                                             track-by="admin_name"></multiselect>
+                                                <!--<select4 v-if="condition.is_multi"-->
+                                                         <!--:included_data="condition.rule_value_multi"-->
+                                                         <!--:items="condition.options"-->
+                                                         <!--:key_value="`id`"-->
+                                                         <!--:field_value="`admin_name`"-->
+                                                         <!--:aspect_key_value="`id`"-->
+                                                         <!--:aspect_field_value="`admin_name`"-->
+                                                         <!--:index="index"-->
+                                                         <!--:index2="index2"-->
+                                                         <!--:index3="index3"-->
+                                                         <!--:type="`multi`"-->
+                                                         <!--:reference="`category_id`"-->
+                                                         <!--:v_model="`category_id`"-->
+                                                         <!--v-on:passDataToParent="select2"-->
+                                                         <!--v-on:passDataToParentDeleteItem="DeleteFromSelect2"-->
+                                                <!--&gt;</select4>-->
+                                                <input v-model="condition.rule_value" v-else
+                                                       type="text" class="dt2 control" />
+                                            </th>
+                                            <th width="5%">
+                                                <i @click="removeCondition(index, index2, index3)" class="table_row_delete fa fa-trash"></i>
+                                            </th>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
+
                         </div>
+
+
                     </div>
+
 
 
                     <button @click="submit" type="button" class="btn btn-success">Save</button>
@@ -206,202 +162,140 @@
 
 <script>
 
-    import Select2 from './shared/Select2.vue';
     export default {
         name: "mix-customize-section",
-        props: ['translation_array', 'condition_attributes', 'page_title', 'route'],
+        props: ['condition_rule', 'page_title'],
         components: {
-            select2: Select2
+
         },
         data() {
             return {
-                attribute_select: "",
-                condition_attributes2: {},
-                parent_rows_iterate: [],
-                rows_iterate: [{slug: "", categories: [], conditions: [], conditions_operator: []}],
-                baseUrl: "",
-                show_multi_select: false,
-                categories: [],
-                conditions: [],
-                is_edit_mode: false,
+//                page_title: "Slider Settings",
+                div_hide: false,
+                attributes: [],
+                sliders: [],
+                sections: [],
                 is_show_image_panel: false,
-                parent_index: 0,
-                under_parent_index: 0,
+                selected_conditions: [],
+                parent_index_details: "",
+                parent_index: ""
             }
-        },
-        updated() {
-//          console.log(this.condition_attributes)
         },
         mounted() {
 
         },
         created() {
-            this.loaded();
-            this.getCategories();
+            this.getListAttribute()
+            this.getAdvertisementData()
+//            console.log(this.baseUrl)
         },
         methods: {
-            select2: function (val) {
-                this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
-                    .conditions[val.index3]['multi'].push(+val.val[val.key_value]);
+            onChange: function (index) {
 
             },
+            apply_to_choose: function (val) {
 
-            select2Delete: function (val) {
-                console.log(val)
-                for (let child in this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
-                   .conditions[val.index3]['multi']) {
-                    console.log(this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
-                        .conditions[val.index3]['multi'][child], val.val)
-                    if (this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
-                            .conditions[val.index3]['multi'][child] == val.val) {
-                        this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
-                            .conditions[val.index3]['multi'].splice(child, 1)
-                    }
-                }
-//                this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
-//                    .conditions[val.index3]['multi'].push(+val.val[val.key_value]);
-
+                this.sections[val.parent_index].details[val.parent_index_details].image_url = val.image_path
+                // image_path
+                this.is_show_image_panel = false;
             },
-
-            attribute_select_change: function (event, parent_item_index, index, nested_index) {
-                let cur_obj = JSON.parse($(event.target.options[event.target.options.selectedIndex]).attr('data-value'));
-
-                if (this.condition_attributes2[0].children[cur_obj].type === "multiselect" &&
-                    this.condition_attributes2[0].children[cur_obj].label === "Categories" ) {
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].data_List = this.categories;
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].key_value = 'id';
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].field_value = 'name';
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].show_multi_select = 1;
-                    console.log(this.condition_attributes2[0].children[cur_obj].options[0].children)
-                } else if (this.condition_attributes2[0].children[cur_obj].type === "multiselect") {
-                    console.log(this.condition_attributes2[0].children[cur_obj].options);
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].data_List = this.condition_attributes2[0].children[cur_obj]['options'];
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].key_value = 'id';
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].field_value = 'admin_name';
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].show_multi_select = 1;
-                } else if (this.condition_attributes2[0].children[cur_obj].type === "select") {
-                    console.log(this.condition_attributes2[0].children[cur_obj].options);
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].data_List = this.condition_attributes2[0].children[cur_obj]['options'];
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].key_value = 'id';
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].field_value = 'admin_name';
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].show_multi_select = 0;
-                } else {
-                    this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                        .conditions[nested_index].show_multi_select = 0;
-                }
-
-
-                this.parent_rows_iterate[parent_item_index].rows_iterate[index]
-                    .conditions[nested_index].conditions_operator = this.translation_array[this.condition_attributes2[0].children[cur_obj].type];
-
+            show_image_panel: function (index, index2) {
+                this.selected_conditions = this.sections[index].details[index2].conditions;
+                this.parent_index = index;
+                this.parent_index_details = index2;
+                this.is_show_image_panel = true;
             },
             visibility_image_Panel: function (val) {
                 this.is_show_image_panel = val;
             },
-            apply_to_choose: function (val) {
-                console.log(val)
-                this.parent_rows_iterate[val.parent_index].rows_iterate[val.under_parent_index]
-                    .image_url = val.image_path;
-                this.is_show_image_panel = false;
-            },
-            click_to_delete_condition_row: function (parent_item_index, index, nested_index) {
-                this.parent_rows_iterate[parent_item_index].rows_iterate[index].conditions.splice(nested_index, 1);
-            },
-            categories_selected: function (val) {
 
-                let parse_arr = JSON.parse(this.parent_rows_iterate[val.index1].rows_iterate[val.index2]
-                    .conditions[val.index3].rule_value_multi);
-                console.log('parse_arr', parse_arr)
-                let parse_arr2 = JSON.parse(parse_arr)
-                console.log(parse_arr2.indexOf(+val.value.toString()))
-                if (parse_arr2.indexOf(+val.value.toString()) === -1) {
-                    parse_arr2.push(+val.value.toString())
+            changeCondition: function(event, index, index2, index3) {
+                let cur_obj = $(event.target.options[event.target.options.selectedIndex]).attr('data-value');
+                let index4 = $(event.target.options[event.target.options.selectedIndex]).attr('index');
+
+                this.sections[index].details[index2].conditions[index3].rule_array = this.condition_rule[cur_obj];
+
+                if (cur_obj === 'multiselect' || cur_obj === 'select') {
+//                    console.log(this.attributes[index3])
+                    this.sections[index].details[index2].conditions[index3].options = this.attributes[index4].options
                 }
-                console.log('parse_arr2', parse_arr2)
-                this.parent_rows_iterate[val.index1].rows_iterate[val.index2].conditions[val.index3]
-                    .rule_value_multi = JSON.stringify(JSON.stringify(parse_arr2))
-            },
-            click_to_delete_row: function (parent_item_index, index) {
-                this.parent_rows_iterate[parent_item_index].rows_iterate.splice(parent_item_index, 1);
-            },
-            click_to_delete_parent_row: function (parent_item_index) {
-                this.parent_rows_iterate.splice(parent_item_index, 1);
-            },
-            click_to_expand_parent_div: function (e) {
+
+                this.sections[index].details[index2].conditions[index3].is_multi = (cur_obj === 'multiselect' || cur_obj === 'select')
 
             },
-            visibility_change: function (event, parent_item_index) {
-//                console.log($(event))
-                this.parent_rows_iterate[parent_item_index].is_visible =
-                    (this.parent_rows_iterate[parent_item_index].is_visible == 1 ? 0 : 1);
-                console.log(this.parent_rows_iterate[parent_item_index].is_visible)
-            },
-            click_to_add_row: function (parent_item_index) {
-                //
-                this.parent_rows_iterate[parent_item_index].rows_iterate.push({title: "", slug: "",
-                    is_visible: 0, admin_url: "", categories: [], conditions: []});
-            },
-            click_to_add_parent_row: function (e) {
-                this.parent_rows_iterate.push({
-                    slug: "",
+            addSections: function () {
+                this.sections.push({
                     title: "",
                     subtitle: "",
-                    rows_iterate: []
-                });
-            },
+                    slug: "",
+                    admin_url: "",
+                    is_visible: "",
+                    is_hide: false,
+                    icon: "minus",
+                    details: [],
 
-            loaded: function () {
-                this.baseUrl = $("#base_url").attr("url");
-                this.condition_attributes2 = this.condition_attributes
-                this.getMixSections();
-            },
-
-            getCategories : function() {
-                let that = this;
-                axios.get(this.baseUrl + '/category-list')
-                .then(function (response) {
-                    that.categories = response.data.categories
-                })
-                .catch(function (error) {
-                    // handle error
-                    console.log(error);
                 })
             },
+            addDetails: function (index) {
+                console.log(index)
+                this.sections[index].details.push({
+                    tile: "",
+                    slug: "",
+                    image_url: "",
+                    is_hide: false,
+                    icon: 'minus',
+                    conditions: []
+                })
+            },
+            addCondition: function (index, index2) {
+                console.log(index, index2)
+                this.sections[index].details[index2].conditions.push({
+                    label: "",
+                    rule_array: [],
+                    rule: "",
+                    rule_value: "",
+                    rule_value_multi: [],
+                    is_select: false,
+                    options: [],
+                    is_multi: false
+                })
+            },
+            removeCondition: function(index, index2, index3) {
+                this.sections[index].details[index2].conditions.splice(index3, 1)
+            },
+            collapse: function(event, index) {
+                this.sections[index].is_hide = !this.sections[index].is_hide
 
-            getMixSections : function() {
+                if (this.sections[index].is_hide)
+                    this.sections[index].icon = 'minus';
+                else
+                    this.sections[index].icon = 'plus'
+            },
+            collapse2: function(event, index, index2) {
+                this.sections[index].details[index2].is_hide = !this.sections[index].details[index2].is_hide
+                if (this.sections[index].details[index2].is_hide)
+                    this.sections[index].details[index2].icon = 'minus';
+                else
+                    this.sections[index].details[index2].icon = 'plus'
+            },
+            addSlider: function () {
+                console.log('aaa')
+                this.sliders.push({
+                    slug: '',
+                    image: '',
+                    image_name: '',
+                    visibility: true,
+                    title: '',
+                    idd: 'id_' + this.sliders.length,
+                    conditions: []
+                })
+            },
+
+            getListAttribute: function (e) {
                 let that = this;
-                axios.get(this.baseUrl + '/admin/cms/get-mix-section')
+                axios.get('/admin/catalog/attribute-options')
                     .then(function (response) {
-                        let i = 0;
-                        for (let parent in response.data) {
-                            that.parent_rows_iterate.push({
-                                slug: response.data[parent].slug,
-                                admin_url: response.data[parent].admin_url,
-                                subtitle: response.data[parent].subtitle,
-                                is_visible: response.data[parent].is_visible,
-                                title: response.data[parent].title,
-                                rows_iterate: []
-                            });
-                            for (let row_iterate in response.data[parent]['rows_iterate']) {
-                                if (row_iterate !== "") {
-                                    that.parent_rows_iterate[i].rows_iterate
-                                        .push(response.data[parent]['rows_iterate'][row_iterate])
-                                }
-                            }
-                            i += 1;
-                        }
+                        that.attributes = response.data
                     })
                     .catch(function (error) {
                         // handle error
@@ -409,25 +303,94 @@
                     })
             },
 
-            parent_slug_generate : function(event, parent_item_index) {
-                this.parent_rows_iterate[parent_item_index].slug = $(event.target).val().toLowerCase().split(' ').join('-')
-                    .split(/[.,\/ -&]/).join('').split('--').join('-')
-            },
-            under_parent_slug_generate : function(event, parent_item_index, index) {
-                this.parent_rows_iterate[parent_item_index].rows_iterate[index].slug = $(event.target).val().toLowerCase().split(' ').join('-')
-                    .split(/[.,\/ -&]/).join('')
-                    .split('--').join('-')
+            getAdvertisementData: function (e) {
+                let that = this;
+                axios.get('/admin/cms/get-mix-section')
+                    .then(function (response) {
+                        that.sections = response.data
+                    })
+                    .catch(function (error) {
+                        // handle error
+                        console.log(error);
+                    })
             },
 
-            submit : function() {
+            readURL: function(input, id) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#'+id).attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            },
+            on_change_Image: function(e, id) {
+                this.readURL($(e.target)[0], id)
+            },
+
+
+            removeSlider: function(index) {
+                this.sections.splice(index, 1)
+            },
+            removeSlider2: function(index, index2) {
+                this.sections[index].details.splice(index2, 1)
+            },
+
+            submit : function(){
+
                 let that = this;
-                axios.post(this.baseUrl + '/admin/cms/mix-customize-section-save',
-                    {data: this.parent_rows_iterate})
+//                let data = new FormData();
+//                for (let i = 0; i < this.sliders.length; i++) {
+//                    data.append(this.sliders[i].idd, document.getElementById(this.sliders[i].idd).files[0]);
+//                }
+//                data.append('data', JSON.stringify());
+
+                axios.post('/admin/cms/mix-customize-section-save', {
+                    data: this.sections
+                })
                     .then(data =>{
                         toastr.success(data.data);
                     })
-                    .catch(error => {
-                    });
+                    .catch(error => {});
+
+            },
+
+            click_to_expand: function (e) {
+                let target = $(e.target);
+                if (target.hasClass('fa-angle-down')) {
+                    target.removeClass('fa-angle-down').addClass('fa-angle-right');
+                    target.parent().parent().find('.accordion_body').addClass('hide')
+                } else {
+                    target.removeClass('fa-angle-right').addClass('fa-angle-down');
+                    target.parent().parent().find('.accordion_body').removeClass('hide')
+                }
+
+            },
+
+            change_attribute_type: function (e) {
+                let types = ['select','multiselect', 'checkbox'];
+                if (types.indexOf($(e.target).val()) > -1) {
+                    this.is_extra_option_value = true
+                } else {
+                    this.is_extra_option_value = false
+                }
+
+            },
+            add_option: function (e) {
+
+                this.total_options.push({
+                    option_name: "",
+                    sort_order: ""
+                })
+            },
+            minus_option: function (e) {
+                this.total_options.length = 0
+                $(e.target).parent().parent().remove()
+            },
+
+            removeImageDiv: function (index) {
+                this.images.splice(index, 1);
             },
 
         },
@@ -490,5 +453,8 @@
     i.take-picture {
         font-size: 21px;
         cursor: pointer;
+    }
+    .control-group {
+        width: 100%;
     }
 </style>

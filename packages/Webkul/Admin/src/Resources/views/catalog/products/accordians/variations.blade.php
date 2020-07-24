@@ -84,7 +84,7 @@
                             <th class="{{ $attribute->code }}" style="width: 150px">{{ $attribute->admin_name }}</th>
                         @endforeach
 
-                        <th class="qty">{{ __('admin::app.catalog.products.qty') }}</th>
+                        <th style="width: 100px;" class="qty">{{ __('admin::app.catalog.products.qty') }}</th>
                         <th class="price">{{ __('admin::app.catalog.products.price') }}</th>
                         <th class="weight">{{ __('admin::app.catalog.products.weight') }}</th>
                         <th class="status">{{ __('admin::app.catalog.products.status') }}</th>
@@ -113,36 +113,49 @@
 
             <td>
                 <div class="control-group" :class="[errors.has(variantInputName + '[name]') ? 'has-error' : '']">
-                    <input type="text" v-validate="'required'" v-model="variant.name"  :name="[variantInputName + '[name]']" class="control" data-vv-as="&quot;{{ __('admin::app.catalog.products.name') }}&quot;"/>
+                    <input type="text" v-validate="'required'"
+                           :name="[variantInputName + '[name]']" class="control"
+                           :value="variant_product_name_value(superAttributes, variant)"
+                           data-vv-as="&quot;{{ __('admin::app.catalog.products.name') }}&quot;"/>
                     <span class="control-error" v-if="errors.has(variantInputName + '[name]')">@{{ errors.first(variantInputName + '[name]') }}</span>
                 </div>
             </td>
 
             <td v-for='(attribute, index) in superAttributes'>
                 <div class="control-group">
-                    <input type="hidden" :name="[variantInputName + '[' + attribute.code + ']']" :value="variant[attribute.code]"/>
+                    <input type="hidden" :name="[variantInputName + '[' + attribute.code + ']']"
+                           :value="variant[attribute.code]"/>
                     <input type="text" class="control" :value="optionName(variant[attribute.code])" readonly/>
                 </div>
             </td>
 
-            <td>
-                <button style="width: 100%;" type="button" class="dropdown-btn dropdown-toggle">
-                    @{{ totalQty }}
-                    <i class="icon arrow-down-icon"></i>
-                </button>
+            {{--<td>--}}
+                {{--<button style="width: 100%;" type="button" class="dropdown-btn dropdown-toggle">--}}
+                    {{--@{{ totalQty }}--}}
+                    {{--<i class="icon arrow-down-icon"></i>--}}
+                {{--</button>--}}
 
-                <div class="dropdown-list">
-                    <div class="dropdown-container">
-                        <ul>
-                            <li v-for='(inventorySource, index) in inventorySources'>
-                                <div class="control-group" :class="[errors.has(variantInputName + '[inventories][' + inventorySource.id + ']') ? 'has-error' : '']">
-                                    <label>@{{ inventorySource.name }}</label>
-                                    <input type="text" v-validate="'numeric|min:0'" :name="[variantInputName + '[inventories][' + inventorySource.id + ']']" v-model="inventories[inventorySource.id]" class="control" v-on:keyup="updateTotalQty()" :data-vv-as="'&quot;' + inventorySource.name  + '&quot;'"/>
-                                    <span class="control-error" v-if="errors.has(variantInputName + '[inventories][' + inventorySource.id + ']')">@{{ errors.first(variantInputName + '[inventories][' + inventorySource.id + ']') }}</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                {{--<div class="dropdown-list">--}}
+                    {{--<div class="dropdown-container">--}}
+                        {{--<ul>--}}
+                            {{--<li v-for='(inventorySource, index) in inventorySources'>--}}
+                                {{--<div class="control-group" :class="[errors.has(variantInputName + '[inventories][' + inventorySource.id + ']') ? 'has-error' : '']">--}}
+                                    {{--<label>@{{ inventorySource.name }}</label>--}}
+                                   {{----}}
+                                    {{--<span class="control-error" v-if="errors.has(variantInputName + '[inventories][' + inventorySource.id + ']')">@{{ errors.first(variantInputName + '[inventories][' + inventorySource.id + ']') }}</span>--}}
+                                {{--</div>--}}
+                            {{--</li>--}}
+                        {{--</ul>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</td>--}}
+
+            <td>
+                <div class="control-group">
+                    <input style="width: 100px;" type="text" v-validate="'numeric|min:0'"
+                           :name="[variantInputName + '[inventories][1]']"
+                           class="control"
+                    />
                 </div>
             </td>
 
@@ -366,6 +379,26 @@
                         attribute.options.forEach(function(option) {
                             if (optionId == option.id) {
                                 optionName = option.admin_name;
+                            }
+                        });
+                    })
+
+                    return optionName;
+                },
+
+                variant_product_name_value: function (superAttributes, variant) {
+                    var optionName = '';
+
+                    this.superAttributes.forEach(function(attribute) {
+                        let code_id = variant[attribute.code];
+                        attribute.options.forEach(function(option) {
+                            if (code_id == option.id) {
+                                if (optionName == "") {
+                                    optionName = option.admin_name;
+                                } else {
+                                    optionName += '-' + option.admin_name;
+                                }
+
                             }
                         });
                     })

@@ -13,7 +13,7 @@ class ManufacturerDataGrid extends DataGrid
 
     public function prepareQueryBuilder()
     {
-        $queryBuilder = DB::table('manufacturers')
+        $queryBuilder = DB::table('configurable_option_value')
             ->select('id')
             ->addSelect('id','admin_name');
 

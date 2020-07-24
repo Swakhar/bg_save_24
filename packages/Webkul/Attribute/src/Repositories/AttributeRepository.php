@@ -2,6 +2,7 @@
 
 namespace Webkul\Attribute\Repositories;
 
+use Illuminate\Support\Facades\DB;
 use Webkul\Core\Eloquent\Repository;
 use Illuminate\Support\Facades\Event;
 use Webkul\Attribute\Repositories\AttributeOptionRepository;
@@ -258,5 +259,249 @@ class AttributeRepository extends Repository
         }
 
         return $trimmed;
+    }
+
+    public function GetAttributeProperty()
+    {
+        $data = DB::select("SELECT attribute_translations.attribute_id id, attribute_translations.name admin_name, type
+        FROM attributes
+        INNER JOIN attribute_translations on attribute_translations.attribute_id = attributes.id
+        WHERE type in ('text', 'price', 'select', 'multiselect', 'boolean', 'checkbox') 
+        and locale = 'en'
+        ORDER BY  admin_name");
+        $main_data = [];
+        foreach ($data as $key => $value) {
+            $main_data[$key+1]['name'] = $value->admin_name;
+            $main_data[$key+1]['type'] = $value->type;
+            $main_data[$key+1]['options'] = $this->GetAttributeOptions($value->id);
+        }
+
+        return $main_data;
+    }
+
+    public function GetAttributeOptions($id)
+    {
+        return DB::select("SELECT id, admin_name FROM attribute_options
+        WHERE attribute_id = $id");
+    }
+
+    public function GetAttributeOptionsByLabel($label)
+    {
+        return DB::select("SELECT attribute_options.id, attribute_options.admin_name FROM attribute_translations
+        INNER JOIN attribute_options on attribute_options.attribute_id = attribute_translations.attribute_id
+        WHERE attribute_translations.name = '$label'");
+    }
+
+    public function GetAttributeTypeRules($label)
+    {
+        $data['price'] = [
+            [
+                'operator' => '==',
+                'label' => __('admin::app.promotions.catalog-rules.is-equal-to')
+            ],
+            [
+                'operator'=> '!=',
+                'label'=>  __('admin::app.promotions.catalog-rules.is-not-equal-to')
+            ],
+            [
+                'operator'=> '>=',
+                'label'=>  __('admin::app.promotions.catalog-rules.equals-or-greater-than')
+            ],
+            [
+                'operator'=> '<=',
+                'label'=>  __('admin::app.promotions.catalog-rules.equals-or-less-than')
+            ],
+            [
+                'operator'=> '>',
+                'label'=>  __('admin::app.promotions.catalog-rules.greater-than')
+            ],
+            [
+                'operator'=> '<',
+                'label'=>  __('admin::app.promotions.catalog-rules.less-than')
+            ]
+        ];
+        $data['decimal'] = [
+            [
+                'operator'=> '==',
+                'label'=>  __('admin::app.promotions.catalog-rules.is-equal-to')
+            ],
+            [
+                'operator'=> '!=',
+                'label'=>  __('admin::app.promotions.catalog-rules.is-not-equal-to')
+            ],
+            [
+                'operator'=> '>=',
+                'label'=>  __('admin::app.promotions.catalog-rules.equals-or-greater-than')
+            ],
+            [
+                'operator'=> '<=',
+                'label'=>  __('admin::app.promotions.catalog-rules.equals-or-less-than')
+            ],
+            [
+                'operator'=> '>',
+                'label'=>  __('admin::app.promotions.catalog-rules.greater-than')
+            ],
+            [
+                'operator'=> '<',
+                'label'=>  __('admin::app.promotions.catalog-rules.less-than')
+            ]
+        ];
+        $data['integer'] = [
+            [
+                'operator'=> '==',
+                'label'=>  __('admin::app.promotions.catalog-rules.is-equal-to')
+            ],
+            [
+                'operator'=> '!=',
+                'label'=>  __('admin::app.promotions.catalog-rules.is-not-equal-to')
+            ],
+            [
+                'operator'=> '>=',
+                'label'=>  __('admin::app.promotions.catalog-rules.equals-or-greater-than')
+            ],
+            [
+                'operator'=> '<=',
+                'label'=>  __('admin::app.promotions.catalog-rules.equals-or-less-than')
+            ],
+            [
+                'operator'=> '>',
+                'label'=>  __('admin::app.promotions.catalog-rules.greater-than')
+            ],
+            [
+                'operator'=> '<',
+                'label'=>  __('admin::app.promotions.catalog-rules.less-than')
+            ]
+        ];
+        $data['text'] = [
+            [
+                'operator'=> '==',
+                'label'=>  __('admin::app.promotions.catalog-rules.is-equal-to')
+            ],
+            [
+                'operator'=> '!=',
+                'label'=>  __('admin::app.promotions.catalog-rules.is-not-equal-to')
+            ],
+            [
+                'operator'=> '{}',
+                'label'=>  __('admin::app.promotions.catalog-rules.contain')
+            ],
+            [
+                'operator'=> '!{}',
+                'label'=>  __('admin::app.promotions.catalog-rules.does-not-contain')
+            ],
+        ];
+        $data['boolean'] = [
+            [
+                'operator'=> '==',
+                'label'=>  __('admin::app.promotions.catalog-rules.is-equal-to')
+            ],
+            [
+                'operator'=> '!=',
+                'label'=>  __('admin::app.promotions.catalog-rules.is-not-equal-to')
+            ],
+        ];
+        $data['date'] = [
+            [
+                'operator'=> '==',
+                'label'=>   __('admin::app.promotions.catalog-rules.is-equal-to')
+            ],
+            [
+                'operator'=> '!=',
+                'label'=>   __('admin::app.promotions.catalog-rules.is-not-equal-to')
+            ],
+            [
+                'operator'=> '>=',
+                'label'=>   __('admin::app.promotions.catalog-rules.equals-or-greater-than')
+            ],
+            [
+                'operator'=> '<=',
+                'label'=>   __('admin::app.promotions.catalog-rules.equals-or-less-than')
+            ],
+            [
+                'operator'=> '>',
+                'label'=>   __('admin::app.promotions.catalog-rules.greater-than')
+            ],
+            [
+                'operator'=> '<',
+                'label'=>   __('admin::app.promotions.catalog-rules.less-than')
+            ],
+        ];
+        $data['datetime'] = [
+            [
+                'operator'=> '==',
+                'label'=>   __('admin::app.promotions.catalog-rules.is-equal-to')
+            ],
+            [
+                'operator'=> '!=',
+                'label'=>   __('admin::app.promotions.catalog-rules.is-not-equal-to')
+            ],
+            [
+                'operator'=> '>=',
+                'label'=>   __('admin::app.promotions.catalog-rules.equals-or-greater-than')
+            ],
+            [
+                'operator'=> '<=',
+                'label'=>   __('admin::app.promotions.catalog-rules.equals-or-less-than')
+            ],
+            [
+                'operator'=> '>',
+                'label'=>   __('admin::app.promotions.catalog-rules.greater-than')
+            ],
+            [
+                'operator'=> '<',
+                'label'=>   __('admin::app.promotions.catalog-rules.less-than')
+            ],
+        ];
+        $data['select'] = [
+            [
+                'operator'=> '==',
+                'label'=>  __('admin::app.promotions.catalog-rules.is-equal-to')
+            ],
+            [
+                'operator'=> '!=',
+                'label'=>  __('admin::app.promotions.catalog-rules.is-not-equal-to')
+            ],
+        ];
+        $data['radio'] = [
+            [
+                'operator'=> '==',
+                'label'=>  __('admin::app.promotions.catalog-rules.is-equal-to')
+            ],
+            [
+                'operator'=> '!=',
+                'label'=>  __('admin::app.promotions.catalog-rules.is-not-equal-to')
+            ],
+        ];
+        $data['multiselect'] = [
+            [
+                'operator'=> '{}',
+                'label'=>  __('admin::app.promotions.catalog-rules.contains')
+            ],
+            [
+                'operator'=> '!{}',
+                'label'=>  __('admin::app.promotions.catalog-rules.does-not-contain')
+            ],
+        ];
+        $data['checkbox'] = [
+            [
+                'operator'=> '{}',
+                'label'=>  __('admin::app.promotions.catalog-rules.contains')
+            ],
+            [
+                'operator'=> '!{}',
+                'label'=>  __('admin::app.promotions.catalog-rules.does-not-contain')
+            ],
+        ];
+
+        if ($label == "Categories") {
+            return $data['multiselect'];
+        } else {
+            $da = DB::select("SELECT attributes.type FROM attribute_translations
+            INNER JOIN attributes on attributes.id = attribute_translations.attribute_id
+            WHERE attribute_translations.name = '$label'");
+            return array_key_exists($da[0]->type, $data) ? $data[$da[0]->type] : [];
+        }
+
+
     }
 }

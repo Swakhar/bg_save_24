@@ -291,7 +291,7 @@
                     </thead>
 
                     <tbody>
-                        <tr v-for="row in optionRows">
+                        <tr v-for="(row, index) in optionRows">
                             <td v-if="show_swatch && swatch_type == 'color'">
                                 <swatch-picker :input-name="'options[' + row.id + '][swatch_value]'" :color="row.swatch_value" colors="text-advanced" show-fallback />
                             </td>
@@ -300,15 +300,27 @@
                                 <input type="file" accept="image/*" :name="'options[' + row.id + '][swatch_value]'"/>
                             </td>
 
-                            <td>
+                            <td width="23%">
                                 <div class="control-group" :class="[errors.has(adminName(row)) ? 'has-error' : '']">
-                                    <input type="text" v-validate="'required'" v-model="row['admin_name']" :name="adminName(row)" class="control" data-vv-as="&quot;{{ __('admin::app.catalog.attributes.admin_name') }}&quot;"/>
-                                    <span class="control-error" v-if="errors.has(adminName(row))">@{{ errors.first(adminName(row)) }}</span>
+                                    <multiselect
+                                            v-model="row.option_obj"
+                                            :options="configure_options"
+                                            placeholder="Select Options"
+                                            label="admin_name"
+                                            :select-label="''"
+                                            :multiple="false" :searchable="true"
+                                            @input="option_value(row.option_obj, index, row)"
+                                            track-by="admin_name"></multiselect>
+
+                                    <input type="hidden" :name="optionValueId(row)" :id="'option_value_'+index" />
+                                    <input type="hidden" :name="optionValueAdminName(row)" :id="'option_value_admin_name_'+index" />
+                                    <span class="control-error"
+                                          v-if="errors.has(adminName(row))">@{{ errors.first(adminName(row)) }}</span>
                                 </div>
                             </td>
 
                             @foreach (app('Webkul\Core\Repositories\LocaleRepository')->all() as $locale)
-                                <td>
+                                <td width="20%">
                                     <div class="control-group" :class="[errors.has(localeInputName(row, '{{ $locale->code }}')) ? 'has-error' : '']">
                                         <input type="text" v-validate="getOptionValidation(row, '{{ $locale->code }}')"  v-model="row['{{ $locale->code }}']" :name="localeInputName(row, '{{ $locale->code }}')" class="control" data-vv-as="&quot;{{ $locale->name . ' (' . $locale->code . ')' }}&quot;"/>
                                         <span class="control-error" v-if="errors.has(localeInputName(row, '{{ $locale->code }}'))">@{{ errors.first(localeInputName(row, '{!! $locale->code !!}')) }}</span>
@@ -316,14 +328,14 @@
                                 </td>
                             @endforeach
 
-                            <td>
+                            <td width="10%">
                                 <div class="control-group" :class="[errors.has(sortOrderName(row)) ? 'has-error' : '']">
                                     <input type="text" v-validate="'required|numeric'" :name="sortOrderName(row)" class="control" data-vv-as="&quot;{{ __('admin::app.catalog.attributes.position') }}&quot;"/>
                                     <span class="control-error" v-if="errors.has(sortOrderName(row))">@{{ errors.first(sortOrderName(row)) }}</span>
                                 </div>
                             </td>
 
-                            <td class="actions">
+                            <td width="5%" class="actions">
                                 <i class="icon trash-icon" @click="removeRow(row)"></i>
                             </td>
                         </tr>
@@ -365,6 +377,7 @@
                 return {
                     optionRowCount: 1,
                     optionRows: [],
+                    configure_options: [],
                     show_swatch: false,
                     swatch_type: '',
                     isNullOptionChecked: false,
@@ -374,6 +387,10 @@
 
             created: function () {
                 var this_this = this;
+
+                @foreach($configurableoption as $key => $value)
+                    this.configure_options.push(@json($value))
+                @endforeach
 
                 $(document).ready(function () {
                     $('#type').on('change', function (e) {
@@ -387,6 +404,17 @@
             },
 
             methods: {
+                option_value: function (val, index, row) {
+                    console.log(val)
+                    for (ind in val.translations) {
+                        this.optionRows[index][val.translations[ind]['locale']] = val.translations[ind]['name'];
+                    }
+                    this.optionRows[index]['foreign_id'] = val['id'];
+                    $("#option_value_"+index).val(val['id']);
+                    $("#option_value_admin_name_"+index).val(val['admin_name']);
+                    this.optionValueId(row);
+                    this.optionValueAdminName(row);
+                },
                 addOptionRow: function (isNullOptionRow) {
                     const rowCount = this.optionRowCount++;
                     const id = 'option_' + rowCount;
@@ -426,6 +454,14 @@
 
                 sortOrderName: function (row) {
                     return 'options[' + row.id + '][sort_order]';
+                },
+
+                optionValueId: function (row) {
+                    return 'options[' + row.id + '][option_value_id]';
+                },
+
+                optionValueAdminName: function (row) {
+                    return 'options[' + row.id + '][admin_name]';
                 },
 
                 getOptionValidation: (row, localeCode) => {

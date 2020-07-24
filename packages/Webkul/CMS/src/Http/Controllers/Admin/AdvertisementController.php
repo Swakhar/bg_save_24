@@ -2,12 +2,15 @@
 
 namespace Webkul\CMS\Http\Controllers\Admin;
 
+use App\Helper\ImageManipulation;
 use Codeception\PHPUnit\ResultPrinter\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Psy\Test\Exception\RuntimeExceptionTest;
+use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Category\Models\Category;
+use Webkul\Category\Repositories\CategoryRepository;
 use Webkul\CMS\Http\Controllers\Controller;
 use Webkul\CMS\Models\HomeCustomizeSection;
 use Webkul\CMS\Models\HomeSlider;
@@ -29,6 +32,8 @@ class AdvertisementController extends Controller
      * @var \Webkul\CMS\Repositories\CmsRepository
      */
     protected $cmsRepository;
+    protected $categoryRepository;
+    protected $attributeRepository;
 
     /**
      * Create a new controller instance.
@@ -36,11 +41,14 @@ class AdvertisementController extends Controller
      * @param  \Webkul\CMS\Repositories\CmsRepository  $cmsRepository
      * @return void
      */
-    public function __construct(CmsRepository $cmsRepository)
+    public function __construct(CmsRepository $cmsRepository, CategoryRepository $categoryRepository,
+                                AttributeRepository $attributeRepository)
     {
         $this->middleware('admin');
 
         $this->cmsRepository = $cmsRepository;
+        $this->categoryRepository = $categoryRepository;
+        $this->attributeRepository = $attributeRepository;
 
         $this->_config = request('_config');
     }
@@ -78,6 +86,618 @@ class AdvertisementController extends Controller
     {
 
 
+    }
+
+    public function GetAdvertisementOne()
+    {
+        $data = DB::select("SELECT advertisement_master.id , advertisement_master.title,
+         advertisement_master.slug, advertisement_master.image_name, 
+        advertisement_master.save_path,
+        advertisement_rule.label, advertisement_rule.operation, advertisement_rule.rule_value, advertisement_rule.is_multi
+        FROM advertisement_master
+        left JOIN advertisement_rule on advertisement_rule.master_id = advertisement_master.id
+        WHERE type = 2
+        ORDER BY advertisement_master.id ");
+
+        $main_data = [];
+        $i = -1;
+        $j = -1;
+        $id_exist = "";
+        foreach ($data as $key => $value) {
+            if ($id_exist != $value->id) {
+                $i += 1;
+                $j = 0;
+                $id_exist = $value->id;
+                $main_data[$i]['title'] = $value->title;
+                $main_data[$i]['idd'] = 'image_' . $value->id;
+                $main_data[$i]['slug'] = $value->slug;
+                $main_data[$i]['image'] = $value->save_path . 'small/' . $value->image_name;
+                $main_data[$i]['image_name'] = $value->image_name;
+            }
+
+            if ($id_exist == $value->id) {
+                $main_data[$i]['conditions'][$j]['is_multi'] = ($value->is_multi == 1 ? true : false);
+                $main_data[$i]['conditions'][$j]['label'] = $value->label;
+                $main_data[$i]['conditions'][$j]['rule'] = $value->operation;
+                $main_data[$i]['conditions'][$j]['rule_array'] = $this->attributeRepository
+                    ->GetAttributeTypeRules($value->label);
+                if ($value->is_multi == 0)
+                    $main_data[$i]['conditions'][$j]['rule_value'] = $value->rule_value;
+                else
+                    $main_data[$i]['conditions'][$j]['rule_value'] = "";
+
+                if ($value->is_multi == 0) {
+                    $main_data[$i]['conditions'][$j]['options'] = [];
+                } else {
+                    if ($value->label == "Categories") {
+                        $link_data = $this->categoryRepository->rawList();
+                        $main_data[$i]['conditions'][$j]['options'] = $link_data;
+                        $ex_data = explode(',', $value->rule_value);
+                        $d = [];
+                        foreach ($link_data as $k => $v) {
+                            if (in_array($v->id, $ex_data)) {
+                                $d[] = $v;
+                            }
+                        }
+
+                        if ($value->is_multi == 0) {
+                            $main_data[$i]['conditions'][$j]['rule_value_multi'] = [];
+                        } else {
+                            $main_data[$i]['conditions'][$j]['rule_value_multi'] = $d;
+                        }
+
+                    } else {
+                        $link_data = $this->attributeRepository->GetAttributeOptionsByLabel($value->label);
+                        $main_data[$i]['conditions'][$j]['options'] = $link_data;
+                        $ex_data = explode(',', $value->rule_value);
+                        $d = [];
+                        foreach ($link_data as $k => $v) {
+                            if (in_array($v->id, $ex_data)) {
+                                $d[] = $v;
+                            }
+                        }
+
+                        if ($value->is_multi == 0) {
+                            $main_data[$i]['conditions'][$j]['rule_value_multi'] = [];
+                        } else {
+                            $main_data[$i]['conditions'][$j]['rule_value_multi'] = $d;
+                        }
+                    }
+
+                }
+            }
+            $j += 1;
+
+        }
+
+        return $main_data;
+    }
+
+    public function UpdateAdvertisementOne(Request $request)
+    {
+        $imageManipulation = new ImageManipulation();
+        $path = '/uploads/advertisement/';
+        $path2 = '/advertisement/';
+        $data_obj = [];
+        $image_data = [];
+        $image_name = "";
+        $logo_name = "";
+        $main_data = \GuzzleHttp\json_decode($request->input('data'), true);
+        $i = 0;
+        foreach ($main_data as $key => $image) {
+            if (array_key_exists('idd', $image)) {
+                if($request->hasFile($image['idd'])) {
+                    $file = $request->file($image['idd']);
+                    $data_obj['image_name'] = $imageManipulation->UploadImage($file, $path);
+                } else {
+                    $data_obj['image_name'] = $image['image_name'];
+                }
+            }
+
+            $child_data = [];
+            $j = 0;
+            foreach ($image['conditions'] as $key2 => $val) {
+                $child_data[$j]['label'] = $val['label'];
+                $child_data[$j]['operation'] = $val['rule'];
+
+                $child_data[$j]['is_multi'] = $val['is_multi'] == true ? 1 : 0;
+                if ($val['is_multi'] == true) {
+                    foreach ($val['rule_value_multi'] as $key3 => $val3) {
+                        if ($key3 == 0) {
+                            $child_data[$j]['rule_value'] = $val3['id'];
+                        } else {
+                            $child_data[$j]['rule_value'] .= ',' . $val3['id'];
+                        }
+
+                    }
+                } else {
+                    $child_data[$j]['rule_value'] = $val['rule_value'];
+                }
+                $j++;
+            }
+            $data_obj['slug'] = $image['slug'];
+
+            $data_obj['title'] = $image['title'];
+            $data_obj['save_path'] = $path2;
+            $data_obj['type'] = 2;
+            $image_data[$i] = $data_obj;
+            $image_data[$i]['child'] = $child_data;
+            $i++;
+        }
+        DB::table('advertisement_master')->where('type', 2)->delete();
+        foreach ($image_data as $key => $value) {
+            $id = DB::table('advertisement_master')->insertGetId([
+                'image_name' => $value['image_name'],
+                'save_path' => $value['save_path'],
+                'slug' => $value['slug'],
+                'title' => $value['title'],
+                'type' => $value['type'],
+            ]);
+            foreach ($value['child'] as $key2 => $value2) {
+                $value2['master_id'] = $id;
+                DB::table('advertisement_rule')->insert($value2);
+            }
+        }
+        return $image_data;
+    }
+
+    public function GetAdvertisementTwo()
+    {
+        $data = DB::select("SELECT advertisement_master.id , advertisement_master.title,
+         advertisement_master.slug, advertisement_master.image_name, 
+        advertisement_master.save_path,
+        advertisement_rule.label, advertisement_rule.operation, advertisement_rule.rule_value, advertisement_rule.is_multi
+        FROM advertisement_master
+        left JOIN advertisement_rule on advertisement_rule.master_id = advertisement_master.id
+        WHERE type = 3
+        ORDER BY advertisement_master.id ");
+
+        $main_data = [];
+        $i = -1;
+        $j = -1;
+        $id_exist = "";
+        foreach ($data as $key => $value) {
+            if ($id_exist != $value->id) {
+                $i += 1;
+                $j = 0;
+                $id_exist = $value->id;
+                $main_data[$i]['title'] = $value->title;
+                $main_data[$i]['idd'] = 'image_' . $value->id;
+                $main_data[$i]['slug'] = $value->slug;
+                $main_data[$i]['image'] = $value->save_path . 'small/' . $value->image_name;
+                $main_data[$i]['image_name'] = $value->image_name;
+            }
+
+            if ($id_exist == $value->id) {
+                $main_data[$i]['conditions'][$j]['is_multi'] = ($value->is_multi == 1 ? true : false);
+                $main_data[$i]['conditions'][$j]['label'] = $value->label;
+                $main_data[$i]['conditions'][$j]['rule'] = $value->operation;
+                $main_data[$i]['conditions'][$j]['rule_array'] = $this->attributeRepository
+                    ->GetAttributeTypeRules($value->label);
+                if ($value->is_multi == 0)
+                    $main_data[$i]['conditions'][$j]['rule_value'] = $value->rule_value;
+                else
+                    $main_data[$i]['conditions'][$j]['rule_value'] = "";
+
+                if ($value->is_multi == 0) {
+                    $main_data[$i]['conditions'][$j]['options'] = [];
+                } else {
+                    if ($value->label == "Categories") {
+                        $link_data = $this->categoryRepository->rawList();
+                        $main_data[$i]['conditions'][$j]['options'] = $link_data;
+                        $ex_data = explode(',', $value->rule_value);
+                        $d = [];
+                        foreach ($link_data as $k => $v) {
+                            if (in_array($v->id, $ex_data)) {
+                                $d[] = $v;
+                            }
+                        }
+
+                        if ($value->is_multi == 0) {
+                            $main_data[$i]['conditions'][$j]['rule_value_multi'] = [];
+                        } else {
+                            $main_data[$i]['conditions'][$j]['rule_value_multi'] = $d;
+                        }
+
+                    } else {
+                        $link_data = $this->attributeRepository->GetAttributeOptionsByLabel($value->label);
+                        $main_data[$i]['conditions'][$j]['options'] = $link_data;
+                        $ex_data = explode(',', $value->rule_value);
+                        $d = [];
+                        foreach ($link_data as $k => $v) {
+                            if (in_array($v->id, $ex_data)) {
+                                $d[] = $v;
+                            }
+                        }
+
+                        if ($value->is_multi == 0) {
+                            $main_data[$i]['conditions'][$j]['rule_value_multi'] = [];
+                        } else {
+                            $main_data[$i]['conditions'][$j]['rule_value_multi'] = $d;
+                        }
+                    }
+
+                }
+            }
+            $j += 1;
+
+        }
+
+        return $main_data;
+    }
+
+    public function UpdateAdvertisementTwo(Request $request)
+    {
+        $imageManipulation = new ImageManipulation();
+        $path = '/uploads/advertisement/';
+        $path2 = '/advertisement/';
+        $data_obj = [];
+        $image_data = [];
+        $image_name = "";
+        $logo_name = "";
+        $main_data = \GuzzleHttp\json_decode($request->input('data'), true);
+        $i = 0;
+        foreach ($main_data as $key => $image) {
+            if (array_key_exists('idd', $image)) {
+                if($request->hasFile($image['idd'])) {
+                    $file = $request->file($image['idd']);
+                    $data_obj['image_name'] = $imageManipulation->UploadImage($file, $path);
+                } else {
+                    $data_obj['image_name'] = $image['image_name'];
+                }
+            }
+
+            $child_data = [];
+            $j = 0;
+            foreach ($image['conditions'] as $key2 => $val) {
+                $child_data[$j]['label'] = $val['label'];
+                $child_data[$j]['operation'] = $val['rule'];
+
+                $child_data[$j]['is_multi'] = $val['is_multi'] == true ? 1 : 0;
+                if ($val['is_multi'] == true) {
+                    foreach ($val['rule_value_multi'] as $key3 => $val3) {
+                        if ($key3 == 0) {
+                            $child_data[$j]['rule_value'] = $val3['id'];
+                        } else {
+                            $child_data[$j]['rule_value'] .= ',' . $val3['id'];
+                        }
+
+                    }
+                } else {
+                    $child_data[$j]['rule_value'] = $val['rule_value'];
+                }
+                $j++;
+            }
+            $data_obj['slug'] = $image['slug'];
+
+            $data_obj['title'] = $image['title'];
+            $data_obj['save_path'] = $path2;
+            $data_obj['type'] = 3;
+            $image_data[$i] = $data_obj;
+            $image_data[$i]['child'] = $child_data;
+            $i++;
+        }
+        DB::table('advertisement_master')->where('type', 3)->delete();
+        foreach ($image_data as $key => $value) {
+            $id = DB::table('advertisement_master')->insertGetId([
+                'image_name' => $value['image_name'],
+                'save_path' => $value['save_path'],
+                'slug' => $value['slug'],
+                'title' => $value['title'],
+                'type' => $value['type'],
+            ]);
+            foreach ($value['child'] as $key2 => $value2) {
+                $value2['master_id'] = $id;
+                DB::table('advertisement_rule')->insert($value2);
+            }
+        }
+        return $image_data;
+    }
+
+    public function GetSliderSection()
+    {
+        $data = DB::select("SELECT advertisement_master.id , advertisement_master.title,
+         advertisement_master.slug, advertisement_master.image_name, 
+        advertisement_master.save_path,
+        advertisement_rule.label, advertisement_rule.operation, advertisement_rule.rule_value, advertisement_rule.is_multi
+        FROM advertisement_master
+        left JOIN advertisement_rule on advertisement_rule.master_id = advertisement_master.id
+        WHERE type = 1
+        ORDER BY advertisement_master.id ");
+
+        $main_data = [];
+        $i = -1;
+        $j = -1;
+        $id_exist = "";
+        foreach ($data as $key => $value) {
+            if ($id_exist != $value->id) {
+                $i += 1;
+                $j = 0;
+                $id_exist = $value->id;
+                $main_data[$i]['title'] = $value->title;
+                $main_data[$i]['idd'] = 'image_' . $value->id;
+                $main_data[$i]['slug'] = $value->slug;
+                $main_data[$i]['image'] = $value->save_path . 'small/' . $value->image_name;
+                $main_data[$i]['image_name'] = $value->image_name;
+            }
+
+            if ($id_exist == $value->id) {
+                $main_data[$i]['conditions'][$j]['is_multi'] = ($value->is_multi == 1 ? true : false);
+                $main_data[$i]['conditions'][$j]['label'] = $value->label;
+                $main_data[$i]['conditions'][$j]['rule'] = $value->operation;
+                $main_data[$i]['conditions'][$j]['rule_array'] = $this->attributeRepository
+                    ->GetAttributeTypeRules($value->label);
+                if ($value->is_multi == 0)
+                    $main_data[$i]['conditions'][$j]['rule_value'] = $value->rule_value;
+                else
+                    $main_data[$i]['conditions'][$j]['rule_value'] = "";
+
+                if ($value->is_multi == 0) {
+                    $main_data[$i]['conditions'][$j]['options'] = [];
+                } else {
+                    if ($value->label == "Categories") {
+                        $link_data = $this->categoryRepository->rawList();
+                        $main_data[$i]['conditions'][$j]['options'] = $link_data;
+                        $ex_data = explode(',', $value->rule_value);
+                        $d = [];
+                        foreach ($link_data as $k => $v) {
+                            if (in_array($v->id, $ex_data)) {
+                                $d[] = $v;
+                            }
+                        }
+
+                        if ($value->is_multi == 0) {
+                            $main_data[$i]['conditions'][$j]['rule_value_multi'] = [];
+                        } else {
+                            $main_data[$i]['conditions'][$j]['rule_value_multi'] = $d;
+                        }
+
+                    } else {
+                        $link_data = $this->attributeRepository->GetAttributeOptionsByLabel($value->label);
+                        $main_data[$i]['conditions'][$j]['options'] = $link_data;
+                        $ex_data = explode(',', $value->rule_value);
+                        $d = [];
+                        foreach ($link_data as $k => $v) {
+                            if (in_array($v->id, $ex_data)) {
+                                $d[] = $v;
+                            }
+                        }
+
+                        if ($value->is_multi == 0) {
+                            $main_data[$i]['conditions'][$j]['rule_value_multi'] = [];
+                        } else {
+                            $main_data[$i]['conditions'][$j]['rule_value_multi'] = $d;
+                        }
+                    }
+
+                }
+            }
+            $j += 1;
+
+        }
+
+        return $main_data;
+    }
+
+    public function UpdateSliderSection(Request $request)
+    {
+        $imageManipulation = new ImageManipulation();
+        $path = '/uploads/advertisement/';
+        $path2 = '/advertisement/';
+        $data_obj = [];
+        $image_data = [];
+        $image_name = "";
+        $logo_name = "";
+        $main_data = \GuzzleHttp\json_decode($request->input('data'), true);
+        $i = 0;
+        foreach ($main_data as $key => $image) {
+            if (array_key_exists('idd', $image)) {
+                if($request->hasFile($image['idd'])) {
+                    $file = $request->file($image['idd']);
+                    $data_obj['image_name'] = $imageManipulation->UploadImage($file, $path);
+                } else {
+                    $data_obj['image_name'] = $image['image_name'];
+                }
+            }
+
+            $child_data = [];
+            $j = 0;
+            foreach ($image['conditions'] as $key2 => $val) {
+                $child_data[$j]['label'] = $val['label'];
+                $child_data[$j]['operation'] = $val['rule'];
+
+                $child_data[$j]['is_multi'] = $val['is_multi'] == true ? 1 : 0;
+                if ($val['is_multi'] == true) {
+                    foreach ($val['rule_value_multi'] as $key3 => $val3) {
+                        if ($key3 == 0) {
+                            $child_data[$j]['rule_value'] = $val3['id'];
+                        } else {
+                            $child_data[$j]['rule_value'] .= ',' . $val3['id'];
+                        }
+
+                    }
+                } else {
+                    $child_data[$j]['rule_value'] = $val['rule_value'];
+                }
+                $j++;
+            }
+            $data_obj['slug'] = $image['slug'];
+
+            $data_obj['title'] = $image['title'];
+            $data_obj['save_path'] = $path2;
+            $data_obj['type'] = 1;
+            $image_data[$i] = $data_obj;
+            $image_data[$i]['child'] = $child_data;
+            $i++;
+        }
+        DB::table('advertisement_master')->where('type', 1)->delete();
+        foreach ($image_data as $key => $value) {
+            $id = DB::table('advertisement_master')->insertGetId([
+                'image_name' => $value['image_name'],
+                'save_path' => $value['save_path'],
+                'slug' => $value['slug'],
+                'title' => $value['title'],
+                'type' => $value['type'],
+            ]);
+            foreach ($value['child'] as $key2 => $value2) {
+                $value2['master_id'] = $id;
+                DB::table('advertisement_rule')->insert($value2);
+            }
+        }
+        return $image_data;
+    }
+
+    public function GetSliderAddSection()
+    {
+        $data = DB::select("SELECT advertisement_master.id , advertisement_master.title,
+         advertisement_master.slug, advertisement_master.image_name, 
+        advertisement_master.save_path,
+        advertisement_rule.label, advertisement_rule.operation, advertisement_rule.rule_value, advertisement_rule.is_multi
+        FROM advertisement_master
+        INNER JOIN advertisement_rule on advertisement_rule.master_id = advertisement_master.id
+        WHERE type = 4
+        ORDER BY advertisement_master.id ");
+
+        $main_data = [];
+        $i = -1;
+        $j = -1;
+        $id_exist = "";
+        foreach ($data as $key => $value) {
+            if ($id_exist != $value->id) {
+                $i += 1;
+                $j = 0;
+                $id_exist = $value->id;
+                $main_data[$i]['title'] = $value->title;
+                $main_data[$i]['idd'] = 'image_' . $value->id;
+                $main_data[$i]['slug'] = $value->slug;
+                $main_data[$i]['image'] = $value->save_path . 'small/' . $value->image_name;
+                $main_data[$i]['image_name'] = $value->image_name;
+            }
+
+            if ($id_exist == $value->id) {
+                $main_data[$i]['conditions'][$j]['is_multi'] = ($value->is_multi == 1 ? true : false);
+                $main_data[$i]['conditions'][$j]['label'] = $value->label;
+                $main_data[$i]['conditions'][$j]['rule'] = $value->operation;
+                $main_data[$i]['conditions'][$j]['rule_array'] = $this->attributeRepository
+                    ->GetAttributeTypeRules($value->label);
+                if ($value->is_multi == 0)
+                    $main_data[$i]['conditions'][$j]['rule_value'] = $value->rule_value;
+                else
+                    $main_data[$i]['conditions'][$j]['rule_value'] = "";
+
+                if ($value->is_multi == 0) {
+                    $main_data[$i]['conditions'][$j]['options'] = [];
+                } else {
+                    if ($value->label == "Categories") {
+                        $link_data = $this->categoryRepository->rawList();
+                        $main_data[$i]['conditions'][$j]['options'] = $link_data;
+                        $ex_data = explode(',', $value->rule_value);
+                        $d = [];
+                        foreach ($link_data as $k => $v) {
+                            if (in_array($v->id, $ex_data)) {
+                                $d[] = $v;
+                            }
+                        }
+
+                        if ($value->is_multi == 0) {
+                            $main_data[$i]['conditions'][$j]['rule_value_multi'] = [];
+                        } else {
+                            $main_data[$i]['conditions'][$j]['rule_value_multi'] = $d;
+                        }
+
+                    } else {
+                        $link_data = $this->attributeRepository->GetAttributeOptionsByLabel($value->label);
+                        $main_data[$i]['conditions'][$j]['options'] = $link_data;
+                        $ex_data = explode(',', $value->rule_value);
+                        $d = [];
+                        foreach ($link_data as $k => $v) {
+                            if (in_array($v->id, $ex_data)) {
+                                $d[] = $v;
+                            }
+                        }
+
+                        if ($value->is_multi == 0) {
+                            $main_data[$i]['conditions'][$j]['rule_value_multi'] = [];
+                        } else {
+                            $main_data[$i]['conditions'][$j]['rule_value_multi'] = $d;
+                        }
+                    }
+
+                }
+            }
+            $j += 1;
+
+        }
+
+        return $main_data;
+    }
+
+    public function UpdateSliderAddSection(Request $request)
+    {
+        $imageManipulation = new ImageManipulation();
+        $path = '/uploads/advertisement/';
+        $path2 = '/advertisement/';
+        $data_obj = [];
+        $image_data = [];
+        $image_name = "";
+        $logo_name = "";
+        $main_data = \GuzzleHttp\json_decode($request->input('data'), true);
+        $i = 0;
+        foreach ($main_data as $key => $image) {
+            if (array_key_exists('idd', $image)) {
+                if($request->hasFile($image['idd'])) {
+                    $file = $request->file($image['idd']);
+                    $data_obj['image_name'] = $imageManipulation->UploadImage($file, $path);
+                } else {
+                    $data_obj['image_name'] = $image['image_name'];
+                }
+            }
+
+            $child_data = [];
+            $j = 0;
+            foreach ($image['conditions'] as $key2 => $val) {
+                $child_data[$j]['label'] = $val['label'];
+                $child_data[$j]['operation'] = $val['rule'];
+
+                $child_data[$j]['is_multi'] = $val['is_multi'] == true ? 1 : 0;
+                if ($val['is_multi'] == true) {
+                    foreach ($val['rule_value_multi'] as $key3 => $val3) {
+                        if ($key3 == 0) {
+                            $child_data[$j]['rule_value'] = $val3['id'];
+                        } else {
+                            $child_data[$j]['rule_value'] .= ',' . $val3['id'];
+                        }
+
+                    }
+                } else {
+                    $child_data[$j]['rule_value'] = $val['rule_value'];
+                }
+                $j++;
+            }
+            $data_obj['slug'] = $image['slug'];
+
+            $data_obj['title'] = $image['title'];
+            $data_obj['save_path'] = $path2;
+            $data_obj['type'] = 4;
+            $image_data[$i] = $data_obj;
+            $image_data[$i]['child'] = $child_data;
+            $i++;
+        }
+        DB::table('advertisement_master')->where('type', 4)->delete();
+        foreach ($image_data as $key => $value) {
+            $id = DB::table('advertisement_master')->insertGetId([
+                'image_name' => $value['image_name'],
+                'save_path' => $value['save_path'],
+                'slug' => $value['slug'],
+                'title' => $value['title'],
+                'type' => $value['type'],
+            ]);
+            foreach ($value['child'] as $key2 => $value2) {
+                $value2['master_id'] = $id;
+                DB::table('advertisement_rule')->insert($value2);
+            }
+        }
+        return $image_data;
     }
 
     public function getMixSection()

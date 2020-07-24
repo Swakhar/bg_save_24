@@ -23,7 +23,9 @@
         {!! view_render_event('bagisto.admin.layout.head') !!}
 
         <link rel="stylesheet" href="{{ asset($relative_path . 'vendor/webkul/admin/assets/css/mobile_responsive.css?version='.$version) }}">
+        <link rel="stylesheet" href="{{ asset($relative_path . 'vendor/webkul/admin/assets/css/vue-multiselect.min.css?version='.$version) }}">
         <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
         <style>
             .alert.alert-danger {
                 background: #c10707f7;
@@ -34,7 +36,7 @@
 
     <body @if (core()->getCurrentLocale() && core()->getCurrentLocale()->direction == 'rtl') class="rtl" @endif style="scroll-behavior: smooth;">
         {!! view_render_event('bagisto.admin.layout.body.before') !!}
-
+        <span baseUrl="{{ url()->to('/') }}" style="display: none" id="base_url_span"></span>
         <div id="app">
 
             <div class="alert-wrapper hide" id="custom_message">
@@ -119,14 +121,14 @@
         <script type="text/javascript" src="{{ asset($relative_path . 'vendor/webkul/admin/assets/js/admin.js?version='.$version) }}"></script>
         <script type="text/javascript" src="{{ asset($relative_path . 'vendor/webkul/ui/assets/js/ui.js?version='.$version) }}"></script>
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.full.min.js"></script>
+
+        @stack('scripts')
+
         <script type="text/javascript">
             $( document ).ready(function() {
                 $('.select2').select2();
             });
-<<<<<<< HEAD
-=======
 
->>>>>>> home-page-design
             window.addEventListener('DOMContentLoaded', function() {
                 moveDown = 60;
                 moveUp =  -60;
@@ -189,15 +191,14 @@
                     window.addEventListener('scroll', function() {
                         documentScrollWhenScrolled = $(document).scrollTop();
 
-                            if (documentScrollWhenScrolled <= differenceInHeight + 200) {
-                                $('.navbar-left').css('top', -documentScrollWhenScrolled + 60 + 'px');
-                                scrollTopValueWhenNavBarFixed = $(document).scrollTop();
-                            }
+                        if (documentScrollWhenScrolled <= differenceInHeight + 200) {
+                            $('.navbar-left').css('top', -documentScrollWhenScrolled + 60 + 'px');
+                            scrollTopValueWhenNavBarFixed = $(document).scrollTop();
+                        }
                     });
                 }
             });
         </script>
-        @stack('scripts')
 
         {!! view_render_event('bagisto.admin.layout.body.after') !!}
         <script src="{{ asset($relative_path . 'vendor/webkul/admin/assets/css/menu.js?version='.$version) }}"></script>

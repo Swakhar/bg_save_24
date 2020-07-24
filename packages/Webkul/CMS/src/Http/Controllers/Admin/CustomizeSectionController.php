@@ -52,30 +52,77 @@ class CustomizeSectionController extends Controller
      */
     public function index()
     {
-        $home_slider =  HomeSlider::get();
-        $catalog_object = Product::GetProductsWithCategoryParentRelation();
+        $categories = DB::select("SELECT categories.id, category_translations.name, 
+        CAST(COALESCE(categories.parent_id,0) as int) parent_id
+        FROM categories
+        INNER JOIN category_translations ON 
+        category_translations.category_id = categories.id");
 
-        $GetSectionData = HomeCustomizeSection::GetSectionData();
-        $home_slider_data = [];
-        $slider_data = [];
-        $slider_name = "";
+        $products = DB::select("SELECT product_flat.id, product_flat.name, product_categories.category_id
+        FROM product_flat
+        INNER JOIN product_categories on 
+        product_categories.product_id = product_flat.product_id
+        WHERE name is not null");
 
-        foreach ($GetSectionData as $key => $value) {
-            $slider_data[$value->master_id]['data'][] = $value;
-            $slider_data[$value->master_id]['section_name'] = $value->section_name;
-            $slider_data[$value->master_id]['position'] = $value->position;
-            $slider_data[$value->master_id]['is_visible'] = $value->is_visible;
-            $slider_data[$value->master_id]['display_block_type'] = $value->display_block_type;
+        $data = DB::select("SELECT name display_name, is_visible, position,
+        home_customize_section_details.display_category_id, 
+        home_customize_section_details.display_block_type, home_customize_section_masters.id
+        FROM home_customize_section_masters
+        INNER JOIN home_customize_section_details on 
+        home_customize_section_details.master_id = home_customize_section_masters.id
+        ORDER BY home_customize_section_masters.id");
+        $master_data = [];
+        $id = "";
+        $j = -1;
+        $i = -1;
+
+        foreach ($data as $key => $value) {
+            if ($id != $value->id) {
+                $id = $value->id;
+                $j = -1;
+                $i += 1;
+                $master_data[$i]['display_name'] = $value->display_name;
+                $master_data[$i]['is_visible'] = ($value->is_visible == 1 ? true : false);
+                $master_data[$i]['position'] = $value->position;
+                $master_data[$i]['is_hide'] = false;
+                $master_data[$i]['icon'] = 'minus';
+            }
+            $j += 1;
+            $master_data[$i]['include_items'][$j] = $this->CategoryCustomInfo($value->display_category_id, $value->display_block_type);
+            $master_data[$i]['items'] = $value->display_block_type == 2 ? $products : $categories;
+            $master_data[$i]['item_type'] = $value->display_block_type;
+
         }
+        //include_items
+//        return $master_data;
 
         return view($this->_config['view'])->with([
-            'catalog_object' => $catalog_object,
-            'slider_data' => $slider_data,
-            'slider_name' => $slider_name,
-            'parent_category' => array_key_exists('categories_parent', $catalog_object) ?
-                $catalog_object['categories_parent'] :
-                \GuzzleHttp\json_encode([], true)
+            'categories' => $categories,
+            'products' => $products,
+            'master_data' => $master_data
         ]);
+    }
+
+    public function CategoryCustomInfo($category_id, $type)
+    {
+        if ($type == 1) {
+            $data = DB::select("SELECT name, category_id id FROM category_translations
+            WHERE category_id = $category_id");
+            if (count($data) > 0) {
+                return $data[0];
+            } else {
+                return [];
+            }
+        } else if ($type == 2) {
+            $data = DB::select("SELECT product_flat.name, product_flat.id, product_categories.category_id FROM product_flat
+            INNER JOIN product_categories on product_categories.product_id = product_flat.product_id
+            WHERE product_flat.product_id = $category_id");
+            if (count($data) > 0) {
+                return $data[0];
+            } else {
+                return [];
+            }
+        }
     }
 
     /**
@@ -93,9 +140,43 @@ class CustomizeSectionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
-//        return \request();
+        $data = $request->input('data');
+        $master_data = [];
+        $details_data = [];
+
+        foreach ($data as $key => $value) {
+            $master_data[$key]['name'] = $value['display_name'];
+            $master_data[$key]['is_visible'] = $value['is_visible'] ? 1 : 0;
+            $master_data[$key]['position'] = $value['position'];
+            $j = 0;
+            foreach ($value['include_items'] as $key2 => $d_value) {
+                $details_data[$key][]['display_category_id'] = $d_value['id'];
+                $type = "";
+                if (array_key_exists('category_id', $d_value)) {
+                    $type = 2;
+                } else {
+                    $type = 1;
+                }
+                $details_data[$key][$j]['display_block_type'] = $type;
+                $j += 1;
+            }
+        }
+        //return $details_data;
+        DB::table('home_customize_section_masters')->delete();
+        foreach ($master_data as $key => $value) {
+            $id = DB::table('home_customize_section_masters')->insertGetId($value);
+            foreach ($details_data[$key] as $key2 => $value2) {
+                $details_data[$key][$key2]['master_id'] = $id;
+                DB::table('home_customize_section_details')->insert($details_data[$key][$key2]);
+            }
+        }
+
+        return Response::json(
+            ['message' => 'Saved Successfully']
+        );
+
         $key_ref = [];
         for ($i = 0; $i < 15; $i++) {
             if (request()->has('category_id_' . $i)) {

@@ -101,6 +101,7 @@
         },
 
         methods: {
+
             closeQuickView: function () {
                 this.$root.quickView = false;
                 this.$root.productDetails = [];

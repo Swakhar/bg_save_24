@@ -212,9 +212,8 @@
 
     <mix-customize-section
 {{--            :route="{{ route('admin.recommended_sliders.store') }}"--}}
-            :page_title="'{{ __('admin::app.cms.mix_customize_section.config') }}'"
-            :condition_attributes="{{ json_encode(app('\Webkul\CatalogRule\Repositories\CatalogRuleRepository')->getConditionAttributes()) }}"
-            :translation_array="{{ json_encode($data) }}"></mix-customize-section>
+    :condition_rule="{{ json_encode($data) }}"
+    :page_title="'Mix Customize Section'"></mix-customize-section>
 
 @stop
 

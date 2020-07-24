@@ -35,12 +35,17 @@ window.Carousel = VueCarousel;
 
 // UI components
 Vue.component("vue-slider", require("vue-slider-component"));
+Vue.component("top_slider_category", require("./UI/components/home-slider"));
+Vue.component("slider-add-section", require("./UI/components/slider-add-section"));
+Vue.component("add-panel-first", require("./UI/components/add-panel-first"));
+Vue.component("add-panel-second", require("./UI/components/add-panel-second"));
 Vue.component('mini-cart', require('./UI/components/mini-cart'));
 Vue.component('modal-component', require('./UI/components/modal'));
 Vue.component("add-to-cart", require("./UI/components/add-to-cart"));
 Vue.component('star-ratings', require('./UI/components/star-rating'));
 Vue.component('quantity-btn', require('./UI/components/quantity-btn'));
 Vue.component('sidebar-component', require('./UI/components/sidebar'));
+Vue.component('sidebar-new', require('./UI/components/sidebar-new'));
 Vue.component("product-card", require("./UI/components/product-card"));
 Vue.component("wishlist-component", require("./UI/components/wishlist"));
 Vue.component('carousel-component', require('./UI/components/carousel'));
@@ -49,6 +54,7 @@ Vue.component('card-list-header', require('./UI/components/card-header'));
 Vue.component('magnify-image', require('./UI/components/image-magnifier'));
 Vue.component('compare-component', require('./UI/components/product-compare'));
 Vue.component("shimmer-component", require("./UI/components/shimmer-component"));
+Vue.component("shimmer-component-small", require("./UI/components/shimmer-component-small"));
 Vue.component('responsive-sidebar', require('./UI/components/responsive-sidebar'));
 Vue.component('product-quick-view', require('./UI/components/product-quick-view'));
 Vue.component('product-quick-view-btn', require('./UI/components/product-quick-view-btn'));

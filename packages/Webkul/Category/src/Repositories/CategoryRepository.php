@@ -261,4 +261,13 @@ class CategoryRepository extends Repository
 
         return $trimmed;
     }
+
+    public function rawList()
+    {
+        return DB::select("SELECT category_translations.category_id id, category_translations.name admin_name 
+        FROM categories 
+        INNER JOIN category_translations ON 
+        category_translations.category_id = categories.id
+        WHERE category_translations.locale = 'en'");
+    }
 }

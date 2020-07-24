@@ -195,3 +195,126 @@
         margin: 2px 0px;
     }
 }
+
+.accordion_header {
+    height: 32px;
+    background: #8080804f;
+    line-height: 32px;
+    padding: 0 7px;
+    font-size: 16px;
+    position: relative;
+    margin-bottom: 3px;
+}
+
+.accordion_header i {
+    position: absolute;
+    right: 5px;
+    top: 7px;
+    background: #367FA9;
+    border-radius: 50%;
+    font-size: 26px;
+    height: 22px;
+    width: 22px;
+    line-height: 22px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+}
+
+.accordion_body.hide {
+    display: none !important;
+}
+i.section_delete {
+    position: absolute;
+    right: 48px;
+    background: none !important;
+    color: red;
+    cursor: pointer;
+}
+i.table_row_delete {
+    background: none !important;
+    color: red;
+    cursor: pointer;
+    font-size: 21px;
+}
+
+div.select2 ul {
+    position: absolute;
+    background: white;
+    z-index: 999;
+    width: 300px;
+    box-shadow: 1px 1px 4px 1px grey;
+    padding-left: 1px;
+    height: 200px;
+    overflow-y: scroll;
+}
+div.select2 ul li {
+    list-style: none;
+    margin: 3px 0;
+    padding: 3px 10px;
+    cursor: pointer;
+}
+div.select2 ul li:hover {
+    background: aliceblue;
+}
+div.select2 span.btnn {
+    background: #3C8DBC;
+    color: white;
+    padding: 5px;
+    margin: 1px;
+    display: inline-block;
+}
+div.select2 span.btnn i {
+    font-size: 19px;
+    cursor: pointer;
+    color: #c31515;
+}
+
+.main_section_mix {
+    border: 1px solid gray;
+    margin: 4px;
+    /*padding: 5px;*/
+}
+.main_section_mix_header {
+    display: block;
+    height: 30px;
+    width: 100%;
+    background: gray;
+}
+.main_section_mix_body {
+    padding: 5px;
+}
+.main_section_mix_header i.section_delete {
+    position: absolute;
+    right: 48px;
+    background: none !important;
+    color: red;
+    cursor: pointer;
+    font-size: 24px;
+}
+.details_section_of_mix {
+    border: 1px solid gray;
+    margin: 5px;
+}
+.mix_details_header {
+    display: block;
+    height: 30px;
+    background: gray;
+}
+.mix_details_body {
+    padding: 5px;
+}
+i.section_expand {
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    right: 18px;
+    /*top: 7px;*/
+    font-size: 21px;
+}
+
+.multiselect__tags {
+    border: 2px solid #C7C7C7 !important;
+    min-height: 37px !important;
+    height: 25px !important;
+}

@@ -2,38 +2,15 @@
     <div class="image-pickup">
         <span class="title">Pick an image url</span>
         <i @click="click_to_visible_image_panel" class="image-panel-trash fa fa-times"></i>
-        <div class="search_panel control-group">
-            <div class="div_50_percent">
-                <select name="" id="" class="control">
-                    <option value="">Select Category </option>
-                    <option value="">asdas </option>
-                    <option value="">asdas </option>
-                    <option value="">asdas </option>
-                    <option value="">asdas </option>
-                    <option value="">asdas </option>
-                </select>
-            </div>
-            <div class="div_50_percent">
-                <select name="" id="" class="control">
-                    <option value="">Select Product </option>
-                    <option value="">asdas </option>
-                    <option value="">asdas </option>
-                    <option value="">asdas </option>
-                    <option value="">asdas </option>
-                    <option value="">asdas </option>
-                </select>
-                <button :disabled="image_path == ''" @click="click_to_apply" class="btn btn-success">Apply</button>
-            </div>
-        </div>
-
+        <button @click="click_to_apply" class="btn btn-success">Apply</button>
         <div class="">
             <div class="image-show-panel">
                 <div class="inline_image_div" v-for="image in images">
-                    <img class="selected_image" :src="'/uploads/'+image.path" alt="">
-                    <input :data-image-path="image.path"
-                           v-on:change="image_radio_click"
-                           :value="image.path"
-                           class="image_choose_check_box" type="radio" name="common" />
+                    <img class="selected_image"
+                         @click="clickIMage($event)"
+                         :data-path="`${image.path}`"
+                         :src="'/uploads/'+image.path" alt="">
+
                 </div>
             </div>
         </div>
@@ -44,7 +21,7 @@
 
     export default {
         name: "image-picker",
-        props: ['under_parent_index', 'parent_index', 'inside_row_data'],
+        props: ['selected_conditions', 'parent_index_details', 'parent_index'],
         components: {
 
         },
@@ -64,6 +41,13 @@
             this.getProductImage()
         },
         methods: {
+            clickIMage: function(event) {
+                $('.selected_image').each(function() {
+                    $(this).removeClass('active')
+                });
+                this.image_path = $(event.target).attr('data-path')
+                $(event.target).addClass("active")
+            },
             image_radio_click: function (event) {
                 this.image_path = event.target.getAttribute("data-image-path")
             },
@@ -73,30 +57,20 @@
             click_to_apply: function () {
                 this.$emit('apply_to_choose', {
                     parent_index: this.parent_index,
-                    under_parent_index: this.under_parent_index,
-                    image_path: $( "input[name='common']" ).val()
+                    parent_index_details: this.parent_index_details,
+                    image_path: this.image_path
                 })
             },
             getProductImage: function () {
-                if (this.inside_row_data.conditions.length > 0) {
-                    let conditions = [];
-                    for (let ind in this.inside_row_data.conditions) {
-                        conditions.push({
-                            rule_operator: this.inside_row_data.conditions[ind].rule_operator,
-                            rule_operator: this.inside_row_data.conditions[ind].rule_operator,
-                        });
-                        console.log(this.inside_row_data.conditions[ind])
-                    }
-                }
-//                let that = this;
-//                axios.get('/admin/cms/product-image-url')
-//                .then(function (response) {
-//                    that.images = response.data
-//                })
-//                .catch(function (error) {
-//                    // handle error
-//                    console.log(error);
-//                })
+                let that = this;
+                axios.post('/admin/cms/product-image-url', {data: that.selected_conditions})
+                .then(function (response) {
+                    that.images = response.data
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                })
             }
         },
         filters: {
@@ -111,16 +85,20 @@
         color: #000000b0;
         font-weight: bold;
     }
+    img.selected_image.active {
+        box-shadow: 2px 0px 11px 3px blue;
+    }
     div.image-pickup {
-        position: absolute;
+        position: fixed;
         z-index: 999;
         background: white;
         width: 80%;
-        min-height: 600px;
+        height: 500px;
         box-shadow: 1px 0px 5px 1px grey;
         left: 12%;
         padding: 20px;
-        top: -9%;
+        top: 2%;
+        overflow-y: scroll;
     }
     div.div_50_percent {
         float: left;
@@ -141,6 +119,8 @@
     }
     img.selected_image {
         width: 150px;
+        height: 150px;
+        cursor: pointer;
     }
     div.inline_image_div {
         display: inline-block;

@@ -5,8 +5,210 @@
 @stop
 
 @section('content')
-
-    <advertisement-section-two :page_title="'Advertisement Section Two'"></advertisement-section-two>
+    @php
+        $fff = 1;
+        $data['price'] = [
+         [
+            'operator' => '==',
+            'label' => __('admin::app.promotions.catalog-rules.is-equal-to')
+         ],
+         [
+            'operator'=> '!=',
+            'label'=>  __('admin::app.promotions.catalog-rules.is-not-equal-to')
+         ],
+         [
+            'operator'=> '>=',
+            'label'=>  __('admin::app.promotions.catalog-rules.equals-or-greater-than')
+         ],
+         [
+            'operator'=> '<=',
+            'label'=>  __('admin::app.promotions.catalog-rules.equals-or-less-than')
+         ],
+         [
+            'operator'=> '>',
+            'label'=>  __('admin::app.promotions.catalog-rules.greater-than')
+         ],
+         [
+            'operator'=> '<',
+            'label'=>  __('admin::app.promotions.catalog-rules.less-than')
+         ]
+        ];
+        $data['decimal'] = [
+            [
+                'operator'=> '==',
+                'label'=>  __('admin::app.promotions.catalog-rules.is-equal-to')
+            ],
+            [
+                'operator'=> '!=',
+                'label'=>  __('admin::app.promotions.catalog-rules.is-not-equal-to')
+            ],
+            [
+                'operator'=> '>=',
+                'label'=>  __('admin::app.promotions.catalog-rules.equals-or-greater-than')
+            ],
+            [
+                'operator'=> '<=',
+                'label'=>  __('admin::app.promotions.catalog-rules.equals-or-less-than')
+            ],
+            [
+                'operator'=> '>',
+                'label'=>  __('admin::app.promotions.catalog-rules.greater-than')
+            ],
+            [
+                'operator'=> '<',
+                'label'=>  __('admin::app.promotions.catalog-rules.less-than')
+            ]
+        ];
+        $data['integer'] = [
+            [
+                'operator'=> '==',
+                'label'=>  __('admin::app.promotions.catalog-rules.is-equal-to')
+            ],
+            [
+                'operator'=> '!=',
+                'label'=>  __('admin::app.promotions.catalog-rules.is-not-equal-to')
+            ],
+            [
+                'operator'=> '>=',
+                'label'=>  __('admin::app.promotions.catalog-rules.equals-or-greater-than')
+            ],
+            [
+                'operator'=> '<=',
+                'label'=>  __('admin::app.promotions.catalog-rules.equals-or-less-than')
+            ],
+            [
+                'operator'=> '>',
+                'label'=>  __('admin::app.promotions.catalog-rules.greater-than')
+            ],
+            [
+                'operator'=> '<',
+                'label'=>  __('admin::app.promotions.catalog-rules.less-than')
+                ]
+        ];
+        $data['text'] = [
+            [
+            'operator'=> '==',
+                                    'label'=>  __('admin::app.promotions.catalog-rules.is-equal-to')
+            ],
+            [
+            'operator'=> '!=',
+                                    'label'=>  __('admin::app.promotions.catalog-rules.is-not-equal-to')
+            ],
+            [
+            'operator'=> '{}',
+                                    'label'=>  __('admin::app.promotions.catalog-rules.contain')
+            ],
+            [
+            'operator'=> '!{}',
+                                    'label'=>  __('admin::app.promotions.catalog-rules.does-not-contain')
+            ],
+        ];
+        $data['boolean'] = [
+            [
+            'operator'=> '==',
+                                    'label'=>  __('admin::app.promotions.catalog-rules.is-equal-to')
+            ],
+            [
+            'operator'=> '!=',
+                                    'label'=>  __('admin::app.promotions.catalog-rules.is-not-equal-to')
+            ],
+        ];
+        $data['date'] = [
+            [
+            'operator'=> '==',
+                                'label'=>   __('admin::app.promotions.catalog-rules.is-equal-to')
+            ],
+            [
+            'operator'=> '!=',
+                                'label'=>   __('admin::app.promotions.catalog-rules.is-not-equal-to')
+            ],
+            [
+             'operator'=> '>=',
+                                'label'=>   __('admin::app.promotions.catalog-rules.equals-or-greater-than')
+            ],
+            [
+             'operator'=> '<=',
+                                'label'=>   __('admin::app.promotions.catalog-rules.equals-or-less-than')
+            ],
+            [
+             'operator'=> '>',
+                                'label'=>   __('admin::app.promotions.catalog-rules.greater-than')
+            ],
+            [
+            'operator'=> '<',
+                                'label'=>   __('admin::app.promotions.catalog-rules.less-than')
+            ],
+        ];
+        $data['datetime'] = [
+            [
+            'operator'=> '==',
+                                'label'=>   __('admin::app.promotions.catalog-rules.is-equal-to')
+            ],
+            [
+             'operator'=> '!=',
+                                'label'=>   __('admin::app.promotions.catalog-rules.is-not-equal-to')
+            ],
+            [
+            'operator'=> '>=',
+                                'label'=>   __('admin::app.promotions.catalog-rules.equals-or-greater-than')
+            ],
+            [
+            'operator'=> '<=',
+                                'label'=>   __('admin::app.promotions.catalog-rules.equals-or-less-than')
+            ],
+            [
+            'operator'=> '>',
+                                'label'=>   __('admin::app.promotions.catalog-rules.greater-than')
+            ],
+            [
+            'operator'=> '<',
+                                'label'=>   __('admin::app.promotions.catalog-rules.less-than')
+            ],
+        ];
+        $data['select'] = [
+            [
+            'operator'=> '==',
+                                'label'=>  __('admin::app.promotions.catalog-rules.is-equal-to')
+            ],
+            [
+            'operator'=> '!=',
+                                'label'=>  __('admin::app.promotions.catalog-rules.is-not-equal-to')
+            ],
+        ];
+        $data['radio'] = [
+            [
+            'operator'=> '==',
+                                'label'=>  __('admin::app.promotions.catalog-rules.is-equal-to')
+            ],
+            [
+            'operator'=> '!=',
+                                'label'=>  __('admin::app.promotions.catalog-rules.is-not-equal-to')
+            ],
+        ];
+        $data['multiselect'] = [
+            [
+            'operator'=> '{}',
+                                'label'=>  __('admin::app.promotions.catalog-rules.contains')
+            ],
+            [
+             'operator'=> '!{}',
+                                'label'=>  __('admin::app.promotions.catalog-rules.does-not-contain')
+            ],
+        ];
+        $data['checkbox'] = [
+            [
+            'operator'=> '{}',
+                                'label'=>  __('admin::app.promotions.catalog-rules.contains')
+            ],
+            [
+            'operator'=> '!{}',
+                                'label'=>  __('admin::app.promotions.catalog-rules.does-not-contain')
+            ],
+        ];
+    @endphp
+    <advertisement-section-two
+            :condition_rule="{{ json_encode($data) }}"
+            :page_title="'Advertisement Section Two'"></advertisement-section-two>
 
 @stop
 

@@ -180,7 +180,8 @@
 
                     <div class="container-fluid ">
                         <div class="row top_banner_three_section">
-                            <div class="col-md-3" style="max-width: 21%;margin-left: 0 !important;margin-right: -6px !important;">
+                            <div class="cust-open" >
+{{--                                <sidebar-new :categoryCount="{{ 10 }}"></sidebar-new>--}}
                                 <sidebar-component
                                         main-sidebar=true
                                         id="sidebar-level-0"
@@ -349,15 +350,21 @@
             });
 
             window.addEventListener('scroll', function(e) {
+//                smooth_show
                 var side_menu = $("#sidebar-level-0");
                 var top_ham_bargur = $("#top_ham_bargur");
-                if (window.scrollY > 430) {
+                var sticky_header = $(".sticky-header");
+//                var vc_header = $(".vc-header");
+                console.log(window.scrollY)
+                if (window.scrollY > 577) {
                     top_ham_bargur.removeClass("hide");
                     side_menu.addClass("hide");
+                    sticky_header.addClass("smooth_show");
                 } else {
                     side_menu.removeClass("hide");
                     side_menu.removeClass("to_show");
                     top_ham_bargur.addClass("hide");
+                    sticky_header.removeClass("smooth_show");
                 }
             });
 

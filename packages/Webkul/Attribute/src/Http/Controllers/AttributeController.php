@@ -4,6 +4,8 @@ namespace Webkul\Attribute\Http\Controllers;
 
 use Illuminate\Support\Facades\Event;
 use Webkul\Attribute\Repositories\AttributeRepository;
+use Webkul\Category\Repositories\CategoryRepository;
+use Webkul\Product\Helpers\ConfigurableOption;
 
 class AttributeController extends Controller
 {
@@ -20,6 +22,7 @@ class AttributeController extends Controller
      * @var \Webkul\Attribute\Repositories\AttributeRepository
      */
     protected $attributeRepository;
+    protected $categoryRepository;
 
     /**
      * Create a new controller instance.
@@ -27,9 +30,10 @@ class AttributeController extends Controller
      * @param  \Webkul\Attribute\Repositories\AttributeRepository  $attributeRepository
      * @return void
      */
-    public function __construct(AttributeRepository $attributeRepository)
+    public function __construct(AttributeRepository $attributeRepository, CategoryRepository $categoryRepository)
     {
         $this->attributeRepository = $attributeRepository;
+        $this->categoryRepository = $categoryRepository;
 
         $this->_config = request('_config');
     }
@@ -51,7 +55,8 @@ class AttributeController extends Controller
      */
     public function create()
     {
-        return view($this->_config['view']);
+        $configurableoption = \Webkul\Manufacturer\Models\ConfigurableOption::get();
+        return view($this->_config['view'], compact('configurableoption'));
     }
 
     /**
@@ -88,7 +93,11 @@ class AttributeController extends Controller
     {
         $attribute = $this->attributeRepository->findOrFail($id);
 
-        return view($this->_config['view'], compact('attribute'));
+//        return $attribute->options;
+
+        $configurableoption = \Webkul\Manufacturer\Models\ConfigurableOption::get();
+
+        return view($this->_config['view'], compact('attribute', 'configurableoption'));
     }
 
     /**
@@ -184,4 +193,15 @@ class AttributeController extends Controller
             return redirect()->back();
         }
     }
+
+    public function GetAttributeProperty()
+    {
+        $main_data = $this->attributeRepository->GetAttributeProperty();
+        $main_data[0]['name'] = 'Categories';
+        $main_data[0]['type'] = 'multiselect';
+        $main_data[0]['options'] = $this->categoryRepository->rawList();
+
+        return $main_data;
+    }
+
 }

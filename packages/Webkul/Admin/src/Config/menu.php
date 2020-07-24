@@ -93,7 +93,7 @@ return [
         'icon-class' => '',
     ], [
         'key'        => 'catalog.manufacturers',
-        'name'       => 'Manufacturers',
+        'name'       => 'Configurable Option Value',
         'route'      => 'admin.catalog.manufacturers.index',
         'sort'       => 6,
         'icon-class' => '',
@@ -269,12 +269,24 @@ return [
         'key'        => 'cms.advertisement_section_one',
         'name'       => 'admin::app.cms.advertisement_section_one.view',
         'route'      => 'admin.advertisement_section_one.index',
-        'sort'       => 3,
+        'sort'       => 4,
         'icon-class' => '',
     ], [
         'key'        => 'cms.advertisement_section_two',
         'name'       => 'admin::app.cms.advertisement_section_two.view',
         'route'      => 'admin.advertisement_section_two.index',
+        'sort'       => 5,
+        'icon-class' => '',
+    ], [
+        'key'        => 'cms.slider_section',
+        'name'       => 'admin::app.cms.slider_section.view',
+        'route'      => 'admin.slider_section.index',
+        'sort'       => 3,
+        'icon-class' => '',
+    ], [
+        'key'        => 'cms.slider_add_section',
+        'name'       => 'admin::app.cms.slider_add_section.view',
+        'route'      => 'admin.slider_add_section.index',
         'sort'       => 3,
         'icon-class' => '',
     ]

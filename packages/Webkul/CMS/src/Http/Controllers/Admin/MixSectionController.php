@@ -7,12 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Psy\Test\Exception\RuntimeExceptionTest;
+use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Category\Models\Category;
+use Webkul\Category\Repositories\CategoryRepository;
 use Webkul\CMS\Http\Controllers\Controller;
 use Webkul\CMS\Models\HomeCustomizeSection;
 use Webkul\CMS\Models\HomeSlider;
 use Webkul\CMS\Repositories\CmsRepository;
 use Webkul\Product\Models\Product;
+use Webkul\Velocity\Repositories\ConditionalProduct;
 
 class MixSectionController extends Controller
 {
@@ -29,6 +32,8 @@ class MixSectionController extends Controller
      * @var \Webkul\CMS\Repositories\CmsRepository
      */
     protected $cmsRepository;
+    protected $categoryRepository;
+    protected $attributeRepository;
 
     /**
      * Create a new controller instance.
@@ -36,11 +41,14 @@ class MixSectionController extends Controller
      * @param  \Webkul\CMS\Repositories\CmsRepository  $cmsRepository
      * @return void
      */
-    public function __construct(CmsRepository $cmsRepository)
+    public function __construct(CmsRepository $cmsRepository, CategoryRepository $categoryRepository,
+                                AttributeRepository $attributeRepository)
     {
         $this->middleware('admin');
 
         $this->cmsRepository = $cmsRepository;
+        $this->categoryRepository = $categoryRepository;
+        $this->attributeRepository = $attributeRepository;
 
         $this->_config = request('_config');
     }
@@ -96,8 +104,89 @@ class MixSectionController extends Controller
      */
     public function store(Request $request)
     {
-//        return $request->all();
+        $data_obj = [];
+        $image_data = [];
+        $main_data = $request->input('data');
+        $i = 0;
+        foreach ($main_data as $key => $data_details) {
+            $details_data = [];
+            $j = 0;
+            $data_obj[$key]['slug'] = $data_details['slug'];
+            $data_obj[$key]['subtitle'] = $data_details['subtitle'];
+            $data_obj[$key]['title'] = $data_details['title'];
 
+            foreach ($data_details['details'] as $key2 => $data_child) {
+                $details_data[$key2]['image_url'] = $data_child['image_url'];
+                $details_data[$key2]['slug'] = $data_child['slug'];
+                $details_data[$key2]['title'] = $data_child['title'];
+
+
+                $child_data = [];
+                $j = 0;
+                foreach ($data_child['conditions'] as $key3 => $data_child_condition) {
+                    $child_data[$j]['label'] = $data_child_condition['label'];
+                    $child_data[$j]['operation'] = $data_child_condition['rule'];
+
+                    $child_data[$j]['is_multi'] = $data_child_condition['is_multi'] == true ? 1 : 0;
+                    if ($data_child_condition['is_multi'] == true) {
+                        foreach ($data_child_condition['rule_value_multi'] as $key4 => $val3) {
+                            if ($key4 == 0) {
+                                $child_data[$j]['rule_value'] = $val3['id'];
+                            } else {
+                                $child_data[$j]['rule_value'] .= ',' . $val3['id'];
+                            }
+                        }
+                    } else {
+                        $child_data[$j]['rule_value'] = $data_child_condition['rule_value'];
+                    }
+                    $j++;
+                }
+
+                $details_data[$key2]['conditions'] = $child_data;
+
+                $data_obj[$key]['details'] = $details_data;
+            }
+
+            $i++;
+        }
+
+
+        /** save **/
+        DB::table('mix_customize_section_master')->delete();
+        foreach ($data_obj as $key => $value) {
+            $master_id = DB::table('mix_customize_section_master')->insertGetId([
+                'title' => $value['title'],
+                'subtitle' => $value['subtitle'],
+                'slug' => $value['slug'],
+            ]);
+
+            foreach ($value['details'] as $key2 => $value2) {
+
+                $details_id = DB::table('mix_customize_section_details')->insertGetId([
+                    'title' => $value2['title'],
+                    'master_section_id' => $master_id,
+                    'slug' => $value2['slug'],
+                    'image_url' => $value2['image_url'],
+                ]);
+
+                foreach ($value2['conditions'] as $key3 => $value3) {
+                    DB::table('mix_customize_section_details_child')->insertGetId([
+                        'is_multi' => $value3['is_multi'],
+                        'details_row_id' => $details_id,
+                        'label' => $value3['label'],
+                        'operation' => $value3['operation'],
+                        'rule_value' => $value3['rule_value'],
+                    ]);
+                }
+            }
+
+        }
+
+    }
+
+    public function store2(Request $request)
+    {
+        /*
         DB::transaction(function () use ($request) {
             DB::table('mix_customize_section_master')->delete();
             $data = $request->input('data');
@@ -159,83 +248,181 @@ class MixSectionController extends Controller
         });
 
         //return $details_section['best-of-electronics'];
-
+  */
     }
 
     public function getMixSection()
     {
-        $sql = "SELECT mix_customize_section_master.id, mix_customize_section_master.title,
-        mix_customize_section_master.subtitle, mix_customize_section_master.slug,
-        mix_customize_section_master.is_visible,
-        mix_customize_section_master.admin_url,
-        mix_customize_section_details.master_section_id, 
-        mix_customize_section_details.slug details_slug,
-        mix_customize_section_details.title details_title,
-        mix_customize_section_details_child.details_row_id,
-        mix_customize_section_details_child.rule_operator,
-        mix_customize_section_details_child.rule_value,
-        mix_customize_section_details_child.show_multi_select,
-        mix_customize_section_details_child.label rule_type,
-        CASE 
-            WHEN mix_customize_section_details_child.show_multi_select = 1 THEN
-                rule_value
-            ELSE
-                ''
-        END rule_value_multi,
-		mix_customize_child_multi_value.multi_value, mix_customize_section_details_child.id child_id
+
+        $data = DB::select("SELECT mix_customize_section_master.id, mix_customize_section_master.title, 
+        mix_customize_section_master.subtitle,
+        mix_customize_section_master.slug, mix_customize_section_details.title details_title, 
+        mix_customize_section_details.slug details_slug, mix_customize_section_details.image_url,
+        mix_customize_section_details_child.label, mix_customize_section_details_child.operation,
+        mix_customize_section_details_child.rule_value, mix_customize_section_details_child.is_multi,
+        mix_customize_section_details.id details_id
         FROM mix_customize_section_master
-        LEFT JOIN mix_customize_section_details on 
+        INNER JOIN mix_customize_section_details on 
         mix_customize_section_details.master_section_id = mix_customize_section_master.id
-        LEFT JOIN mix_customize_section_details_child on 
+        INNER JOIN mix_customize_section_details_child on 
         mix_customize_section_details_child.details_row_id = mix_customize_section_details.id
-        LEFT JOIN mix_customize_child_multi_value on mix_customize_child_multi_value.child_id = mix_customize_section_details_child.id
-        ORDER BY mix_customize_section_details.master_section_id, 
-        mix_customize_section_details_child.details_row_id, mix_customize_section_details_child.id";
-        $data = DB::select($sql);
-        $master_detail = [];
+        ORDER by mix_customize_section_master.id, mix_customize_section_details.id");
+
+//        return $data;
+        $id = "";
+        $dtl_id = "";
         $i = -1;
-        $map_column = ['rule_operator', 'rule_value', 'show_multi_select', 'rule_type', 'rule_value_multi'];
-        $map_column2 = ['multi_value'];
-        $in_array_child = [];
-
+        $j = -1;
+        $k = -1;
+        $m_data = [];
         foreach ($data as $key => $value) {
-            $master_detail[$value->slug]['is_visible'] = $value->is_visible;
-            $master_detail[$value->slug]['admin_url'] = $value->admin_url;
-            $master_detail[$value->slug]['slug'] = $value->slug;
-            $master_detail[$value->slug]['title'] = $value->title;
-            $master_detail[$value->slug]['subtitle'] = $value->subtitle;
-            $master_detail[$value->slug]['rows_iterate'][$value->details_slug]['slug'] = $value->details_slug;
-            $master_detail[$value->slug]['rows_iterate'][$value->details_slug]['title'] = $value->details_title;
-            foreach ($value as $in_key => $in_value) {
-                if (!in_array($value->child_id, $in_array_child)) {
-                    $i += 1;
-                    $in_array_child[] = $value->child_id;
-                }
-                if (in_array($in_key, $map_column)) {
-                    $master_detail[$value->slug]['rows_iterate'][$value->details_slug]['conditions'][$i][$in_key] = $in_value;
-                }
-                if ($in_key == "rule_type" && $value->show_multi_select == 1) {
-                    if ($value->$in_key == "Categories") {
-                        $master_detail[$value->slug]['rows_iterate'][$value->details_slug]['conditions'][$i]['data_List'] = $this->GetCategoriesName();
-                    } else {
-                        $master_detail[$value->slug]['rows_iterate'][$value->details_slug]['conditions'][$i]['data_List'] = $this->GetAttributeOptionsByAttributeName($value->$in_key);
-                    }
-                } else if ($in_key == "rule_type" && $value->show_multi_select == 0) {
-                    $master_detail[$value->slug]['rows_iterate'][$value->details_slug]['conditions'][$i]['data_List'] = [];
-                }
+            if ($id != $value->id) {
+                $i += 1;
+                $j = -1;
 
-                if ($value->show_multi_select == 1) {
-                    if (in_array($in_key, $map_column2)) {
-                        $master_detail[$value->slug]['rows_iterate'][$value->details_slug]['conditions'][$i]['multi'][] = $in_value;
+                $id = $value->id;
+                $m_data[$i]['title'] = $value->title;
+                $m_data[$i]['subtitle'] = $value->subtitle;
+                $m_data[$i]['slug'] = $value->slug;
+                $m_data[$i]['is_hide'] = false;
+                $m_data[$i]['icon'] = 'plus';
+            }
+            if ($dtl_id != $value->details_id) {
+                $j += 1;
+                $k = -1;
+                $dtl_id = $value->details_id;
+                $m_data[$i]['details'][$j]['title'] = $value->details_title;
+                $m_data[$i]['details'][$j]['slug'] = $value->details_slug;
+                $m_data[$i]['details'][$j]['image_url'] = $value->image_url;
+                $m_data[$i]['details'][$j]['is_hide'] = false;
+                $m_data[$i]['details'][$j]['icon'] = 'plus';
+
+            }
+
+            /*** condition array load ***/
+            $k += 1;
+            $m_data[$i]['details'][$j]['conditions'][$k]['is_multi'] = ($value->is_multi == 1 ? true : false);
+            $m_data[$i]['details'][$j]['conditions'][$k]['label'] = $value->label;
+            $m_data[$i]['details'][$j]['conditions'][$k]['rule'] = $value->operation;
+            $m_data[$i]['details'][$j]['conditions'][$k]['rule_array'] = $this->attributeRepository
+                ->GetAttributeTypeRules($value->label);
+            if ($value->is_multi == 0)
+                $m_data[$i]['details'][$j]['conditions'][$k]['rule_value'] = $value->rule_value;
+            else
+                $m_data[$i]['details'][$j]['conditions'][$k]['rule_value'] = "";
+
+            if ($value->is_multi == 0) {
+                $m_data[$i]['details'][$j]['conditions'][$k]['options'] = [];
+            } else {
+                if ($value->label == "Categories") {
+                    $link_data = $this->categoryRepository->rawList();
+                    $m_data[$i]['details'][$j]['conditions'][$k]['options'] = $link_data;
+                    $ex_data = explode(',', $value->rule_value);
+                    $d = [];
+                    foreach ($link_data as $k2 => $v) {
+                        if (in_array($v->id, $ex_data)) {
+                            $d[] = $v;
+                        }
+                    }
+                    if ($value->is_multi == 0) {
+                        $m_data[$i]['details'][$j]['conditions'][$k]['rule_value_multi'] = [];
+                    } else {
+                        $m_data[$i]['details'][$j]['conditions'][$k]['rule_value_multi'] = $d;
                     }
                 } else {
-                    $master_detail[$value->slug]['rows_iterate'][$value->details_slug]['conditions'][$i]['multi'] = [];
+                    $link_data = $this->attributeRepository->GetAttributeOptionsByLabel($value->label);
+                    $m_data[$i]['details'][$j]['conditions'][$k]['options'] = $link_data;
+                    $ex_data = explode(',', $value->rule_value);
+                    $d = [];
+                    foreach ($link_data as $k2 => $v) {
+                        if (in_array($v->id, $ex_data)) {
+                            $d[] = $v;
+                        }
+                    }
+                    if ($value->is_multi == 0) {
+                        $m_data[$i]['details'][$j]['conditions'][$k]['rule_value_multi'] = [];
+                    } else {
+                        $m_data[$i]['details'][$j]['conditions'][$k]['rule_value_multi'] = $d;
+                    }
                 }
             }
-//            $master_detail[$value->slug]['rows_iterate'][$value->details_slug]['conditions'][] = $value;
+
         }
 
-        return $master_detail;
+        return $m_data;
+
+        $main_data = [];
+        $i = -1;
+        $j = -1;
+        $id_exist = "";
+        foreach ($data as $key => $value) {
+            if ($id_exist != $value->id) {
+                $i += 1;
+                $j = 0;
+                $id_exist = $value->id;
+                $main_data[$i]['title'] = $value->title;
+                $main_data[$i]['idd'] = 'image_' . $value->id;
+                $main_data[$i]['slug'] = $value->slug;
+                $main_data[$i]['image'] = $value->save_path . $value->image_name;
+                $main_data[$i]['image_name'] = $value->image_name;
+            }
+
+            if ($id_exist == $value->id) {
+                $main_data[$i]['conditions'][$j]['is_multi'] = ($value->is_multi == 1 ? true : false);
+                $main_data[$i]['conditions'][$j]['label'] = $value->label;
+                $main_data[$i]['conditions'][$j]['rule'] = $value->operation;
+                $main_data[$i]['conditions'][$j]['rule_array'] = $this->attributeRepository
+                    ->GetAttributeTypeRules($value->label);
+                if ($value->is_multi == 0)
+                    $main_data[$i]['conditions'][$j]['rule_value'] = $value->rule_value;
+                else
+                    $main_data[$i]['conditions'][$j]['rule_value'] = "";
+
+                if ($value->is_multi == 0) {
+                    $main_data[$i]['conditions'][$j]['options'] = [];
+                } else {
+                    if ($value->label == "Categories") {
+                        $link_data = $this->categoryRepository->rawList();
+                        $main_data[$i]['conditions'][$j]['options'] = $link_data;
+                        $ex_data = explode(',', $value->rule_value);
+                        $d = [];
+                        foreach ($link_data as $k => $v) {
+                            if (in_array($v->id, $ex_data)) {
+                                $d[] = $v;
+                            }
+                        }
+
+                        if ($value->is_multi == 0) {
+                            $main_data[$i]['conditions'][$j]['rule_value_multi'] = [];
+                        } else {
+                            $main_data[$i]['conditions'][$j]['rule_value_multi'] = $d;
+                        }
+
+                    } else {
+                        $link_data = $this->attributeRepository->GetAttributeOptionsByLabel($value->label);
+                        $main_data[$i]['conditions'][$j]['options'] = $link_data;
+                        $ex_data = explode(',', $value->rule_value);
+                        $d = [];
+                        foreach ($link_data as $k => $v) {
+                            if (in_array($v->id, $ex_data)) {
+                                $d[] = $v;
+                            }
+                        }
+
+                        if ($value->is_multi == 0) {
+                            $main_data[$i]['conditions'][$j]['rule_value_multi'] = [];
+                        } else {
+                            $main_data[$i]['conditions'][$j]['rule_value_multi'] = $d;
+                        }
+                    }
+
+                }
+            }
+            $j += 1;
+
+        }
+
+        return $main_data;
     }
 
     public function GetAttributeOptionsByAttributeName($attribute_name)
@@ -351,4 +538,11 @@ class MixSectionController extends Controller
 
         return redirect()->route('admin.cms.index');
     }
+
+    public function GetProductImageByCondition(Request $request)
+    {
+        $conditions = new ConditionalProduct();
+        return  $conditions->GetConditionalProductDirect($request->input('data'));
+    }
+
 }

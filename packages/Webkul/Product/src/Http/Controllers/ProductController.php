@@ -129,12 +129,19 @@ class ProductController extends Controller
         $families = $this->attributeFamilyRepository->all();
 
         $configurableFamily = null;
-
+        $configurable_attributes = [];
         if ($familyId = request()->get('family')) {
             $configurableFamily = $this->attributeFamilyRepository->find($familyId);
+
+            foreach ($configurableFamily->configurable_attributes as $key => $value) {
+                $configurable_attributes[$key]['admin_name'] = $value->admin_name;
+                $configurable_attributes[$key]['code'] = $value->code;
+                $configurable_attributes[$key]['options'] = $value->options;
+                $configurable_attributes[$key]['name'] = '';
+            }
         }
 
-        return view($this->_config['view'], compact('families', 'configurableFamily'));
+        return view($this->_config['view'], compact('families', 'configurableFamily', 'configurable_attributes'));
     }
 
     /**
@@ -190,7 +197,8 @@ class ProductController extends Controller
         $tags = $this->tagRepository->orderBy('id','desc')->get();
         $manufacturers = $this->manufacturerRepository->orderBy('id','desc')->get();
 
-        return view($this->_config['view'], compact('product', 'categories', 'inventorySources','tags','manufacturers'));
+        return view($this->_config['view'], compact('product', 'categories',
+            'inventorySources','tags','manufacturers'));
     }
 
     /**
@@ -202,7 +210,7 @@ class ProductController extends Controller
      */
     public function update(ProductForm $request, $id)
     {
-        $data=request()->all();
+          $data=request()->all();
 //        return json_encode($data);
 
         if (array_key_exists('variants', $data)) {
@@ -216,28 +224,31 @@ class ProductController extends Controller
                 $basePrice = $data['price'];
             }
             if ($basePrice != null) {
-                foreach ($data['customer_group_prices'] as $key => $value) {
-
-                    if ($value['value_type'] != null) {
-                        if ($value['value_type'] == "discount") {
-                            if ($value['raw_value'] != null && floatval($value['raw_value']) > 0 && floatval($value['raw_value']) <= 100) {
-                                $discount = $basePrice * floatval($value['raw_value']) / 100;
-                                $discount = $basePrice - $discount;
-                                $data['customer_group_prices'][$key]['value'] = $discount;
-                            } else {
-                                return back()->with('error', trans('Invalid discount entry'));
-                            }
-                        } else if ($value['value_type'] == "fixed") {
-                            if ($value['raw_value'] != null && floatval($value['raw_value']) > 0 && floatval($value['raw_value']) <= $basePrice) {
-                                $data['customer_group_prices'][$key]['value'] = $value['raw_value'];
-                            } else {
-                                return back()->with('error', trans('Invalid fixed entry'));;
+                if (array_key_exists('customer_group_prices', $data)) {
+                    foreach ($data['customer_group_prices'] as $key => $value) {
+                        if ($value['value_type'] != null) {
+                            if ($value['value_type'] == "discount") {
+                                if ($value['raw_value'] != null && floatval($value['raw_value']) > 0 && floatval($value['raw_value']) <= 100) {
+                                    $discount = $basePrice * floatval($value['raw_value']) / 100;
+                                    $discount = $basePrice - $discount;
+                                    $data['customer_group_prices'][$key]['value'] = $discount;
+                                } else {
+                                    return back()->with('error', trans('Invalid discount entry'));
+                                }
+                            } else if ($value['value_type'] == "fixed") {
+                                if ($value['raw_value'] != null && floatval($value['raw_value']) > 0 && floatval($value['raw_value']) <= $basePrice) {
+                                    $data['customer_group_prices'][$key]['value'] = $value['raw_value'];
+                                } else {
+                                    return back()->with('error', trans('Invalid fixed entry'));;
+                                }
                             }
                         }
                     }
                 }
+
             }
         }
+//        return $data;
 
         $product = $this->productRepository->update($data, $id);
 

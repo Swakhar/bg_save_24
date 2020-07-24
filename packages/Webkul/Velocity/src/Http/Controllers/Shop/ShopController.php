@@ -4,6 +4,8 @@ namespace Webkul\Velocity\Http\Controllers\Shop;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
+use Intervention\Image\Facades\Image;
 use Webkul\Velocity\Http\Shop\Controllers;
 use Webkul\Checkout\Contracts\Cart as CartModel;
 use Cart;
@@ -24,70 +26,74 @@ class ShopController extends Controller
 
     public function HomePageGetMixCategory()
     {
-        $data = \Illuminate\Support\Facades\DB::select("SELECT mix_customize_section_master.id, 
-            mix_customize_section_master.title,
-            mix_customize_section_master.slug, 
-            mix_customize_section_details.title detail_title,
-            mix_customize_section_details.image_url,
-            mix_customize_section_details.slug details_slug,
-            mix_customize_section_details_child.label, 
-            mix_customize_section_details_child.rule_operator,
-            CASE 
-                WHEN mix_customize_section_details_child.show_multi_select = 1 THEN
-                    mix_customize_child_multi_value.multi_value
-                ELSE
-                    mix_customize_section_details_child.rule_value
-            END rule_value, mix_customize_section_details.id details_id,
-            mix_customize_section_details_child.id details_child_id
-            FROM mix_customize_section_master
-            left JOIN mix_customize_section_details on 
-            mix_customize_section_details.master_section_id = mix_customize_section_master.id
-            left join mix_customize_section_details_child on 
-            mix_customize_section_details_child.details_row_id = mix_customize_section_details.id
-            left join mix_customize_child_multi_value on 
-            mix_customize_child_multi_value.child_id = mix_customize_section_details_child.id
-            ORDER BY mix_customize_section_master.id, mix_customize_section_details.id, mix_customize_section_details_child.sort_no");
+       return $this->conditionalProduct->GetMixData();
+    }
 
-        $main_array = [];
-        $i = 0;
+    public function GetSliderDataHome()
+    {
+       $data = DB::select("SELECT * FROM advertisement_master
+        WHERE type = 1");
+       $main_data = [];
+
+       foreach ($data as $key => $value) {
+           $main_data[$key]['id'] = $value->id;
+           $main_data[$key]['image_name'] = $value->image_name;
+           $main_data[$key]['cache_image'] = '/cache/original' . $value->save_path . $value->image_name;
+           $main_data[$key]['save_path'] = $value->save_path;
+           $main_data[$key]['slug'] = $value->slug;
+           $main_data[$key]['type'] = $value->type;
+       }
+       return $main_data;
+
+    }
+
+    public function GetAddPanelFirst()
+    {
+        $data = DB::select("SELECT * FROM advertisement_master
+        WHERE type = 2");
+        $main_data = [];
+
         foreach ($data as $key => $value) {
-            $main_array[$value->id]['title'] = $value->title;
-            $main_array[$value->id]['slug'] = $value->slug;
-
-            $main_array[$value->id]['details'][$value->details_id]['details_title'] = $value->detail_title;
-            $main_array[$value->id]['details'][$value->details_id]['details_slug'] = $value->details_slug;
-            $main_array[$value->id]['details'][$value->details_id]['image_url'] = $value->image_url;
-            $main_array[$value->id]['details'][$value->details_id]['price_range_span'] = "";
-            $main_array[$value->id]['details'][$value->details_id]['category_brand_span'] = [];
-
-            $main_array[$value->id]['details'][$value->details_id]['child'][$value->details_child_id][$value->label][$i]['label'] = $value->label;
-            $main_array[$value->id]['details'][$value->details_id]['child'][$value->details_child_id][$value->label][$i]['rule_operator'] = $value->rule_operator;
-            $main_array[$value->id]['details'][$value->details_id]['child'][$value->details_child_id][$value->label][$i]['rule_value'] = $value->rule_value;
-            $i += 1;
+            $main_data[$key]['id'] = $value->id;
+            $main_data[$key]['image_name'] = $value->image_name;
+            $main_data[$key]['cache_image'] = '/cache/original' . $value->save_path . $value->image_name;
+            $main_data[$key]['save_path'] = $value->save_path;
+            $main_data[$key]['slug'] = $value->slug;
+            $main_data[$key]['type'] = $value->type;
         }
-        $list = ['Categories', 'Attribute Family'];
-//        return $main_array;
-        foreach ($main_array as $key => $value) {
-            if (count($value['details']) > 0) {
-                foreach ($value['details'] as $key2 => $value2) {
-                    if (count($value2['child']) > 0) {
-                        foreach ($value2['child'] as $key3 => $value3) {
-                            foreach ($value3 as $key4 => $value4) {
-                                if ($key4 == "Categories") {
-                                    $main_array[$key]['details'][$key2]['category_brand_span'][] = $this->homePageCustomizeHelper->GetCategoryString($value3, $key2);
-                                } else if ($key4 == "Attribute Family") {
+        return $main_data;
+    }
+    public function GetAddPanelSecond()
+    {
+        $data = DB::select("SELECT * FROM advertisement_master
+        WHERE type = 3");
+        $main_data = [];
 
-                                } else {
-                                    $main_array[$key]['details'][$key2]['category_brand_span'][] = $this->homePageCustomizeHelper->GetAttributeString($value3, $key2);
-                                }
-                            }
-
-                        }
-                    }
-                }
-            }
+        foreach ($data as $key => $value) {
+            $main_data[$key]['id'] = $value->id;
+            $main_data[$key]['image_name'] = $value->image_name;
+            $main_data[$key]['cache_image'] = '/cache/original' . $value->save_path . $value->image_name;
+            $main_data[$key]['save_path'] = $value->save_path;
+            $main_data[$key]['slug'] = $value->slug;
+            $main_data[$key]['type'] = $value->type;
         }
-        return $main_array;
+        return $main_data;
+    }
+    public function GetSliderAddSection()
+    {
+        $data = DB::select("SELECT * FROM advertisement_master
+        WHERE type = 4");
+        $main_data = [];
+
+        foreach ($data as $key => $value) {
+            $main_data[$key]['id'] = $value->id;
+            $main_data[$key]['image_name'] = $value->image_name;
+            $main_data[$key]['cache_image'] = '/cache/original' . $value->save_path . $value->image_name;
+            $main_data[$key]['save_path'] = $value->save_path;
+            $main_data[$key]['slug'] = $value->slug;
+            $main_data[$key]['type'] = $value->type;
+        }
+        return $main_data;
     }
 
     public function CustomizeSectionHomePage()
