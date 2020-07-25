@@ -13,7 +13,7 @@ class CreateTableConfigurableOptionValueTranslation extends Migration
      */
     public function up()
     {
-        Schema::create('table_configurable_option_value_translation', function (Blueprint $table) {
+        Schema::create('configurable_option_value_translation', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('locale');
             $table->string('name');
@@ -31,6 +31,6 @@ class CreateTableConfigurableOptionValueTranslation extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_configurable_option_value_translation');
+        Schema::dropIfExists('configurable_option_value_translation');
     }
 }
