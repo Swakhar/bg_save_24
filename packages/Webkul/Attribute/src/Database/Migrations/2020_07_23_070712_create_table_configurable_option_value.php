@@ -14,7 +14,7 @@ class CreateTableConfigurableOptionValue extends Migration
     public function up()
     {
         Schema::create('configurable_option_value', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('admin_name');
             $table->text('description');
             $table->tinyInteger('published');
