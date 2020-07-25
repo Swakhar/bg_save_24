@@ -154,6 +154,7 @@
                 <div class="control-group">
                     <input style="width: 100px;" type="text" v-validate="'numeric|min:0'"
                            :name="[variantInputName + '[inventories][1]']"
+                           :value="variant_product_qty(variant['inventories'])"
                            class="control"
                     />
                 </div>
@@ -368,6 +369,14 @@
             },
 
             methods: {
+
+                variant_product_qty: function (inventories) {
+                    var qty = 0;
+                    inventories.forEach(function(inventory) {
+                        qty += +inventory.qty;
+                    })
+                    return qty;
+                },
                 removeVariant: function () {
                     this.$emit('onRemoveVariant', this.variant)
                 },
