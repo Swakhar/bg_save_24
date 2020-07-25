@@ -9,24 +9,75 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
     Route::get('/about', 'Webkul\Shop\Http\Controllers\StaticPageController@aboutus')->defaults('_config', [
         'view' => 'shop::about.about_us'
     ])->name('shop.about.about_us');
-    Route::get('/privacy', 'Webkul\Shop\Http\Controllers\StaticPageController@privacy')->defaults('_config', [
-        'view' => 'shop::privacy.privacy'
-    ])->name('shop.privacy.privacy');
-    Route::get('/policy', 'Webkul\Shop\Http\Controllers\StaticPageController@policy')->defaults('_config', [
-        'view' => 'shop::policy.policy'
-    ])->name('shop.policy.policy');
+    Route::get('/contact', 'Webkul\Shop\Http\Controllers\StaticPageController@contact')->defaults('_config', [
+        'view' => 'shop::about.contact'
+    ])->name('shop.about.contact');
+    Route::post('/contact/message', 'Webkul\Shop\Http\Controllers\StaticPageController@message')->defaults('_config', [
+        'redirect' => 'shop.about.contact'
+    ])->name('contact.message');
+    Route::get('/career', 'Webkul\Shop\Http\Controllers\StaticPageController@career')->defaults('_config', [
+        'view' => 'shop::about.career'
+    ])->name('shop.about.career');
+    Route::post('/career/save', 'Webkul\Shop\Http\Controllers\StaticPageController@career_save')->name('shop.about.career.save');
+    Route::get('/feedback', 'Webkul\Shop\Http\Controllers\StaticPageController@feedback')->defaults('_config', [
+        'view' => 'shop::about.feedback'
+    ])->name('shop.about.feedback');
+    Route::get('/blog', 'Webkul\Shop\Http\Controllers\StaticPageController@blog')->defaults('_config', [
+        'view' => 'shop::blog.index'
+    ])->name('shop.about.blog');
+    Route::get('/blog/{id}', 'Webkul\Shop\Http\Controllers\StaticPageController@blog_id')->defaults('_config', [
+        'view' => 'shop::blog.index'
+    ])->name('shop.about.blog_id');
+    Route::post('/blog/date', 'Webkul\Shop\Http\Controllers\StaticPageController@blog_date')->defaults('_config', [
+        'view' => 'shop::blog.index'
+    ])->name('shop.about.blog_date');
+    Route::post('/blog/search', 'Webkul\Shop\Http\Controllers\StaticPageController@blog_search')->defaults('_config', [
+        'view' => 'shop::blog.index'
+    ])->name('shop.about.blog_search');
+    //store front support
     Route::get('/payment', 'Webkul\Shop\Http\Controllers\StaticPageController@payment')->defaults('_config', [
-        'view' => 'shop::methods.payment'
-    ])->name('shop.methods.payment');
+        'view' => 'shop::support.payment'
+    ])->name('shop.support.payment');
     Route::get('/shipping', 'Webkul\Shop\Http\Controllers\StaticPageController@shipping')->defaults('_config', [
-        'view' => 'shop::methods.shipping'
-    ])->name('shop.methods.shipping');
+        'view' => 'shop::support.shipping'
+    ])->name('shop.support.shipping');
+    Route::get('/cancel', 'Webkul\Shop\Http\Controllers\StaticPageController@cancel')->defaults('_config', [
+        'view' => 'shop::support.cancel'
+    ])->name('shop.support.cancel');
     Route::get('/tracking', 'Webkul\Shop\Http\Controllers\StaticPageController@tracking')->defaults('_config', [
-        'view' => 'shop::methods.tracking'
-    ])->name('shop.methods.tracking');
+        'view' => 'shop::support.tracking'
+    ])->name('shop.support.tracking');
+    Route::post('/track', 'Webkul\Shop\Http\Controllers\StaticPageController@track')->defaults('_config', [
+        'view' => 'shop::support.tracking'
+    ])->name('shop.support.track');
     Route::get('/faqs', 'Webkul\Shop\Http\Controllers\StaticPageController@faqs')->defaults('_config', [
-        'view' => 'shop::faqs.faqs'
-    ])->name('shop.faqs.faqs');
+        'view' => 'shop::support.faqs'
+    ])->name('shop.support.faqs');
+    Route::get('/how', 'Webkul\Shop\Http\Controllers\StaticPageController@how')->defaults('_config', [
+        'view' => 'shop::support.how'
+    ])->name('shop.support.how');
+
+    //store front policy
+    Route::get('/aggrement', 'Webkul\Shop\Http\Controllers\StaticPageController@aggrement')->defaults('_config', [
+        'view' => 'shop::policy.aggrement'
+    ])->name('shop.policy.aggrement');
+    Route::get('/privacy', 'Webkul\Shop\Http\Controllers\StaticPageController@privacy')->defaults('_config', [
+        'view' => 'shop::policy.privacy'
+    ])->name('shop.policy.privacy');
+    Route::get('/return', 'Webkul\Shop\Http\Controllers\StaticPageController@return')->defaults('_config', [
+        'view' => 'shop::policy.return'
+    ])->name('shop.policy.return');
+    Route::get('/refund', 'Webkul\Shop\Http\Controllers\StaticPageController@refund')->defaults('_config', [
+        'view' => 'shop::policy.refund'
+    ])->name('shop.policy.refund');
+    Route::get('/cancellation', 'Webkul\Shop\Http\Controllers\StaticPageController@cancellation')->defaults('_config', [
+        'view' => 'shop::policy.cancellation'
+    ])->name('shop.policy.cancellation');
+    Route::get('/terms', 'Webkul\Shop\Http\Controllers\StaticPageController@terms')->defaults('_config', [
+        'view' => 'shop::policy.terms'
+    ])->name('shop.policy.terms');
+    
+
     //subscription
     //subscribe
     Route::get('/subscribe', 'Webkul\Shop\Http\Controllers\SubscriptionController@subscribe')->name('shop.subscribe');

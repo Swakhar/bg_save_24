@@ -235,5 +235,17 @@ return [
         'route'      => 'admin.recommended_sliders.index',
         'sort'       => 2,
         'icon-class' => '',
+    ],[
+        'key'        => 'blog',
+        'name'       => 'admin::app.layouts.blog',
+        'route'      => 'admin.blog.index',
+        'sort'       => 9,
+        'icon-class' => 'catalog-icon',
+    ], [
+        'key'        => 'blog.list',
+        'name'       => 'admin::app.layouts.blogs',
+        'route'      => 'admin.blog.index',
+        'sort'       => 1,
+        'icon-class' => '',
     ]
 ];

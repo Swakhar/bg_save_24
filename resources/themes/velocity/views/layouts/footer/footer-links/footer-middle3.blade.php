@@ -1,30 +1,11 @@
 <div class="col-lg-2 col-md-12 col-sm-12 footer-ct-content">
-    <span class="contact_main">SAFESHOP OTHERS</span>
+    <span class="contact_main">POLICY</span>
     <ul class="footer_middle_content">
-        <li><a href="{{ route('shop.methods.tracking') }}">Track Your Order</a></li>
-        <li><a href="{{ route('shop.faqs.faqs') }}">FAQs</a></li>
+    	<li><a href="{{ route('shop.policy.aggrement') }}">Vendor Aggrement</a></li>
+        <li><a href="{{ route('shop.policy.return') }}">Return Policy</a></li>
+        <li><a href="{{ route('shop.policy.refund') }}">Refund Policy</a></li>
+        <li><a href="{{ route('shop.policy.cancellation') }}">Cancellation</a></li>
+        <li><a href="{{ route('shop.policy.privacy') }}">Privacy Policy</a></li>
+        <li><a href="{{ route('shop.policy.terms') }}">Terms & Conditions</a></li>
     </ul>
-	{{--<div class="row">--}}
-
-        {{--@if ($velocityMetaData)--}}
-            {{--{!! DbView::make($velocityMetaData)->field('footer_middle_content')->render() !!}--}}
-        {{--@else--}}
-            {{--<div class="col-lg-6 col-md-12 col-sm-12 no-padding">--}}
-                {{--<ul type="none">--}}
-                    {{--<li><a href="https://webkul.com/about-us/company-profile/">About Us</a></li>--}}
-                    {{--<li><a href="https://webkul.com/about-us/company-profile/">Customer Service</a></li>--}}
-                    {{--<li><a href="https://webkul.com/about-us/company-profile/">What&rsquo;s New</a></li>--}}
-                    {{--<li><a href="https://webkul.com/about-us/company-profile/">Contact Us </a></li>--}}
-                {{--</ul>--}}
-            {{--</div>--}}
-            {{--<div class="col-lg-6 col-md-12 col-sm-12 no-padding">--}}
-                {{--<ul type="none">--}}
-                    {{--<li><a href="https://webkul.com/about-us/company-profile/"> Order and Returns </a></li>--}}
-                    {{--<li><a href="https://webkul.com/about-us/company-profile/"> Payment Policy </a></li>--}}
-                    {{--<li><a href="https://webkul.com/about-us/company-profile/"> Shipping Policy</a></li>--}}
-                    {{--<li><a href="https://webkul.com/about-us/company-profile/"> Privacy and Cookies Policy </a></li>--}}
-                {{--</ul>--}}
-            {{--</div>--}}
-        {{--@endif--}}
-	{{--</div>--}}
 </div>
