@@ -18,7 +18,7 @@ class CreateTableConfigurableOptionValueTranslation extends Migration
             $table->string('locale');
             $table->string('name');
             $table->bigInteger('configurable_option_id');
-            $table->foreign('configurable_option_id')
+            $table->foreign('configurable_option_id', 'config_option_id_foreign')
                 ->references('id')->on('configurable_option_value')->onDelete('cascade');
             $table->timestamps();
         });
