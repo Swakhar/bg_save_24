@@ -2,6 +2,7 @@
 
 namespace Webkul\Product\Models;
 
+use Badenjki\Seller\Models\Store;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use stdClass;
@@ -18,6 +19,7 @@ class Product extends Model implements ProductContract
         'attribute_family_id',
         'sku',
         'parent_id',
+        'store_id',
     ];
 
     protected $typeInstance;
@@ -377,6 +379,7 @@ class Product extends Model implements ProductContract
         return $this;
     }
 
+<<<<<<< HEAD
     /***
      * return product_name, category_name, product_id, category_id as collection of array
      */
@@ -464,4 +467,9 @@ class Product extends Model implements ProductContract
         ];
     }
 
+=======
+    public function store(){
+        return $this->belongsTo(Store::class);
+    }
+>>>>>>> Add-Vendor-Functionality
 }

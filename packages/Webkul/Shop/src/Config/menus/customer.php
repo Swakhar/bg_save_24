@@ -41,6 +41,16 @@ return [
         'name'  => 'shop::app.layouts.downloadable-products',
         'route' =>'customer.downloadable_products.index',
         'sort'  => 7,
+    ], [
+        'key' => 'store',
+        'name' => 'shop::app.layouts.my-store',
+        'route' => 'customer.profile.index',
+        'sort' => 2
+    ], [
+        'key' => 'store.start',
+        'name' => 'shop::app.layouts.become-seller',
+        'route' => 'customer.store.index',
+        'sort' => 1,
     ]
 ];
 

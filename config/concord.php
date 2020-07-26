@@ -26,5 +26,6 @@ return [
         \Webkul\Velocity\Providers\ModuleServiceProvider::class,
         \Webkul\Industry\Providers\ModuleServiceProvider::class,
 
+        \Badenjki\Seller\Providers\ModuleServiceProvider::class,
     ]
 ];

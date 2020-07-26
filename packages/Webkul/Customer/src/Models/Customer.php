@@ -2,6 +2,7 @@
 
 namespace Webkul\Customer\Models;
 
+use Badenjki\Seller\Models\Store;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -32,8 +33,12 @@ class Customer extends Authenticatable implements CustomerContract, JWTSubject
         'token',
         'notes',
         'status',
+<<<<<<< HEAD
         'fb_id',
         'g_id'
+=======
+        'store_id',
+>>>>>>> Add-Vendor-Functionality
     ];
 
     protected $hidden = ['password', 'api_token', 'remember_token'];
@@ -161,5 +166,31 @@ class Customer extends Authenticatable implements CustomerContract, JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function store(){
+
+        return $this->belongsTo(Store::class);
+
+    }
+
+    public function isSeller(){
+
+        return $this->store_id ? true : false;
+
+    }
+
+    public function createStore($params, $locale = null){
+
+        $params['locale'] = $locale;
+
+        $store = Store::create($params);
+
+        $this->update([
+            'store_id' => $store->id
+        ]);
+
+        return $store;
+
     }
 }

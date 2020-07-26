@@ -221,10 +221,6 @@
                         @yield('full-needed-slider')
                     </div>
 
-                    <div class="">
-                        @yield('full-mix-customize-section')
-                    </div>
-
                 <div class="container-fluid">
 
                     {!! view_render_event('bagisto.shop.layout.full-content.before') !!}

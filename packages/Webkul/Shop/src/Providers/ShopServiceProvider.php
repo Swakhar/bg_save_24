@@ -4,6 +4,7 @@ namespace Webkul\Shop\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Pagination\Paginator;
 use Webkul\Shop\Http\Middleware\Locale;
 use Webkul\Shop\Http\Middleware\Theme;
@@ -58,16 +59,26 @@ class ShopServiceProvider extends ServiceProvider
      */
     protected function composeView()
     {
-        view()->composer('shop::customers.account.partials.sidemenu', function ($view) {
-            $tree = Tree::create();
+        view()->composer('shop::customers.account.partials.customersidemenu', function ($view) {
+            $customerTree  = Tree::create();
 
             foreach (config('menu.customer') as $item) {
-                $tree->add($item, 'menu');
+                $customerTree ->add($item, 'menu');
             }
 
-            $tree->items = core()->sortItems($tree->items);
+            $customerTree ->items = core()->sortItems($customerTree ->items);
 
-            $view->with('menu', $tree);
+            $view->with('menu', $customerTree );
+        });
+
+        view()->composer('shop::customers.account.partials.sellersidemenu', function ($view) {
+            $sellerTree = Tree::create();
+
+            foreach (config('menu.seller') as $item) {
+                $sellerTree->add($item, 'menu');
+            }
+            $sellerTree->items = core()->sortItems($sellerTree->items);
+            $view->with('menu', $sellerTree);
         });
     }
 
@@ -79,7 +90,10 @@ class ShopServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->mergeConfigFrom(
-            dirname(__DIR__) . '/Config/menu.php', 'menu.customer'
+            dirname(__DIR__) . '/Config/menus/customer.php', 'menu.customer'
+        );
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/menus/seller.php', 'menu.seller'
         );
     }
 }
