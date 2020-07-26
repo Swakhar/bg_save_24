@@ -208,10 +208,11 @@ class ProductController extends Controller
             }
 //            return $basePrice;
             if ($basePrice != null) {
-                foreach ($data['customer_group_prices'] as $key => $value) {
+
+               foreach ($data['customer_group_prices'] as $key => $value) {
 
                     if ($value['value_type'] != null) {
-                        if ($value['value_type'] == "discount") {
+                       if ($value['value_type'] == "discount") {
                             if ($value['raw_value'] != null && floatval($value['raw_value']) > 0 && floatval($value['raw_value']) <= 100) {
                                 $discount = $basePrice * floatval($value['raw_value']) / 100;
                                 $discount = $basePrice - $discount;

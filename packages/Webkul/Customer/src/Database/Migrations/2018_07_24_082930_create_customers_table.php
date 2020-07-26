@@ -28,6 +28,8 @@ class CreateCustomersTable extends Migration
             $table->foreign('customer_group_id')->references('id')->on('customer_groups')->onDelete('set null');
             $table->boolean('subscribed_to_news_letter')->default(0);
             $table->rememberToken();
+            $table->string('fb_id')->default(null);
+            $table->string('g_id')->default(null);
             $table->timestamps();
         });
     }

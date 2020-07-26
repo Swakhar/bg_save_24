@@ -5,7 +5,7 @@
 @endsection
 
 @section('content-wrapper')
-    <div class="auth-content form-container">
+    <div class="auth-content form-container" style="width:100%;margin-left: 50px;">
 
         {!! view_render_event('bagisto.shop.customers.login.before') !!}
 
@@ -94,8 +94,28 @@
                             {!! view_render_event('bagisto.shop.customers.login_form_controls.after') !!}
 
                             <input class="theme-btn" type="submit" value="{{ __('shop::app.customer.login-form.button_title') }}">
-
+                            <br>
+                            <hr>
+                            
+                            <div class="row" style="padding: 15px;">
+                                <div class="col-12">
+                                    <center><p>Alternative Login</p></center>
+                                </div>
+                                
+                                <div class="col-md-4 btn btn-lg btn-info" style="
+                                font-size: 15px;">
+                                    <i class="fa fa-facebook-square" style="color:#3b5998"></i>
+                                    <a href="{{ route('redirectFacebook') }}" style="color: white;">Facebbok</a>
+                                </div>
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4 btn btn-lg btn-info" style="
+                                font-size: 15px;">
+                                    <i class="fa fa-google-plus" style="color: #db4a39"></i>
+                                    <a href="{{ route('redirectGoogle') }}" style="color: white;">Google +</a></div>
+                            </div>
+                            
                         </form>
+                        
                     </div>
                 </div>
             </div>
