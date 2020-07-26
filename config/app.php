@@ -270,7 +270,7 @@ return [
         Webkul\Velocity\Providers\VelocityServiceProvider::class,
         Webkul\BookingProduct\Providers\BookingProductServiceProvider::class,
 
-        Webkul\Industry\Providers\IndustryServiceProvider::class
+        Webkul\Industry\Providers\IndustryServiceProvider::class,
 
         //Badenjki packages
         Badenjki\Seller\Providers\SellerServiceProvider::class,

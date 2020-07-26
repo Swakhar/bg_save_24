@@ -33,12 +33,11 @@ class Customer extends Authenticatable implements CustomerContract, JWTSubject
         'token',
         'notes',
         'status',
-<<<<<<< HEAD
+
         'fb_id',
-        'g_id'
-=======
+        'g_id',
+
         'store_id',
->>>>>>> Add-Vendor-Functionality
     ];
 
     protected $hidden = ['password', 'api_token', 'remember_token'];

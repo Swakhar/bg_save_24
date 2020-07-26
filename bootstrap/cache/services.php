@@ -77,6 +77,7 @@
     73 => 'Webkul\\Velocity\\Providers\\VelocityServiceProvider',
     74 => 'Webkul\\BookingProduct\\Providers\\BookingProductServiceProvider',
     75 => 'Webkul\\Industry\\Providers\\IndustryServiceProvider',
+    76 => 'Badenjki\\Seller\\Providers\\SellerServiceProvider',
   ),
   'eager' => 
   array (
@@ -142,6 +143,7 @@
     59 => 'Webkul\\Velocity\\Providers\\VelocityServiceProvider',
     60 => 'Webkul\\BookingProduct\\Providers\\BookingProductServiceProvider',
     61 => 'Webkul\\Industry\\Providers\\IndustryServiceProvider',
+    62 => 'Badenjki\\Seller\\Providers\\SellerServiceProvider',
   ),
   'deferred' => 
   array (

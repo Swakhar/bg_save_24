@@ -379,7 +379,6 @@ class Product extends Model implements ProductContract
         return $this;
     }
 
-<<<<<<< HEAD
     /***
      * return product_name, category_name, product_id, category_id as collection of array
      */
@@ -467,9 +466,7 @@ class Product extends Model implements ProductContract
         ];
     }
 
-=======
     public function store(){
         return $this->belongsTo(Store::class);
     }
->>>>>>> Add-Vendor-Functionality
 }
