@@ -194,4 +194,8 @@ class RegistrationController extends Controller
 
         return redirect()->back();
     }
+    public function vendor()
+    {
+        return view($this->_config['view']);
+    }
 }

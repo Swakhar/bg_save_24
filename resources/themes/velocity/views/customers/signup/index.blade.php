@@ -1,44 +1,30 @@
-@extends('shop::layouts.master')
+@extends('shop::layouts.login_master')
 
 @section('page_title')
     {{ __('shop::app.customer.signup-form.page-title') }}
 @endsection
 
 @section('content-wrapper')
-    <div class="auth-content form-container">
-        <div class="container">
-            <div class="col-lg-10 col-md-12 offset-lg-1">
-                <div class="heading">
-                    <h2 class="fs24 fw6">
-                        {{ __('velocity::app.customer.signup-form.user-registration')}}
-                    </h2>
+    <div class="col-md-12">
+        <h1>{{ __('velocity::app.customer.signup-form.create-new')}}</h1>
+        <hr style="background: #ff1800;height: 2px;width: 60px;">
+        <br>
+    </div>
+    {!! view_render_event('bagisto.shop.customers.signup.before') !!}
 
-                    <a href="{{ route('customer.session.index') }}" class="btn-new-customer">
-                        <button type="button" class="theme-btn light">
-                            {{ __('velocity::app.customer.signup-form.login')}}
-                        </button>
-                    </a>
-                </div>
+        <form class="col-md-12" method="post" action="{{ route('customer.register.create') }}" @submit.prevent="onSubmit">
 
-                <div class="body col-12">
-                    <h3 class="fw6">
-                        {{ __('velocity::app.customer.signup-form.become-user')}}
-                    </h3>
+        {{ csrf_field() }}
 
-                    <p class="fs16">
-                        {{ __('velocity::app.customer.signup-form.form-sginup-text')}}
-                    </p>
+        {!! view_render_event('bagisto.shop.customers.signup_form_controls.before') !!}
+            <div class="col-md-6">
 
-                    {!! view_render_event('bagisto.shop.customers.signup.before') !!}
-
-                    <form
-                        method="post"
-                        action="{{ route('customer.register.create') }}"
-                        @submit.prevent="onSubmit">
-
-                        {{ csrf_field() }}
-
-                        {!! view_render_event('bagisto.shop.customers.signup_form_controls.before') !!}
+                {!! view_render_event('bagisto.shop.customers.login.before') !!}
+                        <div class="card" style="padding-bottom: 200px">
+                            <div class="card-body">
+                                <h2>{{ __('velocity::app.customer.login-form.registered-user')}}</h2>
+                                <hr style="background: #c75e53;height: 2px;width: 60px;">
+                                {!! view_render_event('bagisto.shop.customers.signup_form_controls.before') !!}
 
                         <div class="control-group" :class="[errors.has('first_name') ? 'has-error' : '']">
                             <label for="first_name" class="required label-style">
@@ -80,7 +66,15 @@
 
                         {!! view_render_event('bagisto.shop.customers.signup_form_controls.lastname.after') !!}
 
-                        <div class="control-group" :class="[errors.has('email') ? 'has-error' : '']">
+                        </div>
+                    </div>
+            </div>
+            <div class="col-md-6">
+                    <div class="card" style="height: 400px;">
+                        <div class="card-body">
+                            <h2>{{ __('velocity::app.customer.signup-form.new-user')}}</h2>
+                            <hr style="background: #c75e53;height: 2px;width: 60px;">
+                            <div class="control-group" :class="[errors.has('email') ? 'has-error' : '']">
                             <label for="email" class="required label-style">
                                 {{ __('shop::app.customer.signup-form.email') }}
                             </label>
@@ -136,18 +130,45 @@
                             <span class="control-error" v-if="errors.has('password_confirmation')">
                                 @{{ errors.first('password_confirmation') }}
                             </span>
+                        </div> 
+                        <div class="control-group" :class="[errors.has('phone') ? 'has-error' : '']">
+                            <label for="phone" class="required label-style">
+                                {{ __('shop::app.customer.signup-form.phone') }}
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-style"
+                                name="phone"
+                                v-validate="'required'"
+                                value="{{ old('phone') }}"
+                                data-vv-as="&quot;{{ __('shop::app.customer.signup-form.phone') }}&quot;" />
+
+                            <span class="control-error" v-if="errors.has('phone')">
+                                @{{ errors.first('phone') }}
+                            </span>
                         </div>
-
-                        {!! view_render_event('bagisto.shop.customers.signup_form_controls.after') !!}
-
-                        <button class="theme-btn" type="submit">
-                            {{ __('shop::app.customer.signup-form.title') }}
-                        </button>
-                    </form>
-
-                    {!! view_render_event('bagisto.shop.customers.signup.after') !!}
+                    </div>
                 </div>
+                {!! view_render_event('bagisto.shop.customers.signup_form_controls.after') !!}
             </div>
-        </div>
-    </div>
+            <div class="col-md-12" style="margin-top: 10px">
+                
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-6">
+                        <button class="btn btn-lg btn-info" type="submit">
+                            CREATE AN ACCOUNT
+                        </button></div>
+                        <div class="col-md-5"></div>
+                        <div class="col-md-1" >
+                            <a href="{{ route('customer.session.index') }}" style="color: black; font-size: 15px;">Back</a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </form>
+
+    {!! view_render_event('bagisto.shop.customers.signup.after') !!}
 @endsection
