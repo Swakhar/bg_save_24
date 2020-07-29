@@ -150,12 +150,6 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
             'redirect' => 'customer.session.index',
         ])->name('customer.register.create');
 
-        //registration form for vendor show
-        Route::get('/vendor', 'Webkul\Customer\Http\Controllers\RegistrationController@vendor')->defaults('_config', [
-            'view' => 'shop::vendor.index'
-        ])->name('cendor.register.index');
-
-
         //verify account
         Route::get('/verify-account/{token}', 'Webkul\Customer\Http\Controllers\RegistrationController@verifyAccount')->name('customer.verify');
 
