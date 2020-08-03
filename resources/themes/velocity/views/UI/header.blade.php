@@ -349,7 +349,7 @@
             @mouseover="toggleSidebar('0', $event, 'mouseover')"
             :class="`main-category fs16 unselectable fw6 ${($root.sharedRootCategories.length > 0) ? 'cursor-pointer' : 'cursor-not-allowed'} left`">
 
-            <i class="rango-view-list text-down-4 align-vertical-top fs18">
+            <i class="fa fa-bars" id="{{ \Request::route()->getName() == 'shop.home.index' ? '' : 'except_index_page' }}" >
             </i>
             <span
                 class="pl5"

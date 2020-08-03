@@ -9,7 +9,7 @@
                     <img class="selected_image"
                          @click="clickIMage($event)"
                          :data-path="`${image.path}`"
-                         :src="'/uploads/'+image.path" alt="">
+                         :src="'/cache/medium/'+image.path" alt="">
 
                 </div>
             </div>

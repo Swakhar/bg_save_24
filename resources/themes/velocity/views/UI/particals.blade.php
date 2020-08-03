@@ -50,6 +50,7 @@
 
         @if ($logo = core()->getCurrentChannel()->logo)
             <img class="logo"  src="{{ $relative_path . '/uploads/' . $logo }}" />
+            <span class="logo-slogan"> | Check Buy Save</span>
         @else
             <img class="logo" src="{{ asset('themes/velocity/assets/images/logo-text.png') }}" />
         @endif

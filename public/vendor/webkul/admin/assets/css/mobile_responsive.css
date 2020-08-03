@@ -316,5 +316,5 @@ i.section_expand {
 .multiselect__tags {
     border: 2px solid #C7C7C7 !important;
     min-height: 37px !important;
-    height: 25px !important;
+    height: auto;
 }

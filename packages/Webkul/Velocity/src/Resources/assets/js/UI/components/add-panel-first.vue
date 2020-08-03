@@ -41,6 +41,10 @@
                 axios.get('/get-data-add-panel-first')
                     .then(function (response) {
                         that.slider_data = response.data
+                        if (response.data.length === 0) {
+                            $(".add_sec_one").addClass('hide')
+                        }
+
                         that.isLoading = false
                     })
                     .catch(function (error) {

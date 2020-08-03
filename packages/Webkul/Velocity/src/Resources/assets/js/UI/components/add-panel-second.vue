@@ -39,6 +39,9 @@
                     .then(function (response) {
                         that.slider_data = response.data
                         that.isLoading = false
+                        if (response.data.length === 0) {
+                            $(".add_sec_two").addClass('hide')
+                        }
                     })
                     .catch(function (error) {
                         // handle error

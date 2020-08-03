@@ -42,7 +42,7 @@
                                         <input type="file" @change="on_change_Image($event, slider.idd+'_image')"
                                                accept="image/*" name="images[]" :id="`${slider.idd}`"
                                                multiple="multiple" aria-required="false" aria-invalid="false">
-                                        <img :src="`/uploads/${slider.image}`" class="preview" alt="" :id="`${slider.idd}_image`" />
+                                        <img :src="`/cache/medium/${slider.image}`" class="preview" alt="" :id="`${slider.idd}_image`" />
                                         <label @click="removeImageDiv(index)" class="remove-image">Remove Image</label>
                                     </label>
                                 </div>

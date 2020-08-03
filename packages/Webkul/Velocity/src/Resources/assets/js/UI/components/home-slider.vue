@@ -2,7 +2,7 @@
     <div class="slider_parent">
 
         <div class="carousel-custom">
-            <shimmer-component :shimmerCount="1" v-if="isLoading"></shimmer-component>
+            <shimmer-component-slider :shimmerCount="1" v-if="isLoading"></shimmer-component-slider>
             <carousel v-else  :class="'pagination-hide'"
                        :navigationEnabled="true"
                        :per-page="1"

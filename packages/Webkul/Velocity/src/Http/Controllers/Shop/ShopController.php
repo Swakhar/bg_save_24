@@ -224,6 +224,29 @@ class ShopController extends Controller
         ];
     }
 
+    public function fetchCategoriesForSidebar()
+    {
+       $data = DB::select("SELECT categories.id, category_translations.name, 
+        CAST(COALESCE(categories.parent_id,0) as int) parent_id,
+        category_translations.url_path, category_translations.slug, categories.category_icon_path
+        FROM categories
+        INNER JOIN category_translations on category_translations.category_id = categories.id
+        WHERE category_translations.locale = 'en' AND status = 1
+        ORDER BY categories.parent_id, categories.position");
+        $main_data = [];
+       foreach ($data as $key => $value) {
+           $main_data[$key]['children'] = [];
+           $main_data[$key]['id'] = $value->id;
+           $main_data[$key]['name'] = $value->name;
+           $main_data[$key]['parent_id'] = $value->parent_id;
+           $main_data[$key]['url_path'] = $value->url_path;
+           $main_data[$key]['slug'] = $value->slug;
+           $main_data[$key]['category_icon_path'] = $value->category_icon_path;
+       }
+       return $main_data;
+
+    }
+
     /**
      * @param  string  $slug
      * @return array

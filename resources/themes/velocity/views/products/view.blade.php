@@ -71,230 +71,101 @@
 @endpush
 
 @section('full-content-wrapper')
-    {!! view_render_event('bagisto.shop.products.view.before', ['product' => $product]) !!}
+<?php
+        // /cache/medium/rating/rating_full.png
+        $rating_image = [];
+ for ($i = 1; $i <= $avgStarRating; $i++) {
+     $rating_image[] = "/cache/medium/rating/rating_full.png";
+ }
+ for ($i = $avgStarRating+1; $i <= 5; $i++) {
+     $rating_image[] = "/cache/medium/rating/rating_0.png";
+ }
+?>
     <div class="row no-margin">
         <section class="col-12 product-detail">
-            <div class="layouter">
-                <product-view>
-                    <div class="form-container">
-                        @csrf()
+            <product-view :avg_star_rating="{{ $avgStarRating }}"
+                          :product_images="{{ json_encode($productImages, true) }}"
+                          :rating_image="{{ json_encode($rating_image, true) }}"
+                          :total="{{ $total }}"
+                    :product_name="'{{ $product->name }}'">
 
-                        <input type="hidden" name="product_id" value="{{ $product->product_id }}">
+            </product-view>
 
-                        {{-- product-gallery --}}
-                        <div class="left col-lg-5">
-                            @include ('shop::products.view.gallery')
+            <div style="width: 100%;display: flex;">
+                <div class="product_view_more_information">
+                    <div class="more_information_header_css">
+                        <span onclick="nab_switch('p_f')" class="more_information_header active" id="p_f">Product Features</span>
+                        <span onclick="nab_switch('m_i')" class="more_information_header" id="m_i">More Information</span>
+                        <span onclick="nab_switch('p_rev')" class="more_information_header" id="p_rev">Reviews</span>
+                    </div>
+                    <div class="more_information_body">
+                        <div :data-fillup="'p_f'" class="more_body active p_f" >
+                            {!! $product->short_description !!}
+                        </div>
+                        <div :data-fillup="'m_i'" class="more_body hide m_i">
+                            <table class="product_details_table">
+                                <tr>
+                                    <td width="50%">SKU</td>
+                                    <td width="50%">545445</td>
+                                </tr>
+                                <tr>
+                                    <td width="50%">Brand</td>
+                                    <td width="50%">545445</td>
+                                </tr>
+                                <tr>
+                                    <td width="50%">Unit Of Measurement</td>
+                                    <td width="50%">545445</td>
+                                </tr>
+                            </table>
                         </div>
 
-                        {{-- right-section --}}
-                        <div class="right col-lg-7">
-                            {{-- product-info-section --}}
-                            <div class="row info">
-                                <h2 class="col-lg-12">{{ $product->name }}</h2>
-
-                                @if ($total)
-                                    <div class="reviews col-lg-12">
-                                        <star-ratings
-                                            push-class="mr5"
-                                            :ratings="{{ $avgStarRating }}"
-                                        ></star-ratings>
-
-                                        <div class="reviews">
-                                                <span>
-                                                    {{ __('shop::app.reviews.ratingreviews', [
-                                                        'rating' => $avgRatings,
-                                                        'review' => $total])
-                                                    }}
-                                                </span>
-                                        </div>
-                                    </div>
-                                @endif
-
-                                @include ('shop::products.view.stock', ['product' => $product])
-
-                                <div class="col-12 price">
-                                    @include ('shop::products.price', ['product' => $product])
+                        <div :data-fillup="'p_rev'" class="more_body hide p_rev">
+                            Write your own review
+                            You are reviewing Atta 2kg
+                            <div>
+                                <div class="left_review">
+                                    <span>Your rating quality</span>
                                 </div>
-
-                                <div class="product-actions">
-                                    @include ('shop::products.add-to-cart', [
-                                        'form' => false,
-                                        'product' => $product,
-                                        'showCompare' => true,
-                                        'showCartIcon' => false,
-                                    ])
+                                <div class="right_review">
+                                    <div class="block_seperate">
+                                        <span class="label3">Nickname</span>
+                                        <input class="ct" type="text" placeholder="Nickname">
+                                    </div>
+                                    <div class="block_seperate">
+                                        <span class="label3">Summary</span>
+                                        <input class="ct" type="text" placeholder="Summary">
+                                    </div>
+                                    <div class="block_seperate">
+                                        <span class="label3">Review</span>
+                                        <textarea class="ct" name="" id="" cols="30" placeholder="Review" rows="3"></textarea>
+                                    </div>
+                                    <div class="block_seperate">
+                                        <button class="btn2 btn-cart">Submit Review</button>
+                                    </div>
                                 </div>
                             </div>
-
-                            {!! view_render_event('bagisto.shop.products.view.short_description.before', ['product' => $product]) !!}
-
-                            @if ($product->short_description)
-                                <div class="description">
-                                    <h3 class="col-lg-12">{{ __('velocity::app.products.short-description') }}</h3>
-
-                                    {!! $product->short_description !!}
-                                </div>
-                            @endif
-
-                            {!! view_render_event('bagisto.shop.products.view.short_description.after', ['product' => $product]) !!}
-
-
-                            {!! view_render_event('bagisto.shop.products.view.quantity.before', ['product' => $product]) !!}
-
-                            @if ($product->getTypeInstance()->showQuantityBox())
-                                <div>
-                                    <quantity-changer></quantity-changer>
-                                </div>
-                            @else
-                                <input type="hidden" name="quantity" value="1">
-                            @endif
-
-                            {!! view_render_event('bagisto.shop.products.view.quantity.after', ['product' => $product]) !!}
-
-                            @include ('shop::products.view.configurable-options')
-
-                            @include ('shop::products.view.downloadable')
-
-                            @include ('shop::products.view.grouped-products')
-
-                            @include ('shop::products.view.bundle-options')
-
-                            @include ('shop::products.view.attributes', [
-                                'active' => true
-                            ])
-
-                            {{-- product long description --}}
-                            @include ('shop::products.view.description')
-
-                            {{-- reviews count --}}
-                            @include ('shop::products.view.reviews', ['accordian' => true])
                         </div>
+
                     </div>
-                </product-view>
+                </div>
             </div>
+
         </section>
-
-        <div class="store-meta-images col-3">
-            @if(
-                isset($velocityMetaData['product_view_images'])
-                && $velocityMetaData['product_view_images']
-            )
-                @foreach (json_decode($velocityMetaData['product_view_images'], true) as $image)
-                    @if ($image && $image !== '')
-                        <img src="{{ url()->to('/') }}/storage/{{ $image }}" />
-                    @endif
-                @endforeach
-            @endif
-        </div>
-
-        <div class="related-products">
-            @include('shop::products.view.related-products')
-            @include('shop::products.view.up-sells')
-        </div>
-
-
     </div>
-    {!! view_render_event('bagisto.shop.products.view.after', ['product' => $product]) !!}
 @endsection
 
 @push('scripts')
-    <script type='text/javascript' src='https://unpkg.com/spritespin@4.1.0/release/spritespin.js'></script>
-
-    <script type="text/x-template" id="product-view-template">
-        <form
-            method="POST"
-            id="product-form"
-            @click="onSubmit($event)"
-            action="{{ route('cart.add', $product->product_id) }}">
-
-            <input type="hidden" name="is_buy_now" v-model="is_buy_now">
-
-            <slot v-if="slot"></slot>
-
-            <div v-else>
-                <div class="spritespin"></div>
-            </div>
-
-        </form>
-    </script>
-
-    <script>
-        Vue.component('product-view', {
-            inject: ['$validator'],
-            template: '#product-view-template',
-            data: function () {
-                return {
-                    slot: true,
-                    is_buy_now: 0,
-                }
-            },
-            mounted: function () {
-                let currentProductId = '{{ $product->url_key }}';
-                let existingViewed = window.localStorage.getItem('recentlyViewed');
-                if (! existingViewed) {
-                    existingViewed = [];
-                } else {
-                    existingViewed = JSON.parse(existingViewed);
-                }
-                if (existingViewed.indexOf(currentProductId) == -1) {
-                    existingViewed.push(currentProductId);
-                    if (existingViewed.length > 3)
-                        existingViewed = existingViewed.slice(Math.max(existingViewed.length - 4, 1));
-                    window.localStorage.setItem('recentlyViewed', JSON.stringify(existingViewed));
-                } else {
-                    var uniqueNames = [];
-                    $.each(existingViewed, function(i, el){
-                        if ($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
-                    });
-                    uniqueNames.push(currentProductId);
-                    uniqueNames.splice(uniqueNames.indexOf(currentProductId), 1);
-                    window.localStorage.setItem('recentlyViewed', JSON.stringify(uniqueNames));
-                }
-            },
-            methods: {
-                onSubmit: function(event) {
-                    if (event.target.getAttribute('type') != 'submit')
-                        return;
-                    event.preventDefault();
-                    this.$validator.validateAll().then(result => {
-                        if (result) {
-                            this.is_buy_now = event.target.classList.contains('buynow') ? 1 : 0;
-                            setTimeout(function() {
-                                document.getElementById('product-form').submit();
-                            }, 0);
-                        }
-                    });
-                },
-            }
+<script>
+    function nab_switch (cond) {
+        $('.more_body').each(function(i, obj) {
+            $(this).addClass('hide').removeClass('active')
         });
-        window.onload = function() {
-            var thumbList = document.getElementsByClassName('thumb-list')[0];
-            var thumbFrame = document.getElementsByClassName('thumb-frame');
-            var productHeroImage = document.getElementsByClassName('product-hero-image')[0];
-            if (thumbList && productHeroImage) {
-                for (let i=0; i < thumbFrame.length ; i++) {
-                    thumbFrame[i].style.height = (productHeroImage.offsetHeight/4) + "px";
-                    thumbFrame[i].style.width = (productHeroImage.offsetHeight/4)+ "px";
-                }
-                if (screen.width > 720) {
-                    thumbList.style.width = (productHeroImage.offsetHeight/4) + "px";
-                    thumbList.style.minWidth = (productHeroImage.offsetHeight/4) + "px";
-                    thumbList.style.height = productHeroImage.offsetHeight + "px";
-                }
-            }
-            window.onresize = function() {
-                if (thumbList && productHeroImage) {
-                    for(let i=0; i < thumbFrame.length; i++) {
-                        thumbFrame[i].style.height = (productHeroImage.offsetHeight/4) + "px";
-                        thumbFrame[i].style.width = (productHeroImage.offsetHeight/4)+ "px";
-                    }
-                    if (screen.width > 720) {
-                        thumbList.style.width = (productHeroImage.offsetHeight/4) + "px";
-                        thumbList.style.minWidth = (productHeroImage.offsetHeight/4) + "px";
-                        thumbList.style.height = productHeroImage.offsetHeight + "px";
-                    }
-                }
-            }
-        };
-    </script>
+        $('.more_information_header').each(function(i, obj) {
+            $(this).removeClass('active')
+        });
+        $("."+cond).removeClass('hide').addClass('active')
+        $("#"+cond).addClass('active')
+        console.log(cond)
+    }
+</script>
 @endpush

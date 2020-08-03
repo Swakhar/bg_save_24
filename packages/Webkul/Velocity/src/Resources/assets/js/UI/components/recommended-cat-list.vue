@@ -11,7 +11,15 @@
                 <ul >
                     <li @click="clickLi(index)"
                             v-for="(cat, index) in category_list_recommended" data-id="cat_recom"
-                        :class="`click_to_switch_slider ${index == active_index ? 'active': ''}`">{{ cat.category_name }}</li>
+                        :class="`click_to_switch_slider ${index == active_index ? 'active': ''}`">
+                        <span class="recommend_div_parent">
+                            <span class="img_span">
+                                <img class="recommend_img"
+                                     :src="`/cache/original/${cat.category_icon_path}`" alt="" />
+                            </span>
+                            <span class="recommend_cat_name">{{ cat.category_name }}</span>
+                        </span>
+                    </li>
                 </ul>
             </section>
         </div>

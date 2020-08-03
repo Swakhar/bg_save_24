@@ -73,12 +73,14 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
         Route::get('/recommended-slider', function () {
             $formattedProducts = [];
             $products = \Webkul\Product\Models\ProductFlat::select(DB::raw('product_flat.*, t1.name slider_name, 
-            category_translations.name category_name, t1.id slider_id, home_sliders.id home_slider_id'))
+            category_translations.name category_name, t1.id slider_id, home_sliders.id home_slider_id, 
+            categories.category_icon_path'))
                 ->join('slider_name_master as t1', function($join) {
                     $join->where('t1.slider_type', '=', 1);
                 })
                 ->join('home_sliders', 'home_sliders.slider_name_master_id', '=', 't1.id')
                 ->join('category_translations', 'category_translations.category_id', '=', 'home_sliders.category_id')
+                ->join('categories', 'categories.id', '=', 'category_translations.category_id')
                 ->join('home_slider_products', function($join) {
                     $join->on('home_slider_products.home_slider_id', '=', 'home_sliders.id');
                     $join->on('home_slider_products.product_id', '=', 'product_flat.product_id');
@@ -92,6 +94,7 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
                 $array['category_name'] = $product->category_name;
                 $array['slider_id'] = $product->slider_id;
                 $array['home_slider_id'] = $product->home_slider_id;
+                $array['category_icon_path'] = $product->category_icon_path;
                 array_push($formattedProducts, $array);
             }
             $slider = [];
@@ -101,6 +104,7 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
                 $slider[$value['home_slider_id']]['category_name'] = $value['category_name'];
                 $slider[$value['home_slider_id']]['slider_name'] = $value['slider_name'];
                 $slider[$value['home_slider_id']]['slider_id'] = $value['slider_id'];
+                $slider[$value['home_slider_id']]['category_icon_path'] = $value['category_icon_path'];
                 $slider[$value['home_slider_id']]['products'][] = $value;
             }
             return $slider;
@@ -117,6 +121,9 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
 
         Route::get('/categories', 'ShopController@fetchCategories')
         ->name('velocity.categoriest');
+
+        Route::get('/categories-front-data', 'ShopController@fetchCategoriesForSidebar')
+        ->name('categories-front-data');
 
         Route::get('/category-details', 'ShopController@categoryDetails')
             ->name('velocity.category.details');
