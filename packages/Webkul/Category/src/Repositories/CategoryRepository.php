@@ -50,6 +50,13 @@ class CategoryRepository extends Repository
 
         if (isset($data['attributes'])) {
             $category->filterableAttributes()->sync($data['attributes']);
+            
+            
+        }
+        if (isset($data['industries'])) {
+            $category->Industries()->sync($data['industries']);
+            
+            
         }
 
         Event::dispatch('catalog.category.create.after', $category);
@@ -176,6 +183,9 @@ class CategoryRepository extends Repository
 
         if (isset($data['attributes'])) {
             $category->filterableAttributes()->sync($data['attributes']);
+        }
+        if (isset($data['industries'])) {
+            $category->Industries()->sync($data['industries']);
         }
 
         Event::dispatch('catalog.category.update.after', $id);

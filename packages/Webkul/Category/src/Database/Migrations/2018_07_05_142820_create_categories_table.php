@@ -19,6 +19,7 @@ class CreateCategoriesTable extends Migration
             $table->integer('position')->default(0);
             $table->string('image')->nullable();
             $table->boolean('status')->default(0);
+            $table->bigInteger('industry_id')->nullable();
             NestedSet::columns($table);
             $table->timestamps();
         });

@@ -5,6 +5,7 @@ namespace Webkul\Category\Http\Controllers;
 use Illuminate\Support\Facades\Event;
 use Webkul\Category\Repositories\CategoryRepository;
 use Webkul\Attribute\Repositories\AttributeRepository;
+use Webkul\Industry\Repositories\IndustryRepository;
 
 class CategoryController extends Controller
 {
@@ -28,6 +29,7 @@ class CategoryController extends Controller
      * @var \Webkul\Attribute\Repositories\AttributeRepository
      */
     protected $attributeRepository;
+    protected $industryRepository;
 
     /**
      * Create a new controller instance.
@@ -38,12 +40,14 @@ class CategoryController extends Controller
      */
     public function __construct(
         CategoryRepository $categoryRepository,
-        AttributeRepository $attributeRepository
+        AttributeRepository $attributeRepository,
+        IndustryRepository $industryRepository
     )
     {
         $this->categoryRepository = $categoryRepository;
 
         $this->attributeRepository = $attributeRepository;
+        $this->industryRepository = $industryRepository;
 
         $this->_config = request('_config');
     }
@@ -68,8 +72,9 @@ class CategoryController extends Controller
         $categories = $this->categoryRepository->getCategoryTree(null, ['id']);
 
         $attributes = $this->attributeRepository->findWhere(['is_filterable' =>  1]);
+        $industries = $this->industryRepository->orderBy('id','desc')->get();
 
-        return view($this->_config['view'], compact('categories', 'attributes'));
+        return view($this->_config['view'], compact('categories', 'attributes','industries'));
     }
 
     /**
@@ -106,8 +111,9 @@ class CategoryController extends Controller
         $categories = $this->categoryRepository->getCategoryTreeWithoutDescendant($id);
 
         $attributes = $this->attributeRepository->findWhere(['is_filterable' =>  1]);
+        $industries = $this->industryRepository->orderBy('id','desc')->get();
 
-        return view($this->_config['view'], compact('category', 'categories', 'attributes'));
+        return view($this->_config['view'], compact('category', 'categories', 'attributes','industries'));
     }
 
     /**
