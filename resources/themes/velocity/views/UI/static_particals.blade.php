@@ -44,14 +44,14 @@
 @include('velocity::UI.header')
 
 <script type="text/x-template" id="logo-template">
-    <a
+    <a style="margin-left:20px"
         :class="`left ${addClass}`"
         href="{{ route('shop.home.index') }}">
 
         @if ($logo = core()->getCurrentChannel()->logo)
             <img class="logo"  src="{{ $relative_path . '/uploads/' . $logo }}" />
         @else
-            <img class="logo" src="{{ asset('themes/velocity/assets/images/logo-text.png') }}" />
+            <img class="logo" src="{{ asset('themes/velocity/assets/images/static/logo_slogan.png') }}" />
         @endif
         <i id="top_ham_bargur" class="hide rango-view-list text-down-4 align-vertical-top fs18 sidebar_hide"></i>
     </a>
@@ -59,11 +59,8 @@
 
 <script type="text/x-template" id="searchbar-template">
     <div class="row no-margin right searchbar">
-        <div class="col-lg-6 col-md-12 no-padding input-group">
-            
-        </div>
-
-        <div class="col-6">
+        
+        <div class="col-12">
             {!! view_render_event('bagisto.shop.layout.header.cart-item.before') !!}
                 @include('shop::checkout.cart.mini-cart')
             {!! view_render_event('bagisto.shop.layout.header.cart-item.after') !!}

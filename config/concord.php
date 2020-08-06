@@ -28,6 +28,7 @@ return [
         \Webkul\Manufacturer\Providers\ModuleServiceProvider::class,
         \Webkul\Tag\Providers\ModuleServiceProvider::class,
         \Badenjki\Seller\Providers\ModuleServiceProvider::class,
+        \Webkul\Blog\Providers\ModuleServiceProvider::class,
 
     ]
 ];

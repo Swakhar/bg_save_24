@@ -476,7 +476,32 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => 'admin.cart-rules.delete',
         'sort'  => 3,
-    ],
+    ],[
+        'key'        => 'blog',
+        'name'       => 'admin::app.acl.blog',
+        'route'      => 'admin.blog.index',
+        'sort'       => 9,
+    ], [
+        'key'        => 'blog.list',
+        'name'       => 'admin::app.acl.blogs',
+        'route'      => 'admin.blog.index',
+        'sort'       => 1,
+    ], [
+        'key'   => 'blog.list.create',
+        'name'  => 'admin::app.acl.create',
+        'route' => 'admin.blog.create',
+        'sort'  => 1,
+    ], [
+        'key'   => 'blog.list.edit',
+        'name'  => 'admin::app.acl.edit',
+        'route' => 'admin.blog.edit',
+        'sort'  => 2,
+    ], [
+        'key'   => 'blog.list.delete',
+        'name'  => 'admin::app.acl.delete',
+        'route' => 'admin.blog.delete',
+        'sort'  => 3,
+    ]
 ];
 
 ?>

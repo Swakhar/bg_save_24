@@ -30,6 +30,7 @@
             <link rel="icon" sizes="16x16" href="{{ $favicon }}" />
         @else
             <link rel="icon" sizes="16x16" href="{{ asset($relative_path . '/themes/velocity/assets/images/static/v-icon.png') }}" />
+            <link rel="icon" sizes="16x16" href="{{ asset('/themes/velocity/assets/images/static/logo_slogan.png') }}" />
         @endif
 
 
@@ -39,6 +40,8 @@
             src="{{ asset($relative_path . 'themes/velocity/assets/js/jquery.min.js') }}">
         </script>
 
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script
             type="text/javascript"
             baseUrl="{{ url()->to('/') }}"
@@ -48,6 +51,10 @@
         <script
             type="text/javascript"
             src="{{ asset($relative_path . 'themes/velocity/assets/js/jquery.ez-plus.js') }}">
+        </script>
+        <script
+            type="text/javascript"
+            src="{{ asset('themes/velocity/assets/js/about.js') }}">
         </script>
 
         @yield('head')
@@ -183,6 +190,46 @@
 
             // landing_top_to_bottom
             $(document).ready(function () {
+                var acc = document.getElementsByClassName("accordion");
+                var i;
+
+                for (i = 0; i < acc.length; i++) {
+                  acc[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var panel = this.nextElementSibling;
+                    if (panel.style.display === "block") {
+                      panel.style.display = "none";
+                    } else {
+                      panel.style.display = "block";
+                    }
+                  });
+                }
+                $('#myCarousel').carousel({
+                    interval: 1000
+                })
+                $('#myCarousel2').carousel({
+                    interval: 1000
+                })
+                $('#myCarousel3').carousel({
+                    interval: 1000
+                })
+                $('.carousel .carousel-item').each(function() {
+                    var minPerSlide = 4;
+                    var next = $(this).next();
+                    if (!next.length) {
+                        next = $(this).siblings(':first');
+                    }
+                    next.children(':first-child').clone().appendTo($(this));
+
+                    for (var i = 0; i < minPerSlide; i++) {
+                        next = next.next();
+                        if (!next.length) {
+                            next = $(this).siblings(':first');
+                        }
+
+                        next.children(':first-child').clone().appendTo($(this));
+                    }
+                });
                 var cross_modal = $("span.cross");
                 var modal = $(".modal_pop_up");
                 cross_modal.on("click", function () {

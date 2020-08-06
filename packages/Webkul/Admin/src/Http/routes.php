@@ -251,6 +251,28 @@ Route::group(['middleware' => ['web']], function () {
                     'view' => 'admin::sales.refunds.view',
                 ])->name('admin.sales.refunds.view');
             });
+            Route::prefix('blog')->group(function () {
+                Route::get('/list', 'Webkul\Blog\Http\Controllers\BlogController@index')->defaults('_config', [
+                    'view' => 'admin::blog.index',
+                ])->name('admin.blog.index');
+                Route::get('/list/create', 'Webkul\Blog\Http\Controllers\BlogController@create')->defaults('_config', [
+                    'view' => 'admin::blog.create',
+                ])->name('admin.blog.create');
+
+                Route::post('/list/create', 'Webkul\Blog\Http\Controllers\BlogController@store')->defaults('_config', [
+                    'redirect' => 'admin.blog.index',
+                ])->name('admin.blog.store');
+
+                Route::get('/list/edit/{id}', 'Webkul\Blog\Http\Controllers\BlogController@edit')->defaults('_config', [
+                    'view' => 'admin::blog.edit',
+                ])->name('admin.blog.edit');
+
+                Route::put('/list/edit/{id}', 'Webkul\Blog\Http\Controllers\BlogController@update')->defaults('_config', [
+                    'redirect' => 'admin.blog.index',
+                ])->name('admin.blog.update');
+
+                Route::post('/list/delete/{id}', 'Webkul\Blog\Http\Controllers\BlogController@destroy')->name('admin.blog.delete');
+            });
 
             // Marketplace Routes
 

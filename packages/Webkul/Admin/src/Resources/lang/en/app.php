@@ -22,6 +22,7 @@ return [
     'action' => 'Action',
     'label' => 'Label',
     'name' => 'Name',
+    'headline' => 'Headline',
     'title' => 'Title',
     'code' => 'Code',
     'type' => 'Type',
@@ -80,7 +81,9 @@ return [
         'tax-rates' => 'Tax Rates',
         'promotions' => 'Promotions',
         'discount' => 'Discount',
-        'cms' => 'CMS'
+        'cms' => 'CMS',
+        'blog'=>'Blog',
+        'blogs'=>'Blogs List'
     ],
 
     'acl' => [
@@ -155,6 +158,7 @@ return [
         'code' => 'Code',
         'admin-name' => 'Name',
         'name' => 'Name',
+        'created' => 'Created',
         'copy' => 'Copy',
         'direction' => 'Direction',
         'fullname' => 'Full Name',
@@ -1115,7 +1119,18 @@ return [
             'title' => 'Development',
         ]
     ],
-
+    'blog' => [
+        'title' => 'Blog',
+        'add-title' => 'Add Blog',
+        'edit-title' => 'Edit Blog',
+        'save-btn-title' => 'Save Blog',
+        'general' => 'General',
+        'name' => 'Name',
+        'headline' => 'Headline',
+        'description' => 'Description',
+        'video' => 'Youtube Video Link',
+        'image' => 'Image',
+    ],
     'customers' => [
         'groups' =>[
             'add-title' => 'Add Group',
@@ -1491,7 +1506,7 @@ return [
     ],
 
     'footer' => [
-        'copy-right' => 'Powered by <a href="https://bagisto.com/" target="_blank">Bagisto</a>, A Community Project by <a href="https://webkul.com/" target="_blank">Webkul</a>',
+        'copy-right' => '&copy;2020 <a href="#">SafeShop</a>,Limited. All rights reserved.',
     ],
 
     'admin' => [

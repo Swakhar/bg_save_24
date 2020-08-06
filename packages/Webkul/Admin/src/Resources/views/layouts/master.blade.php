@@ -96,6 +96,11 @@
                 {!! view_render_event('bagisto.admin.layout.content.after') !!}
 
             </div>
+            {!! view_render_event('bagisto.admin.layout.nav-left.before') !!}
+
+            @include ('admin::layouts.nav-left')
+
+            {!! view_render_event('bagisto.admin.layout.nav-left.after') !!}
 
         </div>
 

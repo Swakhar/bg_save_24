@@ -35,7 +35,9 @@
         "laravel/tinker": "^1.0",
         "maatwebsite/excel": "3.1.18",
         "prettus/l5-repository": "^2.6",
-        "tymon/jwt-auth": "^1.0.0"
+        "tymon/jwt-auth": "^1.0.0",
+        "barryvdh/laravel-debugbar": "^3.1",
+        "fzaninotto/faker": "^1.4"
     },
 
     "require-dev": {
@@ -110,6 +112,8 @@
         "Webkul\\Manufacturer\\":"packages/Webkul/Manufacturer/src",
         "Webkul\\Tag\\":"packages/Webkul/Tag/src",
         "Badenjki\\Seller\\": "packages/Badenjki/Seller/src"
+        "Webkul\\Tag\\":"packages/Webkul/Tag/src",
+        "Webkul\\Blog\\":"packages/Webkul/Blog/src"
       }
     },
 

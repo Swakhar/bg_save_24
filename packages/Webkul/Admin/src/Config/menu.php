@@ -38,28 +38,10 @@ return [
         'sort'       => 4,
         'icon-class' => '',
     ], [
-        'key' => 'marketplace',
-        'name' => 'admin::app.layouts.marketplace',
-        'route' => 'admin.marketplace.stores.index',
-        'sort' => 3,
-        'icon-class' => 'marketplace-icon'
-    ], [
-        'key' => 'marketplace.sellers',
-        'name' => 'admin::app.layouts.stores',
-        'route' => 'admin.marketplace.stores.index',
-        'sort' => 1,
-        'icon-class' => ''
-    ], [
-        'key' => 'marketplace.categories',
-        'name' => 'admin::app.layouts.store-categories',
-        'route' => 'admin.marketplace.categories.index',
-        'sort' => 2,
-        'icon-class' => ''
-    ], [
         'key'        => 'catalog',
         'name'       => 'admin::app.layouts.catalog',
         'route'      => 'admin.catalog.products.index',
-        'sort'       => 4,
+        'sort'       => 3,
         'icon-class' => 'catalog-icon',
     ], [
         'key'        => 'catalog.products',
@@ -93,7 +75,7 @@ return [
         'icon-class' => '',
     ], [
         'key'        => 'catalog.manufacturers',
-        'name'       => 'Configurable Option Value',
+        'name'       => 'Manufacturers',
         'route'      => 'admin.catalog.manufacturers.index',
         'sort'       => 6,
         'icon-class' => '',
@@ -107,7 +89,7 @@ return [
         'key'        => 'customers',
         'name'       => 'admin::app.layouts.customers',
         'route'      => 'admin.customer.index',
-        'sort'       => 5,
+        'sort'       => 4,
         'icon-class' => 'customer-icon',
     ], [
         'key'        => 'customers.customers',
@@ -221,7 +203,7 @@ return [
         'key'        => 'promotions',
         'name'       => 'admin::app.layouts.promotions',
         'route'      => 'admin.catalog-rules.index',
-        'sort'       => 8,
+        'sort'       => 5,
         'icon-class' => 'promotion-icon',
     ], [
         'key'        => 'promotions.catalog-rules',
@@ -239,7 +221,7 @@ return [
         'key'        => 'cms',
         'name'       => 'admin::app.layouts.cms',
         'route'      => 'admin.cms.index',
-        'sort'       => 9,
+        'sort'       => 5,
         'icon-class' => 'cms-icon',
     ], [
         'key'        => 'cms.pages',
@@ -288,6 +270,18 @@ return [
         'name'       => 'admin::app.cms.slider_add_section.view',
         'route'      => 'admin.slider_add_section.index',
         'sort'       => 3,
+        'icon-class' => '',
+    ],[
+        'key'        => 'blog',
+        'name'       => 'admin::app.layouts.blog',
+        'route'      => 'admin.blog.index',
+        'sort'       => 9,
+        'icon-class' => 'catalog-icon',
+    ], [
+        'key'        => 'blog.list',
+        'name'       => 'admin::app.layouts.blogs',
+        'route'      => 'admin.blog.index',
+        'sort'       => 1,
         'icon-class' => '',
     ]
 ];
