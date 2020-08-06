@@ -82,7 +82,8 @@ div.fontawesome-icon-list a{
     line-height: .5rem;
 }
 .footer-payment{
-	margin-top: -20px;
+	margin-top: 15px;
+  font-size: 15px;
 }
 .ol{
 	margin-left: 50px;

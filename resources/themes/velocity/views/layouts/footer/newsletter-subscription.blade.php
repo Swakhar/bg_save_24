@@ -3,8 +3,8 @@
     && $velocityMetaData->subscription_bar_content
     || core()->getConfigData('customer.settings.newsletter.subscription')
 )
-    <div class="rows">
-        <div class=" col-md-12">
+    <div class="row" style="background: #4A5678;">
+        
             <div class="col-md-4">
                 @if ($velocityMetaData && $velocityMetaData->subscription_bar_content)
                 {!! $velocityMetaData->subscription_bar_content !!}
@@ -26,7 +26,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+
     </div>
     
 @endif
