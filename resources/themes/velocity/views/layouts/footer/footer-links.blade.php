@@ -2,7 +2,7 @@
 
 {{--</div>--}}
 
-<div class="rows2 ">
+<div class="row" style="background: #F3F4F8;">
     <div class="col-lg-12">
         @include('velocity::layouts.footer.footer-links.footer-logo')
         @include('velocity::layouts.footer.footer-links.footer-left')
