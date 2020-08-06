@@ -77,9 +77,9 @@
 
                 <thead>
                     <tr>
+                        <th>{{ __('admin::app.catalog.products.image') }}</th>
                         <th class="sku">{{ __('admin::app.catalog.products.sku') }}</th>
                         <th>{{ __('admin::app.catalog.products.name') }}</th>
-
                         @foreach ($product->super_attributes as $attribute)
                             <th class="{{ $attribute->code }}" style="width: 150px">{{ $attribute->admin_name }}</th>
                         @endforeach
@@ -104,6 +104,15 @@
 
     <script type="text/x-template" id="variant-item-template">
         <tr>
+            <td>
+                <div>
+                    <input style="width: 89px;" type="file"
+                           :name="[variantInputName + '[image]']"
+                           @change="on_change_Image($event, index+'_image')" />
+                    <img class="config_image_show"
+                         :src="image_Load(variant)" :id="index+'_image'" alt="">
+                </div>
+            </td>
             <td>
                 <div class="control-group" :class="[errors.has(variantInputName + '[sku]') ? 'has-error' : '']">
                     <input type="text" v-validate="'required'" v-model="variant.sku" :name="[variantInputName + '[sku]']" class="control" data-vv-as="&quot;{{ __('admin::app.catalog.products.sku') }}&quot;" v-slugify/>
@@ -291,7 +300,6 @@
 
             created: function () {
                 var index = 0;
-
                 for (var key in this.old_variants) {
                     var variant = this.old_variants[key];
 
@@ -299,7 +307,8 @@
                         var inventories = [];
 
                         for (var inventorySourceId in variant['inventories']) {
-                            inventories.push({'qty': variant['inventories'][inventorySourceId], 'inventory_source_id': inventorySourceId})
+                            inventories.push({'qty': variant['inventories'][inventorySourceId],
+                                'inventory_source_id': inventorySourceId})
                         }
 
                         variant['inventories'] = inventories;
@@ -313,7 +322,8 @@
                                 variants[index][code] = [];
 
                                 for (var inventorySourceId in variant[code]) {
-                                    variants[index][code].push({'qty': variant[code][inventorySourceId], 'inventory_source_id': inventorySourceId})
+                                    variants[index][code].push({'qty': variant[code][inventorySourceId],
+                                        'inventory_source_id': inventorySourceId})
                                 }
                             }
                         }
@@ -369,7 +379,25 @@
             },
 
             methods: {
+                readURL: function(input, id) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function(e) {
+                            $('#'+id).attr('src', e.target.result);
+                        };
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                },
+                image_Load: function(variant) {
+                    if (variant.images.length > 0) {
+                        return '/cache/medium/' + variant.images[0]['path']
+                    }
+                    return ''
 
+                },
+                on_change_Image: function(e, id) {
+                    this.readURL($(e.target)[0], id)
+                },
                 variant_product_qty: function (inventories) {
                     var qty = 0;
                     inventories.forEach(function(inventory) {

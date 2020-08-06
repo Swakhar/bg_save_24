@@ -87,7 +87,9 @@
                           :product_images="{{ json_encode($productImages, true) }}"
                           :rating_image="{{ json_encode($rating_image, true) }}"
                           :total="{{ $total }}"
-                    :product_name="'{{ $product->name }}'">
+                    :product_name="'{{ $product->name }}'"
+                    :product_price="'{{ round($product->price, 2) }}'"
+            >
 
             </product-view>
 

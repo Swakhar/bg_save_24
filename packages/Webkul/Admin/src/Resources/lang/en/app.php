@@ -639,6 +639,7 @@ return [
             'attribute-option-header' => 'Attribute Option(s)',
             'no' => 'No',
             'yes' => 'Yes',
+            'image' => 'Image',
             'disabled' => 'Disabled',
             'enabled' => 'Enabled',
             'add-variant-btn-title' => 'Add Variant',

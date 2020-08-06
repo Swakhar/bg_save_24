@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Event;
 use Webkul\Category\Models\Category;
 use Webkul\Product\Http\Requests\ProductForm;
 use Webkul\Product\Helpers\ProductType;
+use Webkul\Product\Models\ProductImage;
 use Webkul\Tag\Repositories\TagRepository;
 use Webkul\Manufacturer\Repositories\ManufacturerRepository;
 use Webkul\Category\Repositories\CategoryRepository;
@@ -188,7 +189,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = $this->productRepository->with(['variants', 'variants.inventories'])->findOrFail($id);
+        $product = $this->productRepository->with(['variants', 'variants.inventories', 'variants.images'])->findOrFail($id);
 
         $local = request()->get('locale') ?: app()->getLocale();
         $categories = Category::CategoryRawData($local);
@@ -210,10 +211,21 @@ class ProductController extends Controller
      */
     public function update(ProductForm $request, $id)
     {
+//        return request()->file('variants');
           $data=request()->all();
 //        return json_encode($data);
 
         if (array_key_exists('variants', $data)) {
+            foreach ($data['variants'] as $variantId => $variantData) {
+                if (request()->hasFile('variants.'.$variantId.'.image')) {
+                    ProductImage::where('product_id', $variantId)->delete();
+                    ProductImage::create([
+                        'path'       => request()->file('variants.'.$variantId.'.image')->store('product/'.$variantId),
+                        'product_id' => $variantId,
+                    ]);
+
+                }
+            }
             ///
             /// price save in variant table
             ///
@@ -248,7 +260,8 @@ class ProductController extends Controller
 
             }
         }
-//        return $data;
+
+
 
         $product = $this->productRepository->update($data, $id);
 

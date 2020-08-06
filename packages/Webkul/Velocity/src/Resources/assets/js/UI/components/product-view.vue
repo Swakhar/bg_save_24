@@ -56,7 +56,7 @@
                     <div class="pdp-mod-product-price">
                         <div class="pdp-product-price">
                             <span class=" pdp-price pdp-price_type_normal pdp-price_color_orange pdp-price_size_xl"
-                                  data-spm-anchor-id="a2a0e.pdp.0.i5.49e946aeP2HueI">৳ 151</span>
+                                  data-spm-anchor-id="a2a0e.pdp.0.i5.49e946aeP2HueI">৳ {{ product_price }}</span>
                             <div class="origin-block">
                                 <span class=" pdp-price pdp-price_type_deleted pdp-price_color_lightgray
                                 pdp-price_size_xs">৳ 250</span>
@@ -117,7 +117,7 @@
     export default {
         name: "product-view",
         props: ['product_name', 'avg_star_rating', 'product_images',
-            'total', 'rating_image', 'short_description'],
+            'total', 'rating_image', 'short_description', 'product_price'],
         components: {
             carousel: Carousel,
             slide: Slide,
