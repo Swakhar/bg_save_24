@@ -394,6 +394,29 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
                 'redirect' => 'customer.store.index'
             ])->name('customer.store.edit');
 
+            //Seller products(listing)
+            Route::get('products', 'Badenjki\Seller\Http\Controllers\ProductController@index')->defaults('_config', [
+                'view' => 'shop::sellers.product.index'
+            ])->name('seller.products.index');
+
+            //Product Create Form Show
+            Route::get('products/create', 'Badenjki\Seller\Http\Controllers\ProductController@create')->defaults('_config', [
+                'view' => 'shop::sellers.product.create'
+            ])->name('seller.product.create');
+
+            //Products Create Form Store
+            Route::post('products/create', 'Badenjki\Seller\Http\Controllers\ProductController@store')->defaults('_config', [
+                'redirect' => 'seller.product.edit'
+            ])->name('seller.product.create');
+
+            Route::get('products/edit/{id}', 'Badenjki\Seller\Http\Controllers\ProductController@edit')->defaults('_config', [
+                'view' => 'shop::sellers.product.edit',
+            ])->name('seller.product.edit');
+
+            Route::put('products/edit/{id}', 'Badenjki\Seller\Http\Controllers\ProductController@update')->defaults('_config', [
+                'redirect' => 'seller.products.index',
+            ])->name('seller.product.edit');
+
         });
 //        Route::get('/{store}', 'Badenjki\Seller\Http\Controllers\StoreController@show');
     });

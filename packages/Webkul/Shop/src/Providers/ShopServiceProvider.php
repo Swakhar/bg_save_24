@@ -80,6 +80,20 @@ class ShopServiceProvider extends ServiceProvider
             $sellerTree->items = core()->sortItems($sellerTree->items);
             $view->with('menu', $sellerTree);
         });
+
+        view()->composer(['shop::sellers.product.create'], function ($view) {
+            $items = array();
+
+            foreach (config('product_types') as $item) {
+                $item['children'] = [];
+
+                array_push($items, $item);
+            }
+
+            $types = core()->sortItems($items);
+
+            $view->with('productTypes', $types);
+        });
     }
 
     /**
@@ -94,6 +108,9 @@ class ShopServiceProvider extends ServiceProvider
         );
         $this->mergeConfigFrom(
             dirname(__DIR__) . '/Config/menus/seller.php', 'menu.seller'
+        );
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/product_types.php', 'product_types'
         );
     }
 }

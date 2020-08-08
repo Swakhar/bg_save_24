@@ -44,18 +44,8 @@ return [
     ], [
         'key' => 'store.products',
         'name' => 'shop::app.layouts.store-products',
-        'route' => 'customer.store.index',
+        'route' => 'seller.products.index',
         'sort' => 2
-    ], [
-        'key' => 'store.orders',
-        'name' => 'shop::app.layouts.store-orders',
-        'route' => 'customer.store.index',
-        'sort' => 3
-    ], [
-        'key' => 'store.reviews',
-        'name' => 'shop::app.layouts.store-reviews',
-        'route' => 'customer.store.index',
-        'sort' => 4
     ]
 
 ];
