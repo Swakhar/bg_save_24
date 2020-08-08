@@ -232,7 +232,7 @@ class ShopController extends Controller
         FROM categories
         INNER JOIN category_translations on category_translations.category_id = categories.id
         WHERE category_translations.locale = 'en' AND status = 1
-        ORDER BY categories.parent_id, categories.position");
+        ORDER BY categories.position, categories.parent_id");
         $main_data = [];
        foreach ($data as $key => $value) {
            $main_data[$key]['children'] = [];

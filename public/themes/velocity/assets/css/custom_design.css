@@ -1369,10 +1369,9 @@ ul li.folder {
     background: white;
 }
 ul.sub-folders {
-    position: relative;
+    position: absolute;
     min-height: 439px;
-    left: 265px;
-    top: -320px;
+    left: 267px;
     z-index: 999999;
     border-left: 1px solid gray;
     width: 1024px;
@@ -1382,6 +1381,7 @@ ul.sub-folders {
     box-shadow: 1px 1px 5px 0px grey;
     border: 1px solid gray;
 }
+
 li.position_div_1 {
     width: 251px;
     float: left;
