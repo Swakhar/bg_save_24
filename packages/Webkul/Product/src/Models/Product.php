@@ -474,4 +474,7 @@ class Product extends Model implements ProductContract
         ];
     }
 
+    public function store(){
+        return $this->belongsTo(Store::class);
+    }
 }

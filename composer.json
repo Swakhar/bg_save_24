@@ -112,6 +112,10 @@
         "Webkul\\Tag\\":"packages/Webkul/Tag/src",
         "Badenjki\\Seller\\": "packages/Badenjki/Seller/src",
         "Webkul\\Blog\\":"packages/Webkul/Blog/src"
+
+        "Webkul\\Industry\\":"packages/Webkul/Industry/src",
+
+        "Badenjki\\Seller\\": "packages/Badenjki/Seller/src"
       }
     },
 

@@ -1,65 +1,41 @@
-@extends('shop::layouts.master')
+@extends('shop::layouts.login_master')
 
 @section('page_title')
     {{ __('shop::app.customer.login-form.page-title') }}
 @endsection
 
 @section('content-wrapper')
-    <div class="auth-content form-container" style="width:100%;margin-left: 50px;">
+    <div class="col-md-12">
+        <h1>{{ __('velocity::app.customer.login-form.customer-login')}}</h1>
+        <hr style="background: #ff1800;height: 2px;width: 60px;">
+        <br>
+    </div>
+    
+    <div class="col-md-6">
 
         {!! view_render_event('bagisto.shop.customers.login.before') !!}
+            <div class="card">
+                <div class="card-body">
+                    <h2>{{ __('velocity::app.customer.login-form.registered-user')}}</h2>
+                    <hr style="background: #c75e53;height: 2px;width: 60px;">
+                    <p style="font-size: 15px;">{{ __('velocity::app.customer.login-form.form-login-text')}}</p>
+                    <form method="POST" action="{{ route('customer.session.create') }}" @submit.prevent="onSubmit">
 
-            <div class="container">
-                <div class="col-lg-10 col-md-12 offset-lg-1">
-                    <div class="heading">
-                        <h2 class="fs24 fw6">
-                            {{ __('velocity::app.customer.login-form.customer-login')}}
-                        </h2>
+                    {{ csrf_field() }}
 
-                        <a href="{{ route('customer.register.index') }}" class="btn-new-customer">
-                            <button type="button" class="theme-btn light">
-                                {{ __('velocity::app.customer.login-form.sign-up')}}
-                            </button>
-                        </a>
-                    </div>
+                    {!! view_render_event('bagisto.shop.customers.login_form_controls.before') !!}
 
-                    <div class="body col-12">
-                        <div class="form-header">
-                            <h3 class="fw6">
-                                {{ __('velocity::app.customer.login-form.registered-user')}}
-                            </h3>
+                        <div class="form-group" :class="[errors.has('email') ? 'has-error' : '']">
+                            <label for="email" class="mandatory label-style">{{ __('shop::app.customer.login-form.email') }}</label>
 
-                            <p class="fs16">
-                                {{ __('velocity::app.customer.login-form.form-login-text')}}
-                            </p>
-                        </div>
-
-                        <form
-                            method="POST"
-                            action="{{ route('customer.session.create') }}"
-                            @submit.prevent="onSubmit">
-
-                            {{ csrf_field() }}
-
-                            {!! view_render_event('bagisto.shop.customers.login_form_controls.before') !!}
-
-                            <div class="form-group" :class="[errors.has('email') ? 'has-error' : '']">
-                                <label for="email" class="mandatory label-style">
-                                    {{ __('shop::app.customer.login-form.email') }}
-                                </label>
-
-                                <input
-                                    type="text"
-                                    class="form-style"
-                                    name="email"
-                                    v-validate="'required|email'"
-                                    value="{{ old('email') }}"
-                                    data-vv-as="&quot;{{ __('shop::app.customer.login-form.email') }}&quot;" />
+                            <input
+                                type="text" class="form-style"
+                                name="email" v-validate="'required|email'" value="{{ old('email') }}" data-vv-as="&quot;{{ __('shop::app.customer.login-form.email') }}&quot;" />
 
                                 <span class="control-error" v-if="errors.has('email')">
-                                    @{{ errors.first('email') }}
+                                     @{{ errors.first('email') }}
                                 </span>
-                            </div>
+                        </div>
 
                             <div class="form-group" :class="[errors.has('password') ? 'has-error' : '']">
                                 <label for="password" class="mandatory label-style">
@@ -78,7 +54,7 @@
                                     @{{ errors.first('password') }}
                                 </span>
 
-                                <a href="{{ route('customer.forgot-password.create') }}" class="pull-right">
+                                <a href="{{ route('customer.forgot-password.create') }}" class="pull-right" style="font-size: 15px;">
                                     {{ __('shop::app.customer.login-form.forgot_pass') }}
                                 </a>
 
@@ -93,13 +69,13 @@
 
                             {!! view_render_event('bagisto.shop.customers.login_form_controls.after') !!}
 
-                            <input class="theme-btn" type="submit" value="{{ __('shop::app.customer.login-form.button_title') }}">
+                            <input class="btn btn-lg btn-info" type="submit" value="{{ __('shop::app.customer.login-form.button_title') }}">
                             <br>
                             <hr>
                             
                             <div class="row" style="padding: 15px;">
                                 <div class="col-12">
-                                    <center><p>Alternative Login</p></center>
+                                    <center><p style="font-size: 15px;">Alternative Login</p></center>
                                 </div>
                                 
                                 <div class="col-md-4 btn btn-lg btn-info" style="
@@ -114,12 +90,24 @@
                                     <a href="{{ route('redirectGoogle') }}" style="color: white;">Google +</a></div>
                             </div>
                             
-                        </form>
-                        
-                    </div>
+                        </form>  
                 </div>
             </div>
+    </div>
+    <div class="col-md-6">
 
-        {!! view_render_event('bagisto.shop.customers.login.after') !!}
+        {!! view_render_event('bagisto.shop.customers.login.before') !!}
+            <div class="card" style="height: 400px;">
+                <div class="card-body">
+                    <h2>{{ __('velocity::app.customer.signup-form.new-user')}}</h2>
+                    <hr style="background: #c75e53;height: 2px;width: 60px;">
+                    <p style="font-size: 15px;">{{ __('velocity::app.customer.signup-form.form-signup-text')}}</p>
+                    <a href="{{ route('customer.register.index') }}" class="btn-new-customer">
+                        <button type="button" class="btn btn-lg btn-info">
+                            {{ __('velocity::app.customer.login-form.sign-up')}}
+                        </button>
+                    </a> 
+                </div>
+            </div>
     </div>
 @endsection

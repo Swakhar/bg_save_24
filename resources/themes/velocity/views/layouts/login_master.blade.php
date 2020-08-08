@@ -9,7 +9,6 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta http-equiv="content-language" content="{{ app()->getLocale() }}">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="route-index" content="{{ \Request::route()->getName() }}" >
 
         <link rel="stylesheet" href="{{ asset($relative_path . 'themes/velocity/assets/css/velocity.css') }}" />
         <link rel="stylesheet" href="{{ asset($relative_path . 'themes/velocity/assets/css/bootstrap.min.css') }}" />
@@ -178,12 +177,9 @@
 
                     </div>
                 @show
-                    @if(\Request::route()->getName() == 'shop.home.index')
-                    <div class="container-fluid " >
+
+                    <div class="container-fluid ">
                         <div class="row top_banner_three_section">
-                            <div class="cust-open" >
-                                <sidebar-new route_index="{{ \Request::route()->getName() }}"></sidebar-new>
-                            </div>
                             {!! view_render_event('bagisto.shop.layout.content.before') !!}
 
                             @yield('content-wrapper')
@@ -192,23 +188,13 @@
                         </div>
                     </div>
 
-                    @else
-                        <div style="margin-left: 20px;">
-                            <sidebar-new route_index="{{ \Request::route()->getName() }}"></sidebar-new>
-                        </div>
-                    @endif
 
-
-                    <div class="container-fluid add_sec_one">
-                        @yield('full-add-first')
-                    </div>
-
-                @if(\Request::route()->getName() == 'shop.home.index')
-                        <div class="container-fluid cont_recom" >
-                            @yield('full-recommended-slider')
-                        </div>
-                @endif
-
+                    <div class="container-fluid">
+                    @yield('full-add-first')
+                </div>
+                <div class="container-fluid cont_recom">
+                    @yield('full-recommended-slider')
+                </div>
 
                 <div class="container-fluid">
                     @yield('full-on-sale-now')
@@ -218,11 +204,11 @@
                     @yield('full-add-second')
                 </div>
 
-                    <div class="container-fluid add_sec_two">
+                    <div class="container-fluid">
                         @yield('full-add-third')
                     </div>
 
-                    <div >
+                    <div class="container-fluid">
                         @yield('full-needed-slider')
                     </div>
 
@@ -312,9 +298,77 @@
 
         @stack('scripts')
         <script>
-
             // landing_top_to_bottom
             $(document).ready(function () {
+
+
+                var current_fs, next_fs, previous_fs; //fieldsets
+var opacity;
+
+$(".next").click(function(){
+
+current_fs = $(this).parent();
+next_fs = $(this).parent().next();
+
+//Add Class Active
+$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+//show the next fieldset
+next_fs.show();
+//hide the current fieldset with style
+current_fs.animate({opacity: 0}, {
+step: function(now) {
+// for making fielset appear animation
+opacity = 1 - now;
+
+current_fs.css({
+'display': 'none',
+'position': 'relative'
+});
+next_fs.css({'opacity': opacity});
+},
+duration: 600
+});
+});
+
+$(".previous").click(function(){
+
+current_fs = $(this).parent();
+previous_fs = $(this).parent().prev();
+
+//Remove class active
+$("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+//show the previous fieldset
+previous_fs.show();
+
+//hide the current fieldset with style
+current_fs.animate({opacity: 0}, {
+step: function(now) {
+// for making fielset appear animation
+opacity = 1 - now;
+
+current_fs.css({
+'display': 'none',
+'position': 'relative'
+});
+previous_fs.css({'opacity': opacity});
+},
+duration: 600
+});
+});
+
+$('.radio-group .radio').click(function(){
+$(this).parent().find('.radio').removeClass('selected');
+$(this).addClass('selected');
+});
+
+$(".submit").click(function(){
+return false;
+})
+
+});
+                
                 var cross_modal = $("span.cross");
                 var modal = $(".modal_pop_up");
                 cross_modal.on("click", function () {
@@ -323,43 +377,28 @@
                     }
                 });
 
-
-
-                $("body").mouseover(function(e) {
-                    var i = ($(e.target).hasClass('cat_hideve') ? 1 : 0);
-                    var j = ($(e.target).hasClass('sub-folders') ? 1 : 0);
-                    var k = ($(e.target).hasClass('folder') ? 1 : 0);
-                    var kk = ($(e.target).hasClass('float_left_parent') ? 1 : 0);
-
-                    //console.log($(e.target))
-
-//                    console.log((i+j+k))
-
-                    if ((i+j+k+kk) === 0) {
-                        $('.sub-folders').each(function(i, obj) {
-                            $(this).addClass('hide')
-                        });
-                        var ii = (e.target.id == 'top_ham_bargur' ? 1 : 0);
-                        var ij = (e.target.id == 'except_index_page' ? 1 : 0);
-                        if ((ii+ij) == 0) {
-                            if ($(".top_category_menu").hasClass('while_float')) {
-                                $(".top_category_menu").addClass('hide')
-                            }
-                        }
-
-                    }
-
-                })
-
                 $("#top_ham_bargur").hover(function (e) {
                     var side_menu = $("#sidebar-level-0");
                     side_menu.addClass("to_show");
-                    $(".top_category_menu").removeClass('hide');
                 });
 
-                $("#except_index_page").hover(function (e) {
-                    $(".top_category_menu").removeClass('hide');
-                });
+                $("body").mouseover(function(e) {
+
+                    if (e.clientX > 230) {
+                        var hasClass = Array.from(e.target.classList).indexOf('com') > -1;
+                        if (!hasClass) {
+                            var side_menu = $("#sidebar-level-0");
+                            side_menu.removeClass("to_show")
+
+                            if (!$(e.target).hasClass('hoverd-nav')) {
+                                var sub_categories = $(".sub-categories");
+                                sub_categories.css("display", "none");
+                            }
+
+                        }
+                    }
+                })
+
 
 
             });
@@ -367,29 +406,15 @@
             window.addEventListener('scroll', function(e) {
                 var side_menu = $("#sidebar-level-0");
                 var top_ham_bargur = $("#top_ham_bargur");
-                var sticky_header = $(".sticky-header");
-                var route_index = $('meta[name=route-index]').attr("content");
-
-                var size = '{{ \Request::route()->getName() == 'shop.home.index' ? 577 : 130 }}';
-                if (window.scrollY > +size) {
+                if (window.scrollY > 430) {
                     top_ham_bargur.removeClass("hide");
                     side_menu.addClass("hide");
-                    sticky_header.addClass("smooth_show");
-                    $(".logo-slogan").addClass('hide')
-                    $(".top_category_menu").addClass('while_float').addClass('hide');
                 } else {
                     side_menu.removeClass("hide");
                     side_menu.removeClass("to_show");
                     top_ham_bargur.addClass("hide");
-                    $(".logo-slogan").removeClass('hide')
-                    sticky_header.removeClass("smooth_show");
-                    if (route_index === 'shop.home.index') {
-                        $(".top_category_menu").removeClass('while_float').removeClass('hide');
-                    }
-
                 }
             });
-
 
         </script>
     </body>

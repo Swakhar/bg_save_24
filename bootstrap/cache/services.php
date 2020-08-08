@@ -81,6 +81,8 @@
     77 => 'Badenjki\\Seller\\Providers\\SellerServiceProvider',
     78 => 'Webkul\\Industry\\Providers\\IndustryServiceProvider',
     79 => 'Webkul\\Blog\\Providers\\BlogServiceProvider',
+    75 => 'Webkul\\Industry\\Providers\\IndustryServiceProvider',
+    76 => 'Badenjki\\Seller\\Providers\\SellerServiceProvider',
   ),
   'eager' => 
   array (
@@ -150,6 +152,8 @@
     63 => 'Badenjki\\Seller\\Providers\\SellerServiceProvider',
     64 => 'Webkul\\Industry\\Providers\\IndustryServiceProvider',
     65 => 'Webkul\\Blog\\Providers\\BlogServiceProvider',
+    61 => 'Webkul\\Industry\\Providers\\IndustryServiceProvider',
+    62 => 'Badenjki\\Seller\\Providers\\SellerServiceProvider',
   ),
   'deferred' => 
   array (
