@@ -78,11 +78,10 @@
     74 => 'Webkul\\BookingProduct\\Providers\\BookingProductServiceProvider',
     75 => 'Webkul\\Manufacturer\\Providers\\ManufacturerServiceProvider',
     76 => 'Webkul\\Tag\\Providers\\TagServiceProvider',
-    77 => 'Badenjki\\Seller\\Providers\\SellerServiceProvider',
-    78 => 'Webkul\\Industry\\Providers\\IndustryServiceProvider',
-    79 => 'Webkul\\Blog\\Providers\\BlogServiceProvider',
-    75 => 'Webkul\\Industry\\Providers\\IndustryServiceProvider',
-    76 => 'Badenjki\\Seller\\Providers\\SellerServiceProvider',
+    77 => 'Webkul\\Industry\\Providers\\IndustryServiceProvider',
+    78 => 'Badenjki\\Seller\\Providers\\SellerServiceProvider',
+    79 => 'Webkul\\Industry\\Providers\\IndustryServiceProvider',
+    80 => 'Webkul\\Blog\\Providers\\BlogServiceProvider',
   ),
   'eager' => 
   array (
@@ -149,11 +148,10 @@
     60 => 'Webkul\\BookingProduct\\Providers\\BookingProductServiceProvider',
     61 => 'Webkul\\Manufacturer\\Providers\\ManufacturerServiceProvider',
     62 => 'Webkul\\Tag\\Providers\\TagServiceProvider',
-    63 => 'Badenjki\\Seller\\Providers\\SellerServiceProvider',
-    64 => 'Webkul\\Industry\\Providers\\IndustryServiceProvider',
-    65 => 'Webkul\\Blog\\Providers\\BlogServiceProvider',
-    61 => 'Webkul\\Industry\\Providers\\IndustryServiceProvider',
-    62 => 'Badenjki\\Seller\\Providers\\SellerServiceProvider',
+    63 => 'Webkul\\Industry\\Providers\\IndustryServiceProvider',
+    64 => 'Badenjki\\Seller\\Providers\\SellerServiceProvider',
+    65 => 'Webkul\\Industry\\Providers\\IndustryServiceProvider',
+    66 => 'Webkul\\Blog\\Providers\\BlogServiceProvider',
   ),
   'deferred' => 
   array (
