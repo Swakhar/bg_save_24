@@ -23,6 +23,10 @@ class CreateStoresTable extends Migration
             $table->string('instagram')->nullable();
             $table->string('twitter')->nullable();
             $table->string('telegram')->nullable();
+            $table->string('city')->nullable();
+            $table->string('zip')->nullable();
+            $table->string('street_add')->nullable();
+            $table->string('state')->nullable();
             $table->timestamps();
         });
     }

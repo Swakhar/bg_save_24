@@ -10,9 +10,9 @@ use Webkul\Core\Eloquent\TranslatableModel;
 class Store extends TranslatableModel implements StoreContract
 {
 
-    public $translatedAttributes = ['name', 'address', 'description', 'return_policy', 'shipping_policy', 'meta_title', 'meta_description', 'meta_keywords'];
+    public $translatedAttributes = ['name','address', 'description', 'return_policy', 'shipping_policy', 'meta_title', 'meta_description', 'meta_keywords'];
 
-    protected $fillable = ['url', 'tax_number', 'status', 'featured', 'state_id', 'is_physical', 'category_id', 'phone', 'geolocation', 'is_visible', 'facebook', 'twitter', 'instagram', 'telegram'];
+    protected $fillable = ['url', 'tax_number', 'status', 'featured', 'state_id', 'is_physical', 'category_id', 'phone', 'geolocation', 'is_visible', 'facebook', 'twitter', 'instagram', 'telegram','city','zip','street_add','state'];
 
     protected $with = ['translations'];
 

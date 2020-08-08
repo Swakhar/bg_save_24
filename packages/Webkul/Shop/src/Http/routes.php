@@ -372,6 +372,23 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
 
     Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function () {
 
+        Route::prefix('seller')->group(function () {
+            Route::get('login', 'Badenjki\Seller\Http\Controllers\SessionController@show')->defaults('_config', [
+                'view' => 'shop::sellers.signin.index'
+            ])->name('store.index');
+
+            Route::post('login', 'Badenjki\Seller\Http\Controllers\SessionController@create')->defaults('_config', [
+            'redirect' => 'customer.store.index'
+            ])->name('store.index.save');
+
+            Route::get('registration', 'Badenjki\Seller\Http\Controllers\RegistrationController@show')->defaults('_config', [
+                'view' => 'shop::sellers.register.index'
+            ])->name('store.register');
+
+            Route::post('registration', 'Badenjki\Seller\Http\Controllers\RegistrationController@create')->defaults('_config', [
+            'redirect' => 'store.index',
+            ])->name('store.register.save');
+        });
         Route::group(['middleware' => ['customer']], function () {
 
             Route::get('stores', 'Badenjki\Seller\Http\Controllers\StoreController@index')->defaults('_config', [
