@@ -301,8 +301,8 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
 
         Route::group(['middleware' => ['customer']], function () {
 
-            Route::get('stores', 'Badenjki\Seller\Http\Controllers\StoreController@index')->defaults('_config', [
-                'view' => 'shop::customers.account.store.index'
+            Route::get('stores', 'Webkul\Vendor\Http\Controllers\DashboardController@index')->defaults('_config', [
+                'view' => 'vendor::dashboard.index'
             ])->name('customer.store.index');
 
             Route::get('stores/create', 'Badenjki\Seller\Http\Controllers\StoreController@create')->defaults('_config', [

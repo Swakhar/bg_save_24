@@ -271,6 +271,7 @@ return [
 
         //Badenjki packages
         Badenjki\Seller\Providers\SellerServiceProvider::class,
+        Webkul\Vendor\Providers\VendorServiceProvider::class,
     ],
 
     /*
