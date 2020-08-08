@@ -1789,3 +1789,45 @@ ul.sub-folders  a:hover {
 div.newsletter_input_div span.title {
     font-size: 18px;
 }
+
+div.top_nav_menus {
+    float: right;
+}
+div.top_nav_menus ul {
+
+}
+div.top_nav_menus ul li {
+    display: inline-block;
+    font-size: 13px;
+    height: 31px;
+    line-height: 31px;
+    margin-left: 16px;
+    border-left: 1px solid gray;
+    padding-left: 6px;
+}
+div.top_nav_menus ul li a {
+    text-decoration: none;
+    color: black;
+}
+div.top_nav_menus ul li a:hover  {
+    color: #FF5500;
+}
+
+div.top_nav_menus ul li a i.in-i {
+    margin-right: 2px;
+}
+span.top_span {
+    font-size: 13px;
+    height: 31px;
+    line-height: 31px;
+}
+span.top_span span.link {
+    color: #FF5500;
+}
+span.top_span span.link a {
+
+    text-decoration: none;
+    color: #FF5500;
+    font-size: 14px;
+
+}

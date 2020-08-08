@@ -81,15 +81,15 @@
                     });
                     if ($(event.target).prop("tagName") == "A") {
                         $($(event.target).parent().children()[1]).removeClass('hide');
-                        $($(event.target).parent().children()[1]).css("top", "-"+ ((index)*43+21) + 'px');
+                        $($(event.target).parent().children()[1]).css("top", "-"+ (282) + 'px');
                     }
                     if ($(event.target).prop("tagName") == "SPAN") {
                         $($(event.target).parent().parent().children()[1]).removeClass('hide');
-                        $($(event.target).parent().parent().children()[1]).css("top", "-"+ ((index)*43+21) + 'px');
+                        $($(event.target).parent().parent().children()[1]).css("top", "-"+ (282) + 'px');
                     }
                     if ($(event.target).prop("tagName") == "I") {
                         $($(event.target).parent().parent().children()[1]).removeClass('hide');
-                        $($(event.target).parent().parent().children()[1]).css("top", "-"+ ((index)*43+21) + 'px');
+                        $($(event.target).parent().parent().children()[1]).css("top", "-"+ (282) + 'px');
                     }
                 }
             },

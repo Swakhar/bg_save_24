@@ -5,7 +5,7 @@
 )
     <div class="row" style="background: #4A5678;">
         
-            <div class="col-md-4">
+            <div class="col-md-offset-1 col-md-3" style="    background: #2B375C;">
                 @if ($velocityMetaData && $velocityMetaData->subscription_bar_content)
                 {!! $velocityMetaData->subscription_bar_content !!}
             @endif

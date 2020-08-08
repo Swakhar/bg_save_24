@@ -192,7 +192,7 @@
 
 
             removeSlider: function(index) {
-                this.sections.splice(index, 1)
+                this.sliders.splice(index, 1)
             },
             removeSlider2: function(index, index2) {
                 this.sections[index].details.splice(index2, 1)
