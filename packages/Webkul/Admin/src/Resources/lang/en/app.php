@@ -758,6 +758,7 @@ return [
             'checkbox' => 'Checkbox',
             'use_in_flat' => "Create in Product Flat Table",
             'is_comparable' => "Attribute is comparable",
+            'is_show_in_more_information' => "Attribute is Show in More Information",
             'default_null_option' => 'Create default empty option',
         ],
         'attribute_options' => [

@@ -18,7 +18,6 @@
         "ext-pdo_mysql": "*",
         "ext-tokenizer": "*",
         "astrotomic/laravel-translatable": "^11.0.0",
-        "barryvdh/laravel-debugbar": "^3.1",
         "barryvdh/laravel-dompdf": "0.8.5",
         "doctrine/dbal": "2.9.2",
         "fideloper/proxy": "^4.0",
@@ -111,8 +110,7 @@
         "Webkul\\Industry\\":"packages/Webkul/Industry/src",
         "Webkul\\Manufacturer\\":"packages/Webkul/Manufacturer/src",
         "Webkul\\Tag\\":"packages/Webkul/Tag/src",
-        "Badenjki\\Seller\\": "packages/Badenjki/Seller/src"
-        "Webkul\\Tag\\":"packages/Webkul/Tag/src",
+        "Badenjki\\Seller\\": "packages/Badenjki/Seller/src",
         "Webkul\\Blog\\":"packages/Webkul/Blog/src"
       }
     },

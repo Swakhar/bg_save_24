@@ -1,5 +1,5 @@
 <div class="footer">
-    <div class="container">
+    <div class="container-fluid">
 
         @include('shop::layouts.footer.newsletter-subscription')
         @include('shop::layouts.footer.footer-links')

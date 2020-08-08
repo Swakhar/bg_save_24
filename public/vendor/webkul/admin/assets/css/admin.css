@@ -102,7 +102,6 @@
   bottom: 0;
   z-index: 2;
   background-color: #ffffff;
-  overflow-y: scroll;
 }
 .navbar-left ul.menubar li.menu-item {
   padding: 10px 5px;

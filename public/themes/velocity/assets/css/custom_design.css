@@ -1785,3 +1785,7 @@ div.div_it_side_menu a.div_it_side_menu_a {
 ul.sub-folders  a:hover {
     color: #FF5500;
 }
+
+div.newsletter_input_div span.title {
+    font-size: 18px;
+}

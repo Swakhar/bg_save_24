@@ -1,4 +1,4 @@
-<div class="col-lg-offset-1 col-lg-3 col-sm-12 contact-footer">
+<div class="col-lg-3 col-sm-12 contact-footer">
     <span class="contact_main">Contact Us</span>
     <div class="foot_contact_main">
         <div class="foot_contact_left"><i class="footer_i fa fa-map-marker"></i></div>
