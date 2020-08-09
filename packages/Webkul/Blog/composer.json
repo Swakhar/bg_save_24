@@ -1,0 +1,27 @@
+{
+    "name": "bagisto/laravel-blog",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jitendra Singh",
+            "email": "jitendra@webkul.com"
+        }
+    ],
+    "require": {
+        "baum/baum": "~1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Webkul\\Blog\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\Blog\\Providers\\BlogServiceProvider"
+            ],
+            "aliases": { }
+        }
+    },
+    "minimum-stability": "dev"
+}

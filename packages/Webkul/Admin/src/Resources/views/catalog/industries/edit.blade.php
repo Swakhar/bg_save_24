@@ -37,11 +37,13 @@
 
                             {!! view_render_event('bagisto.admin.catalog.industry.edit_form_accordian.general.controls.before', ['industry' => $industry]) !!}
 
-                            <div class="control-group" :class="[errors.has('admin_name') ? 'has-error' : '']">
-                                <label for="admin_name" class="required">{{ __('admin::app.catalog.industries.admin') }}</label>
-                                <input type="text" v-validate="'required'" class="control" id="admin_name" name="admin_name" value="{{ old('admin_name') ?: $industry->admin_name }}" data-vv-as="&quot;{{ __('admin::app.catalog.industries.admin_name') }}&quot;"/>
-                                <span class="control-error" v-if="errors.has('admin_name')">@{{ errors.first('admin_name') }}</span>
+                            <div class="control-group" :class="[errors.has('code') ? 'has-error' : '']">
+                                <label for="code" class="required">{{ __('admin::app.catalog.industries.code') }}</label>
+                                <input type="text" v-validate="'required'" class="control" id="code" name="code" value="{{ old('code') ?: $industry->code }}" disabled="disabled" data-vv-as="&quot;{{ __('admin::app.catalog.industries.code') }}&quot;" v-code/>
+                                <input type="hidden" name="code" value="{{ $industry->code }}"/>
+                                <span class="control-error" v-if="errors.has('code')">@{{ errors.first('code') }}</span>
                             </div>
+
                             
 
                             {!! view_render_event('bagisto.admin.catalog.industry.edit_form_accordian.general.controls.after', ['industry' => $industry]) !!}
@@ -58,7 +60,11 @@
 
                             {!! view_render_event('bagisto.admin.catalog.industry.edit_form_accordian.industries.controls.before', ['industry' => $industry]) !!}
 
-                            
+                            <div class="control-group" :class="[errors.has('admin_name') ? 'has-error' : '']">
+                                <label for="admin_name" class="required">{{ __('admin::app.catalog.industries.admin') }}</label>
+                                <input type="text" v-validate="'required'" class="control" id="admin_name" name="admin_name" value="{{ old('admin_name') ?: $industry->admin_name }}" data-vv-as="&quot;{{ __('admin::app.catalog.industries.admin_name') }}&quot;"/>
+                                <span class="control-error" v-if="errors.has('admin_name')">@{{ errors.first('admin_name') }}</span>
+                            </div>
 
                             @foreach (app('Webkul\Core\Repositories\LocaleRepository')->all() as $locale)
 
@@ -91,7 +97,7 @@
 
         <div class="control-group" :class="[errors.has('description') ? 'has-error' : '']">
             <label for="description" :class="isRequired ? 'required' : ''">{{ __('admin::app.catalog.categories.description') }}</label>
-            <textarea v-validate="isRequired ? 'required' : ''"  class="control" id="description" name="description" data-vv-as="&quot;{{ __('admin::app.catalog.categories.description') }}&quot;">{{ old('description') }}</textarea>
+            <textarea v-validate="isRequired ? 'required' : ''"  class="control" id="description" name="description" data-vv-as="&quot;{{ __('admin::app.catalog.categories.description') }}&quot;">{{ old('description') ?? $industry->description}}</textarea>
             <span class="control-error" v-if="errors.has('description')">@{{ errors.first('description') }}</span>
         </div>
 

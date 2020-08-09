@@ -2,9 +2,12 @@
 
 namespace Webkul\Product\Models;
 
-use Badenjki\Seller\Models\Store;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use stdClass;
 use Webkul\Attribute\Models\AttributeFamilyProxy;
+use Webkul\Tag\Models\TagProxy;
+use Webkul\Manufacturer\Models\ManufacturerProxy;
 use Webkul\Category\Models\CategoryProxy;
 use Webkul\Attribute\Models\AttributeProxy;
 use Webkul\Inventory\Models\InventorySourceProxy;
@@ -17,7 +20,6 @@ class Product extends Model implements ProductContract
         'attribute_family_id',
         'sku',
         'parent_id',
-        'store_id',
     ];
 
     protected $typeInstance;
@@ -74,6 +76,14 @@ class Product extends Model implements ProductContract
         return $this->belongsToMany(CategoryProxy::modelClass(), 'product_categories');
     }
 
+    public function Tags()
+    {
+        return $this->belongsToMany(TagProxy::modelClass(),'product_tags');
+    }
+    public function Manufacturers()
+    {
+        return $this->belongsToMany(ManufacturerProxy::modelClass(),'product_manufacturers');
+    }
     /**
      * The inventories that belong to the product.
      */
@@ -375,6 +385,93 @@ class Product extends Model implements ProductContract
     public function getProductAttribute()
     {
         return $this;
+    }
+
+    /***
+     * return product_name, category_name, product_id, category_id as collection of array
+     */
+
+    public static function GetProductsWithCategory()
+    {
+        $local = request()->get('locale') ?: app()->getLocale();
+
+        $data = DB::select(DB::raw("SELECT product_flat.name product_name, category_translations.name category_name,
+        product_categories.product_id, product_categories.category_id, categories.parent_id,
+        p_cat.name p_category_name
+        FROM product_categories
+        INNER JOIN product_flat on product_flat.product_id = product_categories.product_id
+        INNER JOIN category_translations on category_translations.category_id = product_categories.category_id
+        INNER JOIN categories on categories.id = product_categories.category_id
+        INNER JOIN category_translations p_cat on p_cat.category_id = categories.parent_id
+        WHERE category_translations.locale = '$local' and product_flat.locale = '$local'
+        ORDER BY product_flat.name"));
+
+        $products = [];
+        $categories = [];
+        $categories_parent = [];
+
+        foreach ($data as $key => $value) {
+            $products[$value->product_id] = $value;
+            $categories[$value->category_id] = $value->category_name;
+
+            if (array_key_exists($value->parent_id, $categories_parent)) {
+                if (!in_array($value->category_id, $categories_parent[$value->parent_id]['category'])) {
+                    $categories_parent[$value->parent_id]['category'][] = $value->category_id;
+                }
+            } else {
+                $categories_parent[$value->parent_id]['parent'] = $value->parent_id;
+                $categories_parent[$value->parent_id]['parent_name'] = $value->p_category_name;
+                $categories_parent[$value->parent_id]['category'][] = $value->category_id;
+            }
+
+        }
+        return [
+            'products' => $products,
+            'categories' => $categories,
+            'categories_parent' => $categories_parent
+        ];
+    }
+
+    public static function GetProductsWithCategoryParentRelation()
+    {
+        $local = request()->get('locale') ?: app()->getLocale();
+
+        $data = DB::select(DB::raw("SELECT product_flat.name product_name, category_translations.name category_name,
+        product_categories.product_id, product_categories.category_id, categories.parent_id,
+        p_cat.name p_category_name
+        FROM product_categories
+        INNER JOIN product_flat on product_flat.product_id = product_categories.product_id
+        INNER JOIN category_translations on category_translations.category_id = product_categories.category_id
+        INNER JOIN categories on categories.id = product_categories.category_id
+        INNER JOIN category_translations p_cat on p_cat.category_id = categories.parent_id
+        WHERE category_translations.locale = '$local' and product_flat.locale = '$local'
+        ORDER BY product_flat.name"));
+
+        $products = [];
+        $categories = [];
+        $categories_parent = [];
+
+        foreach ($data as $key => $value) {
+            $products[$value->product_id] = $value;
+            $categories[$value->category_id]['cat_name'] = $value->category_name;
+            $categories[$value->category_id]['parent_cat_id'] = $value->parent_id;
+
+            if (array_key_exists($value->parent_id, $categories_parent)) {
+                if (!in_array($value->category_id, $categories_parent[$value->parent_id]['category'])) {
+                    $categories_parent[$value->parent_id]['category'][] = $value->category_id;
+                }
+            } else {
+                $categories_parent[$value->parent_id]['parent'] = $value->parent_id;
+                $categories_parent[$value->parent_id]['parent_name'] = $value->p_category_name;
+                $categories_parent[$value->parent_id]['category'][] = $value->category_id;
+            }
+
+        }
+        return [
+            'products' => $products,
+            'categories' => $categories,
+            'categories_parent' => $categories_parent
+        ];
     }
 
     public function store(){

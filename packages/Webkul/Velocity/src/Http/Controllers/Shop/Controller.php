@@ -12,8 +12,10 @@ use Webkul\Product\Repositories\SearchRepository;
 use Webkul\Product\Repositories\ProductRepository;
 use Webkul\Customer\Repositories\WishlistRepository;
 use Webkul\Category\Repositories\CategoryRepository;
+use Webkul\Velocity\Repositories\ConditionalProduct;
 use Webkul\Velocity\Repositories\Product\ProductRepository as VelocityProductRepository;
 use Webkul\Velocity\Repositories\VelocityCustomerCompareProductRepository as CustomerCompareProductRepository;
+use Webkul\Velocity\Helpers\HomePageCustomizeHelper;
 
 class Controller extends BaseController
 {
@@ -68,6 +70,8 @@ class Controller extends BaseController
      */
     protected $wishlistRepository;
 
+    protected $conditionalProduct;
+
     /**
      * Helper object
      *
@@ -97,6 +101,7 @@ class Controller extends BaseController
      *  
      * @return void
      */
+    protected  $homePageCustomizeHelper;
     public function __construct(
         Helper $velocityHelper,
         ProductImage $productImageHelper,
@@ -105,11 +110,16 @@ class Controller extends BaseController
         WishlistRepository $wishlistRepository,
         CategoryRepository $categoryRepository,
         VelocityProductRepository $velocityProductRepository,
-        CustomerCompareProductRepository $compareProductsRepository
+        CustomerCompareProductRepository $compareProductsRepository,
+        HomePageCustomizeHelper $homePageCustomizeHelper,
+        ConditionalProduct $conditionalProduct
     ) {
         $this->_config = request('_config');
+        $this->homePageCustomizeHelper = $homePageCustomizeHelper;
 
         $this->velocityHelper = $velocityHelper;
+
+        $this->conditionalProduct = $conditionalProduct;
 
         $this->searchRepository = $searchRepository;
 

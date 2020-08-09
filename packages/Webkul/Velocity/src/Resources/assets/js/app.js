@@ -35,12 +35,19 @@ window.Carousel = VueCarousel;
 
 // UI components
 Vue.component("vue-slider", require("vue-slider-component"));
+Vue.component("top_slider_category", require("./UI/components/home-slider"));
+Vue.component("slider-add-section", require("./UI/components/slider-add-section"));
+Vue.component("add-panel-first", require("./UI/components/add-panel-first"));
+Vue.component("add-panel-second", require("./UI/components/add-panel-second"));
 Vue.component('mini-cart', require('./UI/components/mini-cart'));
 Vue.component('modal-component', require('./UI/components/modal'));
 Vue.component("add-to-cart", require("./UI/components/add-to-cart"));
 Vue.component('star-ratings', require('./UI/components/star-rating'));
 Vue.component('quantity-btn', require('./UI/components/quantity-btn'));
 Vue.component('sidebar-component', require('./UI/components/sidebar'));
+Vue.component('sidebar-new', require('./UI/components/sidebar-new'));
+Vue.component('root', require('./UI/components/root'));
+Vue.component('folder', require('./UI/components/folder'));
 Vue.component("product-card", require("./UI/components/product-card"));
 Vue.component("wishlist-component", require("./UI/components/wishlist"));
 Vue.component('carousel-component', require('./UI/components/carousel'));
@@ -49,11 +56,24 @@ Vue.component('card-list-header', require('./UI/components/card-header'));
 Vue.component('magnify-image', require('./UI/components/image-magnifier'));
 Vue.component('compare-component', require('./UI/components/product-compare'));
 Vue.component("shimmer-component", require("./UI/components/shimmer-component"));
+Vue.component("shimmer-component-small", require("./UI/components/shimmer-component-small"));
+Vue.component("shimmer-component-slider", require("./UI/components/shimmer-component-slider"));
 Vue.component('responsive-sidebar', require('./UI/components/responsive-sidebar'));
 Vue.component('product-quick-view', require('./UI/components/product-quick-view'));
+Vue.component('product-view', require('./UI/components/product-view'));
+Vue.component('take-review', require('./UI/components/take-review'));
 Vue.component('product-quick-view-btn', require('./UI/components/product-quick-view-btn'));
+Vue.component('recommended-cat-list', require('./UI/components/recommended-cat-list'));
+Vue.component('mix-customize-section-home', require('./UI/components/mix-customize-section'));
+Vue.component('customize-category-section', require('./UI/components/customize-category-section'));
 
+import Loading from 'vue-loading-overlay';
+// Import stylesheet
+import 'vue-loading-overlay/dist/vue-loading.css';
+Vue.component('loading', Loading);
+import VModal from 'vue-js-modal'
 window.eventBus = new Vue();
+Vue.use(VModal, { componentName: 'v-modal' });
 
 $(document).ready(function () {
     // define a mixin object
@@ -68,7 +88,8 @@ $(document).ready(function () {
                 'sharedRootCategories': [],
                 'responsiveSidebarTemplate': '',
                 'responsiveSidebarKey': Math.random(),
-                'baseUrl': document.querySelector("script[src$='velocity.js']").getAttribute('baseUrl'),
+                // 'baseUrl': document.querySelector("script[src$='velocity.js']").getAttribute('baseUrl'),
+                'baseUrl': document.getElementById("base_url_span").getAttribute('baseUrl'),
             }
         },
 
@@ -84,11 +105,13 @@ $(document).ready(function () {
             },
 
             toggleSidebar: function (id, {target}, type) {
+
                 if (
                     Array.from(target.classList)[0] == "main-category"
                     || Array.from(target.parentElement.classList)[0] == "main-category"
                 ) {
                     let sidebar = $(`#sidebar-level-${id}`);
+
                     if (sidebar && sidebar.length > 0) {
                         if (type == "mouseover") {
                             this.show(sidebar);
@@ -113,13 +136,17 @@ $(document).ready(function () {
                             subCategories1 = $(subCategories1);
 
                             if (type == "mouseover") {
+                                console.log(subCategories1)
                                 this.show(subCategories1);
-
                                 let sidebarChild = subCategories1.find('.sidebar');
                                 this.show(sidebarChild);
                             } else if (type == "mouseout") {
+
                                 this.hide(subCategories1);
+                            } else {
+                                console.log('not found')
                             }
+
                         } else {
                             if (type == "mouseout") {
                                 let sidebar = $(`#${id}`);
@@ -281,7 +308,7 @@ $(document).ready(function () {
                         } else {
                             inputNames.push(chunk)
                         }
-                    })
+                    });
 
                     var inputName = inputNames.join('');
 

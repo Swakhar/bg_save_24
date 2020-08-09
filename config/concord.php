@@ -25,6 +25,12 @@ return [
         \Webkul\CMS\Providers\ModuleServiceProvider::class,
         \Webkul\Velocity\Providers\ModuleServiceProvider::class,
         \Webkul\Industry\Providers\ModuleServiceProvider::class,
+        \Webkul\Manufacturer\Providers\ModuleServiceProvider::class,
+        \Webkul\Tag\Providers\ModuleServiceProvider::class,
+
+        \Badenjki\Seller\Providers\ModuleServiceProvider::class,
+        \Webkul\Blog\Providers\ModuleServiceProvider::class,
+
         \Badenjki\Seller\Providers\ModuleServiceProvider::class
     ]
 ];

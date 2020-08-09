@@ -149,6 +149,7 @@ return [
         'customer-reviews'   => 'Customer Reviews',
         'shipping-methods'   => 'Shipping Methods',
         'popular-categories' => 'Popular Categories',
+        'shop-now'           => 'Shop Now'
     ],
 
     'header'        => [
@@ -164,6 +165,12 @@ return [
         'search-text'       => 'Search products here',
         'welcome-message'   => 'Welcome, :customer_name',
         'dropdown-text'     => 'Manage Cart, Orders & Wishlist',
+        'my-account'   => 'My Account',
+        'seller-account'   => 'Seller Account',
+        'shipping-location'   => 'Shipping Location',
+        'shipping-location-modal-header-text'   => 'Please select shipping location',
+
+
     ],
 
     'menu-navbar'   => [
@@ -205,15 +212,18 @@ return [
             'sign-up'               => 'Sign up',
             'new-customer'          => 'New Customer',
             'customer-login'        => 'Customer Login',
-            'registered-user'       => 'Registered User',
+            'registered-user'       => 'REGISTERED CUSTOMERS',
             'your-email-address'    => 'Your email address',
             'form-login-text'       => 'If you have an account, sign in with your email address.',
+            'newsletter-text'   => 'SIGN UP FOR NEWSLETTER',
         ],
         'signup-form'       => [
             'login'             => 'Login',
             'become-user'       => 'Become User',
             'user-registration' => 'User Registration',
-            'form-sginup-text'  => 'If you are new to our store, we glad to have you as member.',
+            'new-user'       => 'NEW CUSTOMERS',
+            'create-new'       => 'CREATE NEW CUSTOMER ACCOUNT',
+            'form-signup-text'  => 'Creating an account has many benefits: check out faster, keep more than one address, track orders and more.',
         ],
         'forget-password'   => [
             'login'                 => 'Login',

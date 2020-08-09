@@ -1,7 +1,17 @@
 <tbody>
+    @php
+    $i=0;
+    @endphp
     @if (count($records))
         @foreach ($records as $key => $record)
-            <tr>
+            @php
+            if($i++%2==0)
+                $bgCode="#ffffff";
+            else
+               $bgCode="#eeeee";
+            @endphp
+
+            <tr bgcolor="{{$bgCode}}">
                 @if ($enableMassActions)
                     <td>
                         <span class="checkbox">

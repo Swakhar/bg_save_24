@@ -86,6 +86,9 @@
                                         if ($attribute->is_required) {
                                             array_push($validations, 'required');
                                         }
+                                        if ($attribute->type == 'number') {
+                                            array_push($validations, 'numeric|min:0');
+                                        }
 
                                         if ($attribute->type == 'price') {
                                             array_push($validations, 'decimal');
@@ -159,11 +162,52 @@
                     @endif
 
                 @endforeach
+                                        <accordian :title="'{{ __('admin::app.catalog.products.tag_man') }}'" :active="false">
+                        <div slot="body">
 
+                            {!! view_render_event('bagisto.admin.catalog.product.edit_form_accordian.general.controls.before', ['product' => $product]) !!}
+
+                            <?php $selectedTags = old('tags') ?? $product->Tags->pluck('id')->toArray() ?>
+
+                            <div class="control-group select" :class="[errors.has('tags[]') ? 'has-error' : '']">
+                                <label for="tags" class="required">{{ __('admin::app.catalog.tags.tags') }}</label>
+
+                                <tag-multi-select-wrapper></tag-multi-select-wrapper>
+                                {{--<select class="control select3" style="width: 100%" name="tags[]"  multiple="multiple">--}}
+                                    {{--@foreach ($tags as $tag)--}}
+                                        {{--<option value="{{ $tag->id }}" {{ in_array($tag->id, $selectedTags) ? 'selected' : ''}}>--}}
+                                            {{--{{ $tag->admin_name }}--}}
+                                        {{--</option>--}}
+                                    {{--@endforeach--}}
+
+                                {{--</select>--}}
+                                <span class="control-error" v-if="errors.has('tags[]')">
+                                    @{{ errors.first('tags[]') }}
+                                </span>
+                            </div>
+                             <?php $selectedManufacturers = old('manufacturers') ?? $product->Manufacturers->pluck('id')->toArray() ?>
+
+                            {{--<div class="control-group select" :class="[errors.has('manufacturers[]') ? 'has-error' : '']">--}}
+                                {{--<label for="manufacturers" class="required">{{ __('admin::app.catalog.manufacturers.manufacturers') }}</label>--}}
+                                {{--<select class="control select2" style="width: 100%" name="manufacturers[]"  multiple>--}}
+                                    {{--@foreach ($manufacturers as $manufacturer)--}}
+                                        {{--<option value="{{ $manufacturer->id }}" {{ in_array($manufacturer->id, $selectedManufacturers) ? 'selected' : ''}}>--}}
+                                            {{--{{ $manufacturer->admin_name }}--}}
+                                        {{--</option>--}}
+                                    {{--@endforeach--}}
+
+                                {{--</select>--}}
+                                {{--<span class="control-error" v-if="errors.has('manufacturers[]')">--}}
+                                    {{--@{{ errors.first('manufacturers[]') }}--}}
+                                {{--</span>--}}
+                            {{--</div>--}}
+                        </div>
+                    </accordian>
                 {!! view_render_event(
                   'bagisto.admin.catalog.product.edit_form_accordian.additional_views.before',
                    ['product' => $product])
                 !!}
+
                 @foreach ($product->getTypeInstance()->getAdditionalViews() as $view)
 
                     @include ($view)
@@ -184,7 +228,20 @@
 
 @push('scripts')
     <script src="{{ asset('vendor/webkul/admin/assets/js/tinyMCE/tinymce.min.js') }}"></script>
+    <script type="text/x-template" id="tag-multi-select">
+        <div>
+            <multiselect
+                    v-model="selected_tags"
+                    :options="tags"
+                    placeholder="Select Options"
+                    label="admin_name"
+                    :select-label="''"
+                    :multiple="true" :searchable="true"
+                    track-by="admin_name"></multiselect>
+            <input v-for="(tag, index) in selected_tags" type="hidden" name="tags[]" :value="tag.id" />
+        </div>
 
+    </script>
     <script>
         $(document).ready(function () {
             $('#channel-switcher, #locale-switcher').on('change', function (e) {
@@ -195,13 +252,44 @@
             })
 
             tinymce.init({
-                selector: 'textarea#description, textarea#short_description',
+                selector: 'textarea',
                 height: 200,
                 width: "100%",
                 plugins: 'image imagetools media wordcount save fullscreen code',
                 toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent  | removeformat | code',
                 image_advtab: true
             });
+
+
         });
+        Vue.component('tag-multi-select-wrapper', {
+
+            template: '#tag-multi-select',
+
+            inject: ['$validator'],
+
+            data: function() {
+                return {
+                    optionRows: [],
+                    tags: [],
+                    selected_tags: []
+                }
+            },
+
+            created: function () {
+                this.tags = [].concat(@json($tags));
+                this.selected_tags = [].concat(@json($product->tags));
+            },
+
+            methods: {
+
+            },
+
+
+            watch: {
+
+            }
+        })
+
     </script>
 @endpush

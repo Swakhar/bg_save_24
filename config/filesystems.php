@@ -50,7 +50,22 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            //'root' => storage_path('app/public'),
+            'root' => public_path() . '/uploads',
+            //'url' => public_path() . '/uploads',
+            'url' => env('APP_URL') . '/uploads',
+            'visibility' => 'public'
+        ],
+        'cv' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/cvs'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+        ],
+
+        'blog' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/blogs'),
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],

@@ -22,6 +22,7 @@ return [
     'action' => 'Action',
     'label' => 'Label',
     'name' => 'Name',
+    'headline' => 'Headline',
     'title' => 'Title',
     'code' => 'Code',
     'type' => 'Type',
@@ -80,7 +81,9 @@ return [
         'tax-rates' => 'Tax Rates',
         'promotions' => 'Promotions',
         'discount' => 'Discount',
-        'cms' => 'CMS'
+        'cms' => 'CMS',
+        'blog'=>'Blog',
+        'blogs'=>'Blogs List'
     ],
 
     'acl' => [
@@ -155,6 +158,7 @@ return [
         'code' => 'Code',
         'admin-name' => 'Name',
         'name' => 'Name',
+        'created' => 'Created',
         'copy' => 'Copy',
         'direction' => 'Direction',
         'fullname' => 'Full Name',
@@ -623,6 +627,7 @@ return [
     'catalog' => [
         'products' => [
             'title' => 'Products',
+            'tag_man' => 'Tags and Manufacturers',
             'add-product-btn-title' => 'Add Product',
             'add-title' => 'Add Product',
             'edit-title' => 'Edit Product',
@@ -638,10 +643,12 @@ return [
             'attribute-option-header' => 'Attribute Option(s)',
             'no' => 'No',
             'yes' => 'Yes',
+            'image' => 'Image',
             'disabled' => 'Disabled',
             'enabled' => 'Enabled',
             'add-variant-btn-title' => 'Add Variant',
             'name' => 'Name',
+            'number' => 'Number',
             'qty' => 'Qty',
             'price' => 'Price',
             'weight' => 'Weight',
@@ -715,6 +722,7 @@ return [
             'multiselect' => 'Multiselect',
             'datetime' => 'Datetime',
             'date' => 'Date',
+            'number' => 'Number',
             'label' => 'Label',
             'admin' => 'Admin',
             'options' => 'Options',
@@ -750,7 +758,18 @@ return [
             'checkbox' => 'Checkbox',
             'use_in_flat' => "Create in Product Flat Table",
             'is_comparable' => "Attribute is comparable",
+            'is_show_in_more_information' => "Attribute is Show in More Information",
             'default_null_option' => 'Create default empty option',
+        ],
+        'attribute_options' => [
+            'title' => 'Configurable Option Value',
+            'add-title' => 'Add Configurable Option',
+            'edit-title' => 'Edit Configurable Option',
+            'save-btn-title' => 'Save Configurable Option',
+            'admin_name' => 'Admin Name',
+            'is_configurable' => 'Is Configurable ?',
+            'image_name' => 'Image',
+            'attribute_name' => 'Attribute Name',
         ],
         'families' => [
             'title' => 'Families',
@@ -798,6 +817,7 @@ return [
             'attributes' => 'Attributes',
             'related-industries' => 'Related Industries/Institutes',
             'industries' => 'Related Industries/Institutes',
+
         ],
         'industries' => [
             'title' => 'Related Industries',
@@ -809,6 +829,45 @@ return [
             'code' => 'Code',
             'label' => 'Label',
             'admin' => 'Admin',
+            'admin_name' => 'Admin Name',
+        ],
+        'manufacturers' => [
+            'title' => 'Manufacturers',
+            'manufacturers' => 'Manufacturers',
+            'add-title' => 'Add Manufacturer',
+            'edit-title' => 'Edit Manufacturer',
+            'save-btn-title' => 'Save Manufacturer',
+            'general' => 'General',
+            'name' => 'Name',
+            'published' => 'Published',
+            'display' => 'Display',
+            'discounts' => 'Discount',
+            'display-order' => 'Display Order',
+            'yes' => 'Yes',
+            'no' => 'No',
+            'mapping' => 'Mapping',
+            'products-only' => 'Products Only',
+            'description-and-images' => 'Description and Images',
+            'description' => 'Description',
+            'image' => 'Image',
+            'admin_name' => 'Admin Name',
+        ],
+        'tags' => [
+            'title' => 'Product Tags',
+            'tags' => 'Tags',
+            'add-title' => 'Add Tag',
+            'edit-title' => 'Edit Tag',
+            'save-btn-title' => 'Save Tag',
+            'general' => 'General',
+            'name' => 'Name',
+            'status' => 'Status',
+            'yes' => 'Yes',
+            'no' => 'No',
+            'mapping' => 'Mapping',
+            'products-only' => 'Products Only',
+            'description-and-images' => 'Description and Images',
+            'description' => 'Description',
+            'image' => 'Image',
             'admin_name' => 'Admin Name',
         ]
     ],
@@ -1061,7 +1120,18 @@ return [
             'title' => 'Development',
         ]
     ],
-
+    'blog' => [
+        'title' => 'Blog',
+        'add-title' => 'Add Blog',
+        'edit-title' => 'Edit Blog',
+        'save-btn-title' => 'Save Blog',
+        'general' => 'General',
+        'name' => 'Name',
+        'headline' => 'Headline',
+        'description' => 'Description',
+        'video' => 'Youtube Video Link',
+        'image' => 'Image',
+    ],
     'customers' => [
         'groups' =>[
             'add-title' => 'Add Group',
@@ -1353,6 +1423,34 @@ return [
     ],
 
     'cms' => [
+        'recommended_slider' => [
+            'view' => 'Recommended Category Slider',
+            'config' => 'Recommended Category Slider Configuration'
+        ],
+        'customize_home_section' => [
+            'view' => 'Customize Home Section',
+            'config' => 'Customize Home Section Configuration'
+        ],
+        'mix_customize_section' => [
+            'view' => 'Mix Customize Section',
+            'config' => 'Mix Customize Section Configuration'
+        ],
+        'advertisement_section_one' => [
+            'view' => 'Advertisement Section One',
+            'config' => 'Advertisement Section One Configuration'
+        ],
+        'advertisement_section_two' => [
+            'view' => 'Advertisement Section Two',
+            'config' => 'Advertisement Section Two Configuration'
+        ],
+        'slider_section' => [
+            'view' => 'Slider Section',
+            'config' => 'Slider Section Configuration'
+        ],
+        'slider_add_section' => [
+            'view' => 'Slider Add Section',
+            'config' => 'Slider Add Section Configuration'
+        ],
         'pages' => [
             'general' => 'General',
             'seo' => 'SEO',
@@ -1409,7 +1507,7 @@ return [
     ],
 
     'footer' => [
-        'copy-right' => 'Powered by <a href="https://bagisto.com/" target="_blank">Bagisto</a>, A Community Project by <a href="https://webkul.com/" target="_blank">Webkul</a>',
+        'copy-right' => '&copy;2020 <a href="#">SafeShop</a>,Limited. All rights reserved.',
     ],
 
     'admin' => [

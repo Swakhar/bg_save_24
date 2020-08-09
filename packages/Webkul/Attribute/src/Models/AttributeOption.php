@@ -17,6 +17,7 @@ class AttributeOption extends TranslatableModel implements AttributeOptionContra
         'swatch_value',
         'sort_order',
         'attribute_id',
+        'option_value_id',
     ];
 
     /**

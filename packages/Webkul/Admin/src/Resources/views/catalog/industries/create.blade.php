@@ -36,10 +36,10 @@
 
                             {!! view_render_event('bagisto.admin.catalog.industry.create_form_accordian.general.controls.before') !!}
 
-                            <div class="control-group" :class="[errors.has('admin_name') ? 'has-error' : '']">
-                                <label for="admin_name" class="required">{{ __('admin::app.catalog.attributes.admin') }}</label>
-                                <input type="text" v-validate="'required'" class="control" id="admin_name" name="admin_name" value="{{ old('admin_name') }}" data-vv-as="&quot;{{ __('admin::app.catalog.attributes.admin') }}&quot;"/>
-                                <span class="control-error" v-if="errors.has('admin_name')">@{{ errors.first('admin_name') }}</span>
+                            <div class="control-group" :class="[errors.has('code') ? 'has-error' : '']">
+                                <label for="code" class="required">{{ __('admin::app.catalog.industries.code') }}</label>
+                                <input type="text" v-validate="'required'" class="control" id="code" name="code" value="{{ old('code') }}" data-vv-as="&quot;{{ __('admin::app.catalog.industries.code') }}&quot;" v-slugify-target="'slug'"/>
+                                <span class="control-error" v-if="errors.has('code')">@{{ errors.first('code') }}</span>
                             </div>
 
                             
@@ -58,7 +58,11 @@
 
                             {!! view_render_event('bagisto.admin.catalog.attribute.create_form_accordian.label.controls.before') !!}
 
-                            
+                            <div class="control-group" :class="[errors.has('admin_name') ? 'has-error' : '']">
+                                <label for="admin_name" class="required">{{ __('admin::app.catalog.attributes.admin') }}</label>
+                                <input type="text" v-validate="'required'" class="control" id="admin_name" name="admin_name" value="{{ old('admin_name') }}" data-vv-as="&quot;{{ __('admin::app.catalog.attributes.admin') }}&quot;"/>
+                                <span class="control-error" v-if="errors.has('admin_name')">@{{ errors.first('admin_name') }}</span>
+                            </div>
 
                             @foreach (app('Webkul\Core\Repositories\LocaleRepository')->all() as $locale)
 

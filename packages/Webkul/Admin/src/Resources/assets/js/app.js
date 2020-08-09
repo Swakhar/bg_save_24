@@ -7,6 +7,14 @@ import './bootstrap';
 
 window.Vue = Vue;
 window.VeeValidate = VeeValidate;
+window.toastr = require('toastr/toastr');
+require('toastr/toastr.scss');
+
+import ar_plug from 'array-tools'
+
+window.a = ar_plug
+
+import multiselect from 'vue-multiselect'
 
 Vue.use(VeeValidate, {
     dictionary: {
@@ -19,6 +27,20 @@ Vue.prototype.$http = axios
 
 window.eventBus = new Vue();
 
+Vue.component('mix-customize-section', require('./components/mix_section').default);
+Vue.component('advertisement-section-one', require('./components/advertisement_section_one').default);
+Vue.component('advertisement-section-two', require('./components/advertisement_section_two').default);
+Vue.component('slider_section', require('./components/slider_section').default);
+Vue.component('slider_add_section', require('./components/slider_add_section').default);
+Vue.component('multi-select', require('./components/shared/multi_select').default);
+Vue.component('select2', require('./components/shared/Select2').default);
+Vue.component('select4', require('./components/shared/Select4').default);
+Vue.component('single-select', require('./components/shared/single_select').default);
+Vue.component('image-picker', require('./components/shared/image_pickup').default);
+Vue.component('customize_section_admin', require('./components/customize_section').default);
+
+Vue.component('multiselect', multiselect);
+
 $(document).ready(function () {
     Vue.config.ignoredElements = [
         'option-wrapper',
@@ -30,7 +52,9 @@ $(document).ready(function () {
         el: "#app",
 
         data: {
-            modalIds: {}
+            modalIds: {},
+            'baseUrl': document.getElementById("base_url_span").getAttribute('baseUrl'),
+
         },
 
         mounted() {
@@ -38,9 +62,11 @@ $(document).ready(function () {
             this.addFlashMessages();
 
             this.$validator.localize(document.documentElement.lang);
+
         },
 
         methods: {
+
             onSubmit: function (e) {
                 this.toggleButtonDisable(true);
 

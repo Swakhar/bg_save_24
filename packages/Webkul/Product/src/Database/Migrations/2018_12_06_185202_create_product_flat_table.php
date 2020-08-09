@@ -23,6 +23,8 @@ class CreateProductFlatTable extends Migration
             $table->boolean('featured')->nullable();
             $table->boolean('status')->nullable();
             $table->string('thumbnail')->nullable();
+            $table->integer('min_qty')->default('1');
+            $table->integer('max_qty')->nullable();
 
             $table->decimal('price', 12, 4)->nullable();
             $table->decimal('cost', 12, 4)->nullable();

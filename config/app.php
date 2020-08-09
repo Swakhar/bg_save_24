@@ -212,6 +212,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -268,9 +269,16 @@ return [
         Webkul\CMS\Providers\CMSServiceProvider::class,
         Webkul\Velocity\Providers\VelocityServiceProvider::class,
         Webkul\BookingProduct\Providers\BookingProductServiceProvider::class,
+        Webkul\Manufacturer\Providers\ManufacturerServiceProvider::class,
+        Webkul\Tag\Providers\TagServiceProvider::class,
+
+        Webkul\Industry\Providers\IndustryServiceProvider::class,
 
         //Badenjki packages
         Badenjki\Seller\Providers\SellerServiceProvider::class,
+        Webkul\Industry\Providers\IndustryServiceProvider::class,
+        Webkul\Blog\Providers\BlogServiceProvider::class,
+
     ],
 
     /*

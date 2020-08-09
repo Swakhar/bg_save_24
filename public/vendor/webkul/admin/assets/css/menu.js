@@ -15,6 +15,9 @@ $(document).ready(function () {
             && !dt_cl.is(e.target)
             && dt_cl.has(e.target).length === 0) {
             $("#menu_List").removeClass("translateX").addClass("hide")
+            $(".parent_multi_select ul").addClass("hide")
+            $(".select2 ul").addClass("hide")
+
         }
     });
 
@@ -43,7 +46,9 @@ $(document).ready(function () {
             container.has(e.target).length === 0
             && !dt_cl.is(e.target)
             && dt_cl.has(e.target).length === 0) {
-            $(".show_logout_div").removeClass("show").addClass("hide")
+            $(".show_logout_div").removeClass("show").addClass("hide");
+            $(".multi_select_div").addClass("hide");
+            $(".custom_select2").addClass("hide");
         }
     });
 });

@@ -251,6 +251,28 @@ Route::group(['middleware' => ['web']], function () {
                     'view' => 'admin::sales.refunds.view',
                 ])->name('admin.sales.refunds.view');
             });
+            Route::prefix('blog')->group(function () {
+                Route::get('/list', 'Webkul\Blog\Http\Controllers\BlogController@index')->defaults('_config', [
+                    'view' => 'admin::blog.index',
+                ])->name('admin.blog.index');
+                Route::get('/list/create', 'Webkul\Blog\Http\Controllers\BlogController@create')->defaults('_config', [
+                    'view' => 'admin::blog.create',
+                ])->name('admin.blog.create');
+
+                Route::post('/list/create', 'Webkul\Blog\Http\Controllers\BlogController@store')->defaults('_config', [
+                    'redirect' => 'admin.blog.index',
+                ])->name('admin.blog.store');
+
+                Route::get('/list/edit/{id}', 'Webkul\Blog\Http\Controllers\BlogController@edit')->defaults('_config', [
+                    'view' => 'admin::blog.edit',
+                ])->name('admin.blog.edit');
+
+                Route::put('/list/edit/{id}', 'Webkul\Blog\Http\Controllers\BlogController@update')->defaults('_config', [
+                    'redirect' => 'admin.blog.index',
+                ])->name('admin.blog.update');
+
+                Route::post('/list/delete/{id}', 'Webkul\Blog\Http\Controllers\BlogController@destroy')->name('admin.blog.delete');
+            });
 
             // Marketplace Routes
 
@@ -401,7 +423,50 @@ Route::group(['middleware' => ['web']], function () {
                 ])->name('admin.catalog.industries.update');
 
                 Route::post('/industries/delete/{id}', 'Webkul\Industry\Http\Controllers\IndustryController@destroy')->name('admin.catalog.industries.delete');
+                // Catalog Manufacturer Routes
+                Route::get('/manufacturers', 'Webkul\Manufacturer\Http\Controllers\ManufacturerController@index')->defaults('_config', [
+                    'view' => 'admin::catalog.manufacturers.index',
+                ])->name('admin.catalog.manufacturers.index');
+                Route::get('/manufacturers/create', 'Webkul\Manufacturer\Http\Controllers\ManufacturerController@create')->defaults('_config', [
+                    'view' => 'admin::catalog.manufacturers.create',
+                ])->name('admin.catalog.manufacturers.create');
 
+                Route::post('/manufacturers/create', 'Webkul\Manufacturer\Http\Controllers\ManufacturerController@store')->defaults('_config', [
+                    'redirect' => 'admin.catalog.manufacturers.index',
+                ])->name('admin.catalog.manufacturers.store');
+
+                Route::get('/manufacturers/edit/{id}', 'Webkul\Manufacturer\Http\Controllers\ManufacturerController@edit')->defaults('_config', [
+                    'view' => 'admin::catalog.manufacturers.edit',
+                ])->name('admin.catalog.manufacturers.edit');
+
+                Route::put('/manufacturers/edit/{id}', 'Webkul\Manufacturer\Http\Controllers\ManufacturerController@update')->defaults('_config', [
+                    'redirect' => 'admin.catalog.manufacturers.index',
+                ])->name('admin.catalog.manufacturers.update');
+
+                Route::post('/manufacturers/delete/{id}', 'Webkul\Manufacturer\Http\Controllers\ManufacturerController@destroy')->name('admin.catalog.manufacturers.delete');
+
+
+                // Catalog Tag Routes
+                Route::get('/tags', 'Webkul\Tag\Http\Controllers\TagController@index')->defaults('_config', [
+                    'view' => 'admin::catalog.tags.index',
+                ])->name('admin.catalog.tags.index');
+                Route::get('/tags/create', 'Webkul\Tag\Http\Controllers\TagController@create')->defaults('_config', [
+                    'view' => 'admin::catalog.tags.create',
+                ])->name('admin.catalog.tags.create');
+
+                Route::post('/tags/create', 'Webkul\Tag\Http\Controllers\TagController@store')->defaults('_config', [
+                    'redirect' => 'admin.catalog.tags.index',
+                ])->name('admin.catalog.tags.store');
+
+                Route::get('/tags/edit/{id}', 'Webkul\Tag\Http\Controllers\TagController@edit')->defaults('_config', [
+                    'view' => 'admin::catalog.tags.edit',
+                ])->name('admin.catalog.tags.edit');
+
+                Route::put('/tags/edit/{id}', 'Webkul\Tag\Http\Controllers\TagController@update')->defaults('_config', [
+                    'redirect' => 'admin.catalog.tags.index',
+                ])->name('admin.catalog.tags.update');
+
+                Route::post('/tags/delete/{id}', 'Webkul\Tag\Http\Controllers\TagController@destroy')->name('admin.catalog.tags.delete');
 
                 // Catalog Attribute Routes
                 Route::get('/attributes', 'Webkul\Attribute\Http\Controllers\AttributeController@index')->defaults('_config', [
@@ -427,6 +492,9 @@ Route::group(['middleware' => ['web']], function () {
                 Route::post('/attributes/delete/{id}', 'Webkul\Attribute\Http\Controllers\AttributeController@destroy')->name('admin.catalog.attributes.delete');
 
                 Route::post('/attributes/massdelete', 'Webkul\Attribute\Http\Controllers\AttributeController@massDestroy')->name('admin.catalog.attributes.massdelete');
+
+                Route::get('/attribute-options', 'Webkul\Attribute\Http\Controllers\AttributeController@GetAttributeProperty')
+                    ->name('attribute_options');
 
                 // Catalog Family Routes
                 Route::get('/families', 'Webkul\Attribute\Http\Controllers\AttributeFamilyController@index')->defaults('_config', [
@@ -831,6 +899,96 @@ Route::group(['middleware' => ['web']], function () {
                 Route::post('/massdelete', 'Webkul\CMS\Http\Controllers\Admin\PageController@massDelete')->defaults('_config', [
                     'redirect' => 'admin.cms.index',
                 ])->name('admin.cms.mass-delete');
+
+                /*** recommended category slider ***/
+                Route::get('/recommended-category-slider', 'Webkul\CMS\Http\Controllers\Admin\RecommendedSliderController@index')->defaults('_config', [
+                    'view' => 'admin::recommended_slider.index',
+                ])->name('admin.recommended_sliders.index');
+
+                Route::post('/recommended-category-slider-save', 'Webkul\CMS\Http\Controllers\Admin\RecommendedSliderController@store')->defaults('_config', [
+                    'view' => 'admin::recommended_slider.index',
+                ])->name('admin.recommended_sliders.store');
+
+                /*** customize section configuration ***/
+                Route::get('/customize-section', 'Webkul\CMS\Http\Controllers\Admin\CustomizeSectionController@index')->defaults('_config', [
+                    'view' => 'admin::customize_home_section.index',
+                ])->name('admin.customize_home_section.index');
+
+                Route::post('/customize-section-save', 'Webkul\CMS\Http\Controllers\Admin\CustomizeSectionController@store')->defaults('_config', [
+                    'view' => 'admin::recommended_slider.index',
+                ])->name('admin.customize_home_section.store');
+
+                /*** mix customize section configuration ***/
+                Route::get('/mix-customize-section', 'Webkul\CMS\Http\Controllers\Admin\MixSectionController@index')->defaults('_config', [
+                    'view' => 'admin::mix_customize_section.index',
+                ])->name('admin.mix_customize_section.index');
+
+                Route::get('/get-mix-section', 'Webkul\CMS\Http\Controllers\Admin\MixSectionController@getMixSection')
+                    ->name('get-mix-section');
+
+                Route::post('/mix-customize-section-save', 'Webkul\CMS\Http\Controllers\Admin\MixSectionController@store')->defaults('_config', [
+                    'view' => 'admin::mix_customize_section.index',
+                ])->name('admin.mix_customize_section.store');
+
+                Route::post('/product-image-url', 'Webkul\CMS\Http\Controllers\Admin\MixSectionController@GetProductImageByCondition')
+                    ->name('product-image-url');
+
+                /*** advertisement section one ***/
+                Route::get('/advertisement-section-one', 'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@index')->defaults('_config', [
+                    'view' => 'admin::advertisement_section_one.index',
+                ])->name('admin.advertisement_section_one.index');
+
+                Route::post('/update-advertisement-section-one',
+                    'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@UpdateAdvertisementOne')
+                ->name('update-advertisement-section-one');
+
+                Route::get('/get-advertisement-section-one',
+                    'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@GetAdvertisementOne')
+                ->name('get-advertisement-section-one');
+
+                /*** advertisement section two ***/
+                Route::get('/advertisement-section-two', 'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@index')
+                    ->defaults('_config', [
+                    'view' => 'admin::advertisement_section_two.index',
+                ])->name('admin.advertisement_section_two.index');
+
+                Route::post('/update-advertisement-section-two',
+                    'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@UpdateAdvertisementTwo')
+                    ->name('update-advertisement-section-two');
+
+                Route::get('/get-advertisement-section-two',
+                    'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@GetAdvertisementTwo')
+                    ->name('get-advertisement-section-two');
+
+                /****  slider section  ****/
+                Route::get('/slider-section', 'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@index')
+                    ->defaults('_config', [
+                    'view' => 'admin::slider_section.index',
+                ])->name('admin.slider_section.index');
+
+                Route::post('/update-section-slider',
+                    'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@UpdateSliderSection')
+                    ->name('update-advertisement-section-slider');
+
+                Route::get('/get-section-slider',
+                    'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@GetSliderSection')
+                    ->name('get-advertisement-section-slider');
+
+                /****  slider add section  ****/
+                Route::get('/slider-add-section', 'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@index')
+                    ->defaults('_config', [
+                    'view' => 'admin::slider_add_section.index',
+                ])->name('admin.slider_add_section.index');
+
+                Route::post('/update-slider-add-section',
+                    'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@UpdateSliderAddSection')
+                    ->name('update-slider-add-section-slider');
+
+                Route::get('/get-slider-add-section',
+                    'Webkul\CMS\Http\Controllers\Admin\AdvertisementController@GetSliderAddSection')
+                    ->name('get-slider-add-section-slider');
+
+
 
                 // Route::post('/delete/{id}', 'Webkul\CMS\Http\Controllers\Admin\PageController@delete')->defaults('_config', [
                 //     'redirect' => 'admin.cms.index'
