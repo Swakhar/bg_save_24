@@ -14,9 +14,9 @@ class AddColumnOptionValueInAttributeOptionTable extends Migration
     public function up()
     {
         Schema::table('attribute_options', function (Blueprint $table) {
-            $table->integer('option_value_id')->nullable();
+            $table->integer('option_value_id')->unsigned();
             $table->foreign('option_value_id')
-                ->references('id')->on('configurable_option_value')->onDelete('cascade');
+                ->nullable()->references('id')->on('configurable_option_value')->onDelete('cascade');
         });
     }
 
