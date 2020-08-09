@@ -5,6 +5,78 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
     Route::get('/', 'Webkul\Shop\Http\Controllers\HomeController@index')->defaults('_config', [
         'view' => 'shop::home.index'
     ])->name('shop.home.index');
+    //Store front about
+    Route::get('/about', 'Webkul\Shop\Http\Controllers\StaticPageController@aboutus')->defaults('_config', [
+        'view' => 'shop::about.about_us'
+    ])->name('shop.about.about_us');
+    Route::get('/contact', 'Webkul\Shop\Http\Controllers\StaticPageController@contact')->defaults('_config', [
+        'view' => 'shop::about.contact'
+    ])->name('shop.about.contact');
+    Route::post('/contact/message', 'Webkul\Shop\Http\Controllers\StaticPageController@message')->defaults('_config', [
+        'redirect' => 'shop.about.contact'
+    ])->name('contact.message');
+    Route::get('/career', 'Webkul\Shop\Http\Controllers\StaticPageController@career')->defaults('_config', [
+        'view' => 'shop::about.career'
+    ])->name('shop.about.career');
+    Route::post('/career/save', 'Webkul\Shop\Http\Controllers\StaticPageController@career_save')->name('shop.about.career.save');
+    Route::get('/feedback', 'Webkul\Shop\Http\Controllers\StaticPageController@feedback')->defaults('_config', [
+        'view' => 'shop::about.feedback'
+    ])->name('shop.about.feedback');
+    Route::get('/blog', 'Webkul\Shop\Http\Controllers\StaticPageController@blog')->defaults('_config', [
+        'view' => 'shop::blog.index'
+    ])->name('shop.about.blog');
+    Route::get('/blog/{id}', 'Webkul\Shop\Http\Controllers\StaticPageController@blog_id')->defaults('_config', [
+        'view' => 'shop::blog.index'
+    ])->name('shop.about.blog_id');
+    Route::post('/blog/date', 'Webkul\Shop\Http\Controllers\StaticPageController@blog_date')->defaults('_config', [
+        'view' => 'shop::blog.index'
+    ])->name('shop.about.blog_date');
+    Route::post('/blog/search', 'Webkul\Shop\Http\Controllers\StaticPageController@blog_search')->defaults('_config', [
+        'view' => 'shop::blog.index'
+    ])->name('shop.about.blog_search');
+    //store front support
+    Route::get('/payment', 'Webkul\Shop\Http\Controllers\StaticPageController@payment')->defaults('_config', [
+        'view' => 'shop::support.payment'
+    ])->name('shop.support.payment');
+    Route::get('/shipping', 'Webkul\Shop\Http\Controllers\StaticPageController@shipping')->defaults('_config', [
+        'view' => 'shop::support.shipping'
+    ])->name('shop.support.shipping');
+    Route::get('/cancel', 'Webkul\Shop\Http\Controllers\StaticPageController@cancel')->defaults('_config', [
+        'view' => 'shop::support.cancel'
+    ])->name('shop.support.cancel');
+    Route::get('/tracking', 'Webkul\Shop\Http\Controllers\StaticPageController@tracking')->defaults('_config', [
+        'view' => 'shop::support.tracking'
+    ])->name('shop.support.tracking');
+    Route::post('/track', 'Webkul\Shop\Http\Controllers\StaticPageController@track')->defaults('_config', [
+        'view' => 'shop::support.tracking'
+    ])->name('shop.support.track');
+    Route::get('/faqs', 'Webkul\Shop\Http\Controllers\StaticPageController@faqs')->defaults('_config', [
+        'view' => 'shop::support.faqs'
+    ])->name('shop.support.faqs');
+    Route::get('/how', 'Webkul\Shop\Http\Controllers\StaticPageController@how')->defaults('_config', [
+        'view' => 'shop::support.how'
+    ])->name('shop.support.how');
+
+    //store front policy
+    Route::get('/aggrement', 'Webkul\Shop\Http\Controllers\StaticPageController@aggrement')->defaults('_config', [
+        'view' => 'shop::policy.aggrement'
+    ])->name('shop.policy.aggrement');
+    Route::get('/privacy', 'Webkul\Shop\Http\Controllers\StaticPageController@privacy')->defaults('_config', [
+        'view' => 'shop::policy.privacy'
+    ])->name('shop.policy.privacy');
+    Route::get('/return', 'Webkul\Shop\Http\Controllers\StaticPageController@return')->defaults('_config', [
+        'view' => 'shop::policy.return'
+    ])->name('shop.policy.return');
+    Route::get('/refund', 'Webkul\Shop\Http\Controllers\StaticPageController@refund')->defaults('_config', [
+        'view' => 'shop::policy.refund'
+    ])->name('shop.policy.refund');
+    Route::get('/cancellation', 'Webkul\Shop\Http\Controllers\StaticPageController@cancellation')->defaults('_config', [
+        'view' => 'shop::policy.cancellation'
+    ])->name('shop.policy.cancellation');
+    Route::get('/terms', 'Webkul\Shop\Http\Controllers\StaticPageController@terms')->defaults('_config', [
+        'view' => 'shop::policy.terms'
+    ])->name('shop.policy.terms');
+    
 
     //subscription
     //subscribe
@@ -137,6 +209,7 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
         Route::post('login', 'Webkul\Customer\Http\Controllers\SessionController@create')->defaults('_config', [
             'redirect' => 'customer.profile.index'
         ])->name('customer.session.create');
+        
 
         // Registration Routes
         //registration form show
@@ -297,6 +370,74 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
     });
     //customer routes end here
 
+    Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function () {
+
+        Route::prefix('seller')->group(function () {
+            Route::get('login', 'Badenjki\Seller\Http\Controllers\SessionController@show')->defaults('_config', [
+                'view' => 'shop::sellers.signin.index'
+            ])->name('store.index');
+
+            Route::post('login', 'Badenjki\Seller\Http\Controllers\SessionController@create')->defaults('_config', [
+            'redirect' => 'customer.store.index'
+            ])->name('store.index.save');
+
+            Route::get('registration', 'Badenjki\Seller\Http\Controllers\RegistrationController@show')->defaults('_config', [
+                'view' => 'shop::sellers.register.index'
+            ])->name('store.register');
+
+            Route::post('registration', 'Badenjki\Seller\Http\Controllers\RegistrationController@create')->defaults('_config', [
+            'redirect' => 'store.index',
+            ])->name('store.register.save');
+        });
+        Route::group(['middleware' => ['customer']], function () {
+
+            Route::get('stores', 'Badenjki\Seller\Http\Controllers\StoreController@index')->defaults('_config', [
+                'view' => 'shop::customers.account.store.index'
+            ])->name('customer.store.index');
+//
+//            Route::get('stores/create', 'Badenjki\Seller\Http\Controllers\StoreController@create')->defaults('_config', [
+//                'view' => 'shop::customers.account.store.create'
+//            ])->name('customer.store.create');
+//
+//            Route::post('stores/create', 'Badenjki\Seller\Http\Controllers\StoreController@store')->defaults('_config',[
+//                'redirect' => 'customer.store.index'
+//            ])->name('customer.store.create');
+
+            Route::get('stores/edit/{id}', 'Webkul\Customer\Http\Controllers\AddressController@edit')->defaults('_config', [
+                'view' => 'shop::customers.account.store.edit'
+            ])->name('customer.store.edit');
+
+            Route::patch('stores/edit/{store}', 'Badenjki\Seller\Http\Controllers\StoreController@update')->defaults('_config',[
+                'redirect' => 'customer.store.index'
+            ])->name('customer.store.edit');
+
+            //Seller products(listing)
+            Route::get('products', 'Badenjki\Seller\Http\Controllers\ProductController@index')->defaults('_config', [
+                'view' => 'shop::sellers.product.index'
+            ])->name('seller.products.index');
+
+            //Product Create Form Show
+            Route::get('products/create', 'Badenjki\Seller\Http\Controllers\ProductController@create')->defaults('_config', [
+                'view' => 'shop::sellers.product.create'
+            ])->name('seller.product.create');
+
+            //Products Create Form Store
+            Route::post('products/create', 'Badenjki\Seller\Http\Controllers\ProductController@store')->defaults('_config', [
+                'redirect' => 'seller.product.edit'
+            ])->name('seller.product.create');
+
+            Route::get('products/edit/{id}', 'Badenjki\Seller\Http\Controllers\ProductController@edit')->defaults('_config', [
+                'view' => 'shop::sellers.product.edit',
+            ])->name('seller.product.edit');
+
+            Route::put('products/edit/{id}', 'Badenjki\Seller\Http\Controllers\ProductController@update')->defaults('_config', [
+                'redirect' => 'seller.products.index',
+            ])->name('seller.product.edit');
+
+        });
+//        Route::get('/{store}', 'Badenjki\Seller\Http\Controllers\StoreController@show');
+    });
+
     Route::get('page/{slug}', 'Webkul\CMS\Http\Controllers\Shop\PagePresenterController@presenter')->name('shop.cms.page');
 
     Route::fallback(\Webkul\Shop\Http\Controllers\ProductsCategoriesProxyController::class . '@index')
@@ -305,4 +446,13 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
             'category_view' => 'shop::products.index'
         ])
         ->name('shop.productOrCategory.index');
+    //Login using facebook
+        Route::post('submit-review', 'Webkul\Shop\Http\Controllers\ProductsCategoriesProxyController@submit_review')
+            ->name('submit-review');
+
+        Route::get('login/facebook', 'Webkul\Customer\Http\Controllers\SessionController@redirectToFacebookProvider')->name('redirectFacebook');
+        Route::get('login/facebook/callback', 'Webkul\Customer\Http\Controllers\SessionController@handleFacebookProviderCallback');
+        //Login using google
+        Route::get('login/google', 'Webkul\Customer\Http\Controllers\SessionController@redirectToGoogleProvider')->name('redirectGoogle');
+        Route::get('login/google/callback', 'Webkul\Customer\Http\Controllers\SessionController@handleGoogleProviderCallback');
 });

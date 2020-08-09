@@ -3,7 +3,12 @@
 namespace Webkul\Customer\Http\Controllers;
 
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Webkul\Customer\Repositories\CustomerRepository;
+use Webkul\Customer\Repositories\CustomerGroupRepository;
 use Cookie;
+use Socialite;
 
 class SessionController extends Controller
 {
@@ -13,17 +18,23 @@ class SessionController extends Controller
      * @var array
      */
     protected $_config;
+    protected $customerRepository;
+    protected $customerGroupRepository;
 
     /**
      * Create a new Repository instance.
      *
      * @return void
     */
-    public function __construct()
+    public function __construct(CustomerRepository $customerRepository,
+        CustomerGroupRepository $customerGroupRepository)
     {
-        $this->middleware('customer')->except(['show','create']);
+        $this->middleware('customer')->except(['show','create','redirectToFacebookProvider', 'handleFacebookProviderCallback','redirectToGoogleProvider', 'handleGoogleProviderCallback']);
 
         $this->_config = request('_config');
+        $this->customerRepository = $customerRepository;
+
+        $this->customerGroupRepository = $customerGroupRepository;
     }
 
     /**
@@ -97,5 +108,102 @@ class SessionController extends Controller
         Event::dispatch('customer.after.logout', $id);
 
         return redirect()->route($this->_config['redirect']);
+    }
+
+    public function redirectToFacebookProvider()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    public function handleFacebookProviderCallback()
+    {
+        $user = Socialite::driver('facebook')->stateless()->user();
+        $emailexist=$this->customerRepository->where('email',$user->getEmail())->get();
+        if(count($emailexist)){
+            session()->flash('error', trans('The email related to this account has exist by other login methods! Please sign in wth that account!'));
+            return redirect()->back();
+        }
+        $customer=$this->customerRepository->where('fb_id',$user->getId())->get();
+        $log['email']=$user->getEmail();
+        $log['password']=$user->getId();
+        if(count($customer)){
+            if (! auth()->guard('customer')->attempt($log)) {
+            session()->flash('error', trans('shop::app.customer.login-form.invalid-creds'));
+
+            return redirect()->back();
+            }
+            session()->flash('success', trans('Login Successfull!'));
+
+            return redirect()->route('shop.home.index');
+        }else{
+            $data['first_name'] = $user->getName();
+            $data['last_name'] = "";
+
+            $data['email'] = $user->getEmail();
+            $data['password'] = bcrypt($user->getId());
+            $data['customer_group_id'] = $this->customerGroupRepository->findOneWhere(['code' => 'general'])->id;
+            $data['token'] = $user->token;
+            $data['is_verified'] = 1;
+            $data['fb_id'] = $user->getId();
+
+            $customer = $this->customerRepository->create($data);
+            Event::dispatch('customer.after.login', $user->getId());
+            if (! auth()->guard('customer')->attempt($log)) {
+                session()->flash('error', trans('shop::app.customer.login-form.invalid-creds'));
+
+                return redirect()->back();
+            }
+            session()->flash('success', trans('Login Successfull!'));
+
+            return redirect()->route('shop.home.index');
+        }
+    }
+    public function redirectToGoogleProvider()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleProviderCallback()
+    {
+        $user = Socialite::driver('google')->stateless()->user();
+        $emailexist=$this->customerRepository->where('email',$user->getEmail())->get();
+        if(count($emailexist)){
+            session()->flash('error', trans('The email related to this account has exist by other login methods! Please sign in wth that account!'));
+            return redirect()->back();
+        }
+        $customer=$this->customerRepository->where('g_id',$user->getId())->get();
+        $log['email']=$user->getEmail();
+        $log['password']=$user->getId();
+        if(count($customer)){
+            if (! auth()->guard('customer')->attempt($log)) {
+            session()->flash('error', trans('shop::app.customer.login-form.invalid-creds'));
+
+            return redirect()->back();
+            }
+            session()->flash('success', trans('Login Successfull!'));
+
+            return redirect()->route('shop.home.index');
+        }else{
+            $data['first_name'] = $user->getName();
+            $data['last_name'] = "";
+
+            $data['email'] = $user->getEmail();
+            $data['password'] = bcrypt($user->getId());
+            $data['customer_group_id'] = $this->customerGroupRepository->findOneWhere(['code' => 'general'])->id;
+            $data['token'] = $user->token;
+            $data['is_verified'] = 1;
+            $data['g_id'] = $user->getId();
+
+            $customer = $this->customerRepository->create($data);
+            Event::dispatch('customer.after.login', $user->getId());
+            if (! auth()->guard('customer')->attempt($log)) {
+                session()->flash('error', trans('shop::app.customer.login-form.invalid-creds'));
+
+                return redirect()->back();
+            }
+            session()->flash('success', trans('Login Successfull!'));
+
+            return redirect()->route('shop.home.index');
+        };
     }
 }

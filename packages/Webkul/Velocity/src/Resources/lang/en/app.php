@@ -149,6 +149,7 @@ return [
         'customer-reviews'   => 'Customer Reviews',
         'shipping-methods'   => 'Shipping Methods',
         'popular-categories' => 'Popular Categories',
+        'shop-now'           => 'Shop Now'
     ],
 
     'header'        => [
@@ -164,6 +165,12 @@ return [
         'search-text'       => 'Search products here',
         'welcome-message'   => 'Welcome, :customer_name',
         'dropdown-text'     => 'Manage Cart, Orders & Wishlist',
+        'my-account'   => 'My Account',
+        'seller-account'   => 'Seller Account',
+        'shipping-location'   => 'Shipping Location',
+        'shipping-location-modal-header-text'   => 'Please select shipping location',
+
+
     ],
 
     'menu-navbar'   => [
@@ -205,15 +212,18 @@ return [
             'sign-up'               => 'Sign up',
             'new-customer'          => 'New Customer',
             'customer-login'        => 'Customer Login',
-            'registered-user'       => 'Registered User',
+            'registered-user'       => 'REGISTERED CUSTOMERS',
             'your-email-address'    => 'Your email address',
             'form-login-text'       => 'If you have an account, sign in with your email address.',
+            'newsletter-text'   => 'SIGN UP FOR NEWSLETTER',
         ],
         'signup-form'       => [
             'login'             => 'Login',
             'become-user'       => 'Become User',
             'user-registration' => 'User Registration',
-            'form-sginup-text'  => 'If you are new to our store, we glad to have you as member.',
+            'new-user'       => 'NEW CUSTOMERS',
+            'create-new'       => 'CREATE NEW CUSTOMER ACCOUNT',
+            'form-signup-text'  => 'Creating an account has many benefits: check out faster, keep more than one address, track orders and more.',
         ],
         'forget-password'   => [
             'login'                 => 'Login',
@@ -223,6 +233,59 @@ return [
         ]
     ],
 
+    'vendor'      => [
+        'compare'           => [
+            'text'                  => 'Compare',
+            'compare_similar_items' => 'Compare Similar Items',
+            'added'                 => 'Item successfully added to compare list',
+            'already_added'         => 'Item already added to compare list',
+            'removed'               => 'Item successfully removed from compare list',
+            'empty-text'            => "You don't have any items in your compare list",
+            'product_image'         => 'Product Image',
+            'actions'               => 'Actions',
+        ],
+        'login-form'        => [
+            'sign-up'               => 'Create An Account',
+            'page-title'               => 'Seller Login',
+            'new-customer'          => 'New Seller',
+            'customer-login'        => 'Seller Login',
+            'registered-user'       => 'REGISTERED SELLER',
+            'your-email-address'    => 'Your email address',
+            'form-login-text'       => 'If you have an account, sign in with your email address.',
+            'newsletter-text'   => 'SIGN UP FOR NEWSLETTER',
+        ],
+        'signup-form'       => [
+            'login'             => 'Login',
+            'page-title'             => 'Seller Registration',
+            'title' => 'Create a store',
+            'become-user'       => 'Become Seller',
+            'user-registration' => 'Seller Registration',
+            'new-user' => 'NEW SELLER ACCOUNT',
+            'create-new' => 'REGISTER NEW SELLER ACCOUNT',
+            'form-signup-text'  => 'Creating a seller account now to start selling your goods.',
+            'firstname'             => 'First Name',
+            'lastname'             => 'Last Name',
+            'store-title'             => 'Store Title',
+            'select-category'             => 'Select Category',
+            'company'             => 'Company',
+            'street_add'             => 'Street Address',
+            'city'             => 'City',
+            'country'             => 'Country',
+            'state'             => 'State/Province',
+            'zip'             => 'Zip/Postal Code',
+            'phone'             => 'Phone Number',
+            'email'             => 'Email',
+            'agree'             => 'Agree',
+            'password'             => 'Password',
+            'confirm_password'             => 'Confirm Password',
+        ],
+        'forget-password'   => [
+            'login'                 => 'Login',
+            'forgot-password'       => 'Forgot Password',
+            'recover-password'      => 'Recover Password',
+            'recover-password-text' => 'If you forgot your password, recover it by entering your email address.',
+        ]
+    ],
     'error'         => [
         'go-to-home'            => 'Go to home',
         'page-lost-short'       => 'Page lost content',

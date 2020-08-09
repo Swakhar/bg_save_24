@@ -13,7 +13,8 @@ class Configurable extends AbstractType
      *
      * @var array
      */
-    protected $skipAttributes = ['price', 'cost', 'special_price', 'special_price_from', 'special_price_to', 'width', 'height', 'depth', 'weight'];
+    protected $skipAttributes = ['price', 'cost', 'special_price', 'special_price_from', 'special_price_to',
+        'width', 'height', 'depth', 'weight'];
 
     /**
      * These blade files will be included in product edit page
@@ -346,11 +347,11 @@ class Configurable extends AbstractType
      *
      * @return float
      */
-    public function getMinimalPrice()
+    public function getMinimalPrice($qty = null)
     {
         $minPrices = [];
 
-        $result = ProductFlat::join('products', 'product_flat.product_id', '=', 'products.id')
+        return $result = ProductFlat::join('products', 'product_flat.product_id', '=', 'products.id')
             ->distinct()
             ->where('products.parent_id', $this->product->id)
             ->selectRaw('IF( product_flat.special_price_from IS NOT NULL

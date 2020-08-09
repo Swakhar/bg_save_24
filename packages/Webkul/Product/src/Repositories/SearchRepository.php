@@ -38,7 +38,17 @@ class SearchRepository extends Repository
 
     public function search($data)
     {
-        $products = $this->productRepository->searchProductByAttribute($data['term']);
+        $query = parse_url(request()->getRequestUri(), PHP_URL_QUERY);
+        $searchTerm = explode("?", $query);
+        $serachQuery = '';
+
+        foreach($searchTerm as $term){
+            if (strpos($term, 'term') !== false) {
+                $serachQuery = last(explode("=", $term));
+            }
+        }
+
+        $products = $this->product->searchProductByAttribute($serachQuery);
 
         return $products;
     }

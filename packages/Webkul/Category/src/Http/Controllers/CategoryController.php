@@ -3,6 +3,7 @@
 namespace Webkul\Category\Http\Controllers;
 
 use Illuminate\Support\Facades\Event;
+use Webkul\Category\Models\Category;
 use Webkul\Category\Repositories\CategoryRepository;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Industry\Repositories\IndustryRepository;
@@ -69,7 +70,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = $this->categoryRepository->getCategoryTree(null, ['id']);
+        $local = request()->get('locale') ?: app()->getLocale();
+        $categories =Category::CategoryRawData($local);
+        //$categories = $this->categoryRepository->getCategoryTree(null, ['id']);
 
         $attributes = $this->attributeRepository->findWhere(['is_filterable' =>  1]);
         $industries = $this->industryRepository->orderBy('id','desc')->get();
@@ -107,8 +110,9 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = $this->categoryRepository->findOrFail($id);
-
-        $categories = $this->categoryRepository->getCategoryTreeWithoutDescendant($id);
+        $local = request()->get('locale') ?: app()->getLocale();
+        $categories =Category::CategoryRawData($local);
+        //$this->categoryRepository->getCategoryTreeWithoutDescendant($id);
 
         $attributes = $this->attributeRepository->findWhere(['is_filterable' =>  1]);
         $industries = $this->industryRepository->orderBy('id','desc')->get();

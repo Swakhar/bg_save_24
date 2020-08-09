@@ -3,9 +3,13 @@
 namespace Webkul\Shop\Http\Controllers;
 
 use Webkul\Customer\Repositories\WishlistRepository;
+use Webkul\Checkout\Repositories\CartRepository;
+use Webkul\Checkout\Repositories\CartItemRepository;
 use Webkul\Product\Repositories\ProductRepository;
+use Webkul\Product\Repositories\ProductFlatRepository;
 use Webkul\Checkout\Contracts\Cart as CartModel;
 use Illuminate\Support\Facades\Event;
+use Webkul\Velocity\Helpers\Helper;
 use Cart;
 
 class CartController extends Controller
@@ -23,6 +27,8 @@ class CartController extends Controller
      * @var \Webkul\Product\Repositories\ProductRepository
      */
     protected $productRepository;
+    protected $productFlatRepository;
+    protected $cartItemRepository;
 
     /**
      * Create a new controller instance.
@@ -33,7 +39,9 @@ class CartController extends Controller
      */
     public function __construct(
         WishlistRepository $wishlistRepository,
-        ProductRepository $productRepository
+        ProductRepository $productRepository,
+        ProductFlatRepository $productFlatRepository,
+        CartItemRepository $cartItemRepository
     )
     {
         $this->middleware('customer')->only(['moveToWishlist']);
@@ -41,6 +49,8 @@ class CartController extends Controller
         $this->wishlistRepository = $wishlistRepository;
 
         $this->productRepository = $productRepository;
+        $this->productFlatRepository = $productFlatRepository;
+        $this->cartItemRepository = $cartItemRepository;
 
         parent::__construct();
     }
@@ -65,8 +75,15 @@ class CartController extends Controller
      */
     public function add($id)
     {
+        $data=request()->all();
+        $pro = $this->productFlatRepository->findOrFail($id);
+
+        if($pro->min_qty ){
+            $min=$pro->min_qty;
+            $data['quantity']=$min;
+        }
         try {
-            $result = Cart::addProduct($id, request()->all());
+            $result = Cart::addProduct($id,$data);
 
             if ($this->onWarningAddingToCart($result)) {
                 session()->flash('warning', $result['warning']);
@@ -122,17 +139,42 @@ class CartController extends Controller
      */
     public function updateBeforeCheckout()
     {
-        try {
-            $result = Cart::updateItems(request()->all());
+        $data=request()->all();
+        $item = $this->cartItemRepository->findOneByField('id', $data['product_id']);
+        $pro = $this->productFlatRepository->findOrFail($item->product_id);
 
-            if ($result) {
-                session()->flash('success', trans('shop::app.checkout.cart.quantity.success'));
+        if($pro->min_qty>$data['quantity']){
+            return $response = [
+                'status'  => 'min_warn',
+                'quantity'  => $data['quantity'],
+                'message' => trans('Minimum quantity must be '.$pro->min_qty),
+            ];
+        }
+        if($pro->max_qty !=null){
+            if($pro->max_qty<$data['quantity']){
+                return $response = [
+                        'status'  => 'max_warn',
+                        'quantity'  => $data['quantity'],
+                        'message' => trans('Maximum quantity must be under '.$pro->max_qty),
+                    ];
+            }if ($cart instanceof CartModel) {
+                $response = [
+                    'status'         => 'success',
+                    'totalCartItems' => sizeof($cart->items),
+                    'message'        => trans('Item quantity updated successfully!'),
+                ];
             }
-        } catch(\Exception $e) {
-            session()->flash('error', trans($e->getMessage()));
+        } catch(\Exception $exception) {
+            $response = [
+                'status'           => 'danger',
+                'message'          => trans($exception->getMessage()),
+            ];
         }
 
-        return redirect()->back();
+        return $response ?? [
+            'status'  => 'danger',
+            'message' => trans('Something wrong!'),
+        ];
     }
 
     /**

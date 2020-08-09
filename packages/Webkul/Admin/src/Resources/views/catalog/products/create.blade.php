@@ -106,41 +106,7 @@
 
                             {!! view_render_event('bagisto.admin.catalog.product.create_form_accordian.configurable_attributes.controls.before') !!}
 
-                            <div class="table">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>{{ __('admin::app.catalog.products.attribute-header') }}</th>
-                                            <th>{{ __('admin::app.catalog.products.attribute-option-header') }}</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        @foreach ($configurableFamily->configurable_attributes as $attribute)
-                                            <tr>
-                                                <td>
-                                                    {{ $attribute->admin_name }}
-                                                </td>
-                                                <td>
-                                                    @foreach ($attribute->options as $option)
-                                                        <span class="label">
-                                                            <input type="hidden" name="super_attributes[{{$attribute->code}}][]" value="{{ $option->id }}"/>
-                                                            {{ $option->admin_name }}
-
-                                                            <i class="icon cross-icon"></i>
-                                                        </span>
-                                                    @endforeach
-                                                </td>
-                                                <td class="actions">
-                                                    <i class="icon trash-icon"></i>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-
-                                </table>
-                            </div>
+                            <configurable-options-template></configurable-options-template>
 
                             {!! view_render_event('bagisto.admin.catalog.product.create_form_accordian.configurable_attributes.controls.after') !!}
 
@@ -157,6 +123,49 @@
 @stop
 
 @push('scripts')
+@push('scripts')
+
+<script type="text/x-template" id="configurable-options">
+    <div>
+        <div class="table">
+            <table>
+                <thead>
+                <tr>
+                    <th>{{ __('admin::app.catalog.products.attribute-header') }}</th>
+                    <th>{{ __('admin::app.catalog.products.attribute-option-header') }}</th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                    <tr v-for="(config_attr, index) in configurable_attributes">
+                        <td width="20%">
+                            @{{ config_attr.admin_name }}
+                        </td>
+                        <td width="75%">
+                            <multiselect
+                                    v-model="config_attr.name"
+                                    :options="config_attr.options"
+                                    placeholder="Select Options"
+                                    label="admin_name"
+                                    :select-label="''"
+                                    :multiple="true" :searchable="true"
+                                    @input="select_change(index)"
+                                    track-by="admin_name"></multiselect>
+                            <input v-for="(name_field, index2) in config_attr.name" type="hidden"
+                                   :name="`super_attributes[${config_attr.code}][]`" :value="name_field.id"/>
+                        </td>
+                        <td width="5%" class="actions">
+                            <i class="icon trash-icon"></i>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</script>
+
     <script>
         $(document).ready(function () {
             $('.label .cross-icon').on('click', function(e) {
@@ -167,5 +176,38 @@
                 $(e.target).parents('tr').remove();
             })
         });
+
+        Vue.component('configurable-options-template', {
+
+            template: '#configurable-options',
+
+            data: function() {
+                return {
+                    configurable_attributes: [],
+                    configurable_attributes_admin_name: [],
+                }
+            },
+
+            created: function () {
+                @foreach($configurable_attributes as $key => $value)
+                    this.configurable_attributes.push(@json($value));
+                @endforeach
+
+            },
+
+            methods: {
+                select_change: function (index) {
+                    console.log(this.configurable_attributes[index].name)
+                },
+
+
+
+            },
+
+
+            watch: {
+
+            }
+        })
     </script>
 @endpush

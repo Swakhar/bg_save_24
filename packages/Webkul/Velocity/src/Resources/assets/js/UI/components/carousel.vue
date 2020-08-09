@@ -1,5 +1,6 @@
 <template>
     <carousel
+
         :id="id"
         :navigationEnabled="true"
         :paginationEnabled="true"
@@ -9,12 +10,13 @@
         :autoplayTimeout="timeout ? parseInt(timeout) : 2000"
         :autoplayDirection="sliderDirection ? sliderDirection : 'forward'"
         :class="[
-            (navigationEnabled == 'hide') ? 'navigation-hide' : '',
+            (navigationEnabled == 'hide2') ? 'navigation-hide2' : '',
             (paginationEnabled == 'hide') ? 'pagination-hide' : '',
             addClass
         ]">
 
         <slot
+                @mouseover.native="mouseOver"
             v-for="index in parseInt(slidesCount)"
             :name="`slide-${parseInt(index) - 1}`">
         </slot>
@@ -43,6 +45,9 @@
         methods: {
             slideClicked: function () {
                 debugger
+            },
+            mouseOver: function(){
+                console.log('asas')
             }
         }
     }

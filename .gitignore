@@ -1,3 +1,4 @@
+packages/Webkul/Shop/src/Resources/views/checkout/cart_dam/
 /docker-compose-collection
 /bin
 /node_modules
@@ -5,7 +6,7 @@
 /public/storage
 /public/css
 /public/js
-/bootstrap
+/bootstrap/*
 /vendor
 /.idea
 /.vscode
@@ -23,4 +24,4 @@ yarn.lock
 storage/
 storage/*.key
 /docker-compose-collection/
-/resources/themes/velocity/*
+

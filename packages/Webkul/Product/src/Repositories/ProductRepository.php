@@ -77,11 +77,16 @@ class ProductRepository extends Repository
         $product = $this->find($id);
 
         $product = $product->getTypeInstance()->update($data, $id, $attribute);
-
+        if (isset($data['tags'])) {
+            $product->Tags()->sync($data['tags']);  
+        }
+        if (isset($data['manufacturers'])) {
+            $product->Manufacturers()->sync($data['manufacturers']);  
+        }
         if (isset($data['channels'])) {
             $product['channels'] = $data['channels'];
         }
-
+        
         Event::dispatch('catalog.product.update.after', $product);
 
         return $product;

@@ -10,11 +10,11 @@
         @if ($favicon = core()->getConfigData('general.design.admin_logo.favicon'))
             <link rel="icon" sizes="16x16" href="{{ \Illuminate\Support\Facades\Storage::url($favicon) }}" />
         @else
-            <link rel="icon" sizes="16x16" href="{{ asset('vendor/webkul/ui/assets/images/favicon.ico') }}" />
+            <link rel="icon" sizes="16x16" href="{{ asset($relative_path . 'vendor/webkul/ui/assets/images/favicon.ico') }}" />
         @endif
         
-        <link rel="stylesheet" href="{{ asset('vendor/webkul/admin/assets/css/admin.css') }}">
-        <link rel="stylesheet" href="{{ asset('vendor/webkul/ui/assets/css/ui.css') }}">
+        <link rel="stylesheet" href="{{ asset($relative_path . 'vendor/webkul/admin/assets/css/admin.css') }}">
+        <link rel="stylesheet" href="{{ asset($relative_path . 'vendor/webkul/ui/assets/css/ui.css') }}">
 
         <style>
             .container {
@@ -82,9 +82,9 @@
 
                     <div class="brand-logo">
                         @if (core()->getConfigData('general.design.admin_logo.logo_image'))
-                            <img src="{{ \Illuminate\Support\Facades\Storage::url(core()->getConfigData('general.design.admin_logo.logo_image')) }}" alt="{{ config('app.name') }}" style="height: 40px; width: 110px;"/>
+                            <img src="{{ $relative_path . '/uploads/' . core()->getConfigData('general.design.admin_logo.logo_image') }}" alt="{{ config('app.name') }}" style="height: 40px; width: 110px;"/>
                         @else
-                            <img src="{{ asset('vendor/webkul/ui/assets/images/logo.png') }}" alt="{{ config('app.name') }}"/>
+                            <img src="{{ asset($relative_path . 'vendor/webkul/ui/assets/images/logo.png') }}" alt="{{ config('app.name') }}"/>
                         @endif
                     </div>
 
@@ -129,8 +129,8 @@
             @endif
         </script>
 
-        <script type="text/javascript" src="{{ asset('vendor/webkul/admin/assets/js/admin.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('vendor/webkul/ui/assets/js/ui.js') }}"></script>
+        <script type="text/javascript" src="{{ asset($relative_path . 'vendor/webkul/admin/assets/js/admin.js') }}"></script>
+        <script type="text/javascript" src="{{ asset($relative_path . 'vendor/webkul/ui/assets/js/ui.js') }}"></script>
 
         @stack('javascript')
 
