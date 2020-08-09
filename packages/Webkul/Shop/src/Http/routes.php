@@ -447,6 +447,9 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
         ])
         ->name('shop.productOrCategory.index');
     //Login using facebook
+        Route::post('submit-review', 'Webkul\Shop\Http\Controllers\ProductsCategoriesProxyController@submit_review')
+            ->name('submit-review');
+
         Route::get('login/facebook', 'Webkul\Customer\Http\Controllers\SessionController@redirectToFacebookProvider')->name('redirectFacebook');
         Route::get('login/facebook/callback', 'Webkul\Customer\Http\Controllers\SessionController@handleFacebookProviderCallback');
         //Login using google

@@ -61,12 +61,19 @@ Vue.component("shimmer-component-slider", require("./UI/components/shimmer-compo
 Vue.component('responsive-sidebar', require('./UI/components/responsive-sidebar'));
 Vue.component('product-quick-view', require('./UI/components/product-quick-view'));
 Vue.component('product-view', require('./UI/components/product-view'));
+Vue.component('take-review', require('./UI/components/take-review'));
 Vue.component('product-quick-view-btn', require('./UI/components/product-quick-view-btn'));
 Vue.component('recommended-cat-list', require('./UI/components/recommended-cat-list'));
 Vue.component('mix-customize-section-home', require('./UI/components/mix-customize-section'));
 Vue.component('customize-category-section', require('./UI/components/customize-category-section'));
 
+import Loading from 'vue-loading-overlay';
+// Import stylesheet
+import 'vue-loading-overlay/dist/vue-loading.css';
+Vue.component('loading', Loading);
+import VModal from 'vue-js-modal'
 window.eventBus = new Vue();
+Vue.use(VModal, { componentName: 'v-modal' });
 
 $(document).ready(function () {
     // define a mixin object
