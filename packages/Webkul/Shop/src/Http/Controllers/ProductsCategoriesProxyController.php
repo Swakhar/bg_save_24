@@ -70,5 +70,5 @@ class ProductsCategoriesProxyController extends Controller
         }
 
         abort(404);
-    } 
+    }
 }
