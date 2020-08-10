@@ -267,6 +267,7 @@ return [
             'lastname'             => 'Last Name',
             'store-title'             => 'Store Title',
             'select-category'             => 'Select Category',
+            'select-country'             => 'Select Country',
             'company'             => 'Company',
             'street_add'             => 'Street Address',
             'city'             => 'City',

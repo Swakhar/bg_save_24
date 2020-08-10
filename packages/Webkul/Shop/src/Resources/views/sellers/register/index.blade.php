@@ -20,7 +20,7 @@
         <!--progress bar-->
         <div class="row">
           <div class="col-12 ml-auto mr-auto mb-4">
-            <div class="multisteps-form__progress">
+            <div class="multisteps-form__progress" style="font-size: 20px;">
               <button class="multisteps-form__progress-btn js-active" type="button" title="User Info">Personal Information</button>
               <button class="multisteps-form__progress-btn" type="button" title="Address">General</button>
               <button class="multisteps-form__progress-btn" type="button" title="Order Info">Login Information</button>
@@ -38,7 +38,7 @@
                 <div class="multisteps-form__content">
                   <div class="col-md-12">
                       <div class="control-group" :class="[errors.has('first_name') ? 'has-error' : '']">
-                            <label for="first_name" class="required label-style">
+                            <label for="first_name" class="mandatory label-style">
                                 {{ __('velocity::app.vendor.signup-form.firstname') }}
                             </label>
 
@@ -59,7 +59,7 @@
                   </div>
                   <div class="col-md-12">
                       <div class="control-group" :class="[errors.has('last_name') ? 'has-error' : '']">
-                            <label for="last_name" class="required label-style">
+                            <label for="last_name" class="mandatory label-style">
                                 {{ __('velocity::app.vendor.signup-form.lastname') }}
                             </label>
 
@@ -89,7 +89,7 @@
                 <div class="multisteps-form__content">
                   <div class="col-md-6">
                       <div class="control-group" :class="[errors.has('category_id') ? 'has-error' : '']">
-                            <label for="category_id" class="required label-style">
+                            <label for="category_id" class="mandatory label-style">
                                 {{ __('velocity::app.vendor.signup-form.select-category') }}
                             </label>
 
@@ -106,7 +106,7 @@
                   </div>
                   <div class="col-md-6">
                       <div class="control-group" :class="[errors.has('name') ? 'has-error' : '']">
-                            <label for="name" class="required label-style">
+                            <label for="name" class="mandatory label-style">
                                 {{ __('velocity::app.vendor.signup-form.store-title') }}
                             </label>
 
@@ -127,11 +127,11 @@
                   </div>
                   <div class="col-md-6">
                       <div class="control-group" :class="[errors.has('state_id') ? 'has-error' : '']">
-                    <label for="state_id" class="required">
+                    <label for="state_id" class="mandatory label-style">
                         {{ __('velocity::app.vendor.signup-form.country') }}
                     </label>
                     <select class="form-style" id="state_id" name="state_id" onblur="validate2()">
-                        <option value="">{{ __('admin::app.marketplace.stores.select-state') }}</option>
+                        <option value="">{{ __('velocity::app.vendor.signup-form.select-country') }}</option>
                         @foreach(core()->states("IN") as $state)
                             <option value="{{$state->id}}" {{isset($store) && $store->state_id == $state->id ? 'selected' : ''}}>{{$state->translate('ar')['default_name']}}</option>
                         @endforeach
@@ -143,7 +143,7 @@
                   </div>
                   <div class="col-md-6">
                       <div class="control-group" :class="[errors.has('street_add') ? 'has-error' : '']">
-                            <label for="street_add" class="required label-style">
+                            <label for="street_add" class="mandatory label-style">
                                 {{ __('velocity::app.vendor.signup-form.street_add') }}
                             </label>
 
@@ -164,7 +164,7 @@
                   </div>
                   <div class="col-md-6">
                       <div class="control-group" :class="[errors.has('city') ? 'has-error' : '']">
-                            <label for="city" class="required label-style">
+                            <label for="city" class="mandatory label-style">
                                 {{ __('velocity::app.vendor.signup-form.city') }}
                             </label>
 
@@ -186,7 +186,7 @@
                   
                   <div class="col-md-6">
                       <div class="control-group" :class="[errors.has('state') ? 'has-error' : '']">
-                            <label for="state" class="required label-style">
+                            <label for="state" class="mandatory label-style">
                                 {{ __('velocity::app.vendor.signup-form.state') }}
                             </label>
 
@@ -207,7 +207,7 @@
                   </div>
                   <div class="col-md-6">
                       <div class="control-group" :class="[errors.has('zip') ? 'has-error' : '']">
-                            <label for="zip" class="required label-style">
+                            <label for="zip" class="mandatory label-style">
                                 {{ __('velocity::app.vendor.signup-form.zip') }}
                             </label>
 
@@ -228,7 +228,7 @@
                   </div>
                   <div class="col-md-6">
                       <div class="control-group" :class="[errors.has('phone') ? 'has-error' : '']">
-                            <label for="phone" class="required label-style">
+                            <label for="phone" class="mandatory label-style">
                                 {{ __('velocity::app.vendor.signup-form.phone') }}
                             </label>
 
@@ -259,7 +259,7 @@
                 <div class="multisteps-form__content">
                   <div class="col-md-12">
                       <div class="control-group" :class="[errors.has('email') ? 'has-error' : '']">
-                            <label for="email" class="required label-style">
+                            <label for="email" class="mandatory label-style">
                                 {{ __('velocity::app.vendor.signup-form.email') }}
                             </label>
 
@@ -280,7 +280,7 @@
                   </div>
                   <div class="col-md-12">
                       <div class="control-group" :class="[errors.has('password') ? 'has-error' : '']">
-                            <label for="password" class="required label-style">
+                            <label for="password" class="mandatory label-style">
                                 {{ __('velocity::app.vendor.signup-form.password') }}
                             </label>
 
@@ -302,7 +302,7 @@
                   </div>
                   <div class="col-md-12">
                       <div class="control-group" :class="[errors.has('confirm_password') ? 'has-error' : '']">
-                            <label for="confirm_password" class="required label-style">
+                            <label for="confirm_password" class="mandatory label-style">
                                 {{ __('velocity::app.vendor.signup-form.confirm_password') }}
                             </label>
 

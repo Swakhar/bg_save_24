@@ -52,7 +52,7 @@
             <img class="logo"  src="{{ $relative_path . '/uploads/' . $logo }}" />
             <span class="logo-slogan"> | Check Buy Save</span>
         @else
-            <img class="logo" src="{{ asset('themes/velocity/assets/images/logo-text.png') }}" />
+            <img class="logo" src="{{ asset('/themes/velocity/assets/images/static/logo_slogan.png') }}" />
         @endif
         <i id="top_ham_bargur" class="hide rango-view-list text-down-4 align-vertical-top fs18 sidebar_hide"></i>
     </a>
