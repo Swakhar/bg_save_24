@@ -283,5 +283,23 @@ return [
         'route'      => 'admin.blog.index',
         'sort'       => 1,
         'icon-class' => '',
+    ], [
+        'key' => 'marketplace',
+        'name' => 'admin::app.layouts.marketplace',
+        'route' => 'admin.marketplace.stores.index',
+        'sort' => 3,
+        'icon-class' => 'marketplace-icon'
+    ], [
+        'key' => 'marketplace.sellers',
+        'name' => 'admin::app.layouts.stores',
+        'route' => 'admin.marketplace.stores.index',
+        'sort' => 1,
+        'icon-class' => ''
+    ], [
+        'key' => 'marketplace.categories',
+        'name' => 'admin::app.layouts.store-categories',
+        'route' => 'admin.marketplace.categories.index',
+        'sort' => 2,
+        'icon-class' => ''
     ]
 ];
