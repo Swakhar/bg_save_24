@@ -8,7 +8,7 @@
     <div class="content">
         <?php $locale = request()->get('locale') ?: app()->getLocale(); ?>
 
-        <form method="POST" action="" @submit.prevent="onSubmit" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('admin.marketplace.stores.update', $store->id) }}" enctype="multipart/form-data">
 
             <div class="page-header">
                 <div class="page-title">
@@ -69,7 +69,7 @@
                             <span class="control-error" v-if="errors.has('tax_number')">@{{ errors.first('tax_number') }}</span>
                         </div>
 
-                        @include ('admin::marketplace.stores.country-state', ['countryCode' => 'SY'])
+                        @include ('admin::marketplace.stores.country-state', ['countryCode' => 'IN'])
 
                         <div class="control-group" :class="[errors.has('{{$locale}}[address]') ? 'has-error' : '']">
                             <label for="address">{{ __('admin::app.marketplace.stores.address') }}</label>

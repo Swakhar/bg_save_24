@@ -5,6 +5,7 @@
 @endsection
 
 @section('content-wrapper')
+    <?php $locale = request()->get('locale') ?: app()->getLocale(); ?>
     <div class="col-md-12">
         <h1>{{ __('velocity::app.vendor.signup-form.create-new')}}</h1>
         <hr style="background: #ff1800;height: 2px;width: 60px;">
@@ -183,7 +184,7 @@
                             </span>
                         </div>
                   </div>
-                  
+
                   <div class="col-md-6">
                       <div class="control-group" :class="[errors.has('state') ? 'has-error' : '']">
                             <label for="state" class="mandatory label-style">

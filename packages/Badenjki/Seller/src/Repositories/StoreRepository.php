@@ -70,13 +70,13 @@ class StoreRepository extends Repository{
     {
         $store = $this->find($id);
 
-        Event::fire('marketplace.store.update.before', $id);
+        Event::dispatch('marketplace.store.update.before', $id);
 
         $store->update($data);
 
         $this->uploadImages($data, $store);
 
-        Event::fire('marketplace.store.update.after', $id);
+        Event::dispatch('marketplace.store.update.after', $id);
 
         return $store;
     }
