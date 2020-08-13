@@ -846,6 +846,7 @@ return [
             'yes' => 'Yes',
             'no' => 'No',
             'mapping' => 'Mapping',
+            'rgb_code' => 'RGB Code',
             'products-only' => 'Products Only',
             'description-and-images' => 'Description and Images',
             'description' => 'Description',

@@ -21,6 +21,7 @@ class CreateTableConfigurableOptionValue extends Migration
             $table->integer('dis_order');
             $table->decimal('discounts');
             $table->string('image');
+            $table->string('rgb_code')->nullable();
             $table->timestamps();
         });
     }

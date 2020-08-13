@@ -45,7 +45,7 @@
 
 <script type="text/x-template" id="logo-template">
     <a
-        :class="`left ${addClass}`"
+        :class="`cvb left ${addClass}`"
         href="{{ route('shop.home.index') }}">
 
         @if ($logo = core()->getCurrentChannel()->logo_url)

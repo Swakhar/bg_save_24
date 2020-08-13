@@ -35,25 +35,19 @@
 ?>
     <div class="row no-margin">
         <section class="col-12 product-detail">
-            <?php
-                $exist = ['name', 'sku', 'price', 'special_price',
-                    'special_price_from', 'special_price_to',
-                    'product_id', 'type'];
-                $cur_product = [];
-                foreach ($product as $key => $value) {
-                    if (in_array($key, $exist)) {
-                        $cur_product[$key] = $value;
-                    }
-                }
-            ?>
-            <product-view
-                    :product="{{ json_encode($cur_product, true) }}"
+
+            <configure-product-view
+                    :product="{{ json_encode($product, true) }}"
+                    :options_product="{{ json_encode($options_product, true) }}"
+                    :product_data="{{ json_encode($product_data, true) }}"
+                    :pretty_option_data="{{ json_encode($pretty_option_data, true) }}"
+                    :option_count="{{ $option_count }}"
                     :images="{{ json_encode($images, true) }}"
                     :span="'{{ $span }}'"
-
+                    :html_span="'{{ $html }}'"
             >
 
-            </product-view>
+            </configure-product-view>
 
 
             <div style="width: 100%;display: flex;">

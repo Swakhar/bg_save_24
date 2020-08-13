@@ -313,6 +313,14 @@ class Helper extends Review
             }
         }
 
+        $configurable_data = DB::select("SELECT p_f.name, round(p_f.price, 2) price, p_f.special_price FROM products
+        INNER JOIN product_flat on product_flat.product_id = products.id
+        INNER JOIN product_flat p_f on p_f.parent_id = product_flat.id
+        WHERE products.id = $product->product_id  AND products.type = 'configurable'
+        ORDER BY p_f.price");
+        $price_low_to_high = (count($configurable_data) > 0)
+            ? $configurable_data[0]->price . ' to ' . $configurable_data[count($configurable_data)-1]->price : '';
+
         return [
             'avgRating'         => $avgRatings,
             'totalReviews'      => $totalReviews,
@@ -324,7 +332,8 @@ class Helper extends Review
             'description'       => $product->description,
             'shortDescription'  => $product->short_description,
             'firstReviewText'   => trans('velocity::app.products.be-first-review'),
-            'priceHTML'         => view('shop::products.price', ['product' => $product])->render(),
+            'priceHTML'         => (count($configurable_data) > 0) ? $price_low_to_high
+                : view('shop::products.price', ['product' => $product])->render() ,
             'defaultAddToCart'  => view('shop::products.add-buttons', ['product' => $product])->render(),
             'addToCartHtml'     => view('shop::products.add-to-cart', [
                 'showCompare'       => true,

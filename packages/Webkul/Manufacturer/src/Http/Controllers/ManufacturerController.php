@@ -89,6 +89,7 @@ class ManufacturerController extends Controller
         $master_data['published'] = request()->input('published');
         $master_data['dis_order'] = request()->input('dis_order');
         $master_data['discounts'] = request()->input('discounts');
+        $master_data['rgb_code'] = request()->input('rgb_code');
         $master_data['image'] = $image;
 
         $id = DB::table('configurable_option_value')->insertGetId($master_data);
@@ -152,6 +153,7 @@ class ManufacturerController extends Controller
         $master_data['published'] = request()->input('published');
         $master_data['dis_order'] = request()->input('dis_order');
         $master_data['discounts'] = request()->input('discounts');
+        $master_data['rgb_code'] = request()->input('rgb_code');
         $master_data['image'] = $image;
 
         DB::table('configurable_option_value')->where('id', $id)->update($master_data);

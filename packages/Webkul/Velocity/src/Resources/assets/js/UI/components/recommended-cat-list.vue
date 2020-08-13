@@ -4,9 +4,9 @@
             <span class="title">{{ slider_name }}</span>
             <a href="#" class="btn-home btn_view_all">{{ btn_txt }}</a>
         </section>
-        <div class="col-md-2 recomend-slide-cat-div" style="    max-width: 14.4667%;;
-    padding-right: 3px;
-    margin-right: -13px;">
+        <div class=""
+             :class="`${isMobileView ? 'col-md-2 recomend-slide-cat-div-mobile hide' : 'col-md-2 recomend-slide-cat-div'}`"
+             style="max-width: 14.4667%;padding-right: 3px;margin-right: -13px;">
             <section class="recommended_cat_list">
                 <ul >
                     <li @click="clickLi(index)"
@@ -14,8 +14,8 @@
                         :class="`click_to_switch_slider ${index == active_index ? 'active': ''}`">
                         <span class="recommend_div_parent">
                             <span class="img_span">
-                                <img class="recommend_img"
-                                     :src="`/cache/original/${cat.category_icon_path}`" alt="" />
+                                <!--<img class="recommend_img"-->
+                                     <!--:src="`/cache/original/${cat.category_icon_path}`" alt="" />-->
                             </span>
                             <span class="recommend_cat_name">{{ cat.category_name }}</span>
                         </span>
@@ -30,7 +30,7 @@
 <script type="text/javascript">
     export default {
         mixins: ['myMixin'],
-        props: ['category_list_recommended', 'btn_txt', 'slider_name', 'active_index'],
+        props: ['category_list_recommended', 'btn_txt', 'slider_name', 'active_index', 'isMobileView'],
 
         data: function () {
             return {
