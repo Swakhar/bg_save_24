@@ -8,6 +8,8 @@ import ar from 'vee-validate/dist/locale/ar';
 import VeeValidate, { Validator } from 'vee-validate';
 import axios from 'axios';
 
+// import ar_plug from 'array-tools'
+//
 
 window.axios = axios;
 window.VeeValidate = VeeValidate;
@@ -32,6 +34,8 @@ Vue.filter('currency', function (value, argument) {
 
 window.Vue = Vue;
 window.Carousel = VueCarousel;
+
+
 
 // UI components
 Vue.component("vue-slider", require("vue-slider-component"));
@@ -61,6 +65,7 @@ Vue.component("shimmer-component-slider", require("./UI/components/shimmer-compo
 Vue.component('responsive-sidebar', require('./UI/components/responsive-sidebar'));
 Vue.component('product-quick-view', require('./UI/components/product-quick-view'));
 Vue.component('product-view', require('./UI/components/product-view'));
+Vue.component('configure-product-view', require('./UI/components/configure-product-view'));
 Vue.component('take-review', require('./UI/components/take-review'));
 Vue.component('product-quick-view-btn', require('./UI/components/product-quick-view-btn'));
 Vue.component('recommended-cat-list', require('./UI/components/recommended-cat-list'));

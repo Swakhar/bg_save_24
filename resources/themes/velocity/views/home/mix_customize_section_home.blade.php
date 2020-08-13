@@ -10,7 +10,7 @@
 @push('scripts')
 <script type="text/x-template" id="mix-category-section">
     <div>
-        <mix-customize-section-home :data_list="data_list"></mix-customize-section-home>
+        <mix-customize-section-home :data_list="data_list" :per_page="isMobileView ? 2 : 6"></mix-customize-section-home>
     </div>
 </script>
 
@@ -32,8 +32,6 @@
             },
 
             methods: {
-
-
                 'getSizeOfObject': function (obj) {
                     var size = 0, key;
                     for (key in obj) {

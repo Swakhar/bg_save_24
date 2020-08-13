@@ -10,7 +10,7 @@
         <meta http-equiv="content-language" content="{{ app()->getLocale() }}">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="route-index" content="{{ \Request::route()->getName() }}" >
-
+        <meta name="theme-color" content="#C0C0C0">
         <link rel="stylesheet" href="{{ asset($relative_path . 'themes/velocity/assets/css/velocity.css') }}" />
         <link rel="stylesheet" href="{{ asset($relative_path . 'themes/velocity/assets/css/bootstrap.min.css') }}" />
         <link rel="stylesheet" href="{{ asset($relative_path . 'themes/velocity/assets/css/google-font.css') }}" />
@@ -21,6 +21,8 @@
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" />
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
         <link rel="stylesheet" href="{{ asset($relative_path . '/themes/velocity/assets/css/custom_design.css?version='.$version) }}" />
+        <link rel="stylesheet" href="{{ asset($relative_path . '/themes/velocity/assets/css/front-responsive.css?version='.$version) }}" />
+        <link rel="stylesheet" href="{{ asset($relative_path . '/themes/velocity/assets/css/style.css?version='.$version) }}" />
         <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         @if (core()->getCurrentLocale()->direction == 'rtl')
             <link href="{{ asset($relative_path . 'themes/velocity/assets/css/bootstrap-flipped.css') }}" rel="stylesheet">
@@ -160,6 +162,7 @@
                         @include('shop::layouts.header.index')
                     </div>
 
+                    @include('shop::layouts.header.mobile-index')
 
                     {!! view_render_event('bagisto.shop.layout.header.after') !!}
 
@@ -178,7 +181,8 @@
 
                     </div>
                 @show
-                    @if(\Request::route()->getName() == 'shop.home.index')
+                    {{--\Request::route()->getName() == 'shop.productOrCategory.index'--}}
+                    @if(\Request::route()->getName() != 'shop.productOrCategory.index')
                     <div class="container-fluid " >
                         <div class="row top_banner_three_section">
                             <div class="cust-open" >
@@ -224,6 +228,9 @@
 
                     <div >
                         @yield('full-needed-slider')
+                    </div>
+                    <div >
+                        @yield('full-mix-customize-section')
                     </div>
 
                 <div class="container-fluid">

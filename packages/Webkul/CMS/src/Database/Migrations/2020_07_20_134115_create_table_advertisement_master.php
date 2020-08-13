@@ -19,7 +19,8 @@ class CreateTableAdvertisementMaster extends Migration
             $table->string('slug');
             $table->string('image_name');
             $table->string('save_path');
-            $table->char('type', 1)->comment('1 = slider, 2 = advertisement one, 3 = advertisement two, 4 = advertisement three');
+            $table->char('type', 1)
+                ->comment('1 = slider, 2 = advertisement one, 3 = advertisement two, 4 = advertisement three');
             $table->timestamps();
         });
     }

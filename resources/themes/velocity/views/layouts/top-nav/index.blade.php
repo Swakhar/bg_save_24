@@ -2,9 +2,9 @@
     <div class="container-fluid">
         <div class="col-md-4">
             @guest('customer')
-            <span class="top_span">Default welcome msg! <span class="link">
+            <span class="top_span">Welcome to the safest marketplace! <span class="link">
                     <a href="{{ route('customer.register.index') }}">Join Free</a></span> or <span class="link"><a
-                            href="#">Sign in</a></span></span>
+                            href="/customer/login">Sign in</a></span></span>
             {{--@include('velocity::layouts.top-nav.locale-currency')--}}
             @endguest
         </div>
@@ -29,9 +29,9 @@
                         </a>
                         @endauth
                     </li>
-                    <li>
-                        <a href="{{ route('customer.wishlist.index') }}"><i class="in-i fa fa-heart"></i>My Wish List</a>
-                    </li>
+                    {{--<li>--}}
+                        {{--<a href="{{ route('customer.wishlist.index') }}"><i class="in-i fa fa-heart"></i>My Wish List</a>--}}
+                    {{--</li>--}}
                     <li>
                         <a href="{{ route('velocity.customer.product.compare') }}"><i class="in-i fa fa-check-square"></i>Checkout</a>
                     </li>

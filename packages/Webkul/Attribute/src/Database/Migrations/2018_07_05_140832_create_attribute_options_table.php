@@ -19,6 +19,7 @@ class CreateAttributeOptionsTable extends Migration
             $table->integer('sort_order')->nullable();
             $table->integer('attribute_id')->unsigned();
             $table->foreign('attribute_id')->references('id')->on('attributes')->onDelete('cascade');
+            $table->string('rgb_code')->nullable();
         });
     }
 

@@ -7,7 +7,7 @@
                 <carousel
                         :class="'pagination-hide'"
                         :navigationEnabled="true"
-                        :per-page="6"
+                        :per-page="per_page"
                         :autoplayTimeout="2000"
                         :loop="true"
                         :autoplay="false"
@@ -51,7 +51,7 @@
     export default {
         name: "mix-customize-section-home",
         mixins: ['myMixin'],
-        props: ['data_list'],
+        props: ['data_list', 'per_page'],
         components: {
             carousel: Carousel,
             slide: Slide
