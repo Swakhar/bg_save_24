@@ -10,6 +10,7 @@ use Webkul\Sales\Models\OrderProxy;
 use Webkul\Product\Models\ProductReviewProxy;
 use Webkul\Customer\Notifications\CustomerResetPassword;
 use Webkul\Customer\Contracts\Customer as CustomerContract;
+use Badenjki\Seller\Models\Store;
 
 class Customer extends Authenticatable implements CustomerContract, JWTSubject
 {
@@ -164,5 +165,31 @@ class Customer extends Authenticatable implements CustomerContract, JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function store(){
+
+        return $this->belongsTo(Store::class);
+
+    }
+
+    public function isSeller(){
+
+        return $this->store_id ? true : false;
+
+    }
+
+    public function createStore($params, $locale = null){
+
+        $params['locale'] = $locale;
+
+        $store = Store::create($params);
+
+        $this->update([
+            'store_id' => $store->id
+        ]);
+
+        return $store;
+
     }
 }
