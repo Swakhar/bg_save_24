@@ -140,6 +140,8 @@ class StoreController extends Controller
 
         $this->store->update(request()->all(), $id);
 
+        session()->flash('success', trans('admin::app.response.update-success', ['name' => 'Store']));
+
         return redirect()->route($this->_config['redirect']);
 
     }

@@ -83,7 +83,7 @@
         {!! view_render_event('bagisto.shop.layout.body.before') !!}
 
 
-        @include('shop::UI.static_particals')
+        @include('shop::UI.particals')
 
         <div id="app">
             <product-quick-view v-if="$root.quickView"></product-quick-view>
