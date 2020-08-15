@@ -33,7 +33,7 @@
 //     $rating_image[] = "/cache/medium/rating/rating_0.png";
 // }
 ?>
-    <div class="row no-margin">
+    <div class="row2 no-margin">
         <section class="col-12 product-detail">
             <?php
                 $exist = ['name', 'sku', 'price', 'special_price',

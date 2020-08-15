@@ -10,7 +10,8 @@
 @push('scripts')
 <script type="text/x-template" id="mix-category-section">
     <div>
-        <mix-customize-section-home :data_list="data_list" :per_page="isMobileView ? 2 : 6"></mix-customize-section-home>
+        <mix-customize-section-home :data_list="data_list"
+                                    :per_page="isMobileView ? 2 : (clientWidth >= 1536 ? 7 : 6)"></mix-customize-section-home>
     </div>
 </script>
 
@@ -24,11 +25,13 @@
                     'isLoading': true,
                     'data_list': [],
                     'isMobileView': this.$root.isMobile(),
+                    'clientWidth': document.documentElement.clientWidth
                 }
             },
 
             mounted: function () {
                 this.mix_section_data_front();
+                console.log('clientWidth', this.clientWidth)
             },
 
             methods: {

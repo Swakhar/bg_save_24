@@ -19,7 +19,8 @@
                             <a
                                :title="`${child.name}`" >
                                 <img loading="lazy" :alt="`${child.name}`"
-                                     :src="`/cache/medium/${child.image_path}`"
+                                     :src="''"
+                                     :realsrc="`/cache/medium/${child.image_url}`"
                                      data-src="/cache/medium/product/31/crbATFGOysK0c8SY6A0xGFlwCs6iBBXNlPe4lyJY.jpeg"
                                      onerror="this.src='/vendor/webkul/ui/assets/images/product/large-product-placeholder.png'"
                                      class="card-img-top lzy_img">
@@ -59,6 +60,7 @@
         },
         data: function () {
             return {
+
             }
         },
 

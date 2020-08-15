@@ -237,4 +237,26 @@
     .menu_open_mobile_view_category ul li {
 
     }
+
+    div.product_image_left_view_page {
+        float: left;
+        width: 375px;
+    }
+    div.product_view_page_inner .image_div img {
+        height:273px;
+        width: 320px;
+    }
+    div.product_view_page_inner .image_div {
+        height: 273px;
+        width: 400px;
+    }
+    div.image_slider_div_product {
+        width: 320px;
+    }
+    div.desktop_view {
+        display: none;
+    }
+    div.mobile_view {
+        display: block;
+    }
 }

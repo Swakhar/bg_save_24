@@ -37,16 +37,18 @@
                                       :active_index="active_index"
                                       :slider_name="slider_name"
                                       :isMobileView="isMobileView"
+                                      :clientWidth="clientWidth"
                                       v-on:passIndexSliderToParent="passIndexSliderToParent"
                         :category_list_recommended="category_list_recommended">
                 </recommended-cat-list>
-                <div :class="`${isMobileView ? 'col-md-12 recom_cat mobile_view' : 'col-md-10  recom_cat desktop_view'}`" >
+                <div style="max-width: 86.2%;margin: 0px;padding-right: 0;padding-left: 0;"
+                     :class="`${isMobileView ? 'col-md-12 recom_cat mobile_view' : 'col-md-10  recom_cat desktop_view'}`" >
                     <div class="container-fluid featured-products">
                         <shimmer-component v-if="isLoading"></shimmer-component>
 
                         <div :class="`carousel-products  ${isMobileView ? '' : 'vc-full-screen'} ltr`" >
                             <carousel-component
-                                    :slides-per-page="isMobileView ? 2 : 6"
+                                    :slides-per-page="isMobileView ? 2 : (clientWidth >= 1536 ? 7 : 6)"
                                     navigation-enabled="hide"
                                     pagination-enabled="hide"
                                     id="fearured-products-carousel"
@@ -88,11 +90,13 @@
                     'active_index': 0,
                     'btn_txt': "",
                     'isMobileView': this.$root.isMobile(),
+                    'clientWidth': document.documentElement.clientWidth
                 }
             },
 
             mounted: function () {
                 this.getFeaturedProducts3();
+
             },
 
             methods: {

@@ -10,7 +10,10 @@
 @push('scripts')
 <script type="text/x-template" id="customize-category-section">
     <div>
-        <customize-category-section :data_list="data_list"  :per_page="isMobileView ? 2 : 6"></customize-category-section>
+        <customize-category-section :data_list="data_list"
+                                    :per_page="isMobileView ? 2 : (clientWidth >= 1536 ? 7 : 6)">
+
+        </customize-category-section>
     </div>
 </script>
 
@@ -24,6 +27,7 @@
                     'isLoading': true,
                     'data_list': [],
                     'isMobileView': this.$root.isMobile(),
+                    'clientWidth': document.documentElement.clientWidth
                 }
             },
 

@@ -41,7 +41,8 @@
             <img
                 loading="lazy"
                 :alt="product.name"
-                :src="product.image"
+                :src="''"
+                :realsrc="`${product.image}`"
                 :data-src="product.image"
                 class="card-img-top lzy_img"
                 :onerror="`this.src='${this.$root.baseUrl}/vendor/webkul/ui/assets/images/product/large-product-placeholder.png'`" />

@@ -1,6 +1,9 @@
 <template>
     <div class="product_view_page">
         <div class="product_view_page_inner">
+            <div class="mobile_view">
+                <span class="product_name">{{ product.name }}</span>
+            </div>
             <div class="product_image_left_view_page">
                 <div class="image_div">
                     <img id="zoom_01"
@@ -27,7 +30,7 @@
                 </div>
             </div>
 
-            <div class="product_content_middle_view_page">
+            <div class="product_content_middle_view_page desktop_view">
                 <span class="product_name">{{ product.name }}</span>
                 <span class="rating_div">
                     <img src="/cache/original/rating/rating_0.png" alt="">
