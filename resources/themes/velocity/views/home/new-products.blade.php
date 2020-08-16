@@ -25,9 +25,11 @@
                         @endpush
 
                         <div class="row ltr">
-                            <div class="col-9 no-padding carousel-products vc-full-screen with-recent-viewed" v-if="!isMobileView">
+                            <div style="flex: 0 0 75%;
+    max-width: 83%;"
+                                    class="col-9 no-padding carousel-products vc-full-screen with-recent-viewed" v-if="!isMobileView">
                                 <carousel-component
-                                    slides-per-page="5"
+                                    :slides-per-page="`${clientWidth >= 1536 ? 6 : 5}`"
                                     navigation-enabled="hide"
                                     pagination-enabled="hide"
                                     id="new-products-carousel"
@@ -127,6 +129,7 @@
                         'isLoading': true,
                         'newProducts': [],
                         'isMobileView': this.$root.isMobile(),
+                        'clientWidth': document.documentElement.clientWidth
                     }
                 },
 

@@ -79,9 +79,10 @@
                             <description></description>
 
                             <div class="control-group {!! $errors->has('image.*') ? 'has-error' : '' !!}">
-                                <label class="required">{{ __('admin::app.catalog.manufacturers.image') }} </label>
+                                <label >{{ __('admin::app.catalog.manufacturers.image') }} </label>
 
-                                <image-wrapper :button-label="'{{ __('admin::app.catalog.products.add-image-btn-title') }}'" input-name="image" :multiple="false" :required="true"></image-wrapper>
+                                <image-wrapper :button-label="'{{ __('admin::app.catalog.products.add-image-btn-title') }}'"
+                                               input-name="image" :multiple="false" ></image-wrapper>
 
                                 <span class="control-error" v-if="{!! $errors->has('image.*') !!}">
                                     @foreach ($errors->get('image.*') as $key => $message)
@@ -101,7 +102,9 @@
 
                             <div class="control-group" :class="[errors.has('published') ? 'has-error' : '']">
                                 <label for="published">{{ __('admin::app.catalog.manufacturers.published') }}</label>
-                                <select class="control" v-validate="'required'" id="published" name="published" data-vv-as="&quot;{{ __('admin::app.catalog.manufacturers.visible-in-menu') }}&quot;">
+                                <select class="control"  id="published"
+                                        name="published"
+                                        data-vv-as="&quot;{{ __('admin::app.catalog.manufacturers.visible-in-menu') }}&quot;">
                                     <option value="1">
                                         {{ __('admin::app.catalog.manufacturers.yes') }}
                                     </option>
@@ -112,8 +115,9 @@
                                 <span class="control-error" v-if="errors.has('published')">@{{ errors.first('published') }}</span>
                             </div>
                             <div class="control-group" :class="[errors.has('dis_order') ? 'has-error' : '']">
-                                <label for="dis_order" class="required">{{ __('admin::app.catalog.manufacturers.display-order') }}</label>
-                                <input type="number" v-validate="'required|numeric'" class="control" id="dis_order" name="dis_order" value="{{ old('dis_order') }}" data-vv-as="&quot;{{ __('admin::app.catalog.manufacturers.display-order') }}&quot;"/>
+                                <label for="dis_order" >{{ __('admin::app.catalog.manufacturers.display-order') }}</label>
+                                <input type="number" v-validate="'numeric'"
+                                       class="control" id="dis_order" name="dis_order" value="{{ old('dis_order') }}" data-vv-as="&quot;{{ __('admin::app.catalog.manufacturers.display-order') }}&quot;"/>
                                 <span class="control-error" v-if="errors.has('dis_order')">@{{ errors.first('dis_order') }}</span>
                             </div>
                         </div>
@@ -138,6 +142,24 @@
                         </div>
                     </accordian>
 
+                    <accordian :title="'{{ __('admin::app.catalog.manufacturers.rgb_code') }}'" :active="true">
+                        <div slot="body">
+
+                            {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.seo.controls.before') !!}
+
+                            <div class="control-group" :class="[errors.has('discounts') ? 'has-error' : '']">
+                                <label for="discounts">{{ __('admin::app.catalog.manufacturers.rgb_code') }}</label>
+                                <input type="text"
+                                       class="control" id="rgb_code" name="rgb_code" value="{{ old('rgb_code') }}"
+                                       data-vv-as="&quot;{{ __('admin::app.catalog.manufacturers.rgb_code') }}&quot;"/>
+                                <span class="control-error" v-if="errors.has('rgb_code')">@{{ errors.first('rgb_code') }}</span>
+                            </div>
+
+                            {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.seo.controls.after') !!}
+
+                        </div>
+                    </accordian>
+
                     {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.seo.after') !!}
 
                 </div>
@@ -153,8 +175,10 @@
     <script type="text/x-template" id="description-template">
 
         <div class="control-group" :class="[errors.has('description') ? 'has-error' : '']">
-            <label for="description" :class="isRequired ? 'required' : ''">{{ __('admin::app.catalog.manufacturers.description') }}</label>
-            <textarea v-validate="isRequired ? 'required' : ''"  class="control" id="description" name="description" data-vv-as="&quot;{{ __('admin::app.catalog.manufacturers.description') }}&quot;">{{ old('description') }}</textarea>
+            <label for="description" >{{ __('admin::app.catalog.manufacturers.description') }}</label>
+            <textarea
+                      class="control" id="description" name="description"
+                      data-vv-as="&quot;{{ __('admin::app.catalog.manufacturers.description') }}&quot;">{{ old('description') }}</textarea>
             <span class="control-error" v-if="errors.has('description')">@{{ errors.first('description') }}</span>
         </div>
 

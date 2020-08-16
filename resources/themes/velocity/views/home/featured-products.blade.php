@@ -15,7 +15,7 @@
 
                 <div class="carousel-products vc-full-screen ltr" v-if="!isMobileView">
                     <carousel-component
-                        slides-per-page="6"
+                            :slides-per-page="`${clientWidth >= 1536 ? 7 : 6}`"
                         navigation-enabled="hide"
                         pagination-enabled="hide"
                         id="fearured-products-carousel"
@@ -67,6 +67,7 @@
                         'isLoading': true,
                         'featuredProducts': [],
                         'isMobileView': this.$root.isMobile(),
+                        'clientWidth': document.documentElement.clientWidth
                     }
                 },
 

@@ -89,7 +89,6 @@ class AttributeOptionController extends Controller
             $data_obj['is_configurable'] = 0;
         }
 
-
         $attribute_option = DB::table('attribute_options')->insert($data_obj);
 
         session()->flash('success', trans('admin::app.response.create-success', ['name' => 'Attribute']));

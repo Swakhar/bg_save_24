@@ -1,6 +1,16 @@
 <template>
     <div>
-        <v-modal name="login_error">This is a modal</v-modal>
+        <v-modal name="login_error" :height="150" :width="400">
+            <div class="dialog-content">
+                <!--<div class="dialog-c-title">Buttons example</div>-->
+                <div class="dialog-c-text">You are not logged in !</div>
+                <div class="vue-dialog-buttons">
+                    <a @click="cancel_modal($event)" class="vue-dialog-button" style="flex: 1 1 33.3333%;" href="">Cancel</a>
+                    <a class="vue-dialog-button" style="flex: 1 1 33.3333%;" href="/customer/login">Login</a>
+                    <a class="vue-dialog-button" style="flex: 1 1 33.3333%;" href="/customer/register">Register</a>
+                </div>
+            </div>
+        </v-modal>
         <loading :active.sync="isLoading"
                  :can-cancel="true"
                  :on-cancel="onCancel"
@@ -60,6 +70,10 @@
 
         },
         methods: {
+            cancel_modal: function (event) {
+                event.preventDefault()
+                this.$modal.hide('login_error')
+            },
             submit: function () {
                 let that = this;
                 this.isLoading = true;
@@ -71,10 +85,11 @@
                     product_id: that.product_id
                 })
                     .then(data =>{
-                        this.isLoading = false
+                        this.isLoading = false;
                         toastr.success(data.data);
                     })
                     .catch(error => {
+                        this.isLoading = false;
                         this.$modal.show('login_error')
                     });
             },

@@ -6,12 +6,12 @@
                 <carousel
                         :class="'pagination-hide'"
                         :navigationEnabled="true"
-                        :per-page="6"
+                        :per-page="per_page"
                         :autoplayTimeout="2000"
                         :loop="true"
                         :autoplay="false"
                         :autoplayDirection="'forward'"
-                         :mouse-drag="false">
+                         :mouse-drag="true">
                     <slide :key="`l-sell-${index}`" v-for="(child, index) in item.child">
 
                         <div v-if="child.is_product == false"
@@ -19,7 +19,8 @@
                             <a
                                :title="`${child.name}`" >
                                 <img loading="lazy" :alt="`${child.name}`"
-                                     :src="`/cache/medium/${child.image_path}`"
+                                     :src="''"
+                                     :realsrc="`/cache/medium/${child.image_url}`"
                                      data-src="/cache/medium/product/31/crbATFGOysK0c8SY6A0xGFlwCs6iBBXNlPe4lyJY.jpeg"
                                      onerror="this.src='/vendor/webkul/ui/assets/images/product/large-product-placeholder.png'"
                                      class="card-img-top lzy_img">
@@ -52,13 +53,14 @@
     export default {
         name: "customize-category-section",
         mixins: ['myMixin'],
-        props: ['data_list'],
+        props: ['data_list', 'per_page'],
         components: {
             carousel: Carousel,
             slide: Slide
         },
         data: function () {
             return {
+
             }
         },
 

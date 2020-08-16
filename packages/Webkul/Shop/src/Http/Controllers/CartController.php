@@ -150,19 +150,22 @@ class CartController extends Controller
                 'message' => trans('Minimum quantity must be '.$pro->min_qty),
             ];
         }
-        if($pro->max_qty !=null){
-            if($pro->max_qty<$data['quantity']){
-                return $response = [
+
+        try {
+            if($pro->max_qty !=null){
+                if($pro->max_qty<$data['quantity']){
+                    return $response = [
                         'status'  => 'max_warn',
                         'quantity'  => $data['quantity'],
                         'message' => trans('Maximum quantity must be under '.$pro->max_qty),
                     ];
-            }if ($cart instanceof CartModel) {
-                $response = [
-                    'status'         => 'success',
-                    'totalCartItems' => sizeof($cart->items),
-                    'message'        => trans('Item quantity updated successfully!'),
-                ];
+                }if ($cart instanceof CartModel) {
+                    $response = [
+                        'status'         => 'success',
+                        'totalCartItems' => sizeof($cart->items),
+                        'message'        => trans('Item quantity updated successfully!'),
+                    ];
+                }
             }
         } catch(\Exception $exception) {
             $response = [

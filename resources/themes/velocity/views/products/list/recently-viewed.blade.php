@@ -10,10 +10,11 @@
 
 @push('scripts')
     <script type="text/x-template" id="recently-viewed-template">
-        <div :class="`${addClass} recently-viewed`">
+        <div style="    flex: 0 0 25%;
+    max-width: 200px;" :class="`${addClass} recently-viewed`">
             <div class="row remove-padding-margin">
                 <div class="col-12 no-padding">
-                    <h2 class="fs20 fw6 mb15">{{ __('velocity::app.products.recently-viewed') }}</h2>
+                    <h2 style="font-size: 17px;" class="fs20 fw6 mb15">{{ __('velocity::app.products.recently-viewed') }}</h2>
                 </div>
             </div>
 

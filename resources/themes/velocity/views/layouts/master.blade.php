@@ -10,7 +10,7 @@
         <meta http-equiv="content-language" content="{{ app()->getLocale() }}">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="route-index" content="{{ \Request::route()->getName() }}" >
-
+        <meta name="theme-color" content="#C0C0C0">
         <link rel="stylesheet" href="{{ asset($relative_path . 'themes/velocity/assets/css/velocity.css') }}" />
         <link rel="stylesheet" href="{{ asset($relative_path . 'themes/velocity/assets/css/bootstrap.min.css') }}" />
         <link rel="stylesheet" href="{{ asset($relative_path . 'themes/velocity/assets/css/google-font.css') }}" />
@@ -21,6 +21,8 @@
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" />
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
         <link rel="stylesheet" href="{{ asset($relative_path . '/themes/velocity/assets/css/custom_design.css?version='.$version) }}" />
+        <link rel="stylesheet" href="{{ asset($relative_path . '/themes/velocity/assets/css/front-responsive.css?version='.$version) }}" />
+        <link rel="stylesheet" href="{{ asset($relative_path . '/themes/velocity/assets/css/style.css?version='.$version) }}" />
         <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         @if (core()->getCurrentLocale()->direction == 'rtl')
             <link href="{{ asset($relative_path . 'themes/velocity/assets/css/bootstrap-flipped.css') }}" rel="stylesheet">
@@ -160,6 +162,7 @@
                         @include('shop::layouts.header.index')
                     </div>
 
+                    @include('shop::layouts.header.mobile-index')
 
                     {!! view_render_event('bagisto.shop.layout.header.after') !!}
 
@@ -203,7 +206,8 @@
                         </div>
                     </div>
                 @show
-                    @if(\Request::route()->getName() == 'shop.home.index')
+                    {{--\Request::route()->getName() == 'shop.productOrCategory.index'--}}
+                    @if(\Request::route()->getName() != 'shop.productOrCategory.index')
                     <div class="container-fluid " >
                         <div class="row top_banner_three_section">
                             <div class="cust-open" >
@@ -249,6 +253,9 @@
 
                     <div >
                         @yield('full-needed-slider')
+                    </div>
+                    <div >
+                        @yield('full-mix-customize-section')
                     </div>
 
                 <div class="container-fluid">
@@ -348,8 +355,6 @@
                     }
                 });
 
-
-
                 $("body").mouseover(function(e) {
                     var i = ($(e.target).hasClass('cat_hideve') ? 1 : 0);
                     var j = ($(e.target).hasClass('sub-folders') ? 1 : 0);
@@ -361,20 +366,24 @@
 //                    console.log((i+j+k))
 
                     if ((i+j+k+kk) === 0) {
+
                         $('.sub-folders').each(function(i, obj) {
                             $(this).addClass('hide')
                         });
                         var ii = (e.target.id == 'top_ham_bargur' ? 1 : 0);
                         var ij = (e.target.id == 'except_index_page' ? 1 : 0);
                         if ((ii+ij) == 0) {
-                            if ($(".top_category_menu").hasClass('while_float')) {
+                            if ($(".top_category_menu").hasClass('while_float')
+                                || $(".top_category_menu").hasClass('while_float2')) {
                                 $(".top_category_menu").addClass('hide')
                             }
                         }
 
                     }
 
-                })
+                });
+
+                //
 
                 $("#top_ham_bargur").hover(function (e) {
                     var side_menu = $("#sidebar-level-0");
@@ -401,7 +410,12 @@
                     side_menu.addClass("hide");
                     sticky_header.addClass("smooth_show");
                     $(".logo-slogan").addClass('hide')
-                    $(".top_category_menu").addClass('while_float').addClass('hide');
+                    if (route_index === 'shop.home.index') {
+                        $(".top_category_menu").addClass('while_float').addClass('hide');
+                    } else {
+                        $(".top_category_menu").addClass('while_float').addClass('menu_float').addClass('hide');
+                    }
+
                 } else {
                     side_menu.removeClass("hide");
                     side_menu.removeClass("to_show");
@@ -410,10 +424,29 @@
                     sticky_header.removeClass("smooth_show");
                     if (route_index === 'shop.home.index') {
                         $(".top_category_menu").removeClass('while_float').removeClass('hide');
+                    } else {
+                        // menu_float
+                        $(".top_category_menu").addClass('hide').removeClass('menu_float');
                     }
 
                 }
             });
+
+            refresh_handler = function(e) {
+                console.log('scrolling')
+                var elements = document.querySelectorAll("*[realsrc]");
+                for (var i = 0; i < elements.length; i++) {
+                    var boundingClientRect = elements[i].getBoundingClientRect();
+                    if (elements[i].hasAttribute("realsrc") && boundingClientRect.top < window.innerHeight) {
+                        elements[i].setAttribute("src", elements[i].getAttribute("realsrc"));
+                        elements[i].removeAttribute("realsrc");
+                    }
+                }
+            };
+
+            window.addEventListener('scroll', refresh_handler);
+            window.addEventListener('load', refresh_handler);
+            window.addEventListener('resize', refresh_handler);
 
 
         </script>

@@ -75,7 +75,7 @@ return [
         'icon-class' => '',
     ], [
         'key'        => 'catalog.manufacturers',
-        'name'       => 'Manufacturers',
+        'name'       => 'Configurable Options',
         'route'      => 'admin.catalog.manufacturers.index',
         'sort'       => 6,
         'icon-class' => '',

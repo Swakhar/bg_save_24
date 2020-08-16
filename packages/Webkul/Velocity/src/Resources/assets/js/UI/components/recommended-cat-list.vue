@@ -4,11 +4,11 @@
             <span class="title">{{ slider_name }}</span>
             <a href="#" class="btn-home btn_view_all">{{ btn_txt }}</a>
         </section>
-        <div class="col-md-2 recomend-slide-cat-div" style="    max-width: 14.4667%;;
-    padding-right: 3px;
-    margin-right: -13px;">
+        <div class=""
+             :class="`${isMobileView ? 'col-md-2 recomend-slide-cat-div-mobile hide' : 'col-md-2 recomend-slide-cat-div'}`"
+             :style="`max-width: ${clientWidth >= 1536 ? '13.4667%' : '14.4667%'};padding-right: 3px;margin-right: -13px;`">
             <section class="recommended_cat_list">
-                <ul >
+                <ul>
                     <li @click="clickLi(index)"
                             v-for="(cat, index) in category_list_recommended" data-id="cat_recom"
                         :class="`click_to_switch_slider ${index == active_index ? 'active': ''}`">
@@ -30,7 +30,8 @@
 <script type="text/javascript">
     export default {
         mixins: ['myMixin'],
-        props: ['category_list_recommended', 'btn_txt', 'slider_name', 'active_index'],
+        props: ['category_list_recommended', 'btn_txt', 'slider_name',
+            'active_index', 'isMobileView', 'clientWidth'],
 
         data: function () {
             return {

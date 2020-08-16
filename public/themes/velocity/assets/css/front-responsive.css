@@ -1,0 +1,262 @@
+@media only screen and (max-width: 600px) {
+    .top_banner_three_section {
+        height: 290px;
+    }
+    .top_category_menu {
+        /*display: none;*/
+    }
+    .cust-open {
+        /*display: none;*/
+    }
+    .cust-midle {
+        width: 100%;
+        height: 200px;
+    }
+    .slider_parent {
+        height: 148px;
+    }
+    .cust-last {
+        width: 100%;
+        float: left;
+    }
+    .product_add_parent {
+        width: 99%;
+        height: 90px;
+    }
+    .inner_add_div_top {
+        height: 90px;
+        margin: 12px 3px;
+        box-shadow: 1px 1px 3px 1px grey;
+        width: 31%;
+        float: left;
+    }
+    .inner_add_div_top img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        height: 90px;
+        padding: 0;
+    }
+    .hard_coded_inner_div {
+        float: left;
+        width: 23.8%;
+    }
+    .hard_coded_inner_div i.secure {
+        margin-left: 5px;
+    }
+    .hard_coded_inner_div i.secure.s {
+        font-size: 25px;
+    }
+    .secure.fa.fa-superpowers {
+        font-size: 25px;
+    }
+    .secure.fa.fa-credit-card {
+        font-size: 24px;
+    }
+    .secure.fa.fa-truck {
+        font-size: 25px;
+    }
+    .title-low {
+        display: none;
+    }
+    .hard_coded_inner_div span.title {
+        text-align: center;
+        display: inline-block;
+        font-size: 11px;
+        float: left;
+        position: absolute;
+        left: 36px;
+        width: 40px;
+        top: 4px;
+        line-height: 11px;
+    }
+    .slider_image {
+        height: 150px;
+    }
+    .vc-header {
+        display: none;
+    }
+    .add_panel_inner {
+        height: 65px;
+        width: 29.5%;
+    }
+    .recommended_title_top {
+        font-size: 16px;
+    }
+    .add_panel_third_inner {
+        height: 78px;
+        position: relative;
+        width: 46.2%;
+        float: left;
+        margin: 3px 5px;
+    }
+    .card.grid-card.product-card-new {
+        width: 159px;
+    }
+    .container-fluid.featured-products {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .recom_cat.mobile_view {max-width: 100%;margin: 0px;padding-right: 0;padding-left: 0;}
+    .recom_cat.desktop_view {max-width: 86.3333%;margin: 0px;padding-right: 0;padding-left: 0;}
+    .VueCarousel-navigation-prev {
+        padding: 4px !important;
+    }
+    .VueCarousel-navigation-next {
+        padding: 4px !important;
+    }
+    .mobile_view_header {
+        padding: 0 20px;
+    }
+    .mobile_view_header img {
+        width: 100px;
+        height: 35px;
+    }
+    .mobile_view_header span.logo-slogan {
+        font-size: 12px;
+        position: absolute;
+        top: 5px;
+        left: 123px;
+    }
+    .half-portion {
+        width: 45%;
+        float: left;
+    }
+    .half-portion-right {
+        width: 45%;
+        float: right;
+        padding-right: 12px;
+    }
+    .full-width {
+        width: 100%;
+        display: block;
+        background:#C0C0C0;
+        height: 74px;
+    }
+    input.input-top-heade-mobile {
+        border-radius: 5px;
+        border: none;
+        padding-left: 5px;
+        height: 29px;
+        position: absolute;
+        left: 20px;
+        top: 41px;
+        width: 91%;
+    }
+    div.full-width-static-footer {
+        position: fixed;
+        z-index: 9999999999;
+        background: white;
+        box-shadow: 1px 1px 4px 1px gray;
+        width: 100%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 45px;
+    }
+    div.full-width-static-footer ul {
+
+    }
+    div.full-width-static-footer ul li {
+        display: inline-block;
+        width: 24%;
+    }
+    div.full-width-static-footer ul li i {
+        font-size: 17px;
+        display: block;
+        text-align: center;
+        color: black;
+        margin-top: 2px;
+    }
+    div.full-width-static-footer ul li span {
+        font-size: 10px;
+        display: block;
+        text-align: center;
+        color: black;
+        margin-top: -5px;
+    }
+    div.full-width-static-footer ul li span.active {
+        color: #FF5500 !important;
+    }
+    input.control.subscribe-field {
+        width: 66%;
+    }
+    .menu_open_mobile_view_category {
+        position: fixed;
+        z-index: 999999999999;
+        background: white;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 45px;
+    }
+    .menu_open_mobile_view_category .top_menu_head {
+        height: 35px;
+        box-shadow: 0px 2px 4px 1px gray;
+    }
+    .menu_open_mobile_view_category .top_menu_head .left {
+        width: 70%;
+        float: left;
+    }
+    .menu_open_mobile_view_category .top_menu_head .left i {
+        font-size: 16px;
+        color: black;
+        margin-left: 6px;
+        margin-right: 13px;
+    }
+    .menu_open_mobile_view_category .top_menu_head .left span {
+        font-size: 18px;
+        color: black;
+        font-weight: 600;
+    }
+    .menu_open_mobile_view_category .top_menu_head .right {
+        width: 29%;
+        float: left;
+    }
+    .menu_open_mobile_view_category .top_menu_head .right i {
+        font-size: 20px;
+        margin-right: 20px;
+        color: black;
+    }
+    .menu_open_mobile_view_category .top_menu_body {
+
+    }
+    .menu_open_mobile_view_category .top_menu_body ul li {
+        font-size: 15px;
+        color: black;
+        margin-left: 10px;
+        line-height: 24px;
+    }
+    .menu_open_mobile_view_category .top_menu_head ul li {
+        display: inline-block;
+    }
+    .menu_open_mobile_view_category ul {
+
+    }
+    .menu_open_mobile_view_category ul li {
+
+    }
+
+    div.product_image_left_view_page {
+        float: left;
+        width: 375px;
+    }
+    div.product_view_page_inner .image_div img {
+        height:273px;
+        width: 320px;
+    }
+    div.product_view_page_inner .image_div {
+        height: 273px;
+        width: 400px;
+    }
+    div.image_slider_div_product {
+        width: 320px;
+    }
+    div.desktop_view {
+        display: none;
+    }
+    div.mobile_view {
+        display: block;
+    }
+}

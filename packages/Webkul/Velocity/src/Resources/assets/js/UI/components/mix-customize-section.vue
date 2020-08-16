@@ -7,7 +7,7 @@
                 <carousel
                         :class="'pagination-hide'"
                         :navigationEnabled="true"
-                        :per-page="6"
+                        :per-page="per_page"
                         :autoplayTimeout="2000"
                         :loop="true"
                         :autoplay="false"
@@ -18,7 +18,8 @@
                             <a :href="`/mix-category-item/${child.details_slug}`"
                                :title="`${child.details_title}`" >
                                 <img loading="lazy" :alt="`${child.details_title}`"
-                                     :src="`/cache/medium/${child.image_url}`"
+                                     :src="''"
+                                     :realsrc="`/cache/medium/${child.image_url}`"
                                      :data-src="`/cache/medium/${child.image_url}`"
                                      onerror="this.src='/vendor/webkul/ui/assets/images/product/large-product-placeholder.png'"
                                      class="card-img-top lzy_img">
@@ -51,13 +52,14 @@
     export default {
         name: "mix-customize-section-home",
         mixins: ['myMixin'],
-        props: ['data_list'],
+        props: ['data_list', 'per_page'],
         components: {
             carousel: Carousel,
             slide: Slide
         },
         data: function () {
             return {
+
             }
         },
 

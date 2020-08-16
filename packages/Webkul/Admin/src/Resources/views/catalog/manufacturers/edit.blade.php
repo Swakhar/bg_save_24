@@ -90,7 +90,7 @@
 
                                 <image-wrapper :button-label="'{{ __('admin::app.catalog.products.add-image-btn-title') }}'" input-name="image" :multiple="false"
                                                :images='"{{ '/cache/small/' . $configurableoption->image }}"'
-                                               :required="true"></image-wrapper>
+                                               ></image-wrapper>
 
                                 <span class="control-error" v-if="{!! $errors->has('image.*') !!}">
                                     @foreach ($errors->get('image.*') as $key => $message)
@@ -110,8 +110,8 @@
                         <div slot="body">
 
                             <div class="control-group" :class="[errors.has('published') ? 'has-error' : '']">
-                                <label for="published" class="required">{{ __('admin::app.catalog.manufacturers.published') }}</label>
-                                <select class="control" v-validate="'required'" id="published" name="published"
+                                <label for="published" class="">{{ __('admin::app.catalog.manufacturers.published') }}</label>
+                                <select class="control"  id="published" name="published"
                                         data-vv-as="&quot;{{ __('admin::app.catalog.manufacturers.visible-in-menu') }}&quot;">
                                     <option value="1" {{ $configurableoption->published ? 'selected' : '' }}>
                                         {{ __('admin::app.catalog.manufacturers.yes') }}
@@ -125,8 +125,8 @@
 
                             <div class="control-group" :class="[errors.has('dis_order') ? 'has-error' : '']">
                                 <label for="dis_order"
-                                       class="required">{{ __('admin::app.catalog.manufacturers.display-order') }}</label>
-                                <input type="text" v-validate="'required|numeric'" class="control" id="dis_order"
+                                       class="">{{ __('admin::app.catalog.manufacturers.display-order') }}</label>
+                                <input type="text" v-validate="'numeric'" class="control" id="dis_order"
                                        name="dis_order" value="{{ old('dis_order') ?: $configurableoption->dis_order }}"
                                        data-vv-as="&quot;{{ __('admin::app.catalog.manufacturers.dis_order') }}&quot;"/>
                                 <span class="control-error" v-if="errors.has('dis_order')">@{{ errors.first('dis_order') }}</span>
@@ -140,12 +140,31 @@
                     <accordian :title="'{{ __('admin::app.catalog.manufacturers.mapping') }}'" :active="true">
                         <div slot="body">
                             <div class="control-group" :class="[errors.has('discounts') ? 'has-error' : '']">
-                                <label for="discounts" class="required">{{ __('admin::app.catalog.manufacturers.discounts') }}</label>
-                                <input type="text" v-validate="'required|numeric'" class="control" id="discounts"
+                                <label for="discounts" class="">{{ __('admin::app.catalog.manufacturers.discounts') }}</label>
+                                <input type="text" v-validate="'numeric'" class="control" id="discounts"
                                        name="discounts" value="{{ old('discounts') ?: $configurableoption->discounts }}"
                                        data-vv-as="&quot;{{ __('admin::app.catalog.manufacturers.discounts') }}&quot;"/>
                                 <span class="control-error" v-if="errors.has('discounts')">@{{ errors.first('discounts') }}</span>
                             </div>
+                        </div>
+                    </accordian>
+
+                    <accordian :title="'{{ __('admin::app.catalog.manufacturers.rgb_code') }}'" :active="true">
+                        <div slot="body">
+
+                            {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.seo.controls.before') !!}
+
+                            <div class="control-group" :class="[errors.has('discounts') ? 'has-error' : '']">
+                                <label for="discounts">{{ __('admin::app.catalog.manufacturers.rgb_code') }}</label>
+                                <input type="text"
+                                       class="control" id="rgb_code" name="rgb_code"
+                                       value="{{ old('rgb_code') ?: $configurableoption->rgb_code }}"
+                                       data-vv-as="&quot;{{ __('admin::app.catalog.manufacturers.rgb_code') }}&quot;"/>
+                                <span class="control-error" v-if="errors.has('rgb_code')">@{{ errors.first('rgb_code') }}</span>
+                            </div>
+
+                            {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.seo.controls.after') !!}
+
                         </div>
                     </accordian>
 
@@ -166,8 +185,8 @@
 
         <div class="control-group" :class="[errors.has('description') ? 'has-error' : '']">
             <label for="description"
-                   :class="isRequired ? 'required' : ''">{{ __('admin::app.catalog.manufacturers.description') }}</label>
-            <textarea v-validate="isRequired ? 'required' : ''"  class="control"
+                  >{{ __('admin::app.catalog.manufacturers.description') }}</label>
+            <textarea   class="control"
                       id="description" name="description"
                       data-vv-as="&quot;{{ __('admin::app.catalog.manufacturers.description') }}&quot;">{{ old('description') ?? ($configurableoption->description?? '') }}</textarea>
             <span class="control-error" v-if="errors.has('description')">@{{ errors.first('description') }}</span>
