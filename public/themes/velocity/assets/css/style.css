@@ -12,9 +12,9 @@ body{
 	font-weight: normal;
 }
 
-h1, h2, h3, h4, h5, h6 {	
-	padding: 5px 0 15px 0;	
-	margin: 0;	
+h1, h2, h3, h4, h5, h6 {
+	padding: 5px 0 15px 0;
+	margin: 0;
 	color: #333;
 	font-weight: normal;
 	-webkit-font-smoothing: antialiased;
@@ -62,11 +62,11 @@ ul{
 	padding: 0;
 	list-style: disc;
 }
-li{
+/* li{
 	font-size: 1.5rem;
 	line-height: 1.5rem;
 	text-align: left;
-}
+} */
 div.fontawesome-icon-list [class*="col-md-"] {
 	margin-bottom: 10px;
 }
@@ -123,7 +123,7 @@ div.fontawesome-icon-list a{
 .boxes-info h5{
 	padding: 10px 0;
 	margin-bottom: 20px;
-	font-weight: 800;	
+	font-weight: 800;
 }
 .boxes-info p{
 	color: #777 !important;
@@ -191,11 +191,11 @@ div.fontawesome-icon-list a{
 .apply-fade-hover:hover img{filter:inherit;opacity:1}
 
 
-.sidebar{
-	background: green; 
+/* .sidebar{
+	background: green;
 	margin-top: 10px;
 	font-size: 17px;
-}
+} */
 
 /*faq accordian */
 .accordion {
