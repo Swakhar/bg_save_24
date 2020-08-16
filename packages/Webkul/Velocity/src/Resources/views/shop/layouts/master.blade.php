@@ -69,7 +69,7 @@
 
                     {!! view_render_event('bagisto.shop.layout.header.before') !!}
 
-                        @include('shop::layouts.header.index')
+                    @include('shop::layouts.header.index')
 
                     {!! view_render_event('bagisto.shop.layout.header.after') !!}
 

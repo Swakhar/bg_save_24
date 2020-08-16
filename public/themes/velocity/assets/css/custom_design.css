@@ -98,11 +98,6 @@ header #search-form #header-search-icon {
     background: #343C54;
     color: white;
 }
-#sidebar-level-0 {
-    display: block !important;
-    height: auto !important;
-    min-height: 438px !important;
-}
 
 div.top-banner-image {
     width: 67% !important;
@@ -114,16 +109,10 @@ div.top-banner-image {
     /*height: 285px !important;*/
     /*margin-top: 1px;*/
 }
-.container-right.row.no-margin.col-12.no-padding {
-    height: 415px !important;
-}
 img.banner_image {
     background-position: center !important;
     width: 100%;
     height: 356px;
-}
-#sidebar-level-0 {
-    /*z-index: 0 !important;*/
 }
 
 ul.side-nav-ul {
@@ -136,17 +125,6 @@ ul.side-nav-ul {
 }
 .pt10 {
     padding-top: 5px !important;
-}
-
-#sidebar-level-0 {
-    display: none;
-    z-index: 2;
-    border-top: 2px solid #FF5500;
-    border-left: 1px solid #c5c4c4 !important;
-    border-right: 1px solid #c5c4c4 !important;
-    box-shadow: none;
-    border-bottom: 1px solid #c5c4c4 !important;
-    margin-top: -4px;
 }
 .vc-header {
     -webkit-box-shadow: none;
@@ -182,11 +160,6 @@ i.sidebar_hide {
     text-decoration: none;
     color: black;
     padding: 10px 0;
-}
-#sidebar-level-0.to_show {
-    position: fixed !important;
-    top: 59px;
-    z-index: 99999999;
 }
 
 li.category-content:hover {
@@ -246,10 +219,6 @@ header .mini-cart-container ~ .compare-btn, header .mini-cart-container ~ .wishl
 }
 header .mini-cart-container ~ .compare-btn:hover, header .mini-cart-container ~ .wishlist-btn:hover {
     color: #FF5500 !important;
-}
-
-.sidebar {
-    width: 270px !important;
 }
 
 .category-list-container .category {
@@ -1002,15 +971,6 @@ body {
 .velocity-divide-page .right {
      padding-left: 0px !important;
 }
-.velocity-divide-page .left {
-    z-index: 1;
-    width: 270px;
-    position: absolute;
-    left: 20px;
-    height: 42px;
-    line-height: 42px;
-    padding: 0 10px;
-}
 .text-down-4 {
     top: 13px;
     position: relative;
@@ -1171,20 +1131,6 @@ a.unset.compare-icon.text-right {
 @media only screen and (max-width: 320px)  {  }
 @media only screen and (max-width: 768px)  {  }
 @media only screen and (max-width: 1024px) { }
-@media (min-width: 1400px) and (max-width: 1900px) {
-    .sidebar {
-        width: 300px !important;
-    }
-    .velocity-divide-page .left {
-        z-index: 1;
-        width: 300px;
-        position: absolute;
-        left: 20px;
-        height: 42px;
-        line-height: 42px;
-        padding: 0 10px;
-    }
-}
 
 .mix-category-section {
     height: 340px;
