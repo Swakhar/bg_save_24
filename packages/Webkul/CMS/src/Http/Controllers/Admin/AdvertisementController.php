@@ -176,8 +176,8 @@ class AdvertisementController extends Controller
     public function UpdateAdvertisementOne(Request $request)
     {
         $imageManipulation = new ImageManipulation();
-        $path = '/uploads/advertisement/';
-        $path2 = '/advertisement/';
+        $path = '/uploads/special_img/';
+        $path2 = '/special_img/';
         $data_obj = [];
         $image_data = [];
         $image_name = "";
@@ -329,8 +329,8 @@ class AdvertisementController extends Controller
     public function UpdateAdvertisementTwo(Request $request)
     {
         $imageManipulation = new ImageManipulation();
-        $path = '/uploads/advertisement/';
-        $path2 = '/advertisement/';
+        $path = '/uploads/special_img/';
+        $path2 = '/special_img/';
         $data_obj = [];
         $image_data = [];
         $image_name = "";
@@ -482,8 +482,8 @@ class AdvertisementController extends Controller
     public function UpdateSliderSection(Request $request)
     {
         $imageManipulation = new ImageManipulation();
-        $path = '/uploads/advertisement/';
-        $path2 = '/advertisement/';
+        $path = '/uploads/special_img/';
+        $path2 = '/special_img/';
         $data_obj = [];
         $image_data = [];
         $image_name = "";
@@ -554,7 +554,7 @@ class AdvertisementController extends Controller
         advertisement_master.save_path,
         advertisement_rule.label, advertisement_rule.operation, advertisement_rule.rule_value, advertisement_rule.is_multi
         FROM advertisement_master
-        INNER JOIN advertisement_rule on advertisement_rule.master_id = advertisement_master.id
+        LEFT JOIN advertisement_rule on advertisement_rule.master_id = advertisement_master.id
         WHERE type = 4
         ORDER BY advertisement_master.id ");
 
@@ -635,8 +635,8 @@ class AdvertisementController extends Controller
     public function UpdateSliderAddSection(Request $request)
     {
         $imageManipulation = new ImageManipulation();
-        $path = '/uploads/advertisement/';
-        $path2 = '/advertisement/';
+        $path = '/uploads/special_img/';
+        $path2 = '/special_img/';
         $data_obj = [];
         $image_data = [];
         $image_name = "";

@@ -124,6 +124,9 @@ div.top-banner-image {
     /*height: 285px !important;*/
     /*margin-top: 1px;*/
 }
+.container-right.row.no-margin.col-12.no-padding {
+    height: 415px !important;
+}
 img.banner_image {
     background-position: center !important;
     width: 100%;
@@ -979,6 +982,15 @@ body {
     margin-right: 4px;
     margin-bottom: 11px;
     height: 430px;
+}
+.velocity-divide-page .left {
+    z-index: 1;
+    width: 270px;
+    position: absolute;
+    left: 20px;
+    height: 42px;
+    line-height: 42px;
+    padding: 0 10px;
 }
 
 .velocity-divide-page .right {
