@@ -16,10 +16,6 @@
         <link rel="stylesheet" href="{{ asset($relative_path . 'themes/velocity/assets/css/google-font.css') }}" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700"/>
 
-        {{--<link rel="stylesheet" href="{{ asset('/themes/velocity/assets/css/slick.css') }}" />--}}
-        {{--<link rel="stylesheet" href="{{ asset('/themes/velocity/assets/css/slick-theme.css') }}" />--}}
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" />
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
         <link rel="stylesheet" href="{{ asset($relative_path . '/themes/velocity/assets/css/custom_design.css?version='.$version) }}" />
         <link rel="stylesheet" href="{{ asset($relative_path . '/themes/velocity/assets/css/front-responsive.css?version='.$version) }}" />
         <link rel="stylesheet" href="{{ asset($relative_path . '/themes/velocity/assets/css/style.css?version='.$version) }}" />
@@ -179,29 +175,32 @@
                         ></content-header>
 
 
-                        
+
                     </div>
                 @show
                     {{--\Request::route()->getName() == 'shop.productOrCategory.index'--}}
-                    @if(\Request::route()->getName() != 'shop.productOrCategory.index')
+
                     <div class="container-fluid " >
-                        <div class="row top_banner_three_section">
+                        <div class="row {{ \Request::route()->getName() == 'shop.home.index' ? 'top_banner_three_section' : '' }}">
+                            @if(\Request::route()->getName() == 'shop.home.index')
                             <div class="cust-open" >
                                 <sidebar-new route_index="{{ \Request::route()->getName() }}"></sidebar-new>
                             </div>
+                                @else
+                                <div class="cust-open" >
+                                    <sidebar-new route_index="{{ \Request::route()->getName() }}"></sidebar-new>
+                                </div>
+                            @endif
                             {!! view_render_event('bagisto.shop.layout.content.before') !!}
 
                             @yield('content-wrapper')
 
                             {!! view_render_event('bagisto.shop.layout.content.after') !!}
+
                         </div>
                     </div>
 
-                    @else
-                        <div style="margin-left: 20px;">
-                            <sidebar-new route_index="{{ \Request::route()->getName() }}"></sidebar-new>
-                        </div>
-                    @endif
+
 
 
                     <div class="container-fluid add_sec_one">
@@ -315,8 +314,6 @@
             src="{{ asset($relative_path . 'vendor/webkul/ui/assets/js/ui.js?version='.$version) }}">
         </script>
 
-        {{--<script src="{{ asset('/themes/velocity/assets/js/slick.js') }}"></script>--}}
-        <script src="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
 
         @stack('scripts')
         <script>
