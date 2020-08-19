@@ -526,6 +526,14 @@ header #search-form > *:focus {
         position: absolute;
     }
 
+    .sidebar {
+        &.left {
+            z-index: 1;
+            width: $sidebar-width;
+            position: absolute;
+        }
+    }
+
     .right {
         width: 100%;
         padding-left: $sidebar-width !important;

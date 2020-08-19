@@ -24,4 +24,5 @@ yarn.lock
 storage/
 storage/*.key
 /docker-compose-collection/
-
+/packages/Webkul/Velocity/publishable/*
+/packages/Webkul/Admin/publishable/*
