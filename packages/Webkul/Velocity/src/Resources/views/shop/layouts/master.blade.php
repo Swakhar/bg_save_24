@@ -187,9 +187,9 @@
                         <sidebar-new route_index="{{ \Request::route()->getName() }}"></sidebar-new>
                     </div>
                 @else
-                    <div class="cust-open" >
+                    {{-- <div class="cust-open" >
                         <sidebar-new route_index="{{ \Request::route()->getName() }}"></sidebar-new>
-                    </div>
+                    </div> --}}
                 @endif
                 {!! view_render_event('bagisto.shop.layout.content.before') !!}
 

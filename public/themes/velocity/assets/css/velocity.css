@@ -3521,7 +3521,7 @@ header #search-form > *:focus {
   position: relative;
 }
 
-.velocity-divide-page .left {
+.velocity-divide-page .sidebar.left {
   z-index: 1;
   width: 230px;
   position: absolute;
