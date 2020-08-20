@@ -36,7 +36,7 @@
                     $menuItem['children']['reviews'],
                     $menuItem['children']['address'],
                     $menuItem['children']['profile'],
-                    $menuItem['children']['products'],
+                    $menuItem['children']['products']
                 );
                 foreach ($menuItem['children'] as $key => $remainingChildren) {
                     $subMenuCollection[$key] = $remainingChildren;
