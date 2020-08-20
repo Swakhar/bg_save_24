@@ -18,9 +18,16 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         view()->composer('*', function ($view)
         {
-            View::share('relative_path', '');
-            View::share('version', '1.0.1');
-            View::share('server_path_from', '');
+            if (env("APP_ENV") == 'local') {
+                View::share('relative_path', '');
+                View::share('server_path_from', '');
+                View::share('version', '3.0.0');
+            } else {
+                View::share('relative_path', '/public/');
+                View::share('server_path_from', '/public/');
+                View::share('version', '3.0.0');
+            }
+
         });
     }
 
