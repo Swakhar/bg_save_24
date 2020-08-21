@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Webkul\Shop\Http\Controllers\Controller;
 use Webkul\Velocity\Repositories\ContactMessagesRepository;
+use Webkul\Velocity\Repositories\AffiliatesRepository;
 use Webkul\Velocity\Repositories\CareerRepository;
 use Webkul\Blog\Repositories\BlogRepository;
 
@@ -15,12 +16,14 @@ use Webkul\Blog\Repositories\BlogRepository;
     protected $_config;
     
     protected $contactMessagesRepository;
+    protected $affiliatesRepository;
     protected $careerRepository;
     protected $blogRepository;
 
-    public function __construct(ContactMessagesRepository $contactMessagesRepository,CareerRepository $careerRepository,BlogRepository $blogRepository)
+    public function __construct(ContactMessagesRepository $contactMessagesRepository,AffiliatesRepository $affiliatesRepository,CareerRepository $careerRepository,BlogRepository $blogRepository)
     {
         $this->contactMessagesRepository = $contactMessagesRepository;
+        $this->affiliatesRepository = $affiliatesRepository;
         $this->careerRepository = $careerRepository;
         $this->blogRepository = $blogRepository;
 
@@ -184,6 +187,31 @@ use Webkul\Blog\Repositories\BlogRepository;
     {
         $menu="How To Shop";
         return view($this->_config['view'],compact('menu'));
+    }
+    public function sell()
+    {
+        $menu="How To Shop";
+        return view($this->_config['view'],compact('menu'));
+    }
+    public function affiliated()
+    {
+        $menu="How To Shop";
+        return view($this->_config['view'],compact('menu'));
+    }
+    public function apply_affiliated(Request $request)
+    {
+        $menu="Career";
+        $this->validate(request(), [
+            'email'       => ['required','unique:affiliates,email'],
+            'name'       => ['required'],
+            'message'       => ['required']
+        ]);
+        $data = request()->all();
+        $affiliates = $this->affiliatesRepository->create($data);
+
+        session()->flash('success', trans('admin::app.response.create-success', ['name' => 'Message']));
+
+        return redirect()->route('shop.earn.affiliated',compact('menu'));
     }
     
     public function notFound()
