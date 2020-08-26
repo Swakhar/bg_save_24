@@ -78,15 +78,15 @@ class ProductRepository extends Repository
 
         $product = $product->getTypeInstance()->update($data, $id, $attribute);
         if (isset($data['tags'])) {
-            $product->Tags()->sync($data['tags']);  
+            $product->Tags()->sync($data['tags']);
         }
         if (isset($data['manufacturers'])) {
-            $product->Manufacturers()->sync($data['manufacturers']);  
+            $product->Manufacturers()->sync($data['manufacturers']);
         }
         if (isset($data['channels'])) {
             $product['channels'] = $data['channels'];
         }
-        
+
         Event::dispatch('catalog.product.update.after', $product);
 
         return $product;
@@ -123,11 +123,13 @@ class ProductRepository extends Repository
 
             $qb = $query->distinct()
                 ->select('product_flat.*')
+                ->leftJoin('products', 'product_flat.product_id', '=', 'products.id')
                 ->join('product_flat as variants', 'product_flat.id', '=', DB::raw('COALESCE(variants.parent_id, variants.id)'))
                 ->leftJoin('product_categories', 'product_categories.product_id', '=', 'product_flat.product_id')
                 ->leftJoin('product_attribute_values', 'product_attribute_values.product_id', '=', 'variants.product_id')
                 ->where('product_flat.channel', $channel)
                 ->where('product_flat.locale', $locale)
+                ->where('products.is_active', 1)
                 ->whereNotNull('product_flat.url_key');
 
             if ($categoryId) {
@@ -298,11 +300,13 @@ class ProductRepository extends Repository
 
             return $query->distinct()
                             ->addSelect('product_flat.*')
+                            ->leftJoin('products', 'product_flat.product_id', '=', 'products.id')
                             ->where('product_flat.status', 1)
                             ->where('product_flat.visible_individually', 1)
                             ->where('product_flat.new', 1)
                             ->where('product_flat.channel', $channel)
                             ->where('product_flat.locale', $locale)
+                            ->where('products.is_active', 1)
                             ->inRandomOrder();
         })->paginate(4);
 
@@ -323,11 +327,13 @@ class ProductRepository extends Repository
 
             return $query->distinct()
                             ->addSelect('product_flat.*')
+                            ->leftJoin('products', 'product_flat.product_id', '=', 'products.id')
                             ->where('product_flat.status', 1)
                             ->where('product_flat.visible_individually', 1)
                             ->where('product_flat.featured', 1)
                             ->where('product_flat.channel', $channel)
                             ->where('product_flat.locale', $locale)
+                            ->where('products.is_active', 1)
                             ->inRandomOrder();
         })->paginate(4);
 
@@ -349,12 +355,14 @@ class ProductRepository extends Repository
 
             return $query->distinct()
                             ->addSelect('product_flat.*')
+                            ->leftJoin('products', 'product_flat.product_id', '=', 'products.id')
                             ->where('product_flat.status', 1)
                             ->where('product_flat.visible_individually', 1)
                             ->where('product_flat.channel', $channel)
                             ->where('product_flat.locale', $locale)
+                            ->where('products.is_active', 1)
                             ->whereNotNull('product_flat.url_key')
-                            ->where(function($sub_query) use ($term) {  
+                            ->where(function($sub_query) use ($term) {
                                 $sub_query->where('product_flat.name', 'like', '%' . urldecode($term) . '%')
                                           ->orWhere('product_flat.short_description', 'like', '%' . urldecode($term) . '%');
                                 })
@@ -410,6 +418,7 @@ class ProductRepository extends Repository
                          ->where('products.type', 'simple')
                          ->where('product_flat.channel', $channel)
                          ->where('product_flat.locale', $locale)
+                         ->where('products.is_active', 1)
                          ->where('product_flat.name', 'like', '%' . urldecode($term) . '%')
                          ->orderBy('product_id', 'desc');
         })->get();

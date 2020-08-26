@@ -48,6 +48,13 @@
                             @endforeach
                         </select>
                     </div>
+
+                    <div class="control-group">
+                        <select class="control" id="is_active" name="is_active">
+                            <option value=1 {{ $product->is_active ? 'selected' : '' }}>Approve</option>
+                            <option value=0 {{ $product->is_active ? '' : 'selected' }}>Reject</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="page-action">
