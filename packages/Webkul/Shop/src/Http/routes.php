@@ -440,7 +440,6 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
             ])->name('seller.dashboard.index');
 
         });
-//        Route::get('/{store}', 'Badenjki\Seller\Http\Controllers\StoreController@show');
     });
 
     Route::get('page/{slug}', 'Webkul\CMS\Http\Controllers\Shop\PagePresenterController@presenter')->name('shop.cms.page');

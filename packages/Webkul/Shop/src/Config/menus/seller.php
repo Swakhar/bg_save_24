@@ -50,7 +50,7 @@ return [
         'key' => 'store.dashboard',
         'name' => 'shop::app.layouts.store-dashboard',
         'route' => 'seller.dashboard.index',
-        'sort' => 3,
+        'sort' => 3
     ]
 ];
 
