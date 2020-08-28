@@ -3622,3 +3622,8 @@ section.review .review-layouter .ratings-reviews .right-side .rater .line-bar .l
 .item-options b {
   font-weight: 500;
 }
+
+.menu-block-title {
+  text-align: center;
+  background: #ececec;
+}

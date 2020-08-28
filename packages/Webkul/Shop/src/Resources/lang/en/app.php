@@ -15,6 +15,7 @@ return [
         'downloadable-products' => 'Downloadable Products',
         'my-store' => 'My Store',
         'become-seller' => 'Become a Seller',
+        'store-dashboard' => 'Dashboard',
         'store-profile' => 'Profile',
         'store-products' => 'Products',
         'store-orders' => 'Orders',
@@ -615,7 +616,7 @@ return [
             'final-summary' => 'Thanks for showing your interest in our store we will send you tracking number once it shipped',
             'help' => 'If you need any kind of help please contact us at :support_email',
             'thanks' => 'Thanks!',
-            
+
             'comment' => [
                 'subject' => 'New comment added to your order',
                 'dear' => 'Dear :customer_name',

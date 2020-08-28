@@ -434,6 +434,11 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
                 'redirect' => 'seller.products.index',
             ])->name('seller.product.edit');
 
+            // Dashboard Route
+            Route::get('dashboard', 'Badenjki\Seller\Http\Controllers\DashboardController@index')->defaults('_config', [
+                'view' => 'shop::sellers.dashboard.index',
+            ])->name('seller.dashboard.index');
+
         });
 //        Route::get('/{store}', 'Badenjki\Seller\Http\Controllers\StoreController@show');
     });
