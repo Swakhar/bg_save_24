@@ -42,17 +42,16 @@ return [
         'route' => 'customer.store.index',
         'sort' => 1,
     ], [
-        'key' => 'store.dashboard',
-        'name' => 'shop::app.layouts.store-dashboard',
-        'route' => 'seller.dashboard.index',
-        'sort' => 2,
-    ], [
         'key' => 'store.products',
         'name' => 'shop::app.layouts.store-products',
         'route' => 'seller.products.index',
-        'sort' => 3
+        'sort' => 2
+    ], [
+        'key' => 'store.dashboard',
+        'name' => 'shop::app.layouts.store-dashboard',
+        'route' => 'seller.dashboard.index',
+        'sort' => 3,
     ]
-
 ];
 
 ?>
