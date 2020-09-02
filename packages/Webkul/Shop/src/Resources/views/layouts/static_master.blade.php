@@ -19,8 +19,8 @@
         {{--<link rel="stylesheet" href="{{ asset('/themes/velocity/assets/css/slick-theme.css') }}" />--}}
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" />
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
-        <link rel="stylesheet" href="{{ asset($relative_path . '/themes/velocity/assets/css/custom_design.css?version='.$version') }}" />
-        <link rel="stylesheet" href="{{ asset($relative_path . '/themes/velocity/assets/css/style.css?version='.$version) }}" />
+        <link rel="stylesheet" href="{{ asset($relative_path . '/themes/velocity/assets/css/custom_design.css?version='.$version) }}" />
+        <link rel="stylesheet" href="{{ asset($relative_path . '/themes/default/assets/css/static_style.css?version='.$version) }}" />
         <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         @if (core()->getCurrentLocale()->direction == 'rtl')
             <link href="{{ asset($relative_path . 'themes/velocity/assets/css/bootstrap-flipped.css') }}" rel="stylesheet">
