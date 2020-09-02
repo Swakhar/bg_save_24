@@ -174,7 +174,7 @@ class ProductController extends Controller
             'sku'                 => ['required', 'unique:products,sku', new \Webkul\Core\Contracts\Validations\Slug],
         ]);
 
-        $product = $this->productRepository->create(request()->all());
+        $product = $this->productRepository->create(array_merge(request()->all(), [ 'is_active' => 1 ]));
 
         session()->flash('success', trans('admin::app.response.create-success', ['name' => 'Product']));
 
@@ -395,7 +395,7 @@ class ProductController extends Controller
 
     /**
      * To be manually invoked when data is seeded into products
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function sync()
