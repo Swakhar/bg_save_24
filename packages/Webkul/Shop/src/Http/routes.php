@@ -26,8 +26,9 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
         'view' => 'shop::blog.index'
     ])->name('shop.about.blog');
     Route::get('/blog/{id}', 'Webkul\Shop\Http\Controllers\StaticPageController@blog_id')->defaults('_config', [
-        'view' => 'shop::blog.index'
+        'view' => 'shop::blog.detail'
     ])->name('shop.about.blog_id');
+
     Route::post('/blog/date', 'Webkul\Shop\Http\Controllers\StaticPageController@blog_date')->defaults('_config', [
         'view' => 'shop::blog.index'
     ])->name('shop.about.blog_date');
@@ -76,7 +77,17 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
     Route::get('/terms', 'Webkul\Shop\Http\Controllers\StaticPageController@terms')->defaults('_config', [
         'view' => 'shop::policy.terms'
     ])->name('shop.policy.terms');
-
+    
+    Route::get('/sell', 'Webkul\Shop\Http\Controllers\StaticPageController@sell')->defaults('_config', [
+        'view' => 'shop::earn.sell'
+    ])->name('shop.earn.sell');
+    Route::get('/affiliated', 'Webkul\Shop\Http\Controllers\StaticPageController@affiliated')->defaults('_config', [
+        'view' => 'shop::earn.affiliated'
+    ])->name('shop.earn.affiliated');
+    Route::post('/affiliated', 'Webkul\Shop\Http\Controllers\StaticPageController@apply_affiliated')->defaults('_config', [
+        'view' => 'shop::earn.apply_affiliated'
+    ])->name('shop.earn.apply_affiliated');
+    
 
     //subscription
     //subscribe
