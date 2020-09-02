@@ -49,7 +49,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <img src="/themes/velocity/assets/images/static/1.png" width="100%" height="200">
+      <img src="{{ asset('themes/velocity/assets/images/static/1.png')}}" width="100%" height="200">
     </div>
     <div class="col-md-12">
       <h2 class="ht">
@@ -177,30 +177,30 @@
     <div class="col-md-4">
       <center><img src="/themes/velocity/assets/images/static/tw.png"></center>
       <p class="ts" style="text-align:center;font-size: 1.5rem">Team Work</p>
-      
+
     </div>
     <div class="col-md-4">
       <center><img src="/themes/velocity/assets/images/static/247.png"></center>
       <p class="ts" style="text-align:center;font-size: 1.5rem">Customer focus and Customer Service</p>
-      
+
     </div>
     <div class="col-md-4">
       <center><img src="/themes/velocity/assets/images/static/go.png"></center>
       <p class="ts" style="text-align:center;font-size: 1.5rem">Goal Oriented</p>
-      
+
     </div><div class="col-md-4">
       <center><img src="/themes/velocity/assets/images/static/tr.png"></center>
       <p class="ts" style="text-align:center;font-size: 1.5rem">Trust & Responsibility
       </p>
-      
+
     </div><div class="col-md-4">
       <center><img src="/themes/velocity/assets/images/static/in.png"></center>
       <p class="ts" style="text-align:center;font-size: 1.5rem">Integrity</p>
-      
+
     </div><div class="col-md-4">
       <center><img src="/themes/velocity/assets/images/static/trans.png"></center>
       <p class="ts" style="text-align:center;font-size: 1.5rem">Transparency</p>
-      
+
     </div>
     <div class="col-md-12" style="padding-bottom: 20px">
       <h2 style="font-weight: 700;color: #ff5500;">Our Brands
@@ -226,7 +226,7 @@
                                            <img src="/themes/velocity/assets/images/static/lg.png" width="100%" height="100px">
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="carousel-item">
@@ -236,7 +236,7 @@
                                            <img src="/themes/velocity/assets/images/static/lg.png" width="100%" height="100px">
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="carousel-item">
@@ -246,7 +246,7 @@
                                            <img src="/themes/velocity/assets/images/static/lg.png" width="100%" height="100px">
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="carousel-item">
@@ -256,7 +256,7 @@
                                            <img src="/themes/velocity/assets/images/static/lg.png" width="100%" height="100px">
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="carousel-item">
@@ -266,7 +266,7 @@
                                            <img src="/themes/velocity/assets/images/static/lg.png" width="100%" height="100px">
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="carousel-item">
@@ -276,7 +276,7 @@
                                            <img src="/themes/velocity/assets/images/static/lg.png" width="100%" height="100px">
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
