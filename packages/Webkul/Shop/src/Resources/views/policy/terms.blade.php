@@ -49,11 +49,11 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <img src="/themes/velocity/assets/images/static/1.png" width="100%" height="200">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/1.png')}}" width="100%" height="200">
     </div>
     <div class="col-md-12">
       <p class="htt">
-        TERMS AND CONDITIONS 
+        TERMS AND CONDITIONS
         <br>
         <br>
       </p>
@@ -404,7 +404,7 @@ THEM.&nbsp;<br>
 Us</b>&nbsp;<br>Please
 send your feedback, comments, requests for technical support by email:&nbsp;<b>official@safeshop.com.bd</b>
       </p>
-      
+
     </div>
   </div>
 </div>

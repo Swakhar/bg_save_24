@@ -49,16 +49,16 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <img src="/themes/velocity/assets/images/static/7.png" width="100%" height="200">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/7.png')}}" width="100%" height="200">
     </div>
     <div class="col-md-12">
       <p class="ts" style="font-size: 1.5">The Speed of delivery at your destination depends on shipping service you choose at the checkout page. Please make sure that shipping service is available at the desired destination before you place your order. Since we can process one shipping address per order. If you wish to receive the same order in different location then you have to place separate orders and separate payments.
       </p>
     </div>
-    
+
     <div class="col-md-3"></div>
     <div class="col-md-2">
-      <img src="/themes/velocity/assets/images/static/sh.png">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/sh.png')}}">
     </div>
     <div class="col-md-7">
       <p class="htt">
@@ -70,7 +70,7 @@
     </div>
     <div class="col-md-3"></div>
     <div class="col-md-2">
-      <img src="/themes/velocity/assets/images/static/es.png">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/es.png')}}">
     </div>
     <div class="col-md-7">
       <p class="htt">
@@ -82,7 +82,7 @@
     </div>
     <div class="col-md-3"></div>
     <div class="col-md-2">
-      <img src="/themes/velocity/assets/images/static/is.png">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/is.png')}}">
     </div>
     <div class="col-md-7">
       <p class="htt">
@@ -104,7 +104,7 @@
     </div>
     <div class="col-md-1"></div>
     <div class="col-md-4">
-      <img src="/themes/velocity/assets/images/static/52e1dc404c51ab14f6da8c7dda793678153bdee757596c4870267cd6914dc35abf_1280.jpg" width="100%">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/52e1dc404c51ab14f6da8c7dda793678153bdee757596c4870267cd6914dc35abf_1280.jpg')}}" width="100%">
     </div>
     <div class="col-md-3"></div>
   </div>

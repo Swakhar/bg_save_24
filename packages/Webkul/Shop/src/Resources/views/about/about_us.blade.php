@@ -49,7 +49,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <img src="{{ asset('themes/velocity/assets/images/static/1.png')}}" width="100%" height="200">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/1.png')}}" width="100%" height="200">
     </div>
     <div class="col-md-12">
       <h2 class="ht">
@@ -61,7 +61,7 @@
       </p>
     </div>
     <div class="col-md-12">
-      <img src="/themes/velocity/assets/images/static/57e2d54a4c56ac14f6da8c7dda793678153bdee757596c4870267cd59149c55cbb_1280.jpg" height="508" width="761">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/57e2d54a4c56ac14f6da8c7dda793678153bdee757596c4870267cd59149c55cbb_1280.jpg')}}" height="508" width="761">
     </div>
     <div class="col-md-2"></div>
     <div class="col-md-5" style="color: #ffffff;
@@ -112,7 +112,7 @@
     </p>
     </div>
     <div class="col-md-6">
-      <img src="/themes/velocity/assets/images/static/online_shop_logo1.png" height="137px" width="100%" style="margin: 79px 28px 0 auto;">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/online_shop_logo1.png')}}" height="137px" width="100%" style="margin: 79px 28px 0 auto;">
       <p style="font-size: 1.5rem;
     font-weight: 700;margin: 0px 0px 0px 220px;">Check Buy &amp; Save</p>
     </div>
@@ -131,39 +131,39 @@
       <div style="width: 275px;border-color: #ff5500;border-width: 2px;border-style: solid;"></div>
     </div>
     <div class="col-md-4">
-      <center><img src="/themes/velocity/assets/images/static/ss.png"></center>
+      <center><img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/ss.png')}}"></center>
       <p class="ts" style="text-align:center;font-size: 1.5rem">Safe & Secure</p>
       <p class="ts" style="text-align:center;font-size: 1rem">
         Trusted and Secure marketplace for B2B & B2C E-Commerce Marketplace in Bangladesh. <br><br><br>
       </p>
     </div>
     <div class="col-md-4">
-      <center><img src="/themes/velocity/assets/images/static/lm.png"></center>
+      <center><img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/lm.png')}}"></center>
       <p class="ts" style="text-align:center;font-size: 1.5rem">Lowest Market Price</p>
       <p class="ts" style="text-align:center;font-size: 1rem">
         Safeshop will provide you the best market price by comparing the price with best renowned brands products
       </p>
     </div>
     <div class="col-md-4">
-      <center><img src="/themes/velocity/assets/images/static/oc.png"></center>
+      <center><img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/oc.png')}}"></center>
       <p class="ts" style="text-align:center;font-size: 1.5rem">Online and COD Payment</p>
       <p class="ts" style="text-align:center;font-size: 1rem">
         Safeshop will provide you the best and secure payment service with all available payment methods in Bangladesh. ''Cash on Delivery'' available all over Bangladesh
       </p>
     </div><div class="col-md-4">
-      <center><img src="/themes/velocity/assets/images/static/sd.png"></center>
+      <center><img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/sd.png')}}"></center>
       <p class="ts" style="text-align:center;font-size: 1.5rem">Speed & Timely Delivery</p>
       <p class="ts" style="text-align:center;font-size: 1rem">
         Safeshop will provide you speed and timely delivery all over Bangladesh
       </p>
     </div><div class="col-md-4">
-      <center><img src="/themes/velocity/assets/images/static/er.png"></center>
+      <center><img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/er.png')}}"></center>
       <p class="ts" style="text-align:center;font-size: 1.5rem">Easy Return</p>
       <p class="ts" style="text-align:center;font-size: 1rem">
         Safeshop has easy return policy which will give you more comfortable for your online shopping
       </p>
     </div><div class="col-md-4">
-      <center><img src="/themes/velocity/assets/images/static/247.png"></center>
+      <center><img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/247.png')}}"></center>
       <p class="ts" style="text-align:center;font-size: 1.5rem">24/7 Customer Service</p>
       <p class="ts" style="text-align:center;font-size: 1rem">
         Safeshop customer representative understand the customer values and they always give you best possible support
@@ -175,30 +175,30 @@
       <div style="width: 205px;border-color: #ff5500;border-width: 2px;border-style: solid;"></div>
     </div>
     <div class="col-md-4">
-      <center><img src="/themes/velocity/assets/images/static/tw.png"></center>
+      <center><img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/tw.png')}}"></center>
       <p class="ts" style="text-align:center;font-size: 1.5rem">Team Work</p>
 
     </div>
     <div class="col-md-4">
-      <center><img src="/themes/velocity/assets/images/static/247.png"></center>
+      <center><img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/247.png')}}"></center>
       <p class="ts" style="text-align:center;font-size: 1.5rem">Customer focus and Customer Service</p>
 
     </div>
     <div class="col-md-4">
-      <center><img src="/themes/velocity/assets/images/static/go.png"></center>
+      <center><img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/go.png')}}"></center>
       <p class="ts" style="text-align:center;font-size: 1.5rem">Goal Oriented</p>
 
     </div><div class="col-md-4">
-      <center><img src="/themes/velocity/assets/images/static/tr.png"></center>
+      <center><img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/tr.png')}}"></center>
       <p class="ts" style="text-align:center;font-size: 1.5rem">Trust & Responsibility
       </p>
 
     </div><div class="col-md-4">
-      <center><img src="/themes/velocity/assets/images/static/in.png"></center>
+      <center><img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/in.png')}}"></center>
       <p class="ts" style="text-align:center;font-size: 1.5rem">Integrity</p>
 
     </div><div class="col-md-4">
-      <center><img src="/themes/velocity/assets/images/static/trans.png"></center>
+      <center><img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/trans.png')}}"></center>
       <p class="ts" style="text-align:center;font-size: 1.5rem">Transparency</p>
 
     </div>
@@ -214,7 +214,7 @@
                                 <div class="col-lg-2 col-md-6">
                                     <div class="card" style="margin-top: 10px">
                                         <div class="card-body">
-                                           <img src="/themes/velocity/assets/images/static/lg.png" width="100%" height="100px">
+                                           <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/lg.png')}}" width="100%" height="100px">
                                         </div>
                                     </div>
                                 </div>
@@ -223,17 +223,7 @@
                                 <div class="col-lg-2 col-md-6">
                                     <div class="card" style="margin-top: 10px">
                                         <div class="card-body">
-                                           <img src="/themes/velocity/assets/images/static/lg.png" width="100%" height="100px">
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="col-lg-2 col-md-6">
-                                    <div class="card" style="margin-top: 10px">
-                                        <div class="card-body">
-                                           <img src="/themes/velocity/assets/images/static/lg.png" width="100%" height="100px">
+                                           <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/lg.png')}}" width="100%" height="100px">
                                         </div>
                                     </div>
 
@@ -243,7 +233,7 @@
                                 <div class="col-lg-2 col-md-6">
                                     <div class="card" style="margin-top: 10px">
                                         <div class="card-body">
-                                           <img src="/themes/velocity/assets/images/static/lg.png" width="100%" height="100px">
+                                           <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/lg.png')}}" width="100%" height="100px">
                                         </div>
                                     </div>
 
@@ -253,7 +243,7 @@
                                 <div class="col-lg-2 col-md-6">
                                     <div class="card" style="margin-top: 10px">
                                         <div class="card-body">
-                                           <img src="/themes/velocity/assets/images/static/lg.png" width="100%" height="100px">
+                                           <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/lg.png')}}" width="100%" height="100px">
                                         </div>
                                     </div>
 
@@ -263,7 +253,7 @@
                                 <div class="col-lg-2 col-md-6">
                                     <div class="card" style="margin-top: 10px">
                                         <div class="card-body">
-                                           <img src="/themes/velocity/assets/images/static/lg.png" width="100%" height="100px">
+                                           <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/lg.png')}}" width="100%" height="100px">
                                         </div>
                                     </div>
 
@@ -273,7 +263,17 @@
                                 <div class="col-lg-2 col-md-6">
                                     <div class="card" style="margin-top: 10px">
                                         <div class="card-body">
-                                           <img src="/themes/velocity/assets/images/static/lg.png" width="100%" height="100px">
+                                           <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/lg.png')}}" width="100%" height="100px">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="col-lg-2 col-md-6">
+                                    <div class="card" style="margin-top: 10px">
+                                        <div class="card-body">
+                                           <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/lg.png')}}" width="100%" height="100px">
                                         </div>
                                     </div>
 

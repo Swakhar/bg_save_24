@@ -49,10 +49,10 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <img src="/themes/velocity/assets/images/static/4.png" width="100%" height="200">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/4.png')}}" width="100%" height="200">
     </div>
     <div class="col-md-8  mar_top">
-        @foreach($blogs as $blog)   
+        @foreach($blogs as $blog)
             <div class="card">
               <div class="card-header">
                 @if($blog->image)

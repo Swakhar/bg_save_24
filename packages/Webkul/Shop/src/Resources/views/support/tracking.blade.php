@@ -49,15 +49,15 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <img src="/themes/velocity/assets/images/static/10.png" width="100%" height="200">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/10.png')}}" width="100%" height="200">
     </div>
     <div class="col-md-12">
       <p class="ts" style="font-size: 1.5">To track your order please enter your Order Id in the box and press the "Track" button. This was given to you on your receipt and in the confirmation email or SMS you should have received.
       </p>
     </div>
-    
+
     <div class="col-md-6" style="padding-bottom: 50px">
-      <img src="/themes/velocity/assets/images/static/truck.png" width="100%">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/truck.png')}}" width="100%">
     </div>
     <div class="col-md-6">
       <form method="POST" action="{{ route('contact.message') }}" @submit.prevent="onSubmit" >
@@ -94,7 +94,7 @@
     </div>
     <div class="col-md-1"></div>
     <div class="col-md-4">
-      <img src="/themes/velocity/assets/images/static/52e1dc404c51ab14f6da8c7dda793678153bdee757596c4870267cd6914dc35abf_1280.jpg" width="100%">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/52e1dc404c51ab14f6da8c7dda793678153bdee757596c4870267cd6914dc35abf_1280.jpg')}}" width="100%">
     </div>
     <div class="col-md-3"></div>
   </div>

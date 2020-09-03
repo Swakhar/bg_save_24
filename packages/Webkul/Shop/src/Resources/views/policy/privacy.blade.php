@@ -49,7 +49,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <img src="/themes/velocity/assets/images/static/16.png" width="100%" height="200">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/16.png')}}" width="100%" height="200">
     </div>
     <div class="col-md-12">
       <p class="htt">
@@ -109,7 +109,7 @@ company) and you are encouraged to review their privacy policy and contact them
 directly for responses to your questions.
 &nbsp;
 Facebook
-Permissions&nbsp; 
+Permissions&nbsp;
 The Site and our mobile application may by default access
 your Facebook basic account information, including your name, email, gender,
 birthday, current city, and profile picture URL, as well as other information
@@ -202,17 +202,17 @@ purposes, as permitted by law.<br>&nbsp; &nbsp;&nbsp;<br><b>3.4 Interactions wit
 Users&nbsp;<br></b>If you interact with other
 users of the Site and our mobile application, those users may see your name,
 profile photo, and descriptions of your activity, including sending invitations
-to other users, chatting with other users, liking posts, following blogs. 
+to other users, chatting with other users, liking posts, following blogs.
 &nbsp;
 Online Postings
 When you post comments, contributions or other content to the
 Site [or our mobile applications, your posts may be viewed by all users and may
 be publicly distributed outside the Site [and our mobile application in
-perpetuity. 
+perpetuity.
 &nbsp;
 &nbsp;
 Third-Party
-Advertisers 
+Advertisers
 We may use third-party advertising companies to serve ads
 when you visit the Site or our mobile application. These companies may use
 information about your visits to the Site and our mobile application and other
@@ -246,7 +246,7 @@ Parties
 We may share your information with advertisers and investors
 for the purpose of conducting general business analysis. We may also share your
 information with such third parties for marketing purposes, as permitted by
-law. 
+law.
 &nbsp;
 We are not responsible for the actions of third parties with
 whom you share personal or sensitive data, and we have no authority to manage
@@ -285,7 +285,7 @@ Advertising Initiative Opt-Out Tool</a> or <a href="http://www.aboutads.info/cho
 Advertising Alliance Opt-Out Tool</a>.
 &nbsp;
 Website
-Analytics 
+Analytics
 We may also partner with selected
 third-party vendors[, such as [<a href="http://www.adobe.com/privacy/marketing-cloud.html">Adobe Analytics</a>,] [<a href="https://www.clicktale.com/company/privacy-policy/">Clicktale,</a>] [<a href="https://clicky.com/terms">Clicky</a>,]
 [<a href="https://www.cloudflare.com/security-policy/">Cloudfare</a>,]
@@ -382,7 +382,7 @@ responsible for contacting the third party directly. <b>&nbsp;</b>&nbsp;<br>CONT
 If you have questions or comments about
 this Privacy Policy, please contact us.<br>
       </p>
-      
+
     </div>
   </div>
 </div>

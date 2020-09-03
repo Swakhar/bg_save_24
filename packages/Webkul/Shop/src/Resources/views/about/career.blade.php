@@ -49,7 +49,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <img src="/themes/velocity/assets/images/static/3.png" width="100%" height="200">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/3.png')}}" width="100%" height="200">
     </div>
     <div class="col-md-8">
       <p class="ts" style="font-size: 1.5">Welcome to career portal of SafeShop Bangladesh Ltd.
@@ -57,7 +57,7 @@
       <p class="ts" style="font-size: 1.5">If you are interested to start your career with us, please send us your current CV at our email!
       </p>
     </div>
-    
+
     <div class="col-md-8" style="margin-bottom: 50px;">
                         <form method="POST" action="{{ route('shop.about.career.save') }}" @submit.prevent="onSubmit" enctype="multipart/form-data">
                             @csrf()
@@ -85,7 +85,7 @@
                         </form>
                     </div>
     <div class="col-md-4">
-      <img src="/themes/velocity/assets/images/static/5ee6dc404252b108f5d084609629317e113fdce15b4c704c7c2879d19148c651_1280.jpg" width="100%">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/5ee6dc404252b108f5d084609629317e113fdce15b4c704c7c2879d19148c651_1280.jpg')}}" width="100%">
     </div>
   </div>
 </div>

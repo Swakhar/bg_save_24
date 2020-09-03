@@ -49,7 +49,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <img src="/themes/velocity/assets/images/static/12.png" width="100%" height="200">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/12.png')}}" width="100%" height="200">
     </div>
     <div class="col-md-12">
       <p class="htt">
@@ -77,7 +77,7 @@
 
       </p>
       <p class="ts">
-        2.3 Vendor agrees to bear all the applicable taxes, duties, or other similar payments arising out of the sales transaction of the product through the online page and www.Safeshop.com.bd shall not be responsible to collect, report, or remit any taxes arising from any transaction. 
+        2.3 Vendor agrees to bear all the applicable taxes, duties, or other similar payments arising out of the sales transaction of the product through the online page and www.Safeshop.com.bd shall not be responsible to collect, report, or remit any taxes arising from any transaction.
         <br><br>
       </p>
       <p class="ts">
@@ -125,7 +125,7 @@
       </p><p class="ts">
         5.3 Safeshop Bangladesh Ltd. shall not be liable for any claims, damages arising out of any negligence, misconduct or misrepresentation by the Vendor or any of its representatives.
       </p><p class="ts">
-        5.4 The Vendor hereby agrees, confirms and acknowledges that the Product is owned by the Vendor and that the Company is merely a facilitator for sale of the Vendor’s Product, hence the Company is not responsible/ liable for the Product, its design, its function and condition manufacturing and selling and financial obligations, warranties, guarantees whatsoever. The Company reserves its right to state appropriate Disclaimers on its website/ online page. 
+        5.4 The Vendor hereby agrees, confirms and acknowledges that the Product is owned by the Vendor and that the Company is merely a facilitator for sale of the Vendor’s Product, hence the Company is not responsible/ liable for the Product, its design, its function and condition manufacturing and selling and financial obligations, warranties, guarantees whatsoever. The Company reserves its right to state appropriate Disclaimers on its website/ online page.
       </p><p class="ts">
         <b style="font-style: italic;">6. Term, Termination and effects of Termination</b>
       </p><p class="ts">
@@ -162,7 +162,7 @@ represent, bind or assume any obligation on behalf of the Company. <br><br>
       </p><p class="ts">
         12.1 The Vendor shall pay the Company a service charge as specified by the Company on every transaction. Company reserves the right to renew the commission charges at any time upon agreeing with the vendor.
       </p>
-      
+
     </div>
   </div>
 </div>

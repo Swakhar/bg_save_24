@@ -89,9 +89,9 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <img src="/themes/velocity/assets/images/static/11.png" width="100%" height="200">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/11.png')}}" width="100%" height="200">
     </div>
-    <div class="col-md-12" style="padding-top: 20px;"> 
+    <div class="col-md-12" style="padding-top: 20px;">
                     <button class="accordion"><i class="fa fa-plus"></i>How can I check my order status?</button>
                     <div class="panel">
                         <p class="just">You can check the status of your order by clicking "Track Order" below.</p>
@@ -142,7 +142,7 @@
                         <p class="just">As per the recent circular given by National Board Of Revenue (NBR), Bangladesh, SafeShop is required to collect applicable VAT from customers, for selling products through E-Commerce channel as VAT exemption on online shopping is only applicable for those companies which do not have physical outlets.</p>
                         <p>The rate of VAT is <strong>7.5 %</strong>.</p></br>
                     </div>
-                </div> 
+                </div>
     </div>
     <div class="col-md-1"></div>
     <div class="col-md-3" style="padding-bottom: 50px;">
@@ -156,7 +156,7 @@
     </div>
     <div class="col-md-1"></div>
     <div class="col-md-4">
-      <img src="/themes/velocity/assets/images/static/52e1dc404c51ab14f6da8c7dda793678153bdee757596c4870267cd6914dc35abf_1280.jpg" width="100%">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/52e1dc404c51ab14f6da8c7dda793678153bdee757596c4870267cd6914dc35abf_1280.jpg')}}" width="100%">
     </div>
     <div class="col-md-3"></div>
   </div>

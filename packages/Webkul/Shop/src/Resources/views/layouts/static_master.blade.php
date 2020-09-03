@@ -54,11 +54,11 @@
         </script>
         <script
             type="text/javascript"
-            src="{{ asset('themes/velocity/assets/js/about.js') }}">
+            src="{{ asset($relative_path . 'themes/velocity/assets/js/about.js') }}">
         </script>
         <script
             type="text/javascript"
-            src="{{ asset('themes/velocity/assets/js/nicepage.js') }}">
+            src="{{ asset($relative_path . 'themes/velocity/assets/js/nicepage.js') }}">
         </script>
 
         @yield('head')

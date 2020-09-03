@@ -49,14 +49,14 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <img src="/themes/velocity/assets/images/static/61.png" width="100%" height="200">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/61.png')}}" width="100%" height="200">
     </div>
     <div class="col-md-12">
       <p class="ts">
         We accept most major payment methods that are available in Bangladesh. SafeShop.com.bd will never save your payment information. Therefore, there is no risk at all when you shop on our website. As we are committed to provide you with the best experience on our site, if you think your choice of payment method is missing on our site, please let us know and we will accommodate accordingly. Below is a list of currently accepted methods of payments. <br>
       </p>
       <p class="htt">Available Payment Methods</p>
-      <img src="/themes/velocity/assets/images/static/SSL-Commerz-Pay-With-logo-All-Size-01-1.png" width="100%" height="200">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/SSL-Commerz-Pay-With-logo-All-Size-01-1.png')}}" width="100%" height="200">
     </div>
     <div class="col-md-12">
         <p class="ts">
@@ -69,16 +69,16 @@ following payment methods through our payment getaway partner:&nbsp;<br><br>2. W
         </p>
     </div>
     <div class="col-md-3">
-        <img src="/themes/velocity/assets/images/static/p1.png" width="100%" height="100">
+        <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/p1.png')}}" width="100%" height="100">
     </div>
     <div class="col-md-3">
-        <img src="/themes/velocity/assets/images/static/p2.png" width="100%" height="200">
+        <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/p2.png')}}" width="100%" height="200">
     </div>
     <div class="col-md-3">
-        <img src="/themes/velocity/assets/images/static/p3.png" width="100%" height="200">
+        <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/p3.png')}}" width="100%" height="200">
     </div>
     <div class="col-md-3">
-        <img src="/themes/velocity/assets/images/static/p4.png" width="100%" height="200">
+        <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/p4.png')}}" width="100%" height="200">
     </div>
     <div class="col-md-12">
         <p class="ts">
@@ -97,7 +97,7 @@ following payment methods through our payment getaway partner:&nbsp;<br><br>2. W
     </div>
     <div class="col-md-1"></div>
     <div class="col-md-4">
-      <img src="/themes/velocity/assets/images/static/52e1dc404c51ab14f6da8c7dda793678153bdee757596c4870267cd6914dc35abf_1280.jpg" width="100%">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/52e1dc404c51ab14f6da8c7dda793678153bdee757596c4870267cd6914dc35abf_1280.jpg')}}" width="100%">
     </div>
     <div class="col-md-3"></div>
   </div>

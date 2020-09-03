@@ -49,13 +49,13 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <img src="/themes/velocity/assets/images/static/8.png" width="100%" height="200">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/8.png')}}" width="100%" height="200">
     </div>
     <div class="col-md-12">
-      <p class="ts" style="font-size: 1.5">Thanks for shopping at Safeshop.com.bd. If you do not satisfy with the product then please simply return and get refund. Please check our return, refund and cancellation policy in bellows: 
+      <p class="ts" style="font-size: 1.5">Thanks for shopping at Safeshop.com.bd. If you do not satisfy with the product then please simply return and get refund. Please check our return, refund and cancellation policy in bellows:
       </p>
     </div>
-    
+
     <div class="col-md-12">
       <p class="htt">
         Return Policy
@@ -64,7 +64,7 @@
         The customer have 3 days to return an item from the date they received the product. The Grocery items will not be covered under return policy. Please note that return policy does not apply for any Global products
       </p>
       <p class="ts">
-        <b>Condition to return an item</b><br>  
+        <b>Condition to return an item</b><br>
         If Delivered Product is&nbsp; <!--[if !supportLists]-->
           <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1. Broken or&nbsp;&nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2. Defective or&nbsp; &nbsp; &nbsp;&nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3. Incomplete or&nbsp;&nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 4. Incorrect (presentation different on website)<br>
       </p>
@@ -88,7 +88,7 @@ tape or stickers on the manufacturer’s box.</p>
     </div>
     <div class="col-md-1"></div>
     <div class="col-md-4">
-      <img src="/themes/velocity/assets/images/static/52e1dc404c51ab14f6da8c7dda793678153bdee757596c4870267cd6914dc35abf_1280.jpg" width="100%">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/52e1dc404c51ab14f6da8c7dda793678153bdee757596c4870267cd6914dc35abf_1280.jpg')}}" width="100%">
     </div>
     <div class="col-md-3"></div>
   </div>

@@ -49,7 +49,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <img src="/themes/velocity/assets/images/static/2.png" width="100%" height="200">
+      <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/2.png')}}" width="100%" height="200">
     </div>
     <div class="col-md-12">
       <h2 class="htt">
@@ -58,27 +58,27 @@
       <div style="width: 235px;border-color: #ff5500;border-width: 2px;border-style: solid;"></div>
     </div>
     <div class="col-md-3">
-      <center><img src="/themes/velocity/assets/images/static/add.png" width="100%" height="100px"></center>
+      <center><img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/add.png')}}" width="100%" height="100px"></center>
       <h6 style="color: #343c54;text-align: center; font-weight: 700">ADDRESS</h6>
       <p style="color: #343c54;text-align: center;">31 Issha Khan Road, 1400 Narayanganj, Dhaka</p>
     </div>
     <div class="col-md-3">
-      <center>  <img src="/themes/velocity/assets/images/static/pn.png" width="100%" height="100px"></center>
+      <center>  <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/pn.png')}}" width="100%" height="100px"></center>
       <h6 style="color: #343c54;text-align: center; font-weight: 700">PHONE NUMBER</h6>
       <p style="color: #343c54;text-align: center;">
       +880 1712-492624</p>
     </div>
     <div class="col-md-3">
-      <center><img src="/themes/velocity/assets/images/static/op.png" width="100%" height="100px"></center>
+      <center><img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/op.png')}}" width="100%" height="100px"></center>
       <h6 style="color: #343c54;text-align: center; font-weight: 700">WE ARE OPEN</h6>
       <p style="color: #343c54;text-align: center;">Saterday to Thursday 9:00 AM- 5:00 PM</p>
     </div>
     <div class="col-md-3">
-      <center><img src="/themes/velocity/assets/images/static/em.png" width="100%" height="100px"></center>
+      <center><img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/em.png')}}" width="100%" height="100px"></center>
       <h6 style="color: #343c54;text-align: center; font-weight: 700">E-MAIL</h6>
       <p style="color: #343c54;text-align: center;">official@safeshop.com.bd</p>
     </div>
-    
+
     <div class="col-md-12">
       <p class="ts" style="font-weight: 900;font-size: 2.25rem;">
         SEND US MESSAGE
@@ -117,11 +117,11 @@
                                           <textarea class="form-control" rows="5" id="message" name="message"></textarea>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-md-12">
                                         <center><button type="submit" class="btn btn-primary">Submit</button></center>
                                     </div>
-                                    
+
                                 </div>
                             </form>
                         </div>
@@ -139,7 +139,7 @@
                                 <div class="col-lg-2 col-md-6">
                                     <div class="card" style="margin-top: 10px">
                                         <div class="card-body">
-                                           <img src="/themes/velocity/assets/images/static/lg.png" width="100%" height="100px">
+                                           <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/lg.png')}}" width="100%" height="100px">
                                         </div>
                                     </div>
                                 </div>
@@ -148,60 +148,60 @@
                                 <div class="col-lg-2 col-md-6">
                                     <div class="card" style="margin-top: 10px">
                                         <div class="card-body">
-                                           <img src="/themes/velocity/assets/images/static/lg.png" width="100%" height="100px">
+                                           <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/lg.png')}}" width="100%" height="100px">
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="carousel-item">
                                 <div class="col-lg-2 col-md-6">
                                     <div class="card" style="margin-top: 10px">
                                         <div class="card-body">
-                                           <img src="/themes/velocity/assets/images/static/lg.png" width="100%" height="100px">
+                                           <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/lg.png')}}" width="100%" height="100px">
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="carousel-item">
                                 <div class="col-lg-2 col-md-6">
                                     <div class="card" style="margin-top: 10px">
                                         <div class="card-body">
-                                           <img src="/themes/velocity/assets/images/static/lg.png" width="100%" height="100px">
+                                           <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/lg.png')}}" width="100%" height="100px">
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="carousel-item">
                                 <div class="col-lg-2 col-md-6">
                                     <div class="card" style="margin-top: 10px">
                                         <div class="card-body">
-                                           <img src="/themes/velocity/assets/images/static/lg.png" width="100%" height="100px">
+                                           <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/lg.png')}}" width="100%" height="100px">
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="carousel-item">
                                 <div class="col-lg-2 col-md-6">
                                     <div class="card" style="margin-top: 10px">
                                         <div class="card-body">
-                                           <img src="/themes/velocity/assets/images/static/lg.png" width="100%" height="100px">
+                                           <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/lg.png')}}" width="100%" height="100px">
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="carousel-item">
                                 <div class="col-lg-2 col-md-6">
                                     <div class="card" style="margin-top: 10px">
                                         <div class="card-body">
-                                           <img src="/themes/velocity/assets/images/static/lg.png" width="100%" height="100px">
+                                           <img src="{{ asset($relative_path . 'themes/velocity/assets/images/static/lg.png')}}" width="100%" height="100px">
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
