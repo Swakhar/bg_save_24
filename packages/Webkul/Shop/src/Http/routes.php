@@ -77,7 +77,7 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
     Route::get('/terms', 'Webkul\Shop\Http\Controllers\StaticPageController@terms')->defaults('_config', [
         'view' => 'shop::policy.terms'
     ])->name('shop.policy.terms');
-    
+
     Route::get('/sell', 'Webkul\Shop\Http\Controllers\StaticPageController@sell')->defaults('_config', [
         'view' => 'shop::earn.sell'
     ])->name('shop.earn.sell');
@@ -87,7 +87,7 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
     Route::post('/affiliated', 'Webkul\Shop\Http\Controllers\StaticPageController@apply_affiliated')->defaults('_config', [
         'view' => 'shop::earn.apply_affiliated'
     ])->name('shop.earn.apply_affiliated');
-    
+
 
     //subscription
     //subscribe
@@ -449,6 +449,10 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
             Route::get('dashboard', 'Badenjki\Seller\Http\Controllers\DashboardController@index')->defaults('_config', [
                 'view' => 'shop::sellers.dashboard.index',
             ])->name('seller.dashboard.index');
+
+            Route::get('orders', 'Badenjki\Seller\Http\Controllers\OrderController@index')->defaults('_config', [
+                'view' => 'shop::sellers.order.index',
+            ])->name('seller.orders.index');
 
         });
     });
