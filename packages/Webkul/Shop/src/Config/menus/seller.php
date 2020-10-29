@@ -51,6 +51,11 @@ return [
         'name' => 'shop::app.layouts.store-dashboard',
         'route' => 'seller.dashboard.index',
         'sort' => 3
+    ], [
+        'key' => 'store.orders',
+        'name' => 'shop::app.layouts.store-orders',
+        'route' => 'seller.orders.index',
+        'sort' => 4
     ]
 ];
 

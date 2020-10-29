@@ -28,6 +28,7 @@
                 $subMenuCollection['profile'] = $menuItem['children']['profile'];
                 $subMenuCollection['products'] = $menuItem['children']['products'];
                 $subMenuCollection['dashboard'] = $menuItem['children']['dashboard'];
+                $subMenuCollection['orders'] = $menuItem['children']['orders'];
                 unset(
                     $menuItem['children']['profile'],
                     $menuItem['children']['orders'],
@@ -38,7 +39,8 @@
                     $menuItem['children']['address'],
                     $menuItem['children']['profile'],
                     $menuItem['children']['products'],
-                    $menuItem['children']['dashboard']
+                    $menuItem['children']['dashboard'],
+                    $menuItem['children']['orders']
                 );
                 foreach ($menuItem['children'] as $key => $remainingChildren) {
                     $subMenuCollection[$key] = $remainingChildren;
